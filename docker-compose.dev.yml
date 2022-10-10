@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+
+  usaon-vta-survey:
+    ports:
+      - "5000:5000"
+    environment:
+      - "FLASK_ENV=development"

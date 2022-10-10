@@ -1,0 +1,26 @@
+<!doctype html>
+<head>
+  <title>{% block title %}{% endblock %} - US AON VTA Survey</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+
+<body>
+  <nav>
+    <h1>US AON VTA Survey</h1>
+  </nav>
+  <section class="content">
+    <header>
+      {% block header %}{% endblock %}
+    </header>
+  
+	  {% for message in get_flashed_messages() %}
+      <div class="flash">{{ message }}</div>
+    {% endfor %}
+
+    {% block content %}
+      <b>Hello world!</b>
+    {% endblock %}
+
+  </section>
+  
+</body>
