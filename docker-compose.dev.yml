@@ -8,3 +8,6 @@ services:
     environment:
       - "FLASK_DEBUG=True"
       - "FLASK_SECRET_KEY=supersecret"
+    volumes:
+      - "./usaon_vta_survey:/usaon-vta-survey/usaon_vta_survey:ro"
+      - "./tasks:/usaon-vta-survey/tasks:ro"
