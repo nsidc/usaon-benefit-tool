@@ -1,7 +1,36 @@
 version: '3.7'
 
-services:
+x-base: &base
+  networks:
+    - "usaon-vta"
+  restart: always
+  logging:
+    options:
+      max-size: "1m"
+      max-file: "1"
 
+
+networks:
+  usaon-vta:
+
+
+services:
   usaon-vta-survey:
+    <<: *base
     image: "nsidc/usaon-vta-survey:dev"
     build: .
+    environment:
+      - DB_USER
+      - DB_PASSWORD
+
+  db:
+    <<: *base
+    image: haproxy:1.8-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    environment:
+      - BACKEND_HOST=${DB_HOST}
+      - BACKEND_PORT=${DB_PORT}
+      - FRONTEND_PORT=5432

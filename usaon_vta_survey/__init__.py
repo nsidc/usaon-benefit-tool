@@ -3,6 +3,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 
+from usaon_vta_survey.constants.db import DB_CONNSTR
+
 
 db = SQLAlchemy(
     metadata=MetaData(naming_convention={
@@ -15,8 +17,7 @@ db = SQLAlchemy(
 )
 
 app = Flask(__name__)
-# TODO: Postgres
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = DB_CONNSTR
 
 db.init_app(app)
 
