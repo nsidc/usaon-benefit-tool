@@ -1,4 +1,6 @@
 # isort: skip_file
+import os
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
@@ -17,6 +19,7 @@ db = SQLAlchemy(
 )
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = os.environ['FLASK_SECRET_KEY']
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_CONNSTR
 
 db.init_app(app)
