@@ -15,15 +15,17 @@ def init(ctx, load=True):
         )
         return
 
+    from usaon_vta_survey import app
     from usaon_vta_survey.util.db.setup import recreate_tables as recreate_tables_
 
     # TODO: "Are you sure" confirmation?
-    print('Recreating tables...')
-    recreate_tables_()
+    with app.app_context():
+        print('Recreating tables...')
+        recreate_tables_()
 
-    if load:
-        print('Loading reference tables...')
-        load_reference_data(ctx)
+        if load:
+            print('Loading reference tables...')
+            load_reference_data(ctx)
 
 
 @task()
@@ -36,6 +38,8 @@ def load_reference_data(ctx):
         )
         return
 
+    from usaon_vta_survey import app
     from usaon_vta_survey.util.db.setup import populate_reference_data
 
-    populate_reference_data()
+    with app.app_context():
+        populate_reference_data()
