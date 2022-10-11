@@ -117,7 +117,7 @@ class ResponseObservingSystemObservational(db.Model):
     response_observing_system_id = Column(
         Integer,
         ForeignKey('response_observing_system.id'),
-        nullable=False,
+        primary_key=True,
     )
 
     platform = Column(String(256), nullable=False)
@@ -133,7 +133,7 @@ class ResponseObservingSystemResearch(db.Model):
     response_observing_system_id = Column(
         Integer,
         ForeignKey('response_observing_system.id'),
-        nullable=False,
+        primary_key=True,
     )
 
     intermediate_product = Column(String(256), nullable=False)
