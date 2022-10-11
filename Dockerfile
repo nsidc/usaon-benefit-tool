@@ -2,7 +2,7 @@ FROM mambaorg/micromamba:0.23.3
 
 # TODO: Figure out a better way to run tasks without requiring container
 # configuration
-RUN touch "/i_am_the_usaon-vta-survey_container"
+RUN touch "/tmp/i_am_the_usaon-vta-survey_container"
 
 WORKDIR /usaon-vta-survey
 

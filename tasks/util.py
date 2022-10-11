@@ -22,7 +22,7 @@ def in_container() -> bool:
     This is a hack to enforce a single docker-driven configuration for connecting to the
     database.
     """
-    if Path('/tmp/i_am_the_usaon-vta-survey_container').isfile():
+    if Path('/tmp/i_am_the_usaon-vta-survey_container').is_file():
         return True
 
-    else return False
+    return False
