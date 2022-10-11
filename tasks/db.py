@@ -9,7 +9,11 @@ from .util import in_container
 def init(ctx, load=True):
     """Drop and recreate all database tables, loading them by default."""
     if not in_container():
-        print('Please run from the container context')
+        print(
+            'Please run from the container context using'
+            ' `scripts/invoke_in_container.sh`'
+        )
+        return
 
     from usaon_vta_survey.util.db.setup import recreate_tables as recreate_tables_
 
@@ -26,7 +30,11 @@ def init(ctx, load=True):
 def load_reference_data(ctx):
     """Populate reference tables with data."""
     if not in_container():
-        print('Please run from the container context')
+        print(
+            'Please run from the container context using'
+            ' `scripts/invoke_in_container.sh`'
+        )
+        return
 
     from usaon_vta_survey.util.db.setup import populate_reference_data
 
