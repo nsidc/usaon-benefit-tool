@@ -1,5 +1,9 @@
 FROM mambaorg/micromamba:0.23.3
 
+# TODO: Figure out a better way to run tasks without requiring container
+# configuration
+RUN touch "/i_am_the_usaon-vta-survey_container"
+
 WORKDIR /usaon-vta-survey
 
 # Activate the conda environment during build process
@@ -20,6 +24,7 @@ RUN micromamba clean --all --yes
 # Install source
 COPY ./setup.py .
 COPY ./.mypy.ini .
+COPY ./tasks ./tasks
 COPY ./usaon_vta_survey ./usaon_vta_survey
 
 ENV FLASK_APP=usaon_vta_survey
