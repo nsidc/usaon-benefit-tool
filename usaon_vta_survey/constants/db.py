@@ -9,5 +9,5 @@ DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
 DB_CONNSTR = (
     f'postgresql://{DB_USERNAME}:{DB_PASSWORD}'
-    f'@{DB_HOSTNAME}:{DB_PORT}/seaice'
+    f'@{DB_HOSTNAME}:{DB_PORT}/usaon-vta'
 )
