@@ -1,7 +1,6 @@
 from invoke import Collection
 
-from . import db
-from . import env
+from . import db, env
 from . import format as format_
 from . import test
 

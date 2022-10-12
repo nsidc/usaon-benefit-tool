@@ -3,18 +3,8 @@ from datetime import datetime
 
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
-from sqlalchemy.schema import (
-    Column,
-    ForeignKey,
-    UniqueConstraint,
-)
-from sqlalchemy.types import (
-    DateTime,
-    Enum,
-    Integer,
-    SmallInteger,
-    String,
-)
+from sqlalchemy.schema import Column, ForeignKey, UniqueConstraint
+from sqlalchemy.types import DateTime, Enum, Integer, SmallInteger, String
 
 from usaon_vta_survey import db
 from usaon_vta_survey._types import ObservingSystemType
@@ -74,12 +64,9 @@ class Response(db.Model):
     )
 
 
-
 class ResponseObservingSystem(db.Model):
     __tablename__ = 'response_observing_system'
-    __table_args__ = (
-        UniqueConstraint('name', 'response_id'),
-    )
+    __table_args__ = (UniqueConstraint('name', 'response_id'),)
     id = Column(
         Integer,
         primary_key=True,
@@ -147,9 +134,7 @@ class ResponseObservingSystemResearch(db.Model):
 
 class ResponseDataProduct(db.Model):
     __tablename__ = 'response_data_product'
-    __table_args__ = (
-        UniqueConstraint('name', 'response_id'),
-    )
+    __table_args__ = (UniqueConstraint('name', 'response_id'),)
     id = Column(
         Integer,
         primary_key=True,
@@ -174,9 +159,7 @@ class ResponseDataProduct(db.Model):
 
 class ResponseApplication(db.Model):
     __tablename__ = 'response_application'
-    __table_args__ = (
-        UniqueConstraint('name', 'response_id'),
-    )
+    __table_args__ = (UniqueConstraint('name', 'response_id'),)
     id = Column(
         Integer,
         primary_key=True,

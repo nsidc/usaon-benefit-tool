@@ -8,8 +8,8 @@ from usaon_vta_survey import db
 from usaon_vta_survey.constants.sba import IAOA_SBA_FRAMEWORK
 from usaon_vta_survey.models.tables import (
     SocietalBenefitArea,
-    SocietalBenefitSubArea,
     SocietalBenefitKeyObjective,
+    SocietalBenefitSubArea,
 )
 
 
@@ -46,11 +46,14 @@ def init_societal_benefit_areas(session: Session) -> None:
     https://en.wikipedia.org/wiki/Global_Earth_Observation_System_of_Systems
     """
     # Add all areas:
-    session.add_all([
-        SocietalBenefitArea(
-            id=sba_name,
-        ) for sba_name in IAOA_SBA_FRAMEWORK.keys()
-    ])
+    session.add_all(
+        [
+            SocietalBenefitArea(
+                id=sba_name,
+            )
+            for sba_name in IAOA_SBA_FRAMEWORK.keys()
+        ]
+    )
 
     # Flush guarantees that these records will be present in the transaction before we
     # add the subsequent child records.
@@ -58,21 +61,27 @@ def init_societal_benefit_areas(session: Session) -> None:
 
     for sba_name, sba in IAOA_SBA_FRAMEWORK.items():
         # Add all of `sba`'s sub-areas:
-        session.add_all([
-            SocietalBenefitSubArea(
-                id=sub_area_name,
-                societal_benefit_area_id=sba_name,
-            ) for sub_area_name in sba.keys()
-        ])
+        session.add_all(
+            [
+                SocietalBenefitSubArea(
+                    id=sub_area_name,
+                    societal_benefit_area_id=sba_name,
+                )
+                for sub_area_name in sba.keys()
+            ]
+        )
         session.flush()
 
         for sub_area_name, sub_area in sba.items():
             # Add all of `sub_area`'s key objectives:
-            session.add_all([
-                SocietalBenefitKeyObjective(
-                    id=key_objective_name,
-                    societal_benefit_subarea_id=sub_area_name,
-                ) for key_objective_name in sub_area
-            ])
+            session.add_all(
+                [
+                    SocietalBenefitKeyObjective(
+                        id=key_objective_name,
+                        societal_benefit_subarea_id=sub_area_name,
+                    )
+                    for key_objective_name in sub_area
+                ]
+            )
 
     session.commit()
