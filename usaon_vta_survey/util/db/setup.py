@@ -25,7 +25,6 @@ def recreate_tables() -> None:
 
     create_tables(db.session)
 
-    populate_reference_data(db.session)
     db.session.commit()
 
 
@@ -35,8 +34,8 @@ def create_tables(session: Session) -> None:
     logger.info('Tables created.')
 
 
-def populate_reference_data(session: Session) -> None:
-    init_societal_benefit_areas(session)
+def populate_reference_data() -> None:
+    init_societal_benefit_areas(db.session)
 
     logger.info('Reference data loaded.')
 
@@ -52,6 +51,7 @@ def init_societal_benefit_areas(session: Session) -> None:
             id=sba_name,
         ) for sba_name in IAOA_SBA_FRAMEWORK.keys()
     ])
+    session.flush()
 
     for sba_name, sba in IAOA_SBA_FRAMEWORK.items():
         # Add all of `sba`'s sub-areas:
@@ -61,12 +61,15 @@ def init_societal_benefit_areas(session: Session) -> None:
                 societal_benefit_area_id=sba_name,
             ) for sub_area_name in sba.keys()
         ])
+        session.flush()
 
         for sub_area_name, sub_area in sba.items():
             # Add all of `sub_area`'s key objectives:
             session.add_all([
                 SocietalBenefitKeyObjective(
                     id=key_objective_name,
-                    societal_benefit_sub_area_id=sub_area_name,
+                    societal_benefit_subarea_id=sub_area_name,
                 ) for key_objective_name in sub_area
             ])
+
+    session.commit()

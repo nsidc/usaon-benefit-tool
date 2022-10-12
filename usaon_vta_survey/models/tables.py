@@ -68,6 +68,12 @@ class Response(db.Model):
         default=datetime.now,
     )
 
+    survey = relationship(
+        'Survey',
+        back_populates='response',
+    )
+
+
 
 class ResponseObservingSystem(db.Model):
     __tablename__ = 'response_observing_system'
