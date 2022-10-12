@@ -2,8 +2,6 @@
 
 ## Web
 
-* `FLASK_DEBUG` (default `False`): Enable debugging within the Flask development server
-    ([doc](https://flask.palletsprojects.com/en/2.2.x/config/#DEBUG)).
 * `FLASK_SECRET_KEY`: For securely signing session cookie and other security needs
     ([doc](https://flask.palletsprojects.com/en/2.2.x/config/#SECRET_KEY)).
 
