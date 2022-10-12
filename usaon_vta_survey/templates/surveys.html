@@ -18,7 +18,9 @@
 
   {% for survey in surveys %}
     <tr>
-      <td>{{survey.id}}</td>
+      <td>
+        <a href="/survey/{{survey.id}}">{{survey.id}}</a>
+      </td>
       <td>{{survey.created_timestamp}}</td>
       <td>{{survey.response_id}}</td>
       <td>{{survey.notes}}</td>
