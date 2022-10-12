@@ -1,7 +1,5 @@
-import datetime as dt
-
 from loguru import logger
-from sqlalchemy import MetaData, delete
+from sqlalchemy import MetaData
 from sqlalchemy.orm import Session
 
 from usaon_vta_survey import db

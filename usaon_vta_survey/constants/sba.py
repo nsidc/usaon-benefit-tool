@@ -1,5 +1,3 @@
-from typing import TypedDict
-
 # TODO: Consider using a type compatible with SQLAlchemy models
 SocietalBenefitKeyObjective = str
 SocietalBenefitSubArea = list[SocietalBenefitKeyObjective]

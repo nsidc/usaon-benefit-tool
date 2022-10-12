@@ -16,3 +16,7 @@ import_order_style = pycharm
 # W503: Line breaks should occur after the binary operator to keep all variable
 # names aligned.
 ignore = D1,W503
+
+# E501: Line too long. Long strings, e.g. URLs, are common in config files.
+per-file-ignores =
+  usaon_vta_survey/constants/sba.py: E501
