@@ -2,6 +2,7 @@ import uuid
 from datetime import datetime
 
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey, UniqueConstraint
 from sqlalchemy.types import DateTime, Enum, Integer, SmallInteger, String
@@ -9,8 +10,12 @@ from sqlalchemy.types import DateTime, Enum, Integer, SmallInteger, String
 from usaon_vta_survey import db
 from usaon_vta_survey._types import ObservingSystemType
 
+# Workaround for missing type stubs for flask-sqlalchemy:
+#     https://github.com/dropbox/sqlalchemy-stubs/issues/76#issuecomment-595839159
+BaseModel: DeclarativeMeta = db.Model
 
-class Survey(db.Model):
+
+class Survey(BaseModel):
     __tablename__ = 'survey'
     id = Column(
         UUID(as_uuid=True),
@@ -40,7 +45,7 @@ class Survey(db.Model):
     )
 
 
-class Response(db.Model):
+class Response(BaseModel):
     __tablename__ = 'response'
     id = Column(
         Integer,
@@ -64,7 +69,7 @@ class Response(db.Model):
     )
 
 
-class ResponseObservingSystem(db.Model):
+class ResponseObservingSystem(BaseModel):
     __tablename__ = 'response_observing_system'
     __table_args__ = (UniqueConstraint('name', 'response_id'),)
     id = Column(
@@ -101,7 +106,7 @@ class ResponseObservingSystem(db.Model):
     notes = Column(String(512), nullable=False)
 
 
-class ResponseObservingSystemObservational(db.Model):
+class ResponseObservingSystemObservational(BaseModel):
     __tablename__ = 'response_observing_system_observational'
     __mapper_args__ = {
         'polymorphic_identity': ObservingSystemType.observational,
@@ -117,7 +122,7 @@ class ResponseObservingSystemObservational(db.Model):
     sensor = Column(String(256), nullable=False)
 
 
-class ResponseObservingSystemResearch(db.Model):
+class ResponseObservingSystemResearch(BaseModel):
     __tablename__ = 'response_observing_system_research'
     __mapper_args__ = {
         'polymorphic_identity': ObservingSystemType.research,
@@ -132,7 +137,7 @@ class ResponseObservingSystemResearch(db.Model):
     intermediate_product = Column(String(256), nullable=False)
 
 
-class ResponseDataProduct(db.Model):
+class ResponseDataProduct(BaseModel):
     __tablename__ = 'response_data_product'
     __table_args__ = (UniqueConstraint('name', 'response_id'),)
     id = Column(
@@ -157,7 +162,7 @@ class ResponseDataProduct(db.Model):
     )
 
 
-class ResponseApplication(db.Model):
+class ResponseApplication(BaseModel):
     __tablename__ = 'response_application'
     __table_args__ = (UniqueConstraint('name', 'response_id'),)
     id = Column(
@@ -177,7 +182,7 @@ class ResponseApplication(db.Model):
 
 
 # Association tables
-class ResponseObservingSystemDataProduct(db.Model):
+class ResponseObservingSystemDataProduct(BaseModel):
     __tablename__ = 'response_observing_system_data_product'
     response_observing_system_id = Column(
         Integer,
@@ -201,7 +206,7 @@ class ResponseObservingSystemDataProduct(db.Model):
     needed_improvements = Column(String(512), nullable=True)
 
 
-class ResponseDataProductApplication(db.Model):
+class ResponseDataProductApplication(BaseModel):
     __tablename__ = 'response_data_product_application'
     response_data_product_id = Column(
         Integer,
@@ -225,7 +230,7 @@ class ResponseDataProductApplication(db.Model):
     needed_improvements = Column(String(512), nullable=True)
 
 
-class ResponseApplicationSocietalBenefitArea(db.Model):
+class ResponseApplicationSocietalBenefitArea(BaseModel):
     __tablename__ = 'response_application_societal_benefit_area'
     response_application_id = Column(
         Integer,
@@ -240,7 +245,7 @@ class ResponseApplicationSocietalBenefitArea(db.Model):
 
 
 # Reference tables
-class SocietalBenefitArea(db.Model):
+class SocietalBenefitArea(BaseModel):
     __tablename__ = 'societal_benefit_area'
     id = Column(
         String(256),
@@ -248,7 +253,7 @@ class SocietalBenefitArea(db.Model):
     )
 
 
-class SocietalBenefitSubArea(db.Model):
+class SocietalBenefitSubArea(BaseModel):
     __tablename__ = 'societal_benefit_subarea'
     id = Column(
         String(256),
@@ -261,7 +266,7 @@ class SocietalBenefitSubArea(db.Model):
     )
 
 
-class SocietalBenefitKeyObjective(db.Model):
+class SocietalBenefitKeyObjective(BaseModel):
     __tablename__ = 'societal_benefit_key_objective'
     id = Column(
         String(256),
