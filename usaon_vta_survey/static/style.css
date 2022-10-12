@@ -1,3 +1,14 @@
+nav ul {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+nav ul li {
+  display: inline;
+  padding-right: 15px;
+}
+
 body {
   padding: 20px;
 }

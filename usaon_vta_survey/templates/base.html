@@ -6,7 +6,11 @@
 
 <body>
   <nav>
-    <h1>US AON VTA Survey</h1>
+    <h1>US AON VTA Survey System</h1>
+    <ul>
+      <li><a href="/surveys">Surveys</a></li>
+      <li><a href="/responses">Responses</a></li>
+    </ul>
   </nav>
   <section class="content">
     <header>
@@ -17,9 +21,7 @@
       <div class="flash">{{ message }}</div>
     {% endfor %}
 
-    {% block content %}
-      <b>Hello world!</b>
-    {% endblock %}
+    {% block content %}{% endblock %}
 
   </section>
   
