@@ -19,7 +19,7 @@ db = SQLAlchemy(
 )
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ['FLASK_SECRET_KEY']
+app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'youcanneverguess')
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_CONNSTR
 
 db.init_app(app)
