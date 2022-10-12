@@ -34,7 +34,7 @@ class Survey(BaseModel):
         nullable=False,
         default=datetime.now,
     )
-    note = Column(
+    notes = Column(
         String(512),
         nullable=True,
     )

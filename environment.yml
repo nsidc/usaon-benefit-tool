@@ -23,8 +23,10 @@ dependencies:
 
   # Runtime dependencies:
   - flask ~=2.2
+  - flask-wtf ~=1.0
+
   - sqlalchemy ~=1.4
-  - flask-sqlalchemy ~=3.0
   - psycopg2 ~=2.9
+  - flask-sqlalchemy ~=3.0
 
   - loguru ~=0.6.0

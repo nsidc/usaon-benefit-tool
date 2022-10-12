@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+  <h2>{% block title %}Surveys{% endblock %}</h1>
+
+  <a href="/survey/new">New survey</a>
+  <br />
+  <br />
+
+  <table>
+
+    <tr>
+      <th>id</th>
+      <th>created</th>
+      <th>response</th>
+      <th>notes</th>
+
+  {% for survey in surveys %}
+    <tr>
+      <td>
+        <a href="/survey/{{survey.id}}">{{survey.id}}</a>
+      </td>
+      <td>{{survey.created_timestamp}}</td>
+      <td>{{survey.response_id}}</td>
+      <td>{{survey.notes}}</td>
+    </tr>
+  {% endfor %}
+
+  </table>
+
+{% endblock %}
