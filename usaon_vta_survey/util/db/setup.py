@@ -51,6 +51,9 @@ def init_societal_benefit_areas(session: Session) -> None:
             id=sba_name,
         ) for sba_name in IAOA_SBA_FRAMEWORK.keys()
     ])
+
+    # Flush guarantees that these records will be present in the transaction before we
+    # add the subsequent child records.
     session.flush()
 
     for sba_name, sba in IAOA_SBA_FRAMEWORK.items():
