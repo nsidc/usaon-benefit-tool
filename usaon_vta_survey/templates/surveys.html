@@ -10,10 +10,18 @@
 
   <table>
 
+    <tr>
+      <th>id</th>
+      <th>created</th>
+      <th>response</th>
+      <th>notes</th>
+
   {% for survey in surveys %}
     <tr>
-      <td>Foo</td>
-      <td>Bar</td>
+      <td>{{survey.id}}</td>
+      <td>{{survey.created_timestamp}}</td>
+      <td>{{survey.response_id}}</td>
+      <td>{{survey.notes}}</td>
     </tr>
   {% endfor %}
 

@@ -12,3 +12,11 @@ nav ul li {
 body {
   padding: 20px;
 }
+
+table, td, th {
+  border: 1px solid;
+}
+
+table td, table th {
+  padding: 10px;
+}
