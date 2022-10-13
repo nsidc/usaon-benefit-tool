@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+  <h2>{% block title %}Response: {{survey.id}}{% endblock %}</h1>
+
+  <p>Created: {{response.created_timestamp}}</p>
+  <p>Last updated: {{response.updated_timestamp}}</p>
+  <p>Survey: <a href="{{url_for('view_survey', survey_id=survey.id)}}">{{survey.id}}</a></p>
+
+{% endblock %}

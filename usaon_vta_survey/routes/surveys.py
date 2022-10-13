@@ -5,7 +5,7 @@ from usaon_vta_survey.models.tables import Survey
 
 
 @app.route('/surveys')
-def surveys():
+def view_surveys():
     surveys = Survey.query.order_by(Survey.created_timestamp).all()
     return render_template(
         'surveys.html',

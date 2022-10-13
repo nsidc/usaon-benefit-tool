@@ -33,7 +33,7 @@ def new_survey():
 
 
 @app.route('/survey/<string:survey_id>')
-def view_survey(survey_id):
+def view_survey(survey_id: str):
     # Fetch survey by id
     survey = db.get_or_404(Survey, survey_id)
 
