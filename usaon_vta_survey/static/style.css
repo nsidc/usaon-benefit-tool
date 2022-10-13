@@ -20,3 +20,7 @@ table, td, th {
 table td, table th {
   padding: 10px;
 }
+
+form input[type=submit] {
+  display: block;
+}

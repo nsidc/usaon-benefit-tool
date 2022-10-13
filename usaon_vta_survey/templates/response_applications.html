@@ -1,0 +1,39 @@
+{% extends 'base_response.html' %}
+
+
+{% block content %}
+
+  {{super()}}
+
+  <h3>Applications</h3>
+
+  <table>
+    <tr>
+      <th>Name</th>
+    </tr>
+    {% for application in response.applications %}
+      <tr>
+        <td>{{application.name}}</td>
+      </tr>
+    {% endfor %}
+  </table>
+
+
+  <h3>Add application</h3>
+
+  <form method="POST">
+		{{form.csrf_token}}
+
+		{{form.name.label}} {{form.name(size=100)}}
+		{% if form.name.errors %}
+			<ul class="errors">
+			{% for error in form.name.errors %}
+				<li>{{ error }}</li>
+			{% endfor %}
+			</ul>
+		{% endif %}
+
+    <input type="submit" value="Create new application" />
+  </form>
+
+{% endblock %}

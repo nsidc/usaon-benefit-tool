@@ -28,7 +28,4 @@ db.init_app(app)
 
 # NOTE: This is a circular import, but it's specified by the Flask docs:
 #     https://flask.palletsprojects.com/en/3.1.x/patterns/packages/
-import usaon_vta_survey.routes.root  # noqa: E402, F401
-import usaon_vta_survey.routes.response  # noqa: E402, F401
-import usaon_vta_survey.routes.survey  # noqa: E402, F401
-import usaon_vta_survey.routes.surveys  # noqa: E402, F401
+import usaon_vta_survey.routes  # noqa: E402, F401

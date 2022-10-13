@@ -67,6 +67,10 @@ class Response(BaseModel):
         'Survey',
         back_populates='response',
     )
+    applications = relationship(
+        'ResponseApplication',
+        back_populates='response',
+    )
 
 
 class ResponseObservingSystem(BaseModel):
@@ -180,6 +184,7 @@ class ResponseApplication(BaseModel):
         nullable=False,
     )
 
+    response = relationship('Response')
 
 # Association tables
 class ResponseObservingSystemDataProduct(BaseModel):

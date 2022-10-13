@@ -10,9 +10,9 @@ class NewSurveyForm(FlaskForm):
     notes = TextAreaField(
         'Notes',
         validators=[
+            validators.DataRequired(),
             # Match length of relevant DB field:
             validators.Length(max=Survey.notes.property.columns[0].type.length),
-            validators.DataRequired(),
         ],
     )
 
