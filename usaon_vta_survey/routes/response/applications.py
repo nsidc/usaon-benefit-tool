@@ -1,19 +1,8 @@
 from flask import redirect, render_template, url_for
-from flask_wtf import FlaskForm
-from wtforms import StringField, validators
 
 from usaon_vta_survey import app, db
+from usaon_vta_survey.forms import NewApplicationForm
 from usaon_vta_survey.models.tables import ResponseApplication, Survey
-
-
-class NewApplicationForm(FlaskForm):
-    name = StringField(
-        'Application name',
-        validators=[
-            validators.DataRequired(),
-            validators.Length(max=ResponseApplication.name.property.columns[0].type.length),
-        ],
-    )
 
 
 @app.route('/response/<string:survey_id>/applications', methods=['GET', 'POST'])

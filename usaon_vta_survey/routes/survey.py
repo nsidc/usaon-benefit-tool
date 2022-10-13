@@ -1,20 +1,8 @@
 from flask import redirect, render_template, url_for
-from flask_wtf import FlaskForm
-from wtforms import TextAreaField, validators
 
 from usaon_vta_survey import app, db
+from usaon_vta_survey.forms import NewSurveyForm
 from usaon_vta_survey.models.tables import Survey
-
-
-class NewSurveyForm(FlaskForm):
-    notes = TextAreaField(
-        'Notes',
-        validators=[
-            validators.DataRequired(),
-            # Match length of relevant DB field:
-            validators.Length(max=Survey.notes.property.columns[0].type.length),
-        ],
-    )
 
 
 @app.route('/survey/new', methods=['GET', 'POST'])
