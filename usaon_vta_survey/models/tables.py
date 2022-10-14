@@ -1,5 +1,11 @@
+"""The VTA survey data model.
+
+TODO: Add check constraints for numeric fields where we know the min/max.
+"""
 import uuid
+from abc import abstractmethod
 from datetime import datetime
+from typing_extensions import NotRequired, TypedDict
 
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import DeclarativeMeta
@@ -13,6 +19,33 @@ from usaon_vta_survey._types import ObservingSystemType
 # Workaround for missing type stubs for flask-sqlalchemy:
 #     https://github.com/dropbox/sqlalchemy-stubs/issues/76#issuecomment-595839159
 BaseModel: DeclarativeMeta = db.Model
+
+
+class IORelationship(TypedDict):
+    in: NotRequired[BaseModel]
+    out: NotRequired[BaseModel]
+
+
+class IORelationshipMixin:
+    """Provide a dictionary of related input and/or output models.
+
+    """
+    @classmethod
+    @cache
+    def __io__(cls) -> IORelationship:
+        io = {}
+        if hasattr(cls, 'input_relationships'):
+            io['in'] = cls.input_relationships.mapper.class_
+        if hasattr(cls, 'output_relationships'):
+            io['out'] = cls.output_relationships.mapper.class_
+
+        if io == {}:
+            raise RuntimeError(
+                'Please only use IORelationshipMixin on a model with'
+                ' input_relationships or output_relationships'
+            )
+
+        return io
 
 
 class Survey(BaseModel):
@@ -67,13 +100,21 @@ class Response(BaseModel):
         'Survey',
         back_populates='response',
     )
+    observing_systems = relationship(
+        'ResponseObservingSystem',
+        back_populates='response',
+    )
+    data_products = relationship(
+        'ResponseDataProduct',
+        back_populates='response',
+    )
     applications = relationship(
         'ResponseApplication',
         back_populates='response',
     )
 
 
-class ResponseObservingSystem(BaseModel):
+class ResponseObservingSystem(BaseModel, IORelationshipMixin):
     __tablename__ = 'response_observing_system'
     __table_args__ = (UniqueConstraint('name', 'response_id'),)
     id = Column(
@@ -109,6 +150,11 @@ class ResponseObservingSystem(BaseModel):
     references_citations = Column(String(512), nullable=False)
     notes = Column(String(512), nullable=False)
 
+    output_relationships = relationship(
+        'ResponseObservingSystemDataProduct',
+        back_populates='observing_system',
+    )
+
 
 class ResponseObservingSystemObservational(BaseModel):
     __tablename__ = 'response_observing_system_observational'
@@ -141,7 +187,7 @@ class ResponseObservingSystemResearch(BaseModel):
     intermediate_product = Column(String(256), nullable=False)
 
 
-class ResponseDataProduct(BaseModel):
+class ResponseDataProduct(BaseModel, IORelationshipMixin):
     __tablename__ = 'response_data_product'
     __table_args__ = (UniqueConstraint('name', 'response_id'),)
     id = Column(
@@ -165,8 +211,17 @@ class ResponseDataProduct(BaseModel):
         nullable=False,
     )
 
+    input_relationships = relationship(
+        'ResponseObservingSystemDataProduct',
+        back_populates='data_product',
+    )
+    output_relationships = relationship(
+        'ResponseDataProductApplication',
+        back_populates='data_product',
+    )
 
-class ResponseApplication(BaseModel):
+
+class ResponseApplication(BaseModel, IORelationshipMixin):
     __tablename__ = 'response_application'
     __table_args__ = (UniqueConstraint('name', 'response_id'),)
     id = Column(
@@ -185,6 +240,15 @@ class ResponseApplication(BaseModel):
     )
 
     response = relationship('Response')
+    input_relationships = relationship(
+        'ResponseDataProductApplication',
+        back_populates='application',
+    )
+    output_relationships = relationship(
+        'ResponseApplicationSocietalBenefitArea',
+        back_populates='application',
+    )
+
 
 # Association tables
 class ResponseObservingSystemDataProduct(BaseModel):
@@ -210,6 +274,15 @@ class ResponseObservingSystemDataProduct(BaseModel):
     rationale = Column(String(512), nullable=True)
     needed_improvements = Column(String(512), nullable=True)
 
+    observing_system = relationship(
+        'ResponseObservingSystem',
+        back_populates='data_product_relationships',
+    )
+    data_product = relationship(
+        'ResponseDataProduct',
+        back_populates='observing_system_relationships',
+    )
+
 
 class ResponseDataProductApplication(BaseModel):
     __tablename__ = 'response_data_product_application'
@@ -234,6 +307,15 @@ class ResponseDataProductApplication(BaseModel):
     rationale = Column(String(512), nullable=True)
     needed_improvements = Column(String(512), nullable=True)
 
+    data_product = relationship(
+        'ResponseDataProduct',
+        back_populates='application_relationships',
+    )
+    application = relationship(
+        'ResponseApplication',
+        back_populates='data_product_relationships',
+    )
+
 
 class ResponseApplicationSocietalBenefitArea(BaseModel):
     __tablename__ = 'response_application_societal_benefit_area'
@@ -248,6 +330,15 @@ class ResponseApplicationSocietalBenefitArea(BaseModel):
         primary_key=True,
     )
 
+    application = relationship(
+        'ResponseApplication',
+        back_populates='societal_benefit_relationships',
+    )
+    societal_benefit_area = relationship(
+        'SocietalBenefitArea',
+        back_populates='application_relationships',
+    )
+
 
 # Reference tables
 class SocietalBenefitArea(BaseModel):
@@ -255,6 +346,15 @@ class SocietalBenefitArea(BaseModel):
     id = Column(
         String(256),
         primary_key=True,
+    )
+
+    application_relationships = relationship(
+        'ResponseApplicationSocietalBenefitArea',
+        back_populates='societal_benefit_area',
+    )
+    societal_benefit_sub_areas = relationship(
+        'SocietalBenefitSubArea',
+        back_populates='societal_benefit_area',
     )
 
 
@@ -270,6 +370,15 @@ class SocietalBenefitSubArea(BaseModel):
         nullable=False,
     )
 
+    societal_benefit_area = relationship(
+        'SocietalBenefitArea',
+        back_populates='societal_benefit_sub_areas',
+    )
+    societal_benefit_key_objectives = relationship(
+        'SocietalBenefitKeyObjectives',
+        back_populates='societal_benefit_sub_area',
+    )
+
 
 class SocietalBenefitKeyObjective(BaseModel):
     __tablename__ = 'societal_benefit_key_objective'
@@ -281,4 +390,9 @@ class SocietalBenefitKeyObjective(BaseModel):
         String(256),
         ForeignKey('societal_benefit_subarea.id'),
         nullable=False,
+    )
+
+    societal_benefit_sub_area = relationship(
+        'SocietalBenefitSubArea',
+        back_populates='societal_benefit_key_objectives',
     )

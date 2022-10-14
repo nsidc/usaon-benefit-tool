@@ -1,13 +1,13 @@
 from flask import redirect, render_template, url_for
 
 from usaon_vta_survey import app, db
-from usaon_vta_survey.forms import NewSurveyForm
+from usaon_vta_survey.forms import FORMS_BY_MODEL
 from usaon_vta_survey.models.tables import Survey
 
 
 @app.route('/survey/new', methods=['GET', 'POST'])
 def new_survey():
-    form = NewSurveyForm()
+    form = FORMS_BY_MODEL[Survey]
 
     if form.validate_on_submit():
         # Insert to DB
