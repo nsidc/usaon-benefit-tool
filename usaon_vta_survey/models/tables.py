@@ -32,7 +32,7 @@ class IORelationshipMixin:
     @classmethod
     @cache
     def __io__(cls) -> IORelationship:
-        io = {}
+        io: IORelationship = {}
         if hasattr(cls, 'input_relationships'):
             io['input'] = cls.input_relationships.mapper.class_
         if hasattr(cls, 'output_relationships'):
