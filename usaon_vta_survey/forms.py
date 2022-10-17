@@ -6,8 +6,10 @@ everything needed to construct column and field instances, and functions for con
 objects of that class to appropriate field/column?
 """
 from flask_wtf import FlaskForm
+from sqlalchemy.ext.declarative import DeclarativeMeta
 from wtforms import IntegerField, StringField, TextAreaField, validators
 
+from usaon_vta_survey import db
 from usaon_vta_survey.models.tables import (
     ResponseApplication,
     ResponseDataProduct,
@@ -120,8 +122,12 @@ class ApplicationForm(FlaskForm):
 # ...
 
 
+# Workaround for missing type stubs for flask-sqlalchemy:
+#     https://github.com/dropbox/sqlalchemy-stubs/issues/76#issuecomment-595839159
+BaseModel: DeclarativeMeta = db.Model
+
 # breakpoint()
-FORMS_BY_MODEL = {
+FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
     Survey: SurveyForm,
     ResponseObservingSystem: ObservingSystemForm,
     ResponseDataProduct: DataProductForm,
