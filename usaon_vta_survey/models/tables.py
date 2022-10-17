@@ -22,8 +22,8 @@ BaseModel: DeclarativeMeta = db.Model
 
 
 class IORelationship(TypedDict):
-    input = NotRequired[BaseModel]
-    output = NotRequired[BaseModel]
+    input: NotRequired[BaseModel]
+    output: NotRequired[BaseModel]
 
 
 class IORelationshipMixin:
