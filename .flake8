@@ -18,5 +18,7 @@ import_order_style = pycharm
 ignore = D1,W503
 
 # E501: Line too long. Long strings, e.g. URLs, are common in config files.
+# F401: Unused import. Flask routes are imported and unused by convention.
 per-file-ignores =
   usaon_vta_survey/constants/sba.py: E501
+  usaon_vta_survey/routes/__init__.py: F401

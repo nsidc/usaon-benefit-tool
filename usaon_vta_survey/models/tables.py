@@ -5,13 +5,13 @@ TODO: Add check constraints for numeric fields where we know the min/max.
 import uuid
 from datetime import datetime
 from functools import cache
-from typing_extensions import NotRequired, TypedDict
 
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey, UniqueConstraint
 from sqlalchemy.types import DateTime, Enum, Integer, SmallInteger, String
+from typing_extensions import NotRequired, TypedDict
 
 from usaon_vta_survey import db
 from usaon_vta_survey._types import ObservingSystemType
@@ -28,6 +28,7 @@ class IORelationship(TypedDict):
 
 class IORelationshipMixin:
     """Provide a dictionary of related input and/or output models."""
+
     @classmethod
     @cache
     def __io__(cls) -> IORelationship:

@@ -6,14 +6,15 @@ everything needed to construct column and field instances, and functions for con
 objects of that class to appropriate field/column?
 """
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, SelectField, StringField, TextAreaField, validators
+from wtforms import IntegerField, StringField, TextAreaField, validators
 
 from usaon_vta_survey.models.tables import (
-    Survey,
     ResponseApplication,
     ResponseDataProduct,
     ResponseObservingSystem,
+    Survey,
 )
+from usaon_vta_survey.util.db.column import column_length
 
 
 # Survey forms:
@@ -23,7 +24,7 @@ class SurveyForm(FlaskForm):
         validators=[
             validators.DataRequired(),
             # Match length of relevant DB field:
-            validators.Length(max=Survey.notes.property.columns[0].type.length),
+            validators.Length(max=column_length(Survey.notes)),
         ],
     )
 
@@ -35,56 +36,62 @@ class ObservingSystemForm(FlaskForm):
         'Application name',
         validators=[
             validators.DataRequired(),
-            validators.Length(max=ResponseObservingSystem.name.property.columns[0].type.length),
+            validators.Length(max=column_length(ResponseObservingSystem.name)),
         ],
     )
     url = StringField(
         'URL',
         validators=[
             validators.DataRequired(),
-            validators.Length(max=ResponseObservingSystem.url.property.columns[0].type.length),
+            validators.Length(max=column_length(ResponseObservingSystem.url)),
         ],
     )
     author_name = StringField(
         'Author name',
         validators=[
             validators.DataRequired(),
-            validators.Length(max=ResponseObservingSystem.author_name.property.columns[0].type.length),
+            validators.Length(max=column_length(ResponseObservingSystem.author_name)),
         ],
     )
     author_email = StringField(
         'Author email',
         validators=[
             validators.DataRequired(),
-            validators.Length(max=ResponseObservingSystem.author_email.property.columns[0].type.length),
+            validators.Length(max=column_length(ResponseObservingSystem.author_email)),
         ],
     )
     funding_country = StringField(
         'Funding country',
         validators=[
             validators.DataRequired(),
-            validators.Length(max=ResponseObservingSystem.funding_country.property.columns[0].type.length),
+            validators.Length(
+                max=column_length(ResponseObservingSystem.funding_country)
+            ),
         ],
     )
     funding_agency = StringField(
         'Funding agency',
         validators=[
             validators.DataRequired(),
-            validators.Length(max=ResponseObservingSystem.funding_agency.property.columns[0].type.length),
+            validators.Length(
+                max=column_length(ResponseObservingSystem.funding_agency)
+            ),
         ],
     )
     references_citations = StringField(
         'References and citations',
         validators=[
             validators.DataRequired(),
-            validators.Length(max=ResponseObservingSystem.references_citations.property.columns[0].type.length),
+            validators.Length(
+                max=column_length(ResponseObservingSystem.references_citations)
+            ),
         ],
     )
     notes = StringField(
         'Notes',
         validators=[
             validators.DataRequired(),
-            validators.Length(max=ResponseObservingSystem.notes.property.columns[0].type.length),
+            validators.Length(max=column_length(ResponseObservingSystem.notes)),
         ],
     )
 
@@ -104,7 +111,7 @@ class ApplicationForm(FlaskForm):
         'Application name',
         validators=[
             validators.DataRequired(),
-            validators.Length(max=ResponseApplication.name.property.columns[0].type.length),
+            validators.Length(max=column_length(ResponseApplication.name)),
         ],
     )
 
