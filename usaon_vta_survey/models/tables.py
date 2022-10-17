@@ -3,8 +3,8 @@
 TODO: Add check constraints for numeric fields where we know the min/max.
 """
 import uuid
-from abc import abstractmethod
 from datetime import datetime
+from functools import cache
 from typing_extensions import NotRequired, TypedDict
 
 from sqlalchemy.dialects.postgresql import UUID
@@ -22,22 +22,20 @@ BaseModel: DeclarativeMeta = db.Model
 
 
 class IORelationship(TypedDict):
-    in: NotRequired[BaseModel]
-    out: NotRequired[BaseModel]
+    input = NotRequired[BaseModel]
+    output = NotRequired[BaseModel]
 
 
 class IORelationshipMixin:
-    """Provide a dictionary of related input and/or output models.
-
-    """
+    """Provide a dictionary of related input and/or output models."""
     @classmethod
     @cache
     def __io__(cls) -> IORelationship:
         io = {}
         if hasattr(cls, 'input_relationships'):
-            io['in'] = cls.input_relationships.mapper.class_
+            io['input'] = cls.input_relationships.mapper.class_
         if hasattr(cls, 'output_relationships'):
-            io['out'] = cls.output_relationships.mapper.class_
+            io['output'] = cls.output_relationships.mapper.class_
 
         if io == {}:
             raise RuntimeError(
@@ -112,6 +110,10 @@ class Response(BaseModel):
         'ResponseApplication',
         back_populates='response',
     )
+    societal_benefit_areas = relationship(
+        'ResponseSocietalBenefitArea',
+        back_populates='response',
+    )
 
 
 class ResponseObservingSystem(BaseModel, IORelationshipMixin):
@@ -150,6 +152,10 @@ class ResponseObservingSystem(BaseModel, IORelationshipMixin):
     references_citations = Column(String(512), nullable=False)
     notes = Column(String(512), nullable=False)
 
+    response = relationship(
+        'Response',
+        back_populates='observing_systems',
+    )
     output_relationships = relationship(
         'ResponseObservingSystemDataProduct',
         back_populates='observing_system',
@@ -211,6 +217,10 @@ class ResponseDataProduct(BaseModel, IORelationshipMixin):
         nullable=False,
     )
 
+    response = relationship(
+        'Response',
+        back_populates='data_products',
+    )
     input_relationships = relationship(
         'ResponseObservingSystemDataProduct',
         back_populates='data_product',
@@ -239,7 +249,10 @@ class ResponseApplication(BaseModel, IORelationshipMixin):
         nullable=False,
     )
 
-    response = relationship('Response')
+    response = relationship(
+        'Response',
+        back_populates='applications',
+    )
     input_relationships = relationship(
         'ResponseDataProductApplication',
         back_populates='application',
@@ -247,6 +260,37 @@ class ResponseApplication(BaseModel, IORelationshipMixin):
     output_relationships = relationship(
         'ResponseApplicationSocietalBenefitArea',
         back_populates='application',
+    )
+
+
+class ResponseSocietalBenefitArea(BaseModel, IORelationshipMixin):
+    __tablename__ = 'response_societal_benefit_area'
+    __table_args__ = (UniqueConstraint('societal_benefit_area_id', 'response_id'),)
+    id = Column(
+        Integer,
+        primary_key=True,
+        autoincrement=True,
+    )
+    response_id = Column(
+        Integer,
+        ForeignKey('response.id'),
+        nullable=False,
+    )
+
+    societal_benefit_area_id = Column(
+        String(256),
+        ForeignKey('societal_benefit_area.id'),
+        nullable=False,
+    )
+
+    response = relationship(
+        'Response',
+        back_populates='societal_benefit_areas',
+    )
+    societal_benefit_area = relationship('SocietalBenefitArea')
+    input_relationships = relationship(
+        'ResponseApplicationSocietalBenefitArea',
+        back_populates='societal_benefit_area',
     )
 
 
@@ -276,11 +320,11 @@ class ResponseObservingSystemDataProduct(BaseModel):
 
     observing_system = relationship(
         'ResponseObservingSystem',
-        back_populates='data_product_relationships',
+        back_populates='output_relationships',
     )
     data_product = relationship(
         'ResponseDataProduct',
-        back_populates='observing_system_relationships',
+        back_populates='input_relationships',
     )
 
 
@@ -309,11 +353,11 @@ class ResponseDataProductApplication(BaseModel):
 
     data_product = relationship(
         'ResponseDataProduct',
-        back_populates='application_relationships',
+        back_populates='output_relationships',
     )
     application = relationship(
         'ResponseApplication',
-        back_populates='data_product_relationships',
+        back_populates='input_relationships',
     )
 
 
@@ -324,19 +368,19 @@ class ResponseApplicationSocietalBenefitArea(BaseModel):
         ForeignKey('response_application.id'),
         primary_key=True,
     )
-    societal_benefit_area_id = Column(
+    response_societal_benefit_area_id = Column(
         String(256),
-        ForeignKey('societal_benefit_area.id'),
+        ForeignKey('response_societal_benefit_area.id'),
         primary_key=True,
     )
 
     application = relationship(
         'ResponseApplication',
-        back_populates='societal_benefit_relationships',
+        back_populates='output_relationships',
     )
     societal_benefit_area = relationship(
-        'SocietalBenefitArea',
-        back_populates='application_relationships',
+        'ResponseSocietalBenefitArea',
+        back_populates='input_relationships',
     )
 
 
@@ -348,10 +392,6 @@ class SocietalBenefitArea(BaseModel):
         primary_key=True,
     )
 
-    application_relationships = relationship(
-        'ResponseApplicationSocietalBenefitArea',
-        back_populates='societal_benefit_area',
-    )
     societal_benefit_sub_areas = relationship(
         'SocietalBenefitSubArea',
         back_populates='societal_benefit_area',
@@ -375,7 +415,7 @@ class SocietalBenefitSubArea(BaseModel):
         back_populates='societal_benefit_sub_areas',
     )
     societal_benefit_key_objectives = relationship(
-        'SocietalBenefitKeyObjectives',
+        'SocietalBenefitKeyObjective',
         back_populates='societal_benefit_sub_area',
     )
 
