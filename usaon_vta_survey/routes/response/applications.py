@@ -7,7 +7,7 @@ from usaon_vta_survey.models.tables import ResponseApplication, Survey
 
 @app.route('/response/<string:survey_id>/applications', methods=['GET', 'POST'])
 def view_response_applications(survey_id: str):
-    form = FORMS_BY_MODEL[ResponseApplication]
+    form = FORMS_BY_MODEL[ResponseApplication]()
     survey = db.get_or_404(Survey, survey_id)
 
     if form.validate_on_submit():

@@ -99,6 +99,13 @@ class ObservingSystemForm(FlaskForm):
 
 
 class DataProductForm(FlaskForm):
+    name = StringField(
+        'Name',
+        validators=[
+            validators.DataRequired(),
+            validators.Length(max=column_length(ResponseDataProduct.name)),
+        ],
+    )
     satisfaction_rating = IntegerField(
         'Satisfaction rating (0-100)',
         validators=[
