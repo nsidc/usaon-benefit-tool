@@ -30,3 +30,6 @@ dependencies:
   - flask-sqlalchemy ~=3.0
 
   - loguru ~=0.6.0
+
+  - pip:
+    - wtforms-sqlalchemy ~=0.3
