@@ -1,9 +1,9 @@
 from flask import redirect, render_template, request, url_for
 
 from usaon_vta_survey import app, db
+from usaon_vta_survey._types import ObservingSystemType
 from usaon_vta_survey.forms import FORMS_BY_MODEL
 from usaon_vta_survey.models.tables import ResponseObservingSystem, Survey
-from usaon_vta_survey._types import ObservingSystemType
 
 
 @app.route('/response/<string:survey_id>/observing_systems', methods=['GET', 'POST'])
@@ -23,7 +23,11 @@ def view_response_observing_systems(survey_id: str):
             db.session.add(response_observing_system)
             db.session.commit()
 
-            return redirect(url_for('view_response_observing_systems', survey_id=survey.id))
+            redirect_url = url_for(
+                'view_response_observing_systems',
+                survey_id=survey.id,
+            )
+            return redirect(redirect_url)
 
     form = Form(obj=response_observing_system)
     return render_template(

@@ -10,7 +10,7 @@ from functools import partial
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from wtforms import fields
 from wtforms.form import Form
-from wtforms_sqlalchemy.orm import converts, model_form, ModelConverter
+from wtforms_sqlalchemy.orm import ModelConverter, converts, model_form
 
 from usaon_vta_survey import db
 from usaon_vta_survey.models.tables import (
