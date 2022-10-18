@@ -10,7 +10,7 @@ def new_survey():
     Form = FORMS_BY_MODEL[Survey]
     survey = Survey()
 
-    if request.method == "POST":
+    if request.method == 'POST':
         form = Form(request.form, obj=survey)
 
         if form.validate():
@@ -21,9 +21,7 @@ def new_survey():
 
             return redirect(url_for('view_survey', survey_id=survey.id))
 
-    else:
-        form = Form(obj=survey)
-
+    form = Form(obj=survey)
     return render_template('new_survey.html', form=form)
 
 

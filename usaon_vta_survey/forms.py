@@ -25,7 +25,7 @@ class CustomModelConverter(ModelConverter):
     @converts("String")
     def conv_String(self, field_args, **extra):
         self._string_common(field_args=field_args, **extra)
-        if extra['column'].type.length > 128:
+        if extra['column'].type.length > 256:
             return fields.TextAreaField(**field_args)
 
         return super().conv_String(field_args, **extra)
@@ -42,6 +42,7 @@ FORMS_BY_MODEL: dict[BaseModel, Form] = {
     ResponseObservingSystem: model_form(
         ResponseObservingSystem,
         only=[
+            'name',
             'url',
             'author_name',
             'author_email',
@@ -51,9 +52,10 @@ FORMS_BY_MODEL: dict[BaseModel, Form] = {
             'notes',
         ],
     ),
+    # TODO: Restrict satisfaction rating values
     ResponseDataProduct: model_form(
         ResponseDataProduct,
-        only=['name', 'satisfaction_rating', ],
+        only=['name', 'satisfaction_rating'],
     ),
     ResponseApplication: model_form(
         ResponseApplication,
