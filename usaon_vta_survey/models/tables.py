@@ -34,11 +34,10 @@ class IORelationshipMixin:
     def __io__(cls) -> IORelationship:
         """Return dictionary of any IO relationships this model has.
 
-        TODO: Remove type-ignore comments.
+        TODO: Fix and remove type-ignore comments.
         """
         io: IORelationship = {}
         if hasattr(cls, 'input_relationships'):
-            # type: ignore
             io['input'] = cls.input_relationships.mapper.class_  # type: ignore
         if hasattr(cls, 'output_relationships'):
             io['output'] = cls.output_relationships.mapper.class_  # type: ignore
