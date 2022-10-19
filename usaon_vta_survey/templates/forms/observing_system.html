@@ -1,0 +1,85 @@
+<form method="POST">
+  {{form.csrf_token}}
+
+  {{form.name.label}} {{form.name(size=100)}}
+  {% if form.name.errors %}
+    <ul class="errors">
+    {% for error in form.name.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
+  {{form.url.label}} {{form.url(size=100)}}
+  {% if form.url.errors %}
+    <ul class="errors">
+    {% for error in form.url.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
+  {{form.author_name.label}} {{form.author_name(size=100)}}
+  {% if form.author_name.errors %}
+    <ul class="errors">
+    {% for error in form.author_name.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
+  {{form.author_email.label}} {{form.author_email(size=100)}}
+  {% if form.author_email.errors %}
+    <ul class="errors">
+    {% for error in form.author_email.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
+  {{form.funding_country.label}} {{form.funding_country(size=100)}}
+  {% if form.funding_country.errors %}
+    <ul class="errors">
+    {% for error in form.funding_country.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
+  {{form.funding_agency.label}} {{form.funding_agency(size=100)}}
+  {% if form.funding_agency.errors %}
+    <ul class="errors">
+    {% for error in form.funding_agency.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
+  {{form.references_citations.label}} {{form.references_citations(size=100)}}
+  {% if form.references_citations.errors %}
+    <ul class="errors">
+    {% for error in form.references_citations.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
+  {{form.notes.label}} {{form.notes(size=100)}}
+  {% if form.notes.errors %}
+    <ul class="errors">
+    {% for error in form.notes.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+
+  <input type="submit" value="Create new observing system" />
+
+</form>

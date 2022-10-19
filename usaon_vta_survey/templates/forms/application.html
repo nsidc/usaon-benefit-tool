@@ -1,0 +1,14 @@
+<form method="POST">
+  {{form.csrf_token}}
+
+  {{form.name.label}} {{form.name(size=100)}}
+  {% if form.name.errors %}
+    <ul class="errors">
+    {% for error in form.name.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+
+  <input type="submit" value="Create new application" />
+</form>

@@ -15,13 +15,13 @@
 
       <li>
         <a href="{{url_for('view_response_observing_systems', survey_id=survey.id)}}">
-          Observing Systems ({{survey.response.observing_systems | length}})
+          Observing systems ({{survey.response.observing_systems | length}})
         </a>
       </li>
 
       <li>
         <a href="{{url_for('view_response_data_products', survey_id=survey.id)}}">
-          Data Products ({{survey.response.data_products | length}})
+          Data products ({{survey.response.data_products | length}})
         </a>
       </li>
 
@@ -29,6 +29,10 @@
         <a href="{{url_for('view_response_applications', survey_id=survey.id)}}">
           Applications ({{survey.response.applications | length}})
         </a>
+      </li>
+
+      <li>
+        Societal benefit areas
       </li>
 
       <li>
