@@ -24,7 +24,7 @@ def view_response_data_products(survey_id: str):
 
     form = Form(obj=response_data_product)
     return render_template(
-        'response_data_products.html',
+        'response/data_products.html',
         form=form,
         survey=survey,
         response=survey.response,

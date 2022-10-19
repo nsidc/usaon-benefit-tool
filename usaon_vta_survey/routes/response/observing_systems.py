@@ -31,7 +31,7 @@ def view_response_observing_systems(survey_id: str):
 
     form = Form(obj=response_observing_system)
     return render_template(
-        'response_observing_systems.html',
+        'response/observing_systems.html',
         form=form,
         survey=survey,
         response=survey.response,

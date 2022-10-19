@@ -15,4 +15,4 @@ def view_response(survey_id: str):
         db.session.add(survey)
         db.session.commit()
 
-    return render_template('response.html', survey=survey, response=survey.response)
+    return render_template('response/view.html', survey=survey, response=survey.response)

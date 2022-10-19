@@ -24,7 +24,7 @@ def view_response_applications(survey_id: str):
 
     form = Form(obj=response_application)
     return render_template(
-        'response_applications.html',
+        'response/applications.html',
         form=form,
         survey=survey,
         response=survey.response,
