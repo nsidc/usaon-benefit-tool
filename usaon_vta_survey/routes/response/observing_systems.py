@@ -8,6 +8,7 @@ from usaon_vta_survey.models.tables import ResponseObservingSystem, Survey
 
 @app.route('/response/<string:survey_id>/observing_systems', methods=['GET', 'POST'])
 def view_response_observing_systems(survey_id: str):
+    """View and add to observing systems associated with a response."""
     Form = FORMS_BY_MODEL[ResponseObservingSystem]
     survey = db.get_or_404(Survey, survey_id)
     response_observing_system = ResponseObservingSystem(

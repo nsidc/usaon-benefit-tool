@@ -7,7 +7,7 @@ from usaon_vta_survey.models.tables import ResponseApplication, Survey
 
 @app.route('/response/<string:survey_id>/applications', methods=['GET', 'POST'])
 def view_response_applications(survey_id: str):
-    """Interface for viewing and adding new applications to a response."""
+    """View and add to applications associated with a response."""
     Form = FORMS_BY_MODEL[ResponseApplication]
     survey = db.get_or_404(Survey, survey_id)
     response_application = ResponseApplication(response_id=survey.response_id)

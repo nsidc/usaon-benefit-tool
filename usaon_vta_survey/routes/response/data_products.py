@@ -7,7 +7,7 @@ from usaon_vta_survey.models.tables import ResponseDataProduct, Survey
 
 @app.route('/response/<string:survey_id>/data_products', methods=['GET', 'POST'])
 def view_response_data_products(survey_id: str):
-    """Interface for viewing and adding new data products to a response."""
+    """View and add to data products associated with a response."""
     Form = FORMS_BY_MODEL[ResponseDataProduct]
     survey = db.get_or_404(Survey, survey_id)
     response_data_product = ResponseDataProduct(response_id=survey.response_id)
