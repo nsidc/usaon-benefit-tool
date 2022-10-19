@@ -10,10 +10,24 @@
   <table>
     <tr>
       <th>Name</th>
+      <th>Data products related</th>
     </tr>
     {% for application in response.applications %}
       <tr>
         <td>{{application.name}}</td>
+        <td>
+          {% if not application.data_product_relationships %}
+            None
+            <br />
+          {% endif %}
+
+          {% for data_product_relationship in application.data_product_relationships %}
+            {{data_product_relationship}}
+            <br />
+          {% endfor %}
+
+          <a href="#">Add relationship</a>
+        </td>
       </tr>
     {% endfor %}
   </table>

@@ -1,4 +1,4 @@
-from flask import render_template, url_for
+from flask import render_template
 
 from usaon_vta_survey import app, db
 from usaon_vta_survey.models.tables import Response, Survey

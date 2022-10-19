@@ -1,0 +1,63 @@
+{% extends 'base_response.html' %}
+
+
+{% block content %}
+
+  {{super()}}
+
+  <h3>Data products</h3>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Observing systems related</th>
+    </tr>
+    {% for data_product in response.data_products %}
+      <tr>
+        <td>{{data_product.name}}</td>
+        <td>
+          {% if not data_product.input_relationships %}
+            None
+            <br />
+          {% endif %}
+
+          {% for observing_system_relationship in data_product.input_relationship %}
+            {{observing_system_relationship}}
+            <br />
+          {% endfor %}
+
+          <a href="#">Add relationship</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+
+
+  <h3>Add data product</h3>
+
+  <form method="POST">
+		{{form.csrf_token}}
+
+		{{form.name.label}} {{form.name(size=100)}}
+		{% if form.name.errors %}
+			<ul class="errors">
+			{% for error in form.name.errors %}
+				<li>{{ error }}</li>
+			{% endfor %}
+			</ul>
+		{% endif %}
+    <br />
+
+		{{form.satisfaction_rating.label}} {{form.satisfaction_rating(size=100)}}
+		{% if form.satisfaction_rating.errors %}
+			<ul class="errors">
+			{% for error in form.satisfaction_rating.errors %}
+				<li>{{ error }}</li>
+			{% endfor %}
+			</ul>
+		{% endif %}
+
+    <input type="submit" value="Create new data_product" />
+  </form>
+
+{% endblock %}
