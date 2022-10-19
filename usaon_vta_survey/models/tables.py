@@ -1,5 +1,12 @@
 """The VTA survey data model.
 
+WARNING: The type-checker can't save you from yourself in this file; there are many
+magic strings that need to match class names at runtime.
+
+TODO: Considered documented approach at the end of this section to mitigate above
+warning:
+    https://docs.sqlalchemy.org/en/14/orm/basic_relationships.html#late-evaluation-of-relationship-arguments
+
 TODO: Add check constraints for numeric fields where we know the min/max.
 """
 import uuid
@@ -27,7 +34,11 @@ class IORelationship(TypedDict):
 
 
 class IORelationshipMixin:
-    """Provide a dictionary of related input and/or output models."""
+    """Provide a dictionary of input and/or output models related to this entity.
+
+    TODO: Could use a clearer name. We may want to also have a mixin for models
+    representing relationships instead of entities.
+    """
 
     @classmethod
     @cache
@@ -217,7 +228,7 @@ class ResponseDataProduct(BaseModel, IORelationshipMixin):
     )
 
     # TODO: Constrain to 0-100
-    satisfaction_rating = Column(
+    performance_rating = Column(
         SmallInteger,
         nullable=False,
     )
@@ -313,13 +324,9 @@ class ResponseObservingSystemDataProduct(BaseModel):
         primary_key=True,
     )
 
-    # TODO: Constrain 0-100
-    observing_system_contribution_to_data_product_rating = Column(
-        SmallInteger,
-        nullable=False,
-    )
-    # TODO: Constraint 0-100
-    satisfaction_rating = Column(SmallInteger, nullable=False)
+    # TODO: Constrain ratings 0-100
+    criticality_rating = Column(SmallInteger, nullable=False)
+    performance_rating = Column(SmallInteger, nullable=False)
     rationale = Column(String(512), nullable=True)
     needed_improvements = Column(String(512), nullable=True)
 
@@ -346,13 +353,9 @@ class ResponseDataProductApplication(BaseModel):
         primary_key=True,
     )
 
-    # TODO: Constrain 0-100
-    data_product_contribution_to_application_rating = Column(
-        SmallInteger,
-        nullable=False,
-    )
-    # TODO: Constraint 0-100
-    satisfaction_rating = Column(SmallInteger, nullable=False)
+    # TODO: Constrain ratings 0-100
+    criticality_rating = Column(SmallInteger, nullable=False)
+    performance_rating = Column(SmallInteger, nullable=False)
     rationale = Column(String(512), nullable=True)
     needed_improvements = Column(String(512), nullable=True)
 
@@ -374,10 +377,13 @@ class ResponseApplicationSocietalBenefitArea(BaseModel):
         primary_key=True,
     )
     response_societal_benefit_area_id = Column(
-        String(256),
+        Integer,
         ForeignKey('response_societal_benefit_area.id'),
         primary_key=True,
     )
+
+    # TODO: Constrain ratings 0-100
+    performance_rating = Column(SmallInteger, nullable=False)
 
     application = relationship(
         'ResponseApplication',
