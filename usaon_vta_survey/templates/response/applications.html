@@ -3,42 +3,51 @@
 
 
 {% block content %}
+  {% include 'includes/highcharts.html' %}
 
   {{super()}}
 
   <h3>Applications</h3>
 
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Data products related</th>
-    </tr>
-    {% for application in response.applications %}
-      <tr>
-        <td>{{application.name}}</td>
-        <td>
-          {% if not application.input_relationships %}
-            None
-            <br />
-          {% endif %}
+  <div class="two-columns">
+    <div>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Data products related</th>
+        </tr>
+        {% for application in response.applications %}
+          <tr>
+            <td>{{application.name}}</td>
+            <td>
+              {% if not application.input_relationships %}
+                None
+                <br />
+              {% endif %}
 
-          {% for input_relationship in application.input_relationships %}
-            <ul>
-              <li>{{input_relationship.data_product.name}}</li>
-            </ul>
-          {% endfor %}
+              {% for input_relationship in application.input_relationships %}
+                <ul>
+                  <li>{{input_relationship.data_product.name}}</li>
+                </ul>
+              {% endfor %}
 
-          <a href="{{url_for(
-            'view_response_data_product_application_relationships',
-            survey_id=survey.id,
-            application_id=application.id,
-          )}}">
-            Add relationship
-          </a>
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
+              <a href="{{url_for(
+                'view_response_data_product_application_relationships',
+                survey_id=survey.id,
+                application_id=application.id,
+              )}}">
+                Add relationship
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <figure class="highcharts-figure">
+      <div id="highcharts-container" />
+    </figure>
+  </div>
 
   <h3>Add application</h3>
   <form method="POST">
@@ -48,4 +57,28 @@
     <input type="submit" value="Create new application" />
   </form>
 
+  <script>
+		Highcharts.chart('highcharts-container', {
+			chart: {
+				type: 'sankey',
+			},
+			title: {
+				text: 'U.S. AON Value Tree Analysis Diagram',
+				style: {fontSize: '20px'},
+			},
+			accessibility: {
+				description: 'Sankey plot fo U.S. AON Value Tree',
+				point: {
+					valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.'
+				}
+			},
+			series: [{
+				keys: ['from', 'to', 'weight'],
+				data: [
+					['foo', 'bar', 1],
+					['bar', 'baz', 2],
+				],
+			}]
+		});
+  </script>
 {% endblock %}
