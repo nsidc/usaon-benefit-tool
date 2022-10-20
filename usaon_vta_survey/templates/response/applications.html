@@ -26,7 +26,13 @@
             <br />
           {% endfor %}
 
-          <a href="#">Add relationship</a>
+          <a href="{{url_for(
+            'view_response_data_product_application_relationships',
+            survey_id=survey.id,
+            application_id=application.id,
+          )}}">
+            Add relationship
+          </a>
         </td>
       </tr>
     {% endfor %}

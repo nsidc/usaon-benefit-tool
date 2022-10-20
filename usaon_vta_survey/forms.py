@@ -15,8 +15,11 @@ from wtforms_sqlalchemy.orm import ModelConverter, converts, model_form
 from usaon_vta_survey import db
 from usaon_vta_survey.models.tables import (
     ResponseApplication,
+    ResponseApplicationSocietalBenefitArea,
     ResponseDataProduct,
+    ResponseDataProductApplication,
     ResponseObservingSystem,
+    ResponseObservingSystemDataProduct,
     Survey,
 )
 
@@ -39,6 +42,8 @@ BaseModel: DeclarativeMeta = db.Model
 
 FORMS_BY_MODEL: dict[BaseModel, Form] = {
     Survey: model_form(Survey, only=['notes']),
+
+    # Response entities ("nodes" from Sankey diagram perspective)
     ResponseObservingSystem: model_form(
         ResponseObservingSystem,
         only=[
@@ -52,13 +57,37 @@ FORMS_BY_MODEL: dict[BaseModel, Form] = {
             'notes',
         ],
     ),
-    # TODO: Restrict satisfaction rating values
+    # TODO: Restrict "rating" values to correct range
     ResponseDataProduct: model_form(
         ResponseDataProduct,
-        only=['name', 'satisfaction_rating'],
+        only=['name', 'performance_rating'],
     ),
     ResponseApplication: model_form(
         ResponseApplication,
         only=['name'],
+    ),
+
+    # Response relationships ("edges" from Sankey diagram perspective)
+    ResponseObservingSystemDataProduct: model_form(
+        ResponseObservingSystemDataProduct,
+        only=[
+            'criticality_rating',
+            'performance_rating',
+            'rationale',
+            'needed_improvements',
+        ],
+    ),
+    ResponseDataProductApplication: model_form(
+        ResponseDataProductApplication,
+        only=[
+            'criticality_rating',
+            'performance_rating',
+            'rationale',
+            'needed_improvements',
+        ],
+    ),
+    ResponseApplicationSocietalBenefitArea: model_form(
+        ResponseApplicationSocietalBenefitArea,
+        only=['performance_rating'],
     ),
 }

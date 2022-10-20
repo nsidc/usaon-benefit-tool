@@ -1,0 +1,68 @@
+{% extends 'response/base.html' %}
+
+
+{% block content %}
+
+  {{super()}}
+
+  <h3>Data Product &lt;-&gt; Application relationship</h3>
+
+  <!-- This form enables reloading the page when a drop-down is changed -->
+  <form method="GET">
+
+    <h4>Data product</h4>
+
+    <select name="data_product_id" onchange="this.form.submit()">
+
+      <option value="" {% if sqla_inspect(data_product).transient %}selected{% endif %}>
+        New dataproduct
+      </option>
+
+      {% for dp in data_products %}
+        <option value="{{dp.id}}" {% if dp.id == data_product.id %}selected{% endif %}>
+          {{dp.name}}
+        </option>
+      {% endfor %}
+
+    </select>
+
+    {% if sqla_inspect(data_product).transient %}
+      <p>!!!Data product entry form here!!!</p>
+    {% else %}
+      <p>!!!Data product metadata here!!!</p>
+    {% endif %}
+
+
+    <h4>Application</h4>
+
+    <select name="application_id" onchange="this.form.submit()">
+
+      <option value="" {% if sqla_inspect(application).transient %}selected{% endif %}>
+        Create new application
+      </option>
+
+      {% for app in applications %}
+        <option value="{{app.id}}" {% if app.id == application.id %}selected{% endif %}>
+          {{app.name}}
+        </option>
+      {% endfor %}
+
+    </select>
+
+    {% if sqla_inspect(application).transient %}
+      <p>!!!Application entry form here!!!</p>
+    {% else %}
+      <p>!!!Application metadata here!!!</p>
+    {% endif %}
+
+  </form>
+
+  <h4>Relationship</h4>
+  {% if sqla_inspect(relationship).transient %}
+    !!!Relationship entry form here!!!
+  {% else %}
+    {{relationship}}
+  {% endif %}
+
+
+{% endblock %}

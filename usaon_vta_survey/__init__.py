@@ -3,7 +3,7 @@ import os
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData
+from sqlalchemy import MetaData, inspect as sqla_inspect
 
 from usaon_vta_survey.constants.db import DB_CONNSTR
 
@@ -25,6 +25,8 @@ app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'youcanneverguess'
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_CONNSTR
 
 db.init_app(app)
+
+app.jinja_env.globals.update(sqla_inspect=sqla_inspect)
 
 # NOTE: This is a circular import, but it's specified by the Flask docs:
 #     https://flask.palletsprojects.com/en/3.1.x/patterns/packages/
