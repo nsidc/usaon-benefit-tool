@@ -12,12 +12,14 @@ def applications_sankey(response: Response) -> list[list[str | int]]:
 
 def _applications_sankey(response: Response) -> list[tuple[str, str, int]]:
     """Provide a sankey data structure of applications, formatted for type checker."""
-    data = list(chain(
-        *[
-            _data_product_application_sankey_links(data_product)
-            for data_product in response.data_products
-        ]
-    ))
+    data = list(
+        chain(
+            *[
+                _data_product_application_sankey_links(data_product)
+                for data_product in response.data_products
+            ]
+        )
+    )
     return data
 
 
