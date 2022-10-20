@@ -24,3 +24,9 @@ table td, table th {
 form input[type=submit] {
   display: block;
 }
+
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+}

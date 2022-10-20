@@ -1,4 +1,5 @@
 {% extends 'response/base.html' %}
+{% from 'macros/forms.j2' import data_product_fields %}
 
 
 {% block content %}
@@ -33,6 +34,11 @@
   </table>
 
   <h3>Add data product</h3>
-  {% include 'forms/data_product.html' %}
+  <form method="POST">
+    {{form.csrf_token}}
+    {{data_product_fields(form)}}
+
+    <input type="submit" value="Create new data product" />
+  </form>
 
 {% endblock %}
