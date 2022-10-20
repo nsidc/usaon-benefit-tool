@@ -3,7 +3,8 @@ from itertools import chain
 from usaon_vta_survey.models.tables import Response, ResponseDataProduct
 
 
-def applications_sankey(response: Response) -> list[list[str | int]]:
+# TODO: Can we do better than `object` here? Mypy doesn't correctly infer `str | int`
+def applications_sankey(response: Response) -> list[list[object]]:
     """Provide Sankey data structure of applications, formatted for Highcharts."""
     # Convert tuples to lists for passing to Javascript-land:
     data = [list(e) for e in _applications_sankey(response)]
