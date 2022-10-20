@@ -27,7 +27,7 @@
 
               {% for input_relationship in application.input_relationships %}
                 <ul>
-                  <li>{{input_relationship.data_product.name}}</li>
+                  <li>{{input_relationship.data_product.name}}: {{input_relationship.performance_rating}}</li>
                 </ul>
               {% endfor %}
 
@@ -74,10 +74,7 @@
 			},
 			series: [{
 				keys: ['from', 'to', 'weight'],
-				data: [
-					['foo', 'bar', 1],
-					['bar', 'baz', 2],
-				],
+        data: {{sankey_series | safe}},
 			}]
 		});
   </script>
