@@ -1,4 +1,6 @@
-from flask import redirect, render_template, request, url_for
+from typing import Type
+
+from flask import Request, redirect, render_template, request, url_for
 from flask_wtf import FlaskForm
 from wtforms import FormField
 
@@ -13,7 +15,7 @@ from usaon_vta_survey.models.tables import (
 
 
 def _update_super_form(
-    super_form: str,
+    super_form: Type[FlaskForm],
     /,
     *,
     data_product_id: int | None,
@@ -34,7 +36,7 @@ def _update_super_form(
 
 
 def _update_relationship(
-    relationship: str,
+    relationship: ResponseDataProductApplication,
     *,
     data_product_id: int | None,
     application_id: int | None,
@@ -54,7 +56,7 @@ def _response_data_product(
     *,
     data_product_id: int | None,
     response_id: int,
-) -> db.Model:
+) -> ResponseDataProduct:
     """Return a data product db object (or 404), and do some mutations.
 
     TODO: Extract mutations to another function responsible for that.
@@ -71,7 +73,7 @@ def _response_application(
     *,
     application_id: int | None,
     response_id: int,
-) -> db.Model:
+) -> ResponseApplication:
     """Return an application db object (or 404), and do some mutations."""
     if application_id is not None:
         response_application = db.get_or_404(ResponseApplication, application_id)
@@ -79,6 +81,43 @@ def _response_application(
         response_application = ResponseApplication(response_id=response_id)
 
     return response_application
+
+
+def _response_data_product_application(
+    *,
+    data_product_id: int | None,
+    application_id: int | None,
+) -> ResponseDataProductApplication:
+    """Return a relationship db object.
+
+    Returned object may be transient or persistent depending on whether a match exists
+    in the db.
+    """
+    if data_product_id and application_id:
+        # If not found, will be `None`
+        response_data_product_application = db.session.get(
+            ResponseDataProductApplication,
+            (data_product_id, application_id),
+        )
+    else:
+        response_data_product_application = None
+
+    if response_data_product_application is not None:
+        return response_data_product_application
+    else:
+        return ResponseDataProductApplication()
+
+
+def _request_args(request: Request) -> tuple[int | None, int | None]:
+    data_product_id: int | str | None = request.args.get('data_product_id')
+    if data_product_id is not None:
+        data_product_id = int(data_product_id)
+
+    application_id: int | str | None = request.args.get('application_id')
+    if application_id is not None:
+        application_id = int(application_id)
+
+    return data_product_id, application_id
 
 
 @app.route(
@@ -91,9 +130,7 @@ def view_response_data_product_application_relationships(survey_id: str):
     TODO: Refactor this whole pile of stuff. Less string magic. Less cyclomatic
     complexity.
     """
-    application_id = request.args.get('application_id')
-    data_product_id = request.args.get('data_product_id')
-
+    data_product_id, application_id = _request_args(request)
     survey = db.get_or_404(Survey, survey_id)
 
     class SuperForm(FlaskForm):
@@ -104,17 +141,10 @@ def view_response_data_product_application_relationships(survey_id: str):
 
         relationship = FormField(FORMS_BY_MODEL[ResponseDataProductApplication])
 
-    if data_product_id and application_id:
-        # If not found, will be `None`
-        response_data_product_application = db.session.get(
-            ResponseDataProductApplication,
-            (data_product_id, application_id),
-        )
-    else:
-        response_data_product_application = None
-
-    if response_data_product_application is None:
-        response_data_product_application = ResponseDataProductApplication()
+    response_data_product_application = _response_data_product_application(
+        data_product_id=data_product_id,
+        application_id=application_id,
+    )
 
     response_data_product = _response_data_product(
         data_product_id=data_product_id,
@@ -137,7 +167,10 @@ def view_response_data_product_application_relationships(survey_id: str):
         application_id=application_id,
     )
 
-    form_obj = {
+    form_obj: dict[
+        str,
+        ResponseDataProduct | ResponseApplication | ResponseDataProductApplication,
+    ] = {
         'data_product': response_data_product,
         'application': response_application,
         # NOTE: Logic below depends on relationship being last in this dict
@@ -155,7 +188,7 @@ def view_response_data_product_application_relationships(survey_id: str):
                     db.session.add(obj)
 
                     # Update the relationship object with the ids of any new entities
-                    if key != 'relationship':
+                    if type(obj) is not ResponseDataProductApplication:
                         # Get the db object's new ID
                         db.session.flush()
                         db.session.refresh(obj)
