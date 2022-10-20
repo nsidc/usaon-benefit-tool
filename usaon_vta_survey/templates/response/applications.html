@@ -1,0 +1,51 @@
+{% extends 'response/base.html' %}
+{% from 'macros/forms.j2' import application_fields %}
+
+
+{% block content %}
+
+  {{super()}}
+
+  <h3>Applications</h3>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Data products related</th>
+    </tr>
+    {% for application in response.applications %}
+      <tr>
+        <td>{{application.name}}</td>
+        <td>
+          {% if not application.input_relationships %}
+            None
+            <br />
+          {% endif %}
+
+          {% for input_relationship in application.input_relationships %}
+            <ul>
+              <li>{{input_relationship.data_product.name}}</li>
+            </ul>
+          {% endfor %}
+
+          <a href="{{url_for(
+            'view_response_data_product_application_relationships',
+            survey_id=survey.id,
+            application_id=application.id,
+          )}}">
+            Add relationship
+          </a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <h3>Add application</h3>
+  <form method="POST">
+    {{form.csrf_token}}
+    {{application_fields(form)}}
+
+    <input type="submit" value="Create new application" />
+  </form>
+
+{% endblock %}

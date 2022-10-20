@@ -3,7 +3,7 @@ import os
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData
+from sqlalchemy import MetaData, inspect as sqla_inspect
 
 from usaon_vta_survey.constants.db import DB_CONNSTR
 
@@ -26,8 +26,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DB_CONNSTR
 
 db.init_app(app)
 
+app.jinja_env.globals.update(sqla_inspect=sqla_inspect)
+
 # NOTE: This is a circular import, but it's specified by the Flask docs:
 #     https://flask.palletsprojects.com/en/3.1.x/patterns/packages/
-import usaon_vta_survey.routes.root  # noqa: E402, F401
-import usaon_vta_survey.routes.survey  # noqa: E402, F401
-import usaon_vta_survey.routes.surveys  # noqa: E402, F401
+import usaon_vta_survey.routes  # noqa: E402, F401

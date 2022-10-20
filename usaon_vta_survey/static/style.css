@@ -20,3 +20,13 @@ table, td, th {
 table td, table th {
   padding: 10px;
 }
+
+form input[type=submit] {
+  display: block;
+}
+
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+}

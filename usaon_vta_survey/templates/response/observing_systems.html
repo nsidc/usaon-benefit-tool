@@ -1,0 +1,44 @@
+{% extends 'response/base.html' %}
+{% from 'macros/forms.j2' import observing_system_fields %}
+
+
+{% block content %}
+
+  {{super()}}
+
+  <h3>Observing systems</h3>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Observing systems related</th>
+    </tr>
+    {% for observing_system in response.observing_systems %}
+      <tr>
+        <td>{{observing_system.name}}</td>
+        <td>
+          {% if not observing_system.observing_system_relationships %}
+            None
+            <br />
+          {% endif %}
+
+          {% for observing_system_relationship in observing_system.input_relationships %}
+            {{observing_system_relationship}}
+            <br />
+          {% endfor %}
+
+          <a href="#">Add relationship</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <h3>Add observing system</h3>
+  <form method="POST">
+    {{form.csrf_token}}
+    {{observing_system_fields(form)}}
+
+    <input type="submit" value="Create new observing system" />
+  </form>
+
+{% endblock %}

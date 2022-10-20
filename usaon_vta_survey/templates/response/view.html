@@ -1,0 +1,11 @@
+{% extends 'response/base.html' %}
+
+
+{% block content %}
+
+  {{super()}}
+
+  <p>Created: {{response.created_timestamp}}</p>
+  <p>Last updated: {{response.updated_timestamp}}</p>
+
+{% endblock %}

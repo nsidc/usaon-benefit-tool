@@ -19,10 +19,24 @@
   {% for survey in surveys %}
     <tr>
       <td>
-        <a href="/survey/{{survey.id}}">{{survey.id}}</a>
+        <a href="{{url_for('view_survey', survey_id=survey.id)}}">{{survey.id}}</a>
       </td>
       <td>{{survey.created_timestamp}}</td>
-      <td>{{survey.response_id}}</td>
+      <td>
+        {% if survey.response %}
+          <a href="{{url_for('view_response', survey_id=survey.id)}}">
+            <!-- NOTE: The comments below eliminate whitespace inserted with each newline. -->
+
+            View (<!--
+            -->{{survey.response.observing_systems | length}}/<!--
+            -->{{survey.response.data_products | length}}/<!--
+            -->{{survey.response.applications | length}}/<!--
+            -->?)
+          </a>
+        {% else %}
+          None
+        {% endif %}
+      </td>
       <td>{{survey.notes}}</td>
     </tr>
   {% endfor %}
