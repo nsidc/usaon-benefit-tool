@@ -6,7 +6,7 @@ from usaon_vta_survey.models.tables import Response, ResponseDataProduct
 def applications_sankey(response: Response) -> list[list[str | int]]:
     """Provide Sankey data structure of applications, formatted for Highcharts."""
     # Convert tuples to lists for passing to Javascript-land:
-    data = list(list(e) for e in _applications_sankey(response))
+    data = [list(e) for e in _applications_sankey(response)]
     return data
 
 
