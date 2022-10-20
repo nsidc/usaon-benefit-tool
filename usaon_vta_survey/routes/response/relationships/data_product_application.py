@@ -12,6 +12,75 @@ from usaon_vta_survey.models.tables import (
 )
 
 
+def _update_super_form(
+    super_form: str,
+    /,
+    *,
+    data_product_id: int | None,
+    application_id: int | None,
+) -> None:
+    """Populate the form of forms with sub-forms depending on provided IDs.
+
+    When an ID for an object is not provided, we need to gather information from the
+    user to create that object.
+
+    TODO: Better function name.
+    """
+    if data_product_id is None:
+        super_form.data_product = FormField(FORMS_BY_MODEL[ResponseDataProduct])
+
+    if application_id is None:
+        super_form.application = FormField(FORMS_BY_MODEL[ResponseApplication])
+
+
+def _update_relationship(
+    relationship: str,
+    *,
+    data_product_id: int | None,
+    application_id: int | None,
+) -> None:
+    """Populate the relationship with any known identifiers.
+
+    TODO: Better function name.
+    """
+    if data_product_id:
+        relationship.response_data_product_id = data_product_id
+
+    if application_id:
+        relationship.response_application_id = application_id
+
+
+def _response_data_product(
+    *,
+    data_product_id: int | None,
+    response_id: int,
+) -> db.Model:
+    """Return a data product db object (or 404), and do some mutations.
+
+    TODO: Extract mutations to another function responsible for that.
+    """
+    if data_product_id is not None:
+        response_data_product = db.get_or_404(ResponseDataProduct, data_product_id)
+    else:
+        response_data_product = ResponseDataProduct(response_id=response_id)
+
+    return response_data_product
+
+
+def _response_application(
+    *,
+    application_id: int | None,
+    response_id: int,
+) -> db.Model:
+    """Return an application db object (or 404), and do some mutations."""
+    if application_id is not None:
+        response_application = db.get_or_404(ResponseApplication, application_id)
+    else:
+        response_application = ResponseApplication(response_id=response_id)
+
+    return response_application
+
+
 @app.route(
     '/response/<string:survey_id>/data_product_application_relationships',
     methods=['GET', 'POST'],
@@ -19,7 +88,8 @@ from usaon_vta_survey.models.tables import (
 def view_response_data_product_application_relationships(survey_id: str):
     """View and add application/dataproduct relationships to a response.
 
-    TODO: Refactor this whole pile of stuff.
+    TODO: Refactor this whole pile of stuff. Less string magic. Less cyclomatic
+    complexity.
     """
     application_id = request.args.get('application_id')
     data_product_id = request.args.get('data_product_id')
@@ -46,19 +116,26 @@ def view_response_data_product_application_relationships(survey_id: str):
     if response_data_product_application is None:
         response_data_product_application = ResponseDataProductApplication()
 
-    if data_product_id:
-        response_data_product = db.get_or_404(ResponseDataProduct, data_product_id)
-        response_data_product_application.response_data_product_id = data_product_id
-    else:
-        response_data_product = ResponseDataProduct(response_id=survey.response_id)
-        SuperForm.data_product = FormField(FORMS_BY_MODEL[ResponseDataProduct])
+    response_data_product = _response_data_product(
+        data_product_id=data_product_id,
+        response_id=survey.response_id,
+    )
 
-    if application_id:
-        response_application = db.get_or_404(ResponseApplication, application_id)
-        response_data_product_application.response_application_id = application_id
-    else:
-        response_application = ResponseApplication(response_id=survey.response_id)
-        SuperForm.application = FormField(FORMS_BY_MODEL[ResponseApplication])
+    response_application = _response_application(
+        application_id=application_id,
+        response_id=survey.response_id,
+    )
+
+    _update_super_form(
+        SuperForm,
+        data_product_id=data_product_id,
+        application_id=application_id,
+    )
+    _update_relationship(
+        response_data_product_application,
+        data_product_id=data_product_id,
+        application_id=application_id,
+    )
 
     form_obj = {
         'data_product': response_data_product,
@@ -79,8 +156,11 @@ def view_response_data_product_application_relationships(survey_id: str):
 
                     # Update the relationship object with the ids of any new entities
                     if key != 'relationship':
+                        # Get the db object's new ID
                         db.session.flush()
                         db.session.refresh(obj)
+
+                        # Update the relationship db object
                         setattr(
                             response_data_product_application,
                             f'response_{key}_id',
