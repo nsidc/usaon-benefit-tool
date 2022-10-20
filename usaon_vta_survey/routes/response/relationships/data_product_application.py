@@ -31,6 +31,7 @@ def view_response_data_product_application_relationships(survey_id: str):
 
         NOTE: Additional class attributes are added dynamically below.
         """
+
         relationship = FormField(FORMS_BY_MODEL[ResponseDataProductApplication])
 
     if data_product_id and application_id:
@@ -76,7 +77,7 @@ def view_response_data_product_application_relationships(survey_id: str):
                     form[key].form.populate_obj(obj)
                     db.session.add(obj)
 
-                    # Update the relationship object with the ids of any new entities 
+                    # Update the relationship object with the ids of any new entities
                     if key != 'relationship':
                         db.session.flush()
                         db.session.refresh(obj)

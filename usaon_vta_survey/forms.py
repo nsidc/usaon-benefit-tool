@@ -42,7 +42,6 @@ BaseModel: DeclarativeMeta = db.Model
 
 FORMS_BY_MODEL: dict[BaseModel, Form] = {
     Survey: model_form(Survey, only=['notes']),
-
     # Response entities ("nodes" from Sankey diagram perspective)
     ResponseObservingSystem: model_form(
         ResponseObservingSystem,
@@ -66,7 +65,6 @@ FORMS_BY_MODEL: dict[BaseModel, Form] = {
         ResponseApplication,
         only=['name'],
     ),
-
     # Response relationships ("edges" from Sankey diagram perspective)
     ResponseObservingSystemDataProduct: model_form(
         ResponseObservingSystemDataProduct,
