@@ -3,7 +3,7 @@ version: '3.7'
 x-base: &base
   networks:
     - "usaon-vta"
-  restart: always
+  restart: "always"
   logging:
     options:
       max-size: "1m"
@@ -17,21 +17,27 @@ networks:
 services:
   usaon-vta-survey:
     <<: *base
+    # TODO: Use a real version!
     image: "nsidc/usaon-vta-survey:dev"
+    # TODO: Remove build config; this should not be built in a non-dev environment
     build: .
+    # TODO: Stop using the dev server
+    ports:
+      - "80:5000"
     environment:
-      - DB_USER
-      - DB_PASSWORD
-      - FLASK_SECRET_KEY
+      - "DB_USER"
+      - "DB_PASSWORD"
+      - "FLASK_SECRET_KEY"
 
+  # A proxy to the real DB
   db:
     <<: *base
-    image: haproxy:1.8-alpine
+    image: "haproxy:1.8-alpine"
     ports:
       - "5432:5432"
     volumes:
-      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+      - "./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"
     environment:
-      - BACKEND_HOST=${DB_HOST}
-      - BACKEND_PORT=${DB_PORT}
-      - FRONTEND_PORT=5432
+      - "BACKEND_HOST=${DB_HOST}"
+      - "BACKEND_PORT=${DB_PORT}"
+      - "FRONTEND_PORT=5432"
