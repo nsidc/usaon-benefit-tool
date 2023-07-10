@@ -7,6 +7,16 @@ inv test
 ```
 
 
+### Changing dependencies
+
+It's critical to update the lockfile every time dependencies are changed. Whenever you
+update the `environment.yml`, please update the lockfile with:
+
+```
+conda-lock -p linux-64 -p osx-64
+```
+
+
 ### Formatting and linting
 
 Linting and formatting are done automatically with `pre-commit`. To configure it:
@@ -23,5 +33,3 @@ To manually trigger linting and formatting:
 ```
 pre-commit run --all-files
 ```
-
-
