@@ -13,8 +13,8 @@
 version: 1
 metadata:
   content_hash:
-    linux-64: 498755db45e7fc10fff4b28d685995f84ee6473452d20c013ae5ec88114d4d30
-    osx-64: 77be8b1ab99f33b1066ce32215b5246633334bf3e73e91cfe72da353766fd890
+    linux-64: ebca7d7ae6acc51255042468e223fa01a190443ffc097c54a1e6814d9147f434
+    osx-64: f9640093961d79e45fa2cdf38f368b96ba9ea72d57f1c8c7e0644d6298aa4641
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -365,6 +365,21 @@ package:
     sha256: b6f32491536823e47cf6eb4717dd341385600a2b901235028dedc629a77aeb82
   category: main
   optional: false
+- name: brotli-python
+  version: 1.0.9
+  manager: conda
+  platform: linux-64
+  dependencies:
+    libgcc-ng: '>=12'
+    libstdcxx-ng: '>=12'
+    python: '>=3.10,<3.11.0a0'
+    python_abi: 3.10.*
+  url: https://conda.anaconda.org/conda-forge/linux-64/brotli-python-1.0.9-py310hd8f1fbe_9.conda
+  hash:
+    md5: e2047ad2af52c01845f58b580c6cbd5c
+    sha256: a4984cb906910850ae979387f0ac4e2623e0a3c8139bc67eb1fff0403bf8388b
+  category: main
+  optional: false
 - name: bump2version
   version: 1.0.1
   manager: conda
@@ -377,6 +392,18 @@ package:
     sha256: c3cf2e47b0aee001025ad29061222b552a60362ec9febd355c5eb4d3a06beef8
   category: main
   optional: false
+- name: certifi
+  version: 2023.5.7
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: '>=3.7'
+  url: https://conda.anaconda.org/conda-forge/noarch/certifi-2023.5.7-pyhd8ed1ab_0.conda
+  hash:
+    md5: 5d1b71c942b8421285934dad1d891ebc
+    sha256: f839a6e04d94069f90dd85337ea9108f058dc76771bb469a413f32bb1ba0b256
+  category: main
+  optional: false
 - name: cfgv
   version: 3.3.1
   manager: conda
@@ -387,6 +414,18 @@ package:
   hash:
     md5: ebb5f5f7dc4f1a3780ef7ea7738db08c
     sha256: fbc03537a27ef756162c49b1d0608bf7ab12fa5e38ceb8563d6f4859e835ac5c
+  category: main
+  optional: false
+- name: charset-normalizer
+  version: 3.2.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: '>=3.7'
+  url: https://conda.anaconda.org/conda-forge/noarch/charset-normalizer-3.2.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: 313516e9a4b08b12dfb1e1cd390a96e3
+    sha256: 0666a95fbbd2299008162e2126c009191e5953d1cad1878bf9f4d8d634af1dd4
   category: main
   optional: false
 - name: click
@@ -463,6 +502,18 @@ package:
   hash:
     md5: 934c4eb3214284125eff6dd665e9568a
     sha256: 7ba8ec0e07a2641af77c1b0f3a52e584593ab4b40c8315648ce642e387c3d3a1
+  category: main
+  optional: false
+- name: idna
+  version: '3.4'
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/idna-3.4-pyhd8ed1ab_0.tar.bz2
+  hash:
+    md5: 34272b248891bddccc64479f9a7fffed
+    sha256: 9887c35c374ec1847f167292d3fde023cb4c994a4ceeec283072b95440131f09
   category: main
   optional: false
 - name: iniconfig
@@ -605,6 +656,31 @@ package:
     sha256: 74c63fd03f1f1ea2b54e8bc529fd1a600aaafb24027b738d0db87909ee3a33dc
   category: main
   optional: false
+- name: pyjwt
+  version: 2.7.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/pyjwt-2.7.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: 99e28be5a278e2319834d7dc99e7bfdd
+    sha256: f3a64306fa0f405f10f4108d7ff42043d6fd393f940f9e98e395a3756687fc98
+  category: main
+  optional: false
+- name: pysocks
+  version: 1.7.1
+  manager: conda
+  platform: linux-64
+  dependencies:
+    __unix: ''
+    python: '>=3.8'
+  url: https://conda.anaconda.org/conda-forge/noarch/pysocks-1.7.1-pyha2e5f31_6.tar.bz2
+  hash:
+    md5: 2a7de29fb590ca14b5243c4c812c8025
+    sha256: a42f826e958a8d22e65b3394f437af7332610e43ee313393d1cf143f0a2d274b
+  category: main
+  optional: false
 - name: pyyaml
   version: '6.0'
   manager: conda
@@ -673,11 +749,11 @@ package:
   manager: conda
   platform: linux-64
   dependencies:
-    python: '>=3.7'
-  url: https://conda.anaconda.org/conda-forge/noarch/zipp-3.16.0-pyhd8ed1ab_0.conda
+    python: '>=3.8'
+  url: https://conda.anaconda.org/conda-forge/noarch/zipp-3.16.0-pyhd8ed1ab_1.conda
   hash:
-    md5: 8be65b18d05ecd2801964e69c42f4fca
-    sha256: de563512a84818e5b367414e68985196dfb40964c12147fc731a6645f2e029e5
+    md5: 0ea0b5003b96e53769a5f70175ff5264
+    sha256: 14b78fc742efdf46e3ecff0a4b89cbdf780b8cf22c822024cc642e4284339ea4
   category: main
   optional: false
 - name: cffi
@@ -827,6 +903,20 @@ package:
     sha256: d5d19b8f5b275240c19616a46d67ec57250b3720ba88200da8c732c3fcbfc21d
   category: main
   optional: false
+- name: urllib3
+  version: 2.0.3
+  manager: conda
+  platform: linux-64
+  dependencies:
+    brotli-python: '>=1.0.9'
+    pysocks: '>=1.5.6,<2.0,!=1.5.7'
+    python: '>=3.7'
+  url: https://conda.anaconda.org/conda-forge/noarch/urllib3-2.0.3-pyhd8ed1ab_1.conda
+  hash:
+    md5: 89efeecbb24c62e2f1ed0b8ca959ec69
+    sha256: 60b64b483b2c662f946837043d95c1a5d90948464a834403b0e3bce373a96a1e
+  category: main
+  optional: false
 - name: werkzeug
   version: 2.3.6
   manager: conda
@@ -851,6 +941,22 @@ package:
   hash:
     md5: 62a19155ee3896566849634586c1813d
     sha256: fc6bc71fc1bd5966ad024a1c828652b9a1ceee06ea514a94968b9b53492e3abe
+  category: main
+  optional: false
+- name: cryptography
+  version: 41.0.1
+  manager: conda
+  platform: linux-64
+  dependencies:
+    cffi: '>=1.12'
+    libgcc-ng: '>=12'
+    openssl: '>=3.1.1,<4.0a0'
+    python: '>=3.10,<3.11.0a0'
+    python_abi: 3.10.*
+  url: https://conda.anaconda.org/conda-forge/linux-64/cryptography-41.0.1-py310h75e40e8_0.conda
+  hash:
+    md5: bd5501a8ae0df5ef36b9ed03035ebe3a
+    sha256: b50152a7149abea394c771fba544a302831f11135a0d0dc676a73784176a8361
   category: main
   optional: false
 - name: flask
@@ -884,6 +990,22 @@ package:
     sha256: b5012d6fd30f2462b6ca595539cfdae9aaf61b3b7a56e51ab94aef0fd9efcd3d
   category: main
   optional: false
+- name: requests
+  version: 2.31.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    certifi: '>=2017.4.17'
+    charset-normalizer: '>=2,<4'
+    idna: '>=2.5,<4'
+    python: '>=3.7'
+    urllib3: '>=1.21.1,<3'
+  url: https://conda.anaconda.org/conda-forge/noarch/requests-2.31.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: a30144e4156cdbb236f99ebb49828f8b
+    sha256: 9f629d6fd3c8ac5f2a198639fe7af87c4db2ac9235279164bfe0fcb49d8c4bad
+  category: main
+  optional: false
 - name: ukkonen
   version: 1.0.1
   manager: conda
@@ -898,6 +1020,20 @@ package:
   hash:
     md5: 703ff1ac7d1b27fb5944b8052b5d1edb
     sha256: 3813d8579d5472cc182a56a6bf4c7b14085adfe0f7157af0d595efefb27b8e5c
+  category: main
+  optional: false
+- name: flask-login
+  version: 0.6.2
+  manager: conda
+  platform: linux-64
+  dependencies:
+    flask: '>=1.0.4'
+    python: '>=3.7'
+    werkzeug: '>=1.0.1'
+  url: https://conda.anaconda.org/conda-forge/noarch/flask-login-0.6.2-pyhd8ed1ab_0.tar.bz2
+  hash:
+    md5: 427457b9179d5f1d65b11ca7761e60ee
+    sha256: 39efb8711fcafaf82f2e69f97288f950d0dd5bbe14dedbc6648a28b77f0fcabf
   category: main
   optional: false
 - name: flask-sqlalchemy
@@ -940,6 +1076,21 @@ package:
   hash:
     md5: a4085ab0562d5081a9333435837b538a
     sha256: 4027103c59220a68b41aed056d2ce89d46e4971033d259293ca07198a8a81fdc
+  category: main
+  optional: false
+- name: oauthlib
+  version: 3.2.2
+  manager: conda
+  platform: linux-64
+  dependencies:
+    blinker: ''
+    cryptography: ''
+    pyjwt: '>=1.0.0'
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/oauthlib-3.2.2-pyhd8ed1ab_0.tar.bz2
+  hash:
+    md5: 8f882b197fd9c4941a787926baea4868
+    sha256: 0cfd5146a91d3974f4abfc2a45de890371d510a77238fe553e036ec8c031dc5b
   category: main
   optional: false
 - name: virtualenv
@@ -1227,6 +1378,20 @@ package:
     sha256: b6f32491536823e47cf6eb4717dd341385600a2b901235028dedc629a77aeb82
   category: main
   optional: false
+- name: brotli-python
+  version: 1.0.9
+  manager: conda
+  platform: osx-64
+  dependencies:
+    libcxx: '>=14.0.6'
+    python: '>=3.10,<3.11.0a0'
+    python_abi: 3.10.*
+  url: https://conda.anaconda.org/conda-forge/osx-64/brotli-python-1.0.9-py310h7a76584_9.conda
+  hash:
+    md5: c67beac00bdca7f4f18af799744fac95
+    sha256: 65b56826c3e4ab2fbc29181814e983ef3a1b57c2ed8be997200933d620207e3b
+  category: main
+  optional: false
 - name: bump2version
   version: 1.0.1
   manager: conda
@@ -1239,6 +1404,18 @@ package:
     sha256: c3cf2e47b0aee001025ad29061222b552a60362ec9febd355c5eb4d3a06beef8
   category: main
   optional: false
+- name: certifi
+  version: 2023.5.7
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.7'
+  url: https://conda.anaconda.org/conda-forge/noarch/certifi-2023.5.7-pyhd8ed1ab_0.conda
+  hash:
+    md5: 5d1b71c942b8421285934dad1d891ebc
+    sha256: f839a6e04d94069f90dd85337ea9108f058dc76771bb469a413f32bb1ba0b256
+  category: main
+  optional: false
 - name: cfgv
   version: 3.3.1
   manager: conda
@@ -1249,6 +1426,18 @@ package:
   hash:
     md5: ebb5f5f7dc4f1a3780ef7ea7738db08c
     sha256: fbc03537a27ef756162c49b1d0608bf7ab12fa5e38ceb8563d6f4859e835ac5c
+  category: main
+  optional: false
+- name: charset-normalizer
+  version: 3.2.0
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.7'
+  url: https://conda.anaconda.org/conda-forge/noarch/charset-normalizer-3.2.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: 313516e9a4b08b12dfb1e1cd390a96e3
+    sha256: 0666a95fbbd2299008162e2126c009191e5953d1cad1878bf9f4d8d634af1dd4
   category: main
   optional: false
 - name: click
@@ -1324,6 +1513,18 @@ package:
   hash:
     md5: 699b3a96666340fe9349c3547f047e29
     sha256: 13b7d13109bdb30d8b5f292d4ed9bea75d93c6268417af451150de281f653618
+  category: main
+  optional: false
+- name: idna
+  version: '3.4'
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/idna-3.4-pyhd8ed1ab_0.tar.bz2
+  hash:
+    md5: 34272b248891bddccc64479f9a7fffed
+    sha256: 9887c35c374ec1847f167292d3fde023cb4c994a4ceeec283072b95440131f09
   category: main
   optional: false
 - name: iniconfig
@@ -1463,6 +1664,31 @@ package:
     sha256: 74c63fd03f1f1ea2b54e8bc529fd1a600aaafb24027b738d0db87909ee3a33dc
   category: main
   optional: false
+- name: pyjwt
+  version: 2.7.0
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/pyjwt-2.7.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: 99e28be5a278e2319834d7dc99e7bfdd
+    sha256: f3a64306fa0f405f10f4108d7ff42043d6fd393f940f9e98e395a3756687fc98
+  category: main
+  optional: false
+- name: pysocks
+  version: 1.7.1
+  manager: conda
+  platform: osx-64
+  dependencies:
+    __unix: ''
+    python: '>=3.8'
+  url: https://conda.anaconda.org/conda-forge/noarch/pysocks-1.7.1-pyha2e5f31_6.tar.bz2
+  hash:
+    md5: 2a7de29fb590ca14b5243c4c812c8025
+    sha256: a42f826e958a8d22e65b3394f437af7332610e43ee313393d1cf143f0a2d274b
+  category: main
+  optional: false
 - name: pyyaml
   version: '6.0'
   manager: conda
@@ -1530,11 +1756,11 @@ package:
   manager: conda
   platform: osx-64
   dependencies:
-    python: '>=3.7'
-  url: https://conda.anaconda.org/conda-forge/noarch/zipp-3.16.0-pyhd8ed1ab_0.conda
+    python: '>=3.8'
+  url: https://conda.anaconda.org/conda-forge/noarch/zipp-3.16.0-pyhd8ed1ab_1.conda
   hash:
-    md5: 8be65b18d05ecd2801964e69c42f4fca
-    sha256: de563512a84818e5b367414e68985196dfb40964c12147fc731a6645f2e029e5
+    md5: 0ea0b5003b96e53769a5f70175ff5264
+    sha256: 14b78fc742efdf46e3ecff0a4b89cbdf780b8cf22c822024cc642e4284339ea4
   category: main
   optional: false
 - name: cffi
@@ -1681,6 +1907,20 @@ package:
     sha256: d5d19b8f5b275240c19616a46d67ec57250b3720ba88200da8c732c3fcbfc21d
   category: main
   optional: false
+- name: urllib3
+  version: 2.0.3
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.7'
+    pysocks: '>=1.5.6,<2.0,!=1.5.7'
+    brotli-python: '>=1.0.9'
+  url: https://conda.anaconda.org/conda-forge/noarch/urllib3-2.0.3-pyhd8ed1ab_1.conda
+  hash:
+    md5: 89efeecbb24c62e2f1ed0b8ca959ec69
+    sha256: 60b64b483b2c662f946837043d95c1a5d90948464a834403b0e3bce373a96a1e
+  category: main
+  optional: false
 - name: werkzeug
   version: 2.3.6
   manager: conda
@@ -1705,6 +1945,21 @@ package:
   hash:
     md5: 62a19155ee3896566849634586c1813d
     sha256: fc6bc71fc1bd5966ad024a1c828652b9a1ceee06ea514a94968b9b53492e3abe
+  category: main
+  optional: false
+- name: cryptography
+  version: 41.0.1
+  manager: conda
+  platform: osx-64
+  dependencies:
+    cffi: '>=1.12'
+    openssl: '>=3.1.1,<4.0a0'
+    python: '>=3.10,<3.11.0a0'
+    python_abi: 3.10.*
+  url: https://conda.anaconda.org/conda-forge/osx-64/cryptography-41.0.1-py310ha1817de_0.conda
+  hash:
+    md5: f66541237ec50c9d89228ded177b8d65
+    sha256: 0d73ef9738465c357e40ad9f17d0bd5b266ed0c21191d177736074237c9d53ac
   category: main
   optional: false
 - name: flask
@@ -1738,6 +1993,22 @@ package:
     sha256: b5012d6fd30f2462b6ca595539cfdae9aaf61b3b7a56e51ab94aef0fd9efcd3d
   category: main
   optional: false
+- name: requests
+  version: 2.31.0
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.7'
+    idna: '>=2.5,<4'
+    certifi: '>=2017.4.17'
+    charset-normalizer: '>=2,<4'
+    urllib3: '>=1.21.1,<3'
+  url: https://conda.anaconda.org/conda-forge/noarch/requests-2.31.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: a30144e4156cdbb236f99ebb49828f8b
+    sha256: 9f629d6fd3c8ac5f2a198639fe7af87c4db2ac9235279164bfe0fcb49d8c4bad
+  category: main
+  optional: false
 - name: ukkonen
   version: 1.0.1
   manager: conda
@@ -1751,6 +2022,20 @@ package:
   hash:
     md5: b3727e37919b1f4ef885d65ed97f3ca1
     sha256: 0dd6e9633c64cf5d842ddbcda5a8e322e4322b049aa42db2f4564c98b6826a74
+  category: main
+  optional: false
+- name: flask-login
+  version: 0.6.2
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.7'
+    flask: '>=1.0.4'
+    werkzeug: '>=1.0.1'
+  url: https://conda.anaconda.org/conda-forge/noarch/flask-login-0.6.2-pyhd8ed1ab_0.tar.bz2
+  hash:
+    md5: 427457b9179d5f1d65b11ca7761e60ee
+    sha256: 39efb8711fcafaf82f2e69f97288f950d0dd5bbe14dedbc6648a28b77f0fcabf
   category: main
   optional: false
 - name: flask-sqlalchemy
@@ -1793,6 +2078,21 @@ package:
   hash:
     md5: a4085ab0562d5081a9333435837b538a
     sha256: 4027103c59220a68b41aed056d2ce89d46e4971033d259293ca07198a8a81fdc
+  category: main
+  optional: false
+- name: oauthlib
+  version: 3.2.2
+  manager: conda
+  platform: osx-64
+  dependencies:
+    cryptography: ''
+    blinker: ''
+    python: '>=3.6'
+    pyjwt: '>=1.0.0'
+  url: https://conda.anaconda.org/conda-forge/noarch/oauthlib-3.2.2-pyhd8ed1ab_0.tar.bz2
+  hash:
+    md5: 8f882b197fd9c4941a787926baea4868
+    sha256: 0cfd5146a91d3974f4abfc2a45de890371d510a77238fe553e036ec8c031dc5b
   category: main
   optional: false
 - name: virtualenv
