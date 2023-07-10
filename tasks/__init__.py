@@ -1,8 +1,7 @@
 from invoke import Collection
 
-from . import db, env
+from . import db, env, test
 from . import format as format_
-from . import test
 
 ns = Collection()
 ns.add_collection(db)

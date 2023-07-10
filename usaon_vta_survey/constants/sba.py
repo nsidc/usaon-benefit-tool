@@ -9,15 +9,19 @@ IaoaSbaFramework = dict[str, SocietalBenefitArea]
 IAOA_SBA_FRAMEWORK: IaoaSbaFramework = {
     'Disaster Preparedness': {
         'Disaster Mitigation': [
-            'Apply common indices and indicators to inform disaster mitigation activities',
-            'Develop educationtrainingand compliance procedures for disaster mitigation',
+            'Apply common indices and indicators to inform'
+            ' disaster mitigation activities',
+            'Develop educationtrainingand compliance procedures'
+            ' for disaster mitigation',
             'Ensure access to disaster-relevant environmental intelligence',
             'Inform infrastructure design standards for disaster mitigation',
         ],
         'Disaster Protection and Prevention': [
-            'Apply common indices and indicators to assess state of disaster preparedness',
+            'Apply common indices and indicators to assess'
+            ' state of disaster preparedness',
             'Conduct risk assessments to inform disaster preparedness activities',
-            'Deploy emergency responder personnel and equipment in an optimal manner prior to a disaster',
+            'Deploy emergency responder personnel and equipment in an optimal'
+            ' manner prior to a disaster',
             'Develop and execute plans and procedures for disaster prevention',
             'Improve emergency preparedness for human-made hazards',
             'Improve emergency preparedness for natural hazards',

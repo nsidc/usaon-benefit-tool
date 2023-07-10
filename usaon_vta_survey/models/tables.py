@@ -12,6 +12,7 @@ TODO: Add check constraints for numeric fields where we know the min/max.
 import uuid
 from datetime import datetime
 from functools import cache
+from typing import Final
 
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import DeclarativeMeta
@@ -155,7 +156,7 @@ class ResponseObservingSystem(BaseModel, IORelationshipMixin):
         nullable=False,
     )
 
-    __mapper_args__ = {
+    __mapper_args__: Final[dict] = {
         'polymorphic_identity': ObservingSystemType.other,
         'polymorphic_on': type,
     }
@@ -180,7 +181,7 @@ class ResponseObservingSystem(BaseModel, IORelationshipMixin):
 
 class ResponseObservingSystemObservational(BaseModel):
     __tablename__ = 'response_observing_system_observational'
-    __mapper_args__ = {
+    __mapper_args__: Final[dict] = {
         'polymorphic_identity': ObservingSystemType.observational,
     }
 
@@ -196,7 +197,7 @@ class ResponseObservingSystemObservational(BaseModel):
 
 class ResponseObservingSystemResearch(BaseModel):
     __tablename__ = 'response_observing_system_research'
-    __mapper_args__ = {
+    __mapper_args__: Final[dict] = {
         'polymorphic_identity': ObservingSystemType.research,
     }
 

@@ -10,11 +10,31 @@ jobs:
     <<: *setup
     steps:
       - checkout
+      - restore_cache:
+          key: 'conda-{{ checksum "conda-lock.yml" }}'
+      - run:
+          name: "Create conda environment"
+          command: |
+            if [ -d "/opt/conda/envs/sipn-reanalysis-ingest" ]; then
+              echo "Environment exists in cache. Skipping build!"
+              exit 0
+            fi
+            conda init bash
+            conda install --channel=conda-forge --name=base conda-lock
+
+            conda-lock install -n usaon-vta-survey
+      - save_cache:
+          key: 'conda-{{ checksum "conda-lock.yml" }}'
+          paths: "/opt/conda"
+
+      - run:
+          name: "Run pre-commit checks (lint, format)"
+          command: |
+            /bin/bash --login -c "conda activate usaon-vta-survey && pre-commit run --all-files --show-diff-on-failure --color always"
+
       - run:
           name: 'Run all tests (lint, config validation, etc.)'
           command: |
-            conda env create --quiet --file environment-lock.yml 
-            conda init bash
             /bin/bash --login -c "conda activate usaon-vta-survey && inv test"
 
   # release:
