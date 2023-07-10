@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from invoke import task
 
 from .util import in_container

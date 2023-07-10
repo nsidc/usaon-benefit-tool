@@ -1,5 +1,3 @@
-from typing import Type
-
 from flask import Request, redirect, render_template, request, url_for
 from flask_wtf import FlaskForm
 from wtforms import FormField
@@ -15,7 +13,7 @@ from usaon_vta_survey.models.tables import (
 
 
 def _update_super_form(
-    super_form: Type[FlaskForm],
+    super_form: type[FlaskForm],
     /,
     *,
     data_product_id: int | None,

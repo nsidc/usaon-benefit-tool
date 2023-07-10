@@ -26,12 +26,12 @@ from usaon_vta_survey.models.tables import (
 
 class CustomModelConverter(ModelConverter):
     @converts("String")
-    def conv_String(self, field_args, **extra):
+    def conv_string(self, field_args, **extra):
         self._string_common(field_args=field_args, **extra)
         if extra['column'].type.length > 256:
             return fields.TextAreaField(**field_args)
 
-        return super().conv_String(field_args, **extra)
+        return super().conv_string(field_args, **extra)
 
 
 model_form = partial(model_form, converter=CustomModelConverter())
