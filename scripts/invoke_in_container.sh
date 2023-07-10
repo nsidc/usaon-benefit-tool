@@ -9,4 +9,4 @@ docker-compose run \
     usaon-vta-survey \
     invoke $args
 
-cd - 1>/dev/null
+cd / 1>/dev/null
