@@ -4,6 +4,7 @@ from .util import PROJECT_DIR, print_and_run
 
 ENV_LOCKFILE = PROJECT_DIR / "environment-lock.yml"
 
+
 # TODO: Will delete once we start using conda lock
 @task(default=True)
 def lock(ctx):
