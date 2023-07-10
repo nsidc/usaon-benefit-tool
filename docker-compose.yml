@@ -38,6 +38,8 @@ services:
     volumes:
       - "./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"
     environment:
+      # cname
       - "BACKEND_HOST=${DB_HOST}"
+      # 5432
       - "BACKEND_PORT=${DB_PORT}"
       - "FRONTEND_PORT=5432"
