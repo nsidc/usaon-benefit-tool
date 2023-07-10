@@ -13,7 +13,7 @@ It's critical to update the lockfile every time dependencies are changed. Whenev
 update the `environment.yml`, please update the lockfile with:
 
 ```
-conda-lock -p linux-64 -p osx-64
+conda-lock
 ```
 
 
