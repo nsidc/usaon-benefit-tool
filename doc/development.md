@@ -29,4 +29,4 @@ Bring up the docker container
 
 ## Initialize the database
 
-
+Run `./scripts/invoke_in_container.sh db.init`
