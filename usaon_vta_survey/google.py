@@ -4,8 +4,8 @@ from flask_dance.contrib.google import make_google_blueprint, google
 app = Flask(__name__)
 app.secret_key = "supersekrit"
 blueprint = make_google_blueprint(
-    client_id=${{secrets.CLIENT_ID}},
-    client_secret=${{secrets.CLIENT_SECRET}},
+    client_id=CLIENT_ID,
+    client_secret=CLIENT_SECRET,
     scope=["profile", "email"]
 )
 app.register_blueprint(blueprint, url_prefix="/login")
