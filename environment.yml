@@ -18,6 +18,7 @@ dependencies:
   - flask ~=2.2
   - flask-wtf ~=1.0
   - flask-login
+  - flask-dance
   
   - requests 
   - oauthlib

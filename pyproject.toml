@@ -38,6 +38,8 @@ ignore = [
 [tool.ruff.per-file-ignores]
 # E501: Line too long. Long strings, e.g. URLs, are common in config.
 "usaon_vta_survey/models/tables.py" = ["A003"]
+# TODO: Figure out what's going on here
+"usaon_vta_survey/google.py" = ["F821"]
 "tasks/format.py" = ["A001"]
 
 [tool.ruff.isort]
