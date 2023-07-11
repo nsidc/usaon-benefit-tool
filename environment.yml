@@ -18,7 +18,6 @@ dependencies:
   - flask ~=2.2
   - flask-wtf ~=1.0
   - flask-login
-  - flask-dance
   
   - requests 
   - oauthlib
@@ -31,7 +30,8 @@ dependencies:
   - loguru ~=0.6.0
 
   - pip:
-    - wtforms-sqlalchemy ~=0.3      
+    - wtforms-sqlalchemy ~=0.3
+    - flask-dance ~=6.1
 
 platforms:
   - linux-64
