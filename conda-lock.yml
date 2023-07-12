@@ -13,8 +13,8 @@
 version: 1
 metadata:
   content_hash:
-    linux-64: ca8b87faed6061dff77c74c40d2467b326fac347baeb5b9666d99f31c4d55884
-    osx-64: 641b779965e63500711373b6efef4df6ed886ed16ea7ad69be94de77151ba4bf
+    linux-64: 78edbfb80a2537bb4a10e26964e889c4e6b9366427658bf849269010ea6eb684
+    osx-64: ad07e0b021d273148f54d7ca07b973b8b0b4e474d37d555c09cfa0b6fac0f7f5
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -1160,19 +1160,19 @@ package:
   category: main
   optional: false
 - name: flask-dance
-  version: 6.1.1
+  version: 7.0.0
   manager: pip
   platform: linux-64
   dependencies:
     requests: '>=2.0'
-    oauthlib: '*'
+    oauthlib: '>=3.2'
     requests-oauthlib: '>=1.0.0'
     flask: '>=2.0.3'
     werkzeug: '*'
     urlobject: '*'
-  url: https://files.pythonhosted.org/packages/ba/30/bb23044d700c264dbd33ba90d81626c411fd3ee50b41864e04dd8eb00e57/Flask_Dance-6.1.1-py3-none-any.whl
+  url: https://files.pythonhosted.org/packages/a6/31/cfd6c5c2e7a8ee47a55388b26e5752c8e78eb53e6bc98b5a932cd61fca91/flask_dance-7.0.0-py3-none-any.whl
   hash:
-    sha256: 73e1410ce8b99cc22729e402dd88744c665d673fcc7f9088dab6af1833b4fd71
+    sha256: 935f5806d587eed94b53cf356ee921466bb32ba83405ed5a4e8ac8ea859620dc
   category: main
   optional: false
 - name: bzip2
@@ -2200,18 +2200,18 @@ package:
   category: main
   optional: false
 - name: flask-dance
-  version: 6.1.1
+  version: 7.0.0
   manager: pip
   platform: osx-64
   dependencies:
     requests: '>=2.0'
-    oauthlib: '*'
+    oauthlib: '>=3.2'
     requests-oauthlib: '>=1.0.0'
     flask: '>=2.0.3'
     werkzeug: '*'
     urlobject: '*'
-  url: https://files.pythonhosted.org/packages/ba/30/bb23044d700c264dbd33ba90d81626c411fd3ee50b41864e04dd8eb00e57/Flask_Dance-6.1.1-py3-none-any.whl
+  url: https://files.pythonhosted.org/packages/a6/31/cfd6c5c2e7a8ee47a55388b26e5752c8e78eb53e6bc98b5a932cd61fca91/flask_dance-7.0.0-py3-none-any.whl
   hash:
-    sha256: 73e1410ce8b99cc22729e402dd88744c665d673fcc7f9088dab6af1833b4fd71
+    sha256: 935f5806d587eed94b53cf356ee921466bb32ba83405ed5a4e8ac8ea859620dc
   category: main
   optional: false
