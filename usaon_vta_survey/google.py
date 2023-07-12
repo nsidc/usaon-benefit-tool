@@ -1,11 +1,13 @@
+import os
+
 from flask import Flask, redirect, url_for
 from flask_dance.contrib.google import google, make_google_blueprint
 
 app = Flask(__name__)
 app.secret_key = "supersekrit"
 blueprint = make_google_blueprint(
-    client_id=CLIENT_ID,
-    client_secret=CLIENT_SECRET,
+    client_id=os.getenv('CLIENT_ID'),
+    client_secret=os.getenv('CLIENT_SECRET'),
     scope=["profile", "email"],
 )
 app.register_blueprint(blueprint, url_prefix="/login")
