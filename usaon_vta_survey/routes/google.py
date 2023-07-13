@@ -1,25 +1,28 @@
 import os
 
-from flask import Flask, redirect, url_for
+from flask import redirect, url_for
 from flask_dance.contrib.google import google, make_google_blueprint
 
-app = Flask(__name__)
-app.secret_key = "supersekrit"
+from usaon_vta_survey import app
+
 blueprint = make_google_blueprint(
     client_id=os.getenv('CLIENT_ID'),
     client_secret=os.getenv('CLIENT_SECRET'),
     scope=["profile", "email"],
 )
-app.register_blueprint(blueprint, url_prefix="/login")
+app.register_blueprint(
+    blueprint, url_prefix="/login"
+)  # can we make this something other than login
 
 
-@app.route("/")
-def index():
+@app.route("/log-in")  # to change this to /login
+def login():
     if not google.authorized:
         return redirect(url_for("google.login"))
-    resp = google.get("/plus/v1/people/me")
+    resp = google.get("/oauth2/v2/userinfo")
     assert resp.ok, resp.text
-    return "You are {email} on Google".format(email=resp.json()["emails"][0]["value"])
+    # "You are {email} on Google".format(email=resp.json()['emails'])
+    return redirect()
 
 
 if __name__ == "__main__":
