@@ -9,7 +9,15 @@ WORKDIR /usaon-vta-survey
 # Activate the conda environment during build process
 ARG MAMBA_DOCKERFILE_ACTIVATE=1
 
+COPY ./conda-lock.yml .
+
 RUN micromamba create -n usaon-vta-survey -f conda-lock.yml
+
+# RUN micromamba clean --all --yes
+RUN micromamba install -y \
+    # NOTE: -p is important to install to the "base" env
+    -p /opt/conda \
+    -f conda-lock.yml
 
 # Install source
 COPY ./setup.py .
@@ -19,6 +27,7 @@ COPY ./tasks ./tasks
 COPY ./usaon_vta_survey ./usaon_vta_survey
 
 ENV FLASK_APP=usaon_vta_survey
+
 
 # Did the build work?
 RUN python -c "import flask"
