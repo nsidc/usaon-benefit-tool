@@ -15,14 +15,14 @@ app.register_blueprint(
 )  # can we make this something other than login
 
 
-@app.route("/log-in")  # to change this to /login
+@app.route("/")  # to change this to /login
 def login():
     if not google.authorized:
         return redirect(url_for("google.login"))
     resp = google.get("/oauth2/v2/userinfo")
     assert resp.ok, resp.text
     # "You are {email} on Google".format(email=resp.json()['emails'])
-    return redirect()
+    return "You are {email} on Google".format(email=resp.json()['email'])  # redirect()
 
 
 if __name__ == "__main__":

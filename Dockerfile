@@ -19,6 +19,10 @@ RUN micromamba install -y \
     -p /opt/conda \
     -f conda-lock.yml
 
+# Seemed like conda-lock was a bit off about the pip installs
+RUN pip install wtforms_sqlalchemy
+RUN pip install flask-dance
+
 # Install source
 COPY ./setup.py .
 COPY ./pyproject.toml .
