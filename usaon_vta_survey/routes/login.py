@@ -13,14 +13,14 @@ blueprint = make_google_blueprint(
     scope=["profile", "email"],
 )
 app.register_blueprint(
-    blueprint, url_prefix="/google_oauth"
-)  # can we make this something other than login
+    blueprint, url_prefix="/login"
+)  
 
 
-@app.route("/login")  # to change this to /login
+@app.route("/log-in")  # to change this to /login
 def login():
     if not google.authorized:
-        return redirect(url_for("login.google_oauth"))
+        return redirect(url_for("google.login"))
     resp = google.get("/oauth2/v2/userinfo")
     assert resp.ok, resp.text
     ensure_user_exists(resp.json())
