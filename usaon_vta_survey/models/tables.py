@@ -63,6 +63,34 @@ class IORelationshipMixin:
         return io
 
 
+class User(BaseModel):
+    __tablename__ = 'user'
+    id = Column(
+        # This will be email from google sso
+        String,
+        primary_key=True,
+        nullable=False,
+    )
+    name = Column(
+        # This will be name from google sso
+        String,
+        nullable=False,
+    )
+    orcid = Column(
+        String(64),  # how long are orcids?
+        nullable=True,
+    )
+    # TODO: Role
+    biography = Column(
+        String,
+        nullable=True,
+    )
+    affiliation = Column(
+        String,
+        nullable=True,
+    )
+
+
 class Survey(BaseModel):
     __tablename__ = 'survey'
     id = Column(
@@ -75,6 +103,12 @@ class Survey(BaseModel):
         Integer,
         ForeignKey('response.id'),
         nullable=True,
+    )
+
+    created_by = Column(
+        String,
+        ForeignKey('user.id'),
+        nullable=False,
     )
 
     created_timestamp = Column(
@@ -99,6 +133,11 @@ class Response(BaseModel):
         Integer,
         primary_key=True,
         autoincrement=True,
+    )
+    created_by = Column(
+        String,
+        ForeignKey('user.id'),
+        nullable=False,
     )
     created_timestamp = Column(
         DateTime,
