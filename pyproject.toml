@@ -39,9 +39,10 @@ ignore = [
 # E501: Line too long. Long strings, e.g. URLs, are common in config.
 "usaon_vta_survey/models/tables.py" = ["A003"]
 "tasks/format.py" = ["A001"]
+"usaon_vta_survey/forms.py" = ["N802"]
+"usaon_vta_survey/routes/__init__.py" = ["F401", "I001"]
 
 [tool.ruff.isort]
-known-first-party = ["sipn-reanalysis-ingest"]
 known-third-party = ["luigi"]
 
 [tool.ruff.mccabe]

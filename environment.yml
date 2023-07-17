@@ -30,7 +30,8 @@ dependencies:
   - loguru ~=0.6.0
 
   - pip:
-    - wtforms-sqlalchemy ~=0.3      
+    - wtforms-sqlalchemy
+    - flask-dance
 
 platforms:
   - linux-64

@@ -8,6 +8,9 @@ services:
     environment:
       - "FLASK_DEBUG=True"
       - "FLASK_SECRET_KEY=supersecret"
+        # https://flask-dance.readthedocs.io/en/v0.8.0/quickstarts/google.html#code
+        # Allow http in dev. DO NOT USE IN PROD.
+      - "OAUTHLIB_INSECURE_TRANSPORT=1"
     volumes:
       - "./usaon_vta_survey:/usaon-vta-survey/usaon_vta_survey:ro"
       - "./tasks:/usaon-vta-survey/tasks:ro"

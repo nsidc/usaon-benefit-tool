@@ -1,12 +1,11 @@
-# isort: skip_file
 import os
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData, inspect as sqla_inspect
+from sqlalchemy import MetaData
+from sqlalchemy import inspect as sqla_inspect
 
 from usaon_vta_survey.constants.db import DB_CONNSTR
-
 
 db = SQLAlchemy(
     metadata=MetaData(

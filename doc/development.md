@@ -29,4 +29,8 @@ Bring up the docker container
 
 ## Initialize the database
 
-Run `./scripts/invoke_in_container.sh db.init`
+Run `./scripts/invoke_in_container.sh db.init`  
+
+This can also be used to drop and recreate all the tables.
+
+> :warning: This results in all the data in the database being deleted.

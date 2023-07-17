@@ -28,6 +28,10 @@ services:
       - "DB_USER"
       - "DB_PASSWORD"
       - "FLASK_SECRET_KEY"
+        # https://flask-dance.readthedocs.io/en/v0.8.0/quickstarts/google.html#code
+      - "OAUTHLIB_RELAX_TOKEN_SCOPE=1"
+      - "USAON_VTA_GOOGLE_CLIENT_ID"
+      - "USAON_VTA_GOOGLE_CLIENT_SECRET"
 
   # A proxy to the real DB
   db:
