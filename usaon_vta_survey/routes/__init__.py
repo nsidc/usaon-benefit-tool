@@ -1,8 +1,8 @@
-import usaon_vta_survey.routes.response  # ruff: noqa
-import usaon_vta_survey.routes.response.applications  # ruff: noqa
-import usaon_vta_survey.routes.response.data_products  # ruff: noqa
-import usaon_vta_survey.routes.response.observing_systems  # ruff: noqa
-import usaon_vta_survey.routes.response.relationships.data_product_application  # ruff: noqa
-import usaon_vta_survey.routes.login  # ruff: noqa
-import usaon_vta_survey.routes.survey  # ruff: noqa
-import usaon_vta_survey.routes.surveys  # root route
+import usaon_vta_survey.routes.response
+import usaon_vta_survey.routes.response.applications
+import usaon_vta_survey.routes.response.data_products
+import usaon_vta_survey.routes.response.observing_systems
+import usaon_vta_survey.routes.response.relationships.data_product_application
+import usaon_vta_survey.routes.login
+import usaon_vta_survey.routes.survey
+import usaon_vta_survey.routes.surveys
