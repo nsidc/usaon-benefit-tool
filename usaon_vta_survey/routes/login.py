@@ -13,17 +13,18 @@ blueprint = make_google_blueprint(
     scope=["profile", "email"],
 )
 app.register_blueprint(
-    blueprint, url_prefix="/login"
+    blueprint, url_prefix="/google_oauth"
 )  
 
 
-@app.route("/log-in")  # to change this to /login
+@app.route("/login")
 def login():
     if not google.authorized:
         return redirect(url_for("google.login"))
     resp = google.get("/oauth2/v2/userinfo")
     assert resp.ok, resp.text
     ensure_user_exists(resp.json())
+    # TODO: redirect to profile page for new user
     return "You are {email} on Google".format(email=resp.json()['email'])  # redirect()
 
 
