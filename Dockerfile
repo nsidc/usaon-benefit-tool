@@ -13,7 +13,8 @@ COPY ./conda-lock.yml .
 
 RUN micromamba create -n usaon-vta-survey -f conda-lock.yml
 
-# RUN micromamba clean --all --yes
+RUN micromamba clean --all --yes
+
 RUN micromamba install -y \
     # NOTE: -p is important to install to the "base" env
     -p /opt/conda \

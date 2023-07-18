@@ -16,7 +16,7 @@ nsidc@nsidc.org for more information.
 
 ## Requirements
 
-_TODO_ Probably Python and/or Docker
+Docker + docker-compose
 
 
 ## Installation
