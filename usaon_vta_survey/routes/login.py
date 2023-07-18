@@ -12,9 +12,7 @@ blueprint = make_google_blueprint(
     client_secret=os.getenv('USAON_VTA_GOOGLE_CLIENT_SECRET'),
     scope=["profile", "email"],
 )
-app.register_blueprint(
-    blueprint, url_prefix="/google_oauth"
-)  
+app.register_blueprint(blueprint, url_prefix="/google_oauth")
 
 
 @app.route("/login")
@@ -24,8 +22,8 @@ def login():
     resp = google.get("/oauth2/v2/userinfo")
     assert resp.ok, resp.text
     ensure_user_exists(resp.json())
-    # TODO: redirect to profile page for new user
-    return "You are {email} on Google".format(email=resp.json()['email'])  # redirect()
+    # TODO: redirect to profile page for new user only
+    return redirect(url_for('profile', id='roma8902@colorado.edu'))
 
 
 @app.before_request
