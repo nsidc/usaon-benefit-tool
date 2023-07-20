@@ -21,6 +21,7 @@ from usaon_vta_survey.models.tables import (
     ResponseObservingSystem,
     ResponseObservingSystemDataProduct,
     Survey,
+    User,
 )
 
 
@@ -41,6 +42,7 @@ model_form = partial(model_form, converter=CustomModelConverter())
 BaseModel: DeclarativeMeta = db.Model
 
 FORMS_BY_MODEL: dict[BaseModel, Form] = {
+    User: model_form(User, only=['orcid']),
     Survey: model_form(Survey, only=['notes']),
     # Response entities ("nodes" from Sankey diagram perspective)
     ResponseObservingSystem: model_form(

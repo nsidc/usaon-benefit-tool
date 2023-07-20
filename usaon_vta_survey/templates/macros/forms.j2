@@ -155,3 +155,26 @@
     </ul>
   {% endif %}
 {%- endmacro -%}
+
+
+{% macro user(form) -%}
+  {{form.name.label}} {{form.name(size=50)}}
+  {% if form.name.errors %}
+    <ul class="errors">
+    {% for error in form.name.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br/>
+
+  {{form.orcid.label}} {{form.orcid(size=50)}}
+  {% if form.orcid.errors %}
+    <ul class="errors">
+    {% for error in form.orcid.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br/>
+{%- endmacro -%}

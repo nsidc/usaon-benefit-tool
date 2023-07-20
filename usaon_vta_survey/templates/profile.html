@@ -1,35 +1,16 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
-    <h1>Profile for user: {{ user.id }}</h1>
-		<form method="post">
-        <p>
-            <label for="orcid">ORCID</label>
-            <input type="text" name="orcid"
-                   placeholder="orcid">
-            </input>
-        </p>
 
-        <p>
-            <label for="biography">Biography</label>
-            <input type="text" name="biography"
-                   placeholder="about you">
-            </input>
-        </p>
+  <h2>{% block title %}User: {{user.id}}{% endblock %}</h1>
 
-        <p>
-            <label for="affiliation">Affiliation</label>
-            <input type="text" name="affiliation"
-                   placeholder="workplace/org">
-            </input>
-        </p>
-        <p>
-            <button type="submit">Submit</label>
-        </p>
-    <hr>
-    {% for post in posts %}
-    <p>
-    {{ post.author.id }} says: <b>{{ post.body }}</b>
-    </p>
-    {% endfor %}
+
+  <h3>Profile</h3>
+
+  {% if user.id %}
+    <p>User exists. (show profile values)</p>
+  {% else %}
+    <p>No user exists.</p>
+  {% endif %}
+
 {% endblock %}

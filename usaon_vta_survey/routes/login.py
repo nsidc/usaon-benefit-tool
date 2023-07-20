@@ -22,10 +22,9 @@ def login():
     resp = google.get("/oauth2/v2/userinfo")
     assert resp.ok, resp.text
     ensure_user_exists(resp.json())
+    email = resp.json()['email']
     # TODO: redirect to profile page for new user only
-    return (
-        "You are logged in"  # redirect(url_for('profile', id='roma8902@colorado.edu'))
-    )
+    return f"You are logged in: {email}"
 
 
 @app.before_request
