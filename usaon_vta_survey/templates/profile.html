@@ -1,11 +1,9 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
+    <h1>Profile for user: {{ user.id }}</h1>
 
-  <h2>{% block title %}User: {{user.id}}{% endblock %}</h1>
-
-
-  <h3>Profile</h3>
+  <h2>Profile</h2>
 
   {% if user.id %}
     <p>User exists. (show profile values)</p>

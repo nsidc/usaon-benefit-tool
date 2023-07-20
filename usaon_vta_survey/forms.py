@@ -29,8 +29,10 @@ class CustomModelConverter(ModelConverter):
     @converts("String")
     def conv_String(self, field_args, **extra):
         self._string_common(field_args=field_args, **extra)
-        if (extra['column'].type.length is not None
-            and extra['column'].type.length > 256):
+        if (
+            extra['column'].type.length is not None
+            and extra['column'].type.length > 256
+        ):
             return fields.TextAreaField(**field_args)
 
         return super().conv_String(field_args, **extra)
@@ -43,9 +45,7 @@ model_form = partial(model_form, converter=CustomModelConverter())
 BaseModel: DeclarativeMeta = db.Model
 
 FORMS_BY_MODEL: dict[BaseModel, Form] = {
-    User: model_form(
-        User,
-        only=['name', 'orcid', 'biography', 'affiliation']),
+    User: model_form(User, only=['name', 'orcid', 'biography', 'affiliation']),
     Survey: model_form(Survey, only=['notes']),
     # Response entities ("nodes" from Sankey diagram perspective)
     ResponseObservingSystem: model_form(

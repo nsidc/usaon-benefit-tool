@@ -8,10 +8,37 @@
   <form method="POST">
         {{form.csrf_token}}
 
+        {{form.name.label}} {{form.name(rows=4, cols=100)}}
+        {% if form.name.errors %}
+            <ul class="errors">
+            {% for error in form.name.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+
         {{form.orcid.label}} {{form.orcid(rows=4, cols=100)}}
         {% if form.orcid.errors %}
             <ul class="errors">
-            {% for error in form.name.errors %}
+            {% for error in form.orcid.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+
+        {{form.biography.label}} {{form.biography(rows=4, cols=100)}}
+        {% if form.biography.errors %}
+            <ul class="errors">
+            {% for error in form.biography.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+
+        {{form.affiliation.label}} {{form.affiliation(rows=4, cols=100)}}
+        {% if form.affiliation.errors %}
+            <ul class="errors">
+            {% for error in form.affiliation.errors %}
                 <li>{{ error }}</li>
             {% endfor %}
             </ul>

@@ -76,6 +76,7 @@ class User(BaseModel):
         String,
         nullable=False,
     )
+    # Add Role and set default to Admin
     orcid = Column(
         String(64),  # how long are orcids?
         nullable=True,

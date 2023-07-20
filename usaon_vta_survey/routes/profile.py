@@ -10,8 +10,7 @@ from usaon_vta_survey.models.tables import User
 # There will always be ID and NAME from google
 def profile(user_id: str):
     Form = FORMS_BY_MODEL[User]
-    user = User()
-    # breakpoint()
+    user = db.get_or_404(User, user_id)
 
     if request.method == 'POST':
         form = Form(request.form, obj=user)
@@ -21,20 +20,5 @@ def profile(user_id: str):
             db.session.commit()
 
             return render_template('profile.html', user_id=user.id)
-    #  user.biography = request.form['biography']
-    #  user.orcid = request.form['orcid']
-    #  user.affiliation = request.form['affiliation']
-
-    #  db.session.add(user)
-    #  db.session.commit()
-    # return redirect(url_for('surveys'))
     form = Form(obj=user)
     return render_template('new_profile.html', form=form)
-
-
-@app.route('/profile/<id>')
-def view_profile(user_id: str):
-    # Fetch user by ID
-    user = db.get_or_404(User, user_id)
-
-    return render_template('profile_old.html', user=user)
