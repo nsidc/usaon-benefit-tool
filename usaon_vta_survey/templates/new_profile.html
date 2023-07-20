@@ -3,7 +3,7 @@
 
 {% block content %}
 
-  <h2>{% block title %}New Profile{% endblock %}</h1>
+<h2>{% block title %}Profile{% endblock %}</h1>
 
   <form method="POST">
         {{form.csrf_token}}
@@ -16,6 +16,8 @@
             {% endfor %}
             </ul>
         {% endif %}
+        <br>
+        <br>
 
         {{form.orcid.label}} {{form.orcid(rows=4, cols=100)}}
         {% if form.orcid.errors %}
@@ -25,6 +27,8 @@
             {% endfor %}
             </ul>
         {% endif %}
+        <br>
+        <br>
 
         {{form.biography.label}} {{form.biography(rows=4, cols=100)}}
         {% if form.biography.errors %}
@@ -34,6 +38,8 @@
             {% endfor %}
             </ul>
         {% endif %}
+        <br>
+        <br>
 
         {{form.affiliation.label}} {{form.affiliation(rows=4, cols=100)}}
         {% if form.affiliation.errors %}
@@ -43,8 +49,10 @@
             {% endfor %}
             </ul>
         {% endif %}
+        <br>
+        <br>
 
-    <input type="submit" value="Create profile" />
+    <input type="submit" value="Submit" />
 
   </form>
 
