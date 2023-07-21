@@ -19,6 +19,7 @@ def profile(user_id: str):
             db.session.add(user)
             db.session.commit()
 
-            return render_template('profile.html', user_id=user.id)
+            return render_template('profile.html', form=form)
     form = Form(obj=user)
-    return render_template('new_profile.html', form=form)
+    # at this point should there be a redirect or after submit is clicked?
+    return render_template('profile.html', form=form)

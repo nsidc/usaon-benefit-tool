@@ -1,14 +1,4 @@
 {% macro observing_system_fields(form) -%}
-  {{form.id.label}} {{form.id(size=50)}}
-  {% if form.id.errors %}
-    <ul class="errors">
-    {% for error in form.id.errors %}
-      <li>{{ error }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-  <br />
-
   {{form.name.label}} {{form.name(size=50)}}
   {% if form.name.errors %}
     <ul class="errors">
@@ -168,6 +158,16 @@
 
 
 {% macro user(form) -%}
+  {{form.id.label}} {{form.id(size=50)}}
+  {% if form.id.errors %}
+    <ul class="errors">
+    {% for error in form.id.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
   {{form.name.label}} {{form.name(size=50)}}
   {% if form.name.errors %}
     <ul class="errors">
