@@ -2,8 +2,8 @@ import os
 import time
 
 from flask import redirect, session, url_for
-from flask_login import login_user
 from flask_dance.contrib.google import google, make_google_blueprint
+from flask_login import login_user
 
 from usaon_vta_survey import app
 from usaon_vta_survey.util.db.user import ensure_user_exists
@@ -25,8 +25,8 @@ def login():
 
     user = ensure_user_exists(resp.json())
     login_user(user)
-    
-    email = user.id 
+
+    email = user.id
     # TODO: redirect to profile page for new user only
     return f"You are logged in: {email}"
 

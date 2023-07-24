@@ -92,6 +92,7 @@ class User(BaseModel, UserMixin):
         nullable=True,
     )
 
+
 class Survey(BaseModel):
     __tablename__ = 'survey'
     id = Column(
