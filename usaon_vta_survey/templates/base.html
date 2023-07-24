@@ -9,7 +9,7 @@
     <h1>US AON VTA Survey System</h1>
     <a href="{{url_for('view_surveys')}}">Home</a>
     <a href="{{url_for('login')}}">Login</a>
-    <a href="{{url_for('profile', user_id='roma8902@colorado.edu')}}">Profile</a>
+    <a href="{{url_for('profile', user_id=current_user.id)}}">Profile</a>
   </nav>
   <section class="content">
     <header>

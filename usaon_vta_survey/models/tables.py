@@ -14,6 +14,7 @@ from datetime import datetime
 from functools import cache
 from typing import Final
 
+from flask_login import UserMixin
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import relationship
@@ -63,7 +64,7 @@ class IORelationshipMixin:
         return io
 
 
-class User(BaseModel):
+class User(BaseModel, UserMixin):
     __tablename__ = 'user'
     id = Column(
         # This will be email from google sso
@@ -90,7 +91,6 @@ class User(BaseModel):
         String,
         nullable=True,
     )
-
 
 class Survey(BaseModel):
     __tablename__ = 'survey'

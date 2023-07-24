@@ -2,6 +2,7 @@ import os
 import time
 
 from flask import redirect, session, url_for
+from flask_login import login_user
 from flask_dance.contrib.google import google, make_google_blueprint
 
 from usaon_vta_survey import app
@@ -21,8 +22,11 @@ def login():
         return redirect(url_for("google.login"))
     resp = google.get("/oauth2/v2/userinfo")
     assert resp.ok, resp.text
-    ensure_user_exists(resp.json())
-    email = resp.json()['email']
+
+    user = ensure_user_exists(resp.json())
+    login_user(user)
+    
+    email = user.id 
     # TODO: redirect to profile page for new user only
     return f"You are logged in: {email}"
 

@@ -3,21 +3,11 @@
 
 {% block content %}
 
-<h2>{% block title %}Profile{% endblock %}</h1>
+<h1>{% block title %}Profile: {{ current_user.name }} {% endblock %}</h1>
+<h3>{{ current_user.id }}</h3>
 
   <form method="POST">
         {{form.csrf_token}}
-
-        {{form.name.label}} {{form.name(rows=4, cols=100)}}
-        {% if form.name.errors %}
-            <ul class="errors">
-            {% for error in form.name.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-            </ul>
-        {% endif %}
-        <br>
-        <br>
 
         {{form.orcid.label}} {{form.orcid(rows=4, cols=100)}}
         {% if form.orcid.errors %}
