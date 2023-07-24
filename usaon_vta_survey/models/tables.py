@@ -73,16 +73,18 @@ class User(BaseModel, UserMixin):
         nullable=False,
     )
     name = Column(
-        # This will be name from google sso
         String,
         nullable=False,
     )
-    # Add Role and set default to Admin
     orcid = Column(
         String(64),  # how long are orcids?
         nullable=True,
     )
-    # TODO: Role
+    role = Column(
+        String,
+        ForeignKey('role.role'),
+        nullable=True,
+    )
     biography = Column(
         String,
         nullable=True,
@@ -90,6 +92,17 @@ class User(BaseModel, UserMixin):
     affiliation = Column(
         String,
         nullable=True,
+    )
+
+
+class Role(BaseModel):
+    __tablename__ = 'role'
+    role = Column(
+        String,
+        # NOTE: not currently working
+        default="admin",
+        primary_key=True,
+        nullable=False,
     )
 
 
