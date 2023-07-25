@@ -73,16 +73,19 @@ class User(BaseModel, UserMixin):
         nullable=False,
     )
     name = Column(
-        # This will be name from google sso
         String,
         nullable=False,
     )
-    # Add Role and set default to Admin
     orcid = Column(
         String(64),  # how long are orcids?
         nullable=True,
     )
-    # TODO: Role
+    role = Column(
+        String,
+        ForeignKey('role.id'),
+        default="admin",
+        nullable=False,
+    )
     biography = Column(
         String,
         nullable=True,
@@ -353,6 +356,15 @@ class ResponseSocietalBenefitArea(BaseModel, IORelationshipMixin):
 
 
 # Association tables
+class Role(BaseModel):
+    __tablename__ = 'role'
+    id = Column(
+        String,
+        primary_key=True,
+        nullable=False,
+    )
+
+
 class ResponseObservingSystemDataProduct(BaseModel):
     __tablename__ = 'response_observing_system_data_product'
     response_observing_system_id = Column(

@@ -3,8 +3,10 @@ from sqlalchemy import MetaData
 from sqlalchemy.orm import Session
 
 from usaon_vta_survey import db
+from usaon_vta_survey.constants.roles import ROLES
 from usaon_vta_survey.constants.sba import IAOA_SBA_FRAMEWORK
 from usaon_vta_survey.models.tables import (
+    Role,
     SocietalBenefitArea,
     SocietalBenefitKeyObjective,
     SocietalBenefitSubArea,
@@ -34,8 +36,21 @@ def create_tables(session: Session) -> None:
 
 def populate_reference_data() -> None:
     init_societal_benefit_areas(db.session)
-    # init_roles(db.session)
+    init_roles(db.session)
     logger.info('Reference data loaded.')
+
+
+def init_roles(session: Session) -> None:
+    session.add_all(
+        [
+            Role(
+                id=role,
+            )
+            for role in ROLES
+        ]
+    )
+
+    session.commit()
 
 
 def init_societal_benefit_areas(session: Session) -> None:
