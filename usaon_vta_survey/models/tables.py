@@ -82,7 +82,8 @@ class User(BaseModel, UserMixin):
     )
     role = Column(
         String,
-        ForeignKey('role.role'),
+        ForeignKey('role.id'),
+        # default="admin",
         nullable=True,
     )
     biography = Column(
@@ -97,10 +98,8 @@ class User(BaseModel, UserMixin):
 
 class Role(BaseModel):
     __tablename__ = 'role'
-    role = Column(
+    id = Column(
         String,
-        # NOTE: not currently working
-        default="admin",
         primary_key=True,
         nullable=False,
     )
