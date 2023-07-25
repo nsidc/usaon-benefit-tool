@@ -1,4 +1,5 @@
 ROLES = [
     'admin',
     # 'respondent',
+    # 'analyst',
 ]

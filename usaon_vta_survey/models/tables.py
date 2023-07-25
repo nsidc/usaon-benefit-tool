@@ -96,15 +96,6 @@ class User(BaseModel, UserMixin):
     )
 
 
-class Role(BaseModel):
-    __tablename__ = 'role'
-    id = Column(
-        String,
-        primary_key=True,
-        nullable=False,
-    )
-
-
 class Survey(BaseModel):
     __tablename__ = 'survey'
     id = Column(
@@ -365,6 +356,15 @@ class ResponseSocietalBenefitArea(BaseModel, IORelationshipMixin):
 
 
 # Association tables
+class Role(BaseModel):
+    __tablename__ = 'role'
+    id = Column(
+        String,
+        primary_key=True,
+        nullable=False,
+    )
+
+
 class ResponseObservingSystemDataProduct(BaseModel):
     __tablename__ = 'response_observing_system_data_product'
     response_observing_system_id = Column(
