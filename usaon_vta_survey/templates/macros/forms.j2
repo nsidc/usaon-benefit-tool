@@ -157,7 +157,7 @@
 {%- endmacro -%}
 
 
-{% macro user(form) -%}
+{% macro user_fields(form) -%}
   {{form.id.label}} {{form.id(size=50)}}
   {% if form.id.errors %}
     <ul class="errors">
