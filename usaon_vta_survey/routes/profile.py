@@ -27,5 +27,4 @@ def profile(user_id: str):
 
             return render_template('profile.html', form=form)
     form = Form(obj=user)
-    # at this point should there be a redirect or after submit is clicked?
     return render_template('profile.html', form=form)

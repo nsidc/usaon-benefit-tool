@@ -157,27 +157,7 @@
 {%- endmacro -%}
 
 
-{% macro user(form) -%}
-  {{form.id.label}} {{form.id(size=50)}}
-  {% if form.id.errors %}
-    <ul class="errors">
-    {% for error in form.id.errors %}
-      <li>{{ error }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-  <br />
-
-  {{form.name.label}} {{form.name(size=50)}}
-  {% if form.name.errors %}
-    <ul class="errors">
-    {% for error in form.name.errors %}
-      <li>{{ error }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-  <br/>
-
+{% macro user_fields(form) -%}
   {{form.orcid.label}} {{form.orcid(size=50)}}
   {% if form.orcid.errors %}
     <ul class="errors">
@@ -186,6 +166,7 @@
     {% endfor %}
     </ul>
   {% endif %}
+  <br/>
   <br/>
 
   {{form.biography.label}} {{form.biography(size=50)}}
@@ -197,4 +178,16 @@
     </ul>
   {% endif %}
   <br/>
+  <br/>
+
+  {{form.affiliation.label}} {{form.affiliation(size=50)}}
+  {% if form.affiliation.errors %}
+    <ul class="errors">
+    {% for error in form.affiliation.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br/>
+
 {%- endmacro -%}
