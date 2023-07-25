@@ -83,8 +83,8 @@ class User(BaseModel, UserMixin):
     role = Column(
         String,
         ForeignKey('role.id'),
-        # default="admin",
-        # nullable=False,
+        default="admin",
+        nullable=False,
     )
     biography = Column(
         String,
