@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% from 'macros/forms.j2' import user_fields %}
+
+
+{% block content %}
+
+<h1>{% block title %}Profile: {{ current_user.name }} {% endblock %}</h1>
+<h3>{{ current_user.id }}</h3>
+
+  <form method="POST">
+        {{form.csrf_token}}
+        {{user_fields(form)}}
+        <br>
+
+    <input type="submit" value="Submit" />
+
+  </form>
+
+{% endblock %}

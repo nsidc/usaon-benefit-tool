@@ -13,7 +13,6 @@ x-base: &base
 networks:
   usaon-vta:
 
-
 services:
   usaon-vta-survey:
     <<: *base
@@ -25,13 +24,13 @@ services:
     ports:
       - "80:5000"
     environment:
-      - "DB_USER"
-      - "DB_PASSWORD"
+      - "DB_USER=${DB_USER:?DB_USER must be set}"
+      - "DB_PASSWORD=${DB_PASSWORD:?DB_PASSWORD must be set}"
       - "FLASK_SECRET_KEY"
         # https://flask-dance.readthedocs.io/en/v0.8.0/quickstarts/google.html#code
       - "OAUTHLIB_RELAX_TOKEN_SCOPE=1"
-      - "USAON_VTA_GOOGLE_CLIENT_ID"
-      - "USAON_VTA_GOOGLE_CLIENT_SECRET"
+      - "USAON_VTA_GOOGLE_CLIENT_ID=${USAON_VTA_GOOGLE_CLIENT_ID:?USAON_VTA_GOOGLE_CLIENT_ID must be set}"
+      - "USAON_VTA_GOOGLE_CLIENT_SECRET=${USAON_VTA_GOOGLE_CLIENT_SECRET:?USAON_VTA_GOOGLE_CLIENT_ID must be set}"
 
   # A proxy to the real DB
   db:
@@ -43,7 +42,7 @@ services:
       - "./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"
     environment:
       # cname
-      - "BACKEND_HOST=${DB_HOST}"
+      - "BACKEND_HOST=${DB_HOST:?DB_HOST must be set}"
       # 5432
-      - "BACKEND_PORT=${DB_PORT}"
+      - "BACKEND_PORT=${DB_PORT:?DB_PORT must be set}"
       - "FRONTEND_PORT=5432"

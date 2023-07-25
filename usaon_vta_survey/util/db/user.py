@@ -8,8 +8,9 @@ def ensure_user_exists(google_json: dict) -> User:
     Note: Does this include user updates for something like a name change?
     """
     user = User(id=google_json['email'], name=google_json['name'])
-    if user := db.session.get(User, user.id):
-        return user
+    user_db = db.session.get(User, user.id)
+    if user_db:
+        return user_db
     else:
         db.session.add(user)
         db.session.commit()

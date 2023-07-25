@@ -34,7 +34,7 @@ def create_tables(session: Session) -> None:
 
 def populate_reference_data() -> None:
     init_societal_benefit_areas(db.session)
-
+    # init_roles(db.session)
     logger.info('Reference data loaded.')
 
 
