@@ -38,8 +38,9 @@ ENV FLASK_APP=usaon_vta_survey
 RUN python -c "import flask"
 RUN which flask
 
-# TODO: Move this to dev docker-compose and use a production ready server option
 # Start a flask server
 # WARNING: Using CMD is key; using ENTRYPOINT overrides the micromamba
-# entrypoint and prevents env activation.
-CMD ["flask", "run", "-h", "0.0.0.0"]
+#          entrypoint and prevents env activation.
+# TODO: Move this to dev docker-compose and use a production ready server
+#       option in non-dev
+CMD ["flask", "run", "--cert=adhoc", "-h", "0.0.0.0"]

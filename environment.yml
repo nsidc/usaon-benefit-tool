@@ -29,6 +29,9 @@ dependencies:
 
   - loguru ~=0.6.0
 
+  # Optional dependency enables adhoc ssl certs in dev:
+  - pyopenssl
+
   - pip:
     - wtforms-sqlalchemy
     - flask-dance
