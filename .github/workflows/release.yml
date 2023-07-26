@@ -1,0 +1,61 @@
+name: "Build and release container image"
+
+on:
+  push:
+    branches:
+      - "main"
+  release:
+    types:
+      - "published"
+
+
+# Default to bash in login mode for all steps; key to activating conda
+# environment!
+#     https://github.com/mamba-org/provision-with-micromamba#IMPORTANT
+defaults:
+  run:
+    shell: "bash -l {0}"
+
+
+
+jobs:
+
+  build-and-release-image:
+    name: "Build and release container image"
+    runs-on: "ubuntu-latest"
+    needs: ["test"]
+    env:
+      IMAGE_NAME: "nsidc/usaon-vta-survey"
+      # GitHub Actions expressions don't have great conditional support, so
+      # writing a ternary expression looks a lot like bash. In Python, this
+      # would read as:
+      #     github.release.tag_name if github.event_name == 'release' else 'latest'
+      #     https://docs.github.com/en/actions/learn-github-actions/expressions
+      IMAGE_TAG: "${{ github.event_name == 'release' && github.release.tag_name || 'latest' }}"
+    steps:
+      - name: "Check out repository"
+        uses: "actions/checkout@v3"
+
+      - name: "Build container image"
+        run: |
+          docker build -t "${IMAGE_NAME}:${IMAGE_TAG}" .
+
+      - name: "DockerHub login"
+        uses: "docker/login-action@v2"
+        with:
+          username: "${{secrets.DOCKER_USER}}"
+          password: "${{secrets.DOCKER_PASS}}"
+
+      - name: "GHCR login"
+        uses: "docker/login-action@v2"
+        with:
+          registry: "ghcr.io"
+          username: "${{ github.repository_owner }}"
+          password: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: "Push to DockerHub and GHCR"
+        run: |
+          docker push "${IMAGE_NAME}:${IMAGE_TAG}"
+
+          docker tag "${IMAGE_NAME}:${IMAGE_TAG}" "ghcr.io/${IMAGE_NAME}:${IMAGE_TAG}"
+          docker push "ghcr.io/${IMAGE_NAME}:${IMAGE_TAG}"
