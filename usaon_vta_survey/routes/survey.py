@@ -1,4 +1,5 @@
 from flask import redirect, render_template, request, url_for
+from flask_login import current_user
 
 from usaon_vta_survey import app, db
 from usaon_vta_survey.forms import FORMS_BY_MODEL
@@ -16,6 +17,7 @@ def new_survey():
         if form.validate():
             # Insert to DB
             form.populate_obj(survey)
+            survey.created_by = current_user.id
             db.session.add(survey)
             db.session.commit()
 
