@@ -26,7 +26,7 @@ services:
         # https://flask-dance.readthedocs.io/en/v0.8.0/quickstarts/google.html#code
       - "OAUTHLIB_RELAX_TOKEN_SCOPE=1"
       - "USAON_VTA_GOOGLE_CLIENT_ID=${USAON_VTA_GOOGLE_CLIENT_ID:?USAON_VTA_GOOGLE_CLIENT_ID must be set}"
-      - "USAON_VTA_GOOGLE_CLIENT_SECRET=${USAON_VTA_GOOGLE_CLIENT_SECRET:?USAON_VTA_GOOGLE_CLIENT_ID must be set}"
+      - "USAON_VTA_GOOGLE_CLIENT_SECRET=${USAON_VTA_GOOGLE_CLIENT_SECRET:?USAON_VTA_GOOGLE_CLIENT_SECRET must be set}"
 
   # A proxy to the real DB
   db:
