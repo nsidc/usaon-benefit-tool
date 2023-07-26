@@ -113,7 +113,6 @@ class Survey(BaseModel):
     created_by = Column(
         String,
         ForeignKey('user.id'),
-        # default=current_user.id,
         nullable=False,
     )
 
