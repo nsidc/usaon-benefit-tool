@@ -14,7 +14,7 @@ from datetime import datetime
 from functools import cache
 from typing import Final
 
-from flask_login import UserMixin
+from flask_login import UserMixin, current_user
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import relationship
@@ -113,6 +113,7 @@ class Survey(BaseModel):
     created_by = Column(
         String,
         ForeignKey('user.id'),
+        default=(lambda: current_user.id),
         nullable=False,
     )
 
@@ -142,6 +143,7 @@ class Response(BaseModel):
     created_by = Column(
         String,
         ForeignKey('user.id'),
+        default=(lambda: current_user.id),
         nullable=False,
     )
     created_timestamp = Column(
