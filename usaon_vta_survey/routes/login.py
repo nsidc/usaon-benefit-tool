@@ -26,9 +26,7 @@ def login():
     user = ensure_user_exists(resp.json())
     login_user(user)
 
-    email = user.id
-    # TODO: redirect to profile page for new user only
-    return f"You are logged in: {email}"
+    return redirect('/')
 
 
 @app.before_request
