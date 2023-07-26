@@ -1,4 +1,5 @@
 import os
+from typing import Final
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -6,6 +7,9 @@ from sqlalchemy import MetaData
 from sqlalchemy import inspect as sqla_inspect
 
 from usaon_vta_survey.constants.db import DB_CONNSTR
+from usaon_vta_survey.constants.version import VERSION
+
+__version__: Final[str] = VERSION
 
 db = SQLAlchemy(
     metadata=MetaData(
