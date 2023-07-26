@@ -1,3 +1,8 @@
+# v0.1.1 (2023-07-26)
+
+* Set up "ad-hoc" HTTPS cert for dev
+
+
 # v0.1.0 (2023-07-26)
 
 * Initial release
