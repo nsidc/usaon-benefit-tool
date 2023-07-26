@@ -1,3 +1,3 @@
 # NEXT_VERSION
 
-* TODO
+* Initial release
