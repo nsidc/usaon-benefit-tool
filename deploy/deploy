@@ -5,6 +5,10 @@ set -euo pipefail
 
 source VERSION.env
 
+# TODO: How to genericize this? These envvars can't go in the Git repository.
+# At minimum, we should rename envvars.sh to usaon-vta-survey.sh.
+source /etc/profile.d/envvars.sh
+
 # We have limited disk space in our deployment environment, so the app needs to
 # go down, delete its image, download the new image, and start it back up.
 # TODO: Zero-downtime deployments!
