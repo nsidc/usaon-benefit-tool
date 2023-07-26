@@ -1,0 +1,52 @@
+name: "Test"
+
+on:
+  push:
+      branches:
+        - "main"
+  pull_request:
+
+
+# Default to bash in login mode; key to activating conda environment
+# https://github.com/mamba-org/provision-with-micromamba#IMPORTANT
+defaults:
+  run:
+    shell: "bash -l {0}"
+
+
+jobs:
+  test:
+    name: "Run tests"
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Check out repository"
+        uses: "actions/checkout@v3"
+
+      - name: "Install Conda environment"
+        uses: "mamba-org/setup-micromamba@v1"
+        with:
+          environment-file: "conda-lock.yml"
+          # When using a lock-file, we have to set an environment name.
+          environment-name: "usaon-vta-survey-ci"
+          cache-environment: true
+          # Increase this key to trigger cache invalidation
+          cache-environment-key: 0
+
+      - name: "Run pre-commit checks"
+        run: "pre-commit run --all-files --show-diff-on-failure --color always"
+
+      - name: "Run tests"
+        run: "inv test"
+
+
+  test-build:
+    name: "Run test-build of container image"
+    runs-on: "ubuntu-latest"
+    needs: ["test"]
+    steps:
+      - name: "Check out repository"
+        uses: "actions/checkout@v3"
+
+      - name: "Test-build container image"
+        run: |
+          docker build .
