@@ -12,9 +12,11 @@
 
     <tr>
       <th>id</th>
-      <th>created</th>
-      <th>created by</th>
-      <th>response</th>
+      <th>Title</th>
+      <th>Created On</th>
+      <th>Created by</th>
+      <th>Updated</th>
+      <th>Response</th>
       <th>notes</th>
 
   {% for survey in surveys %}
@@ -22,8 +24,10 @@
       <td>
         <a href="{{url_for('view_survey', survey_id=survey.id)}}">{{survey.id}}</a>
       </td>
+      <td>{{survey.title}}</td>
       <td>{{survey.created_timestamp}}</td>
-      <td>{{survey.created_by}}</td>
+      <td>{{current_user.name}}</td>
+      <td>{{survey.response.updated_timestamp}}</td>
       <td>
         {% if survey.response %}
           <a href="{{url_for('view_response', survey_id=survey.id)}}">
