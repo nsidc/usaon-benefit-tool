@@ -16,11 +16,7 @@ networks:
 services:
   usaon-vta-survey:
     <<: *base
-    # TODO: Use a real version!
-    image: "nsidc/usaon-vta-survey:dev"
-    # TODO: Remove build config; this should not be built in a non-dev environment
-    build: .
-    # TODO: Stop using the dev server
+    image: "nsidc/usaon-vta-survey:${USAON_VTA_SURVEY_VERSION:-latest}"
     ports:
       - "80:5000"
     environment:

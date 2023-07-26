@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# This script is a deployment script tailored to NSIDC's deployment
+# environment. It needs to be genericized!
+set -euo pipefail
+
+source VERSION.env
+
+# We have limited disk space in our deployment environment, so the app needs to
+# go down, delete its image, download the new image, and start it back up.
+# TODO: Zero-downtime deployments!
+docker-compose down
+docker system prune -af
+docker-compose up -d

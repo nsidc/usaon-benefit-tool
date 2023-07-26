@@ -3,6 +3,8 @@ version: '3.7'
 services:
 
   usaon-vta-survey:
+    image: "nsidc/usaon-vta-survey:dev"
+    build: "."
     ports:
       - "5000:5000"
     environment:
