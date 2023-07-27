@@ -4,7 +4,9 @@
 {% block content %}
   <h2>{% block title %}Users{% endblock %}</h1>
 
-  {% if current_user.role=='admin' %}
+  {% if not current_user.role=='admin' %}
+    <h3>You don't belong here! This page is for admins only.</h3>
+  {% else %}
     <table>
 
       <tr>
