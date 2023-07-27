@@ -8,3 +8,4 @@ import usaon_vta_survey.routes.logout
 import usaon_vta_survey.routes.profile
 import usaon_vta_survey.routes.survey
 import usaon_vta_survey.routes.surveys
+import usaon_vta_survey.routes.users
