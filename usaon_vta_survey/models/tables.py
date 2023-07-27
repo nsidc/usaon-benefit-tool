@@ -110,6 +110,11 @@ class Survey(BaseModel):
         nullable=True,
     )
 
+    title = Column(
+        String(128),
+        nullable=False,
+    )
+
     created_by = Column(
         String,
         ForeignKey('user.id'),
