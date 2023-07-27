@@ -46,7 +46,7 @@ BaseModel: DeclarativeMeta = db.Model
 
 FORMS_BY_MODEL: dict[BaseModel, Form] = {
     User: model_form(User, only=['orcid', 'biography', 'affiliation']),
-    Survey: model_form(Survey, only=['notes']),
+    Survey: model_form(Survey, only=['title', 'notes']),
     # Response entities ("nodes" from Sankey diagram perspective)
     ResponseObservingSystem: model_form(
         ResponseObservingSystem,
