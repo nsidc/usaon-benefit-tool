@@ -4,28 +4,32 @@
 {% block content %}
   <h2>{% block title %}Users{% endblock %}</h1>
 
-  {% if not current_user.role=='admin' %}
-    <h3>You don't belong here! This page is for admins only.</h3>
+  {% if not current_user.is_authenticated %}
+    <h3>Please login to view this page.</h3>  
   {% else %}
-    <table>
+    {% if not current_user.role=='admin' %}
+      <h3>You don't belong here! This page is for admins only.</h3>
+    {% else %}
+      <table>
 
-      <tr>
-        <th>id</th>
-        <th>Name</th>
-        <th>Role</th>
-        <th>Affiliation</th>
-        <th>Bio</th>
+        <tr>
+          <th>id</th>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Affiliation</th>
+          <th>Bio</th>
 
-    {% for user in users %}
-      <tr>
-        <td>{{user.id}} </td>
-        <td>{{user.name}}</td>
-        <td>{{user.role}}</td>
-        <td>{{user.affiliation}}</td>
-        <td>{{user.biography}}</td>
-      </tr>
-    {% endfor %}
+      {% for user in users %}
+        <tr>
+          <td>{{user.id}} </td>
+          <td>{{user.name}}</td>
+          <td>{{user.role}}</td>
+          <td>{{user.affiliation}}</td>
+          <td>{{user.biography}}</td>
+        </tr>
+      {% endfor %}
 
-    </table>
+      </table>
+    {% endif %}
   {% endif %}
 {% endblock %}
