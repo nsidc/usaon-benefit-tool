@@ -5,6 +5,7 @@ from usaon_vta_survey import app, db
 from usaon_vta_survey.forms import FORMS_BY_MODEL
 from usaon_vta_survey.models.tables import User
 
+# TODO: Change this file name
 login_manager = LoginManager(app)
 
 
@@ -13,8 +14,8 @@ def load_user(user_id: str) -> User:
     return User.query.get(user_id)
 
 
-@app.route('/profile/<user_id>', methods=['POST', 'GET'])
-def profile(user_id: str):
+@app.route('/user/<user_id>', methods=['POST', 'GET'])
+def user(user_id: str):
     Form = FORMS_BY_MODEL[User]
     user = db.get_or_404(User, user_id)
 

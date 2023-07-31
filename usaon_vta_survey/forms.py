@@ -59,7 +59,9 @@ model_form = partial(model_form, converter=CustomModelConverter())
 BaseModel: DeclarativeMeta = db.Model
 
 FORMS_BY_MODEL: dict[BaseModel, Form] = {
-    User: model_form(User, only=['orcid', 'biography', 'affiliation']),
+    User: model_form(
+        User, only=['orcid', 'biography', 'affiliation', 'role_id'], exclude_fk=False
+    ),
     Survey: model_form(Survey, only=['title', 'notes']),
     # Response entities ("nodes" from Sankey diagram perspective)
     ResponseObservingSystem: model_form(

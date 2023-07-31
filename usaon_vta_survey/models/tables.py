@@ -80,7 +80,7 @@ class User(BaseModel, UserMixin):
         String(64),  # how long are orcids?
         nullable=True,
     )
-    role = Column(
+    role_id = Column(
         String,
         ForeignKey('role.id'),
         default="admin",
