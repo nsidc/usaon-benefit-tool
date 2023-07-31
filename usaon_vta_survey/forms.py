@@ -10,7 +10,12 @@ from functools import partial
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from wtforms import fields
 from wtforms.form import Form
-from wtforms_sqlalchemy.orm import ModelConverter, converts, model_form
+from wtforms_sqlalchemy.orm import (
+    ModelConverter,
+    QuerySelectField,
+    converts,
+    model_form,
+)
 
 from usaon_vta_survey import db
 from usaon_vta_survey.models.tables import (
@@ -20,9 +25,18 @@ from usaon_vta_survey.models.tables import (
     ResponseDataProductApplication,
     ResponseObservingSystem,
     ResponseObservingSystemDataProduct,
+    Role,
     Survey,
     User,
 )
+
+
+def possible_roles():
+    return Role.query
+
+
+class RoleEdit(Form):
+    role_list = QuerySelectField(query_factory=possible_roles)
 
 
 class CustomModelConverter(ModelConverter):

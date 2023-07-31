@@ -7,6 +7,13 @@
   {% if not current_user.role=='admin' %}
     <h3>You don't belong here! This page is for admins only.</h3>
   {% else %}
+    <form action="/" method="POST">
+      <select id='role', name='role'> 
+        <option value="1">admin</option>
+        <option value="2">respondent</option>
+      </select>
+        <input type="submit" value="change role">
+    </form>
     <table>
 
       <tr>
@@ -20,7 +27,7 @@
       <tr>
         <td>{{user.id}} </td>
         <td>{{user.name}}</td>
-        <td>{{user.role}}</td>
+				<td>{{user.role}}</td>
         <td>{{user.affiliation}}</td>
         <td>{{user.biography}}</td>
       </tr>
