@@ -13,8 +13,8 @@
 version: 1
 metadata:
   content_hash:
-    linux-64: d783fcea3e9b78e720249c8cf8d39bfc3e1117e1a3a5963d844ee9fb126045ab
-    osx-64: c4382710a53451567375d8e3fea0025f76a6e31c6d0b89dfd3e7dd06b32c46e6
+    linux-64: 4b404884cd24332267b06e92905c4d42a4c15317225092ba0f8c0b9d755221dc
+    osx-64: cc9fe5af9235e137eb76990357aa63f490768ba668ad8ed6339f47fa5cb08896
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -772,6 +772,21 @@ package:
     sha256: f223c8782195f19dbe7cfd27e329de8b0e2205a090ee2a6891e0695d4d634854
   category: main
   optional: false
+- name: gunicorn
+  version: 21.2.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    packaging: ''
+    python: '>=3.10,<3.11.0a0'
+    python_abi: 3.10.*
+    setuptools: '>=3.0'
+  url: https://conda.anaconda.org/conda-forge/linux-64/gunicorn-21.2.0-py310hff52083_0.conda
+  hash:
+    md5: 4a35b3cfaead26e3a164de3314a3c458
+    sha256: e67103c7761eca4a5a216193583e3e33f34077b8b3fcc20e508ae4699c1072c6
+  category: main
+  optional: false
 - name: importlib-metadata
   version: 6.8.0
   manager: conda
@@ -978,16 +993,16 @@ package:
   category: main
   optional: false
 - name: platformdirs
-  version: 3.9.1
+  version: 3.10.0
   manager: conda
   platform: linux-64
   dependencies:
     python: '>=3.7'
     typing-extensions: '>=4.6.3'
-  url: https://conda.anaconda.org/conda-forge/noarch/platformdirs-3.9.1-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/platformdirs-3.10.0-pyhd8ed1ab_0.conda
   hash:
-    md5: 044e7a1e0ad42c4e67110bd078150a63
-    sha256: 885611bd528abaf3e31bc0bfaad3a619cfe89db61d886b53c2a9ec9ff50edebe
+    md5: 0809187ef9b89a3d94a5c24d13936236
+    sha256: 1b5c0ca2f4260c7dd8cfccd8a641c1e41876c79dc594506be379cde08f5b471e
   category: main
   optional: false
 - name: requests
@@ -1829,6 +1844,21 @@ package:
     sha256: 67aa2bf58a98ed9e5bd693233f1de3cf7d499e9520dec7cbea0ee71e4d8f6895
   category: main
   optional: false
+- name: gunicorn
+  version: 21.2.0
+  manager: conda
+  platform: osx-64
+  dependencies:
+    packaging: ''
+    python: '>=3.10,<3.11.0a0'
+    python_abi: 3.10.*
+    setuptools: '>=3.0'
+  url: https://conda.anaconda.org/conda-forge/osx-64/gunicorn-21.2.0-py310h2ec42d9_0.conda
+  hash:
+    md5: 67e06cc92a1b8360539f7739b39e887c
+    sha256: 75937a1d5364f6ea5a262b237c5338bc815620e6a4012226e922330cf83fa369
+  category: main
+  optional: false
 - name: importlib-metadata
   version: 6.8.0
   manager: conda
@@ -2032,16 +2062,16 @@ package:
   category: main
   optional: false
 - name: platformdirs
-  version: 3.9.1
+  version: 3.10.0
   manager: conda
   platform: osx-64
   dependencies:
     python: '>=3.7'
     typing-extensions: '>=4.6.3'
-  url: https://conda.anaconda.org/conda-forge/noarch/platformdirs-3.9.1-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/platformdirs-3.10.0-pyhd8ed1ab_0.conda
   hash:
-    md5: 044e7a1e0ad42c4e67110bd078150a63
-    sha256: 885611bd528abaf3e31bc0bfaad3a619cfe89db61d886b53c2a9ec9ff50edebe
+    md5: 0809187ef9b89a3d94a5c24d13936236
+    sha256: 1b5c0ca2f4260c7dd8cfccd8a641c1e41876c79dc594506be379cde08f5b471e
   category: main
   optional: false
 - name: requests

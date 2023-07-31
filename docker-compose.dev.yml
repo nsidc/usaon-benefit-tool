@@ -4,6 +4,8 @@ services:
 
   usaon-vta-survey:
     image: "nsidc/usaon-vta-survey:dev"
+    # Flask development server with live debugger and hot reloading:
+    command: "flask run --cert=adhoc -h 0.0.0.0"
     build: "."
     ports:
       - "5000:5000"

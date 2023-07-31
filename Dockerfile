@@ -39,8 +39,11 @@ RUN python -c "import flask"
 RUN which flask
 
 # Start a flask server
-# WARNING: Using CMD is key; using ENTRYPOINT overrides the micromamba
-#          entrypoint and prevents env activation.
-# TODO: Move this to dev docker-compose and use a production ready server
-#       option in non-dev
-CMD ["flask", "run", "--cert=adhoc", "-h", "0.0.0.0"]
+#
+# WARNING: Be careful not to change this CMD to an ENTRYPOINT without reading
+# the docs!
+#     https://micromamba-docker.readthedocs.io/en/latest/advanced_usage.html#use-of-the-entrypoint-command-within-a-dockerfile
+#
+# For gunicorn, the recommended number of workers is (2*CPU)+1. This config
+# assumes dual-core CPU.
+CMD ["gunicorn", "usaon_vta_survey:app", "--workers", "5", "--bind", "0.0.0.0:5000"]
