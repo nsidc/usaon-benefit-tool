@@ -6,7 +6,6 @@
 
 <h1>{% block title %}Profile: {{ current_user.name }} {% endblock %}</h1>
 <h3>{{ current_user.id }}</h3>
-<h3>Role: {{ current_user.role }}</h3>
 
   <form method="POST">
         {{form.csrf_token}}
