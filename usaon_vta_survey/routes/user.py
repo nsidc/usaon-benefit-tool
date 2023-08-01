@@ -5,7 +5,6 @@ from usaon_vta_survey import app, db
 from usaon_vta_survey.forms import FORMS_BY_MODEL
 from usaon_vta_survey.models.tables import User
 
-# TODO: Change this file name
 login_manager = LoginManager(app)
 
 
@@ -26,6 +25,6 @@ def user(user_id: str):
             db.session.add(user)
             db.session.commit()
 
-            return render_template('profile.html', form=form)
+            return render_template('user.html', form=form)
     form = Form(obj=user)
-    return render_template('profile.html', form=form)
+    return render_template('user.html', form=form)
