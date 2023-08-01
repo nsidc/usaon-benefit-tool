@@ -4,9 +4,10 @@
 
 {% block content %}
 
-<h1>{% block title %}Profile: {{ current_user.name }} {% endblock %}</h1>
-<h3>{{ current_user.id }}</h3>
+<h1>{% block title %}Your Profile: {{ current_user.name }} {% endblock %}</h1>
+<h3>You are logged in as: {{ current_user.id }}</h3>
 
+<h4>Viewing profile of {{ user.id }}</h4>
   <form method="POST">
         {{form.csrf_token}}
         {{user_fields(form)}}
