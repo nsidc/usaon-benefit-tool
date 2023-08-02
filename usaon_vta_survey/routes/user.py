@@ -32,6 +32,6 @@ def user(user_id: str):
             db.session.add(user)
             db.session.commit()
 
-            return render_template('profile.html', form=form)
+            return render_template('profile.html', form=form, user=user)
     form = Form(obj=user)
-    return render_template('profile.html', form=form)
+    return render_template('profile.html', form=form, user=user)
