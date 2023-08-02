@@ -9,6 +9,6 @@ def limit_response_editors() -> None:
             raise RuntimeError(
                 "You must be a respondent or admin to respond to this survey."
             )
-    except AttributeError as AE:
+    except AttributeError as e:
         # TODO: Add link to login here?
-        raise RuntimeError("Please login to use this application.") from AE
+        raise RuntimeError("Please login to use this application.")
