@@ -10,6 +10,7 @@ from usaon_vta_survey.models.tables import (
     ResponseDataProductApplication,
     Survey,
 )
+from usaon_vta_survey.util.authorization import limit_response_editors
 
 
 def _update_super_form(
@@ -176,6 +177,7 @@ def view_response_data_product_application_relationships(survey_id: str):
     }
 
     if request.method == 'POST':
+        limit_response_editors()
         form = SuperForm(request.form, obj=form_obj)
 
         if form.validate():
