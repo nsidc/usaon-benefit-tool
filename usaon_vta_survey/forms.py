@@ -12,7 +12,6 @@ from wtforms import fields
 from wtforms.form import Form
 from wtforms_sqlalchemy.orm import (
     ModelConverter,
-    QuerySelectField,
     converts,
     model_form,
 )
@@ -25,18 +24,9 @@ from usaon_vta_survey.models.tables import (
     ResponseDataProductApplication,
     ResponseObservingSystem,
     ResponseObservingSystemDataProduct,
-    Role,
     Survey,
     User,
 )
-
-
-def possible_roles():
-    return Role.query
-
-
-class RoleEdit(Form):
-    role_list = QuerySelectField(query_factory=possible_roles)
 
 
 class CustomModelConverter(ModelConverter):
@@ -62,6 +52,7 @@ FORMS_BY_MODEL: dict[BaseModel, Form] = {
     User: model_form(
         User,
         only=['orcid', 'biography', 'affiliation', 'role_id'],
+        # Allows foreign key to be included in form.
         exclude_fk=False,
     ),
     Survey: model_form(Survey, only=['title', 'notes']),
