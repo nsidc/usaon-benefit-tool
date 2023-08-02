@@ -2,13 +2,9 @@ from flask_login import current_user
 
 
 def limit_response_editors() -> None:
-    try:
-        if not (
-            current_user.role_id == 'admin' or current_user.role_id == 'respondent'
-        ):
-            raise RuntimeError(
-                "You must be a respondent or admin to respond to this survey."
-            )
-    except AttributeError as e:
-        # TODO: Add link to login here?
-        raise RuntimeError("Please login to use this application.") from e
+    if not current_user.is_authenticated:
+        raise RuntimeError("Please login")
+    elif current_user.role_id not in ['admin', 'respondent']:
+        raise RuntimeError(
+            "You must be a respondent or admin to respond to this survey."
+        )
