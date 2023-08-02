@@ -11,4 +11,4 @@ def limit_response_editors() -> None:
             )
     except AttributeError as e:
         # TODO: Add link to login here?
-        raise RuntimeError("Please login to use this application.")
+        raise RuntimeError("Please login to use this application.") from e
