@@ -3,6 +3,7 @@ from flask import redirect, render_template, request, url_for
 from usaon_vta_survey import app, db
 from usaon_vta_survey.forms import FORMS_BY_MODEL
 from usaon_vta_survey.models.tables import ResponseApplication, Survey
+from usaon_vta_survey.util.authorization import limit_response_editors
 from usaon_vta_survey.util.sankey import applications_sankey
 
 
@@ -14,6 +15,7 @@ def view_response_applications(survey_id: str):
     response_application = ResponseApplication(response_id=survey.response_id)
 
     if request.method == 'POST':
+        limit_response_editors()
         form = Form(request.form, obj=response_application)
 
         if form.validate():
