@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
-{% from 'macros/forms.j2' import user_fields %}
+{% from 'macros/forms/user_profile.j2' import user_fields %}
 
 
 {% block content %}
 
-<h1>{% block title %}Profile: {{ current_user.name }} {% endblock %}</h1>
-<h3>{{ current_user.id }}</h3>
-<h3>Role: {{ current_user.role }}</h3>
+<h1>{% block title %}Profile | {{ user.id }} {% endblock %}</h1>
+<h2>Name: {{ user.name }}</h2>
+{% if not current_user.id==user.id %}
+  <h3 style='color:red'>This is another users profile.</h3>
+{% endif %}
 
   <form method="POST">
         {{form.csrf_token}}

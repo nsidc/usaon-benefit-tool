@@ -10,7 +10,11 @@ from functools import partial
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from wtforms import fields
 from wtforms.form import Form
-from wtforms_sqlalchemy.orm import ModelConverter, converts, model_form
+from wtforms_sqlalchemy.orm import (
+    ModelConverter,
+    converts,
+    model_form,
+)
 
 from usaon_vta_survey import db
 from usaon_vta_survey.models.tables import (
@@ -45,7 +49,12 @@ model_form = partial(model_form, converter=CustomModelConverter())
 BaseModel: DeclarativeMeta = db.Model
 
 FORMS_BY_MODEL: dict[BaseModel, Form] = {
-    User: model_form(User, only=['orcid', 'biography', 'affiliation']),
+    User: model_form(
+        User,
+        only=['orcid', 'biography', 'affiliation', 'role_id'],
+        # Allows foreign key to be included in form.
+        exclude_fk=False,
+    ),
     Survey: model_form(Survey, only=['title', 'notes']),
     # Response entities ("nodes" from Sankey diagram perspective)
     ResponseObservingSystem: model_form(

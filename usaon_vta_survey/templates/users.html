@@ -4,7 +4,7 @@
 {% block content %}
   <h2>{% block title %}Users{% endblock %}</h1>
 
-  {% if not current_user.role=='admin' %}
+  {% if not current_user.role_id=='admin' %}
     <h3>You don't belong here! This page is for admins only.</h3>
   {% else %}
     <table>
@@ -15,14 +15,16 @@
         <th>Role</th>
         <th>Affiliation</th>
         <th>Bio</th>
+      </tr>
 
     {% for user in users %}
       <tr>
         <td>{{user.id}} </td>
         <td>{{user.name}}</td>
-        <td>{{user.role}}</td>
+        <td>{{user.role_id}}</td>
         <td>{{user.affiliation}}</td>
         <td>{{user.biography}}</td>
+        <td><a href="{{url_for('user', user_id=user.id)}}">edit</a></td>
       </tr>
     {% endfor %}
 
