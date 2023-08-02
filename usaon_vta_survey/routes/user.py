@@ -14,9 +14,8 @@ def load_user(user_id: str) -> User:
 
 
 def _validate_role_change(user: User, form) -> None:
-    if not form.data['role_id'] == user.role_id:
-        if not current_user.role_id == 'admin':
-            raise RuntimeError("Only admins can edit users roles.")
+    if not form.data['role_id'] == user.role_id and not current_user.role_id == 'admin':
+        raise RuntimeError("Only admins can edit users roles.")
 
 
 @app.route('/user/<user_id>', methods=['POST', 'GET'])
