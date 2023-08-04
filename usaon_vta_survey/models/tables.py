@@ -218,7 +218,7 @@ class ResponseObservingSystem(BaseModel, IORelationshipMixin):
     funding_country = Column(String(256), nullable=False)
     funding_agency = Column(String(256), nullable=False)
     references_citations = Column(String(512), nullable=False)
-    notes = Column(String(512), nullable=False)
+    notes = Column(String(512), nullable=True)
 
     response = relationship(
         'Response',
