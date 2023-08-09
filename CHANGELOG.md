@@ -1,4 +1,4 @@
-# NEXT_VERSION
+# v0.2.0 (2023-08-09)
 
 * Create user list view
 * Allow role changes by admin
