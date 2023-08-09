@@ -51,6 +51,7 @@ def _update_relationship(
         relationship.response_data_product_id = data_product_id
 
 
+# may not need to be internal
 def _response_data_product(
     *,
     data_product_id: int | None,

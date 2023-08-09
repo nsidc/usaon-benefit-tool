@@ -1,0 +1,88 @@
+{% extends 'response/base.html' %}
+{% from 'macros/forms/misc.j2' import
+  observing_system_fields,
+  data_product_fields,
+  observing_system_data_product_fields
+%}
+
+
+{% block content %}
+
+  {{super()}}
+
+  <h3>Observing System &lt;-&gt; Data Product relationship</h3>
+
+  <!-- This form enables reloading the page when a drop-down is changed -->
+  <form method="GET" class="two-columns">
+
+    <div>
+      <h4>Obserivng Systems</h4>
+
+      <select name="observing_system_id" onchange="this.form.submit()">
+
+        <option value="" {% if sqla_inspect(observing_system).transient %}selected{% endif %}>
+          New observing system
+        </option>
+
+        {% for os in observing_systems %}
+          <option value="{{os.id}}" {% if os.id == observing_system.id %}selected{% endif %}>
+            {{os.name}}
+          </option>
+        {% endfor %}
+
+      </select>
+    </div>
+
+
+    <div>
+      <h4>Data Product</h4>
+
+      <select name="data_product_id" onchange="this.form.submit()">
+
+        <option value="" {% if sqla_inspect(data_product).transient %}selected{% endif %}>
+          Create new data product
+        </option>
+
+        {% for dp in data_product %}
+          <option value="{{dp.id}}" {% if dp.id == data_product.id %}selected{% endif %}>
+            {{dp.name}}
+          </option>
+        {% endfor %}
+
+      </select>
+    </div>
+  </form>
+
+  <form method="POST">
+    {{form.csrf_token}}
+
+    <div class="two-columns">
+      <div>
+        {% if sqla_inspect(observing_system).transient %}
+          {{ observing_system_fields(form.observing_system.form) }}
+        {% else %}
+          <p>Name: {{observing_system.name}}</p>
+        {% endif %}
+      </div>
+
+      <div>
+        {% if sqla_inspect(data_product).transient %}
+          {{ data_product_fields(form.data_product.form) }}
+        {% else %}
+          <p>Name: {{data_product.name}}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <h4>Relationship</h4>
+    {% if sqla_inspect(relationship).transient %}
+      {{ observing_system_data_product_fields(form.relationship.form) }}
+    {% else %}
+      {{relationship}}
+    {% endif %}
+
+    <input type="submit" value="Create new relationship" />
+  </form>
+
+
+{% endblock %}
