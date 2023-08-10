@@ -17,6 +17,10 @@ services:
   usaon-vta-survey:
     <<: *base
     image: "nsidc/usaon-vta-survey:${USAON_VTA_SURVEY_VERSION:-latest}"
+    # HACK: run the app on the flask dev server with an adhoc cert.
+    # TODO: Remove this `command` once we have a more mature solution for
+    # distributing certs to our pre-production and production environment.
+    command: "flask run --cert=adhoc --host 0.0.0.0"
     ports:
       - "443:5000"
     environment:
