@@ -1,4 +1,4 @@
-# NEXT_VESION
+# v0.2.1 (2023-08-10)
 
 * Temporary https fix
 
