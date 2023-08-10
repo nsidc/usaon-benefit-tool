@@ -9,15 +9,6 @@ on:
       - "published"
 
 
-# Default to bash in login mode for all steps; key to activating conda
-# environment!
-#     https://github.com/mamba-org/provision-with-micromamba#IMPORTANT
-defaults:
-  run:
-    shell: "bash -l {0}"
-
-
-
 jobs:
 
   build-and-release-image:
