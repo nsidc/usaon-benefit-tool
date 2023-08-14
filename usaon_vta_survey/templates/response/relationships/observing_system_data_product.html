@@ -43,7 +43,7 @@
           Create new data product
         </option>
 
-        {% for dp in data_product %}
+        {% for dp in data_products %}
           <option value="{{dp.id}}" {% if dp.id == data_product.id %}selected{% endif %}>
             {{dp.name}}
           </option>
