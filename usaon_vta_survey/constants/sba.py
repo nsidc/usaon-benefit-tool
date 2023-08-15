@@ -49,7 +49,6 @@ IAOA_SBA_FRAMEWORK: IaoaSbaFramework = {
             ' identification and disaster prediction',
         ],
     },
-    # TODO: Populate societal benefit sub-areas and their key objectives
     'Environmental Quality': {
         'Drivers of Environmental Impacts': [
             'Improve ability to identify environmental impact thresholds'
