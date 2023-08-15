@@ -142,8 +142,72 @@ IAOA_SBA_FRAMEWORK: IaoaSbaFramework = {
             ' atmospheric and oceanic processes',
         ],
     },
-    'Human Health': {},
-    'Infrastructure and Operations': {},
+    'Human Health': {
+        'Mental Health': [
+            'Improve understanding of mental health determinants of Arctic residents',
+            'Improve understanding of the risks and benefits of climatic and'
+            ' environmental changes on community, household, and individual mental'
+            ' health',
+            'Mitigate the impacts of climatic and environmental changes on community,'
+            ' household, and individual mental health',
+            'Promote community, household, and individual mental health through'
+            ' adaptation to climatic and environmental changes',
+        ],
+        'Physical Health': [
+            'Improve understanding of physical health determinants of Arctic residents',
+            'Improve understanding of the risks and benefits of climatic and'
+            ' environmental changes on community, household, and individual'
+            ' physical health',
+            'Mitigate the impacts of climatic and environmental changes on'
+            ' community, household, and individual physical health',
+            'Promote community, household, and inidivdual physical health'
+            ' through adaptation to climatic and environmental changes',
+        ],
+        'Public Health': [
+            'Ensure access to health care and health promotion services',
+            'Improves acces to clean water and sanitation infastructure',
+            'Improve early warning systems for impending public health emergencies',
+            'Improve synthesis of health- and environmental health-related'
+            ' knowledge across Arctic cultures',
+            'Improve understanding of epidemiology and health behaviors'
+            ' in the Arctic to inform public health policies and strategies',
+            'Improve understanding of influences of climatic and environmental'
+            ' changes on emerging infectious diseases in the Arctic',
+            'Reduce presence of foodborne pathogens and contaminants in Arctic food'
+            ' supplies',
+        ],
+    },
+    'Infrastructure and Operations': {
+        'Planning of Infrastructure': [
+            'Ensure safe and secure infrastructure design',
+            'Improve understanding of the impacts of infrastructure on the'
+            ' environment, human systems, and society',
+            'Support infrastructure design siting',
+        ],
+        'Development of Infrastructure': [
+            'Ensure compliance with infrastructure codes and'
+            ' environmental regulations',
+            'Inform and support construction and quality assurance'
+            ' and control activities',
+        ],
+        'Operations and Maintenance of Infrastructure': [
+            'Ensure safe and secure infrastructure operations',
+            'Improve understanding of environmental effects on'
+            ' infrastructure operations',
+            'Maintain awareness and provide predictive capabilities'
+            ' to support safe operation of infrastructure',
+            'Maintain operational awareness of infrastructure systems',
+            'Support economic optimization of operations',
+        ],
+        'Decommissioning of Infrastructure': [
+            'Dispose of infrastructure materials or assets that cannot be re-utilized',
+            'Identify opportunities for re-utilization of infrastructure system assets',
+            'Improve understanding of long-term impacts of decommissioned'
+            ' infrastructure systems on Arctic communities and the environment',
+            'Inform decisions regarding re-utilization and disposition'
+            ' of infrastructure systems',
+        ],
+    },
     'Marine and Coastal Ecosystems and Processes': {},
     'Natural Resources': {},
     'Resilient Communities': {},
