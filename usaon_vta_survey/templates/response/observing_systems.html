@@ -11,24 +11,10 @@
   <table>
     <tr>
       <th>Name</th>
-      <th>Observing systems related</th>
     </tr>
     {% for observing_system in response.observing_systems %}
       <tr>
         <td>{{observing_system.name}}</td>
-        <td>
-          {% if not observing_system.observing_system_relationships %}
-            None
-            <br />
-          {% endif %}
-
-          {% for observing_system_relationship in observing_system.input_relationships %}
-            {{observing_system_relationship}}
-            <br />
-          {% endfor %}
-
-          <a href="#">Add relationship</a>
-        </td>
       </tr>
     {% endfor %}
   </table>

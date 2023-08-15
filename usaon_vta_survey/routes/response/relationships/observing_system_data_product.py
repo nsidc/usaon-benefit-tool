@@ -5,9 +5,9 @@ from wtforms import FormField
 from usaon_vta_survey import app, db
 from usaon_vta_survey.forms import FORMS_BY_MODEL
 from usaon_vta_survey.models.tables import (
-    ResponseApplication,
     ResponseDataProduct,
-    ResponseDataProductApplication,
+    ResponseObservingSystem,
+    ResponseObservingSystemDataProduct,
     Survey,
 )
 from usaon_vta_survey.util.authorization import limit_response_editors
@@ -18,7 +18,7 @@ def _update_super_form(
     /,
     *,
     data_product_id: int | None,
-    application_id: int | None,
+    observing_system_id: int | None,
 ) -> None:
     """Populate the form of forms with sub-forms depending on provided IDs.
 
@@ -27,30 +27,31 @@ def _update_super_form(
 
     TODO: Better function name.
     """
+    if observing_system_id is None:
+        super_form.observing_system = FormField(FORMS_BY_MODEL[ResponseObservingSystem])
+
     if data_product_id is None:
         super_form.data_product = FormField(FORMS_BY_MODEL[ResponseDataProduct])
 
-    if application_id is None:
-        super_form.application = FormField(FORMS_BY_MODEL[ResponseApplication])
-
 
 def _update_relationship(
-    relationship: ResponseDataProductApplication,
+    relationship: ResponseObservingSystemDataProduct,
     *,
+    observing_system_id: int | None,
     data_product_id: int | None,
-    application_id: int | None,
 ) -> None:
     """Populate the relationship with any known identifiers.
 
     TODO: Better function name.
     """
+    if observing_system_id:
+        relationship.response_observing_system_id = observing_system_id
+
     if data_product_id:
         relationship.response_data_product_id = data_product_id
 
-    if application_id:
-        relationship.response_application_id = application_id
 
-
+# may not need to be internal
 def _response_data_product(
     *,
     data_product_id: int | None,
@@ -65,43 +66,45 @@ def _response_data_product(
     return response_data_product
 
 
-def _response_application(
+def _response_observing_system(
     *,
-    application_id: int | None,
+    observing_system_id: int | None,
     response_id: int,
-) -> ResponseApplication:
-    """Return an application db object (or 404)."""
-    if application_id is not None:
-        response_application = db.get_or_404(ResponseApplication, application_id)
+) -> ResponseObservingSystem:
+    """Return an observing system db object (or 404)."""
+    if observing_system_id is not None:
+        response_observing_system = db.get_or_404(
+            ResponseObservingSystem, observing_system_id
+        )
     else:
-        response_application = ResponseApplication(response_id=response_id)
+        response_observing_system = ResponseObservingSystem(response_id=response_id)
 
-    return response_application
+    return response_observing_system
 
 
-def _response_data_product_application(
+def _response_observing_system_data_product(
     *,
+    observing_system_id: int | None,
     data_product_id: int | None,
-    application_id: int | None,
-) -> ResponseDataProductApplication:
+) -> ResponseObservingSystemDataProduct:
     """Return a relationship db object.
 
     Returned object may be transient or persistent depending on whether a match exists
     in the db.
     """
-    if data_product_id and application_id:
+    if data_product_id and observing_system_id:
         # If not found, will be `None`
-        response_data_product_application = db.session.get(
-            ResponseDataProductApplication,
-            (data_product_id, application_id),
+        response_observing_system_data_product = db.session.get(
+            ResponseObservingSystemDataProduct,
+            (data_product_id, observing_system_id),
         )
     else:
-        response_data_product_application = None
+        response_observing_system_data_product = None
 
-    if response_data_product_application is not None:
-        return response_data_product_application
+    if response_observing_system_data_product is not None:
+        return response_observing_system_data_product
     else:
-        return ResponseDataProductApplication()
+        return ResponseObservingSystemDataProduct()
 
 
 def _request_args(request: Request) -> tuple[int | None, int | None]:
@@ -109,24 +112,24 @@ def _request_args(request: Request) -> tuple[int | None, int | None]:
     if data_product_id is not None:
         data_product_id = int(data_product_id)
 
-    application_id: int | str | None = request.args.get('application_id')
-    if application_id is not None:
-        application_id = int(application_id)
+    observing_system_id: int | str | None = request.args.get('observing_system_id')
+    if observing_system_id is not None:
+        observing_system_id = int(observing_system_id)
 
-    return data_product_id, application_id
+    return data_product_id, observing_system_id
 
 
 @app.route(
-    '/response/<string:survey_id>/data_product_application_relationships',
+    '/response/<string:survey_id>/observing_system_data_product_relationships',
     methods=['GET', 'POST'],
 )
-def view_response_data_product_application_relationships(survey_id: str):
-    """View and add application/dataproduct relationships to a response.
+def view_response_observing_system_data_product_relationships(survey_id: str):
+    """View and add observing system/dataproduct relationships to a response.
 
     TODO: Refactor this whole pile of stuff. Less string magic. Less cyclomatic
     complexity.
     """
-    data_product_id, application_id = _request_args(request)
+    data_product_id, observing_system_id = _request_args(request)
     survey = db.get_or_404(Survey, survey_id)
 
     class SuperForm(FlaskForm):
@@ -135,11 +138,11 @@ def view_response_data_product_application_relationships(survey_id: str):
         NOTE: Additional class attributes are added dynamically below.
         """
 
-        relationship = FormField(FORMS_BY_MODEL[ResponseDataProductApplication])
+        relationship = FormField(FORMS_BY_MODEL[ResponseObservingSystemDataProduct])
 
-    response_data_product_application = _response_data_product_application(
+    response_observing_system_data_product = _response_observing_system_data_product(
         data_product_id=data_product_id,
-        application_id=application_id,
+        observing_system_id=observing_system_id,
     )
 
     response_data_product = _response_data_product(
@@ -147,30 +150,32 @@ def view_response_data_product_application_relationships(survey_id: str):
         response_id=survey.response_id,
     )
 
-    response_application = _response_application(
-        application_id=application_id,
+    response_observing_system = _response_observing_system(
+        observing_system_id=observing_system_id,
         response_id=survey.response_id,
     )
 
     _update_super_form(
         SuperForm,
+        observing_system_id=observing_system_id,
         data_product_id=data_product_id,
-        application_id=application_id,
     )
     _update_relationship(
-        response_data_product_application,
+        response_observing_system_data_product,
+        observing_system_id=observing_system_id,
         data_product_id=data_product_id,
-        application_id=application_id,
     )
 
     form_obj: dict[
         str,
-        ResponseDataProduct | ResponseApplication | ResponseDataProductApplication,
+        ResponseObservingSystem
+        | ResponseDataProduct
+        | ResponseObservingSystemDataProduct,
     ] = {
+        'observing_system': response_observing_system,
         'data_product': response_data_product,
-        'application': response_application,
         # NOTE: Logic below depends on relationship being last in this dict
-        'relationship': response_data_product_application,
+        'relationship': response_observing_system_data_product,
     }
 
     if request.method == 'POST':
@@ -185,30 +190,30 @@ def view_response_data_product_application_relationships(survey_id: str):
                     db.session.add(obj)
 
                     # Update the relationship object with the ids of any new entities
-                    if type(obj) is not ResponseDataProductApplication:
+                    if type(obj) is not ResponseObservingSystemDataProduct:
                         # Get the db object's new ID
                         db.session.flush()
                         db.session.refresh(obj)
 
                         # Update the relationship db object
                         setattr(
-                            response_data_product_application,
+                            response_observing_system_data_product,
                             f'response_{key}_id',
                             obj.id,
                         )
 
             db.session.commit()
 
-        return redirect(url_for('view_response_applications', survey_id=survey.id))
+        return redirect(url_for('view_response_data_products', survey_id=survey.id))
 
     form = SuperForm(obj=form_obj)
     return render_template(
-        'response/relationships/data_product_application.html',
+        'response/relationships/observing_system_data_product.html',
         form=form,
         survey=survey,
+        observing_system=response_observing_system,
+        observing_systems=survey.response.observing_systems,
         data_product=response_data_product,
         data_products=survey.response.data_products,
-        application=response_application,
-        applications=survey.response.applications,
-        relationship=response_data_product_application,
+        relationship=response_observing_system_data_product,
     )
