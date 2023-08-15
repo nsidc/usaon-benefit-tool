@@ -331,15 +331,15 @@ IAOA_SBA_FRAMEWORK: IaoaSbaFramework = {
             ' on terrestrial and freshwater ecosystems',
             'Improve understanding of ecological and evolutionary responses'
             ' of terrestrial and freshwater organisms to changes in the Arctic',
-            # 'Inform human adaptation to ecosystem changes',
+            'Inform human adaptation to ecosystem changes',
             'Manage disturbances to terrestrial and freshwater ecosystems',
         ],
         'Terrestrial and Freshwater Living Resources': [
             'Assess and manage land cover and land use in a sustainable manner',
-            # 'Characterize and assess the status and trends of Arctic and'
-            # ' migratory living resources',
+            'Characterize and assess the status and trends of Arctic and'
+            ' migratory living resources',
             'Manage and use water resources in a sustainable manner',
-            # 'Manage Arctic and migratory living resources in a sustainable manner',
+            'Manage Arctic and migratory living resources in a sustainable manner',
             'Manage natural resources that support the use of Arctic and migratory'
             ' living resources in a sustainable manner',
             'Understand and assess the role of the terrestrial cryosphere as a'
