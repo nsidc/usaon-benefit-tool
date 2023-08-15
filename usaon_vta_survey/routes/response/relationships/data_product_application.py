@@ -56,10 +56,7 @@ def _response_data_product(
     data_product_id: int | None,
     response_id: int,
 ) -> ResponseDataProduct:
-    """Return a data product db object (or 404), and do some mutations.
-
-    TODO: Extract mutations to another function responsible for that.
-    """
+    """Return a data product db object (or 404)."""
     if data_product_id is not None:
         response_data_product = db.get_or_404(ResponseDataProduct, data_product_id)
     else:
@@ -73,7 +70,7 @@ def _response_application(
     application_id: int | None,
     response_id: int,
 ) -> ResponseApplication:
-    """Return an application db object (or 404), and do some mutations."""
+    """Return an application db object (or 404)."""
     if application_id is not None:
         response_application = db.get_or_404(ResponseApplication, application_id)
     else:
