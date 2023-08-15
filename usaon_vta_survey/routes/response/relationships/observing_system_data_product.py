@@ -57,10 +57,7 @@ def _response_data_product(
     data_product_id: int | None,
     response_id: int,
 ) -> ResponseDataProduct:
-    """Return a data product db object (or 404), and do some mutations.
-
-    TODO: Extract mutations to another function responsible for that.
-    """
+    """Return a data product db object (or 404)."""
     if data_product_id is not None:
         response_data_product = db.get_or_404(ResponseDataProduct, data_product_id)
     else:
@@ -74,7 +71,7 @@ def _response_observing_system(
     observing_system_id: int | None,
     response_id: int,
 ) -> ResponseObservingSystem:
-    """Return an observing system db object (or 404), and do some mutations."""
+    """Return an observing system db object (or 404)."""
     if observing_system_id is not None:
         response_observing_system = db.get_or_404(
             ResponseObservingSystem, observing_system_id
