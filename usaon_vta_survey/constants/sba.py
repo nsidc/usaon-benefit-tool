@@ -58,7 +58,7 @@ IAOA_SBA_FRAMEWORK: IaoaSbaFramework = {
             ' environmental quality',
             'Manage regional and local human activities in the Arctic'
             ' to mitigate environmental impact',
-            'Reduce the source of transboundary and local pullutants' ' in the Arctic',
+            'Reduce the source of transboundary and local pullutants in the Arctic',
         ],
         'Environmental Impacts': [
             'Adapt to and mitigate the impacts of climate change on'
@@ -242,9 +242,150 @@ IAOA_SBA_FRAMEWORK: IaoaSbaFramework = {
             ' biogeochemistry, and their interactions',
         ],
     },
-    'Natural Resources': {},
-    'Resilient Communities': {},
-    'Sociocultural Services': {},
-    'Terrestrial and Freshwater Ecosystems and Processes': {},
-    'Weather and Climate': {},
+    'Natural Resources': {
+        'Natural Resource Exploration and Assessment': [
+            'Asses and reduce to impact of natural resource exploration',
+            'Improve understanding of the connections and dynamics between'
+            ' resources and environment',
+            'Improve understanding of the distribution of Arctic',
+            'Manage inventories of existing natural resource stocks,'
+            ' inlucind protected stocks, in a sustainable manner',
+        ],
+        'Natural Resource Development and Exploitation': [
+            'Assess, manage, and reduce the impact of natural resource'
+            ' development and exploitation',
+            'Ensure regulatory compliance of natural resource'
+            ' development activities',
+            'Maintain the safe and secure operation of natural resource'
+            ' exploitation activities',
+            'Support natural resource development decisions',
+            'Understand and project conditions to inform facility'
+            ' management and support operator situational awareness',
+        ],
+        'Natural Resource Decommissioning and Reclamation': [
+            'Assess long-term risks and hazards associated with reclaimed'
+            ' or decommissioned sites',
+            'Ensure effectiveness of reclamaton measures in the Arctic',
+            'Ensure regulatory compliance of reclamation and'
+            ' decommissioning activities',
+            'Inform the development of long-term reclamation and'
+            ' decommissioning plans',
+        ],
+    },
+    'Resilient Communities': {
+        'Adaptation and Response of Communities': [
+            'Develop capacity to adapt and respond to Arctic'
+            ' system changes on communities',
+            'Improve community education on Arctic system changes and their impacts',
+            'Mitigate the impacts of Arctic system changes on communities',
+        ],
+        'Baseline Conditions of Communities': [
+            'Assess community resources to adapt to Arctic system changes',
+            'Assess community understanding of the threats, impacts, and'
+            ' causes of Arctic system changes',
+            'Assess community vulnerability to Arctic system changes',
+        ],
+        'Future Projections of Community Changes': [
+            'Characterize the magnitudes and rates of Arctic system'
+            ' changes and their impacts on communities',
+            'Improve the projections of impacts from Arctic system'
+            ' changes on communities',
+        ],
+    },
+    'Sociocultural Services': {
+        'Cultural and Spiritual Experiences': [
+            'Ensure continued access to opportunities for recreation'
+            ' and human connection with nature',
+            'Maintain areas of cultural significance in the Arctic',
+            'Maintain the vitality of Arctic languages, cultures,'
+            ' and communities to preserve knowledge sources',
+        ],
+        'Knowledge Development and Integration': [
+            'Ensure integration of indigenous languages, cultures, and'
+            ' communities for knowledge co-production',
+            'Improve understafing of Arctic processes and cultures to'
+            ' improve and enhance knowledge co-production',
+            'Support development, co-production, and dissemination of'
+            ' scientific knowledge across Arctic cultures',
+        ],
+        'Socioeconomics': [
+            'Improve understanding of formal and informal exchange networks'
+            ' for Arctic resources',
+            'Improve understanding of socioeconomic systems that impact the Arctic',
+            'Improve understanding of the cryospheric and environmental'
+            ' processess in the Arctic on socioeconomic systems',
+        ],
+    },
+    'Terrestrial and Freshwater Ecosystems and Processes': {
+        'Terrestrial and Freshwater Ecosystem Biodiversity': [
+            'Identify and preserve culturally important terrestrial'
+            ' and freshwater areas',
+            'Identify and preserve ecologically sensitive terrestrial'
+            ' and freshwater areas for biodiversity',
+            'Identify and understand the diversity of biota throughout their ranges',
+            'Manage and preserve biota throughout their ranges',
+            'Promote resilience and sustainability of biodiversity in'
+            ' terrestrial and freshwater ecosystems',
+        ],
+        'Terrestrial and Freshwater Ecosystem Responses to Arctic Changes': [
+            'Improve understanding of changing environmental impacts'
+            ' on terrestrial and freshwater ecosystems',
+            'Improve understanding of ecological and evolutionary responses'
+            ' of terrestrial and freshwater organisms to changes in the Arctic',
+            'Inform human adaptation to ecosystem changes',
+            'Manage disturbances to terrestrial and freshwater ecosystems',
+        ],
+        'Terrestrial and Freshwater Living Resources': [
+            'Assess and manage land cover and land use in a sustainable manner',
+            'Characterize and assess the status and trends of Arctic and'
+            ' migratory living resources',
+            'Manage and use water resources in a sustainable manner',
+            'Manage Arctic and migratory living resources in a sustainable manner',
+            'Manage natural resources that support the use of Arctic and migratory'
+            ' living resources in a sustainable manner',
+            'Understand and assess the role of the terrestrial cryosphere as a'
+            ' resource',
+        ],
+        'Terrestrial and Freshwater Processess': [
+            'Assess the impact of changing hydrologic and cryospheric conditions'
+            ' on terrestrial and freshwater ecosystems',
+            'Improve decision making for responses to changes in terrestrial and'
+            ' freshwater conditions',
+            'Improve understanding of physical and biogeochemical processes in'
+            ' cryospheric and hydrospheric systems',
+            'Improve understanding of the impact of the hydrologic cycle on biota',
+        ],
+    },
+    'Weather and Climate': {
+        'Weather Effects on Economic Productivity': [
+            'Provide community-specific weather predictions for economic productivity',
+            'Provide sector-specific weather predictions for economic productivity',
+        ],
+        'Weather Effects on Protection of Lives and Property': [
+            'Improve understanding, prediction, and detection of weather events in'
+            ' the Arctic and their effects on life and property',
+            'Reduce loss of life and injury and damage to property due to high-impact'
+            ' weather events',
+            'Reduce loss of life and injury and damage to property due to routine'
+            ' weather events',
+        ],
+        'Weather Effects on Quality of Life': [
+            'Improve public understanding and use of weather products and services',
+            'Support ability to understand, plan for, and mitigate changing weather'
+            ' patterns in the Arctic',
+            'Support effective weather response, planning, mitigation, and resource'
+            ' allocation for communities',
+        ],
+        'Weather Forecasting and Climate Projections': [
+            'Improve understanding of the relationship between the Arctic and global'
+            ' processes to improve weather predictions and climate projections',
+            'Improve linkages between weather and climate observations across'
+            ' timescales to reduce uncertainty in weather and climate modeling and'
+            ' prediction',
+            'Improve fundamental understanding of Arctic processes that impact'
+            ' weather in the mid-latitudes',
+            'Support effective response, planning, mitigation, and resource allocation'
+            ' based on changing climatic conditions',
+        ],
+    },
 }
