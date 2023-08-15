@@ -219,9 +219,28 @@ IAOA_SBA_FRAMEWORK: IaoaSbaFramework = {
             'Promote resilience and sustainability of Arctic biodiversity'
             ' in marine and coastal ecosystems',
         ],
-        'Marine and Coastal Ecosystem Changes': [],
-        'Marine and Coastal Living Resources': [],
-        'Marine and Coastal Processes': [],
+        'Marine and Coastal Ecosystem Changes': [
+            'Improve understanding of impacts of environmental change on'
+            ' Arctic marine and coastal ecosystems',
+            'Improve understanding of ecological and evolutionary responses'
+            ' of marine and coastal organisms to changes in the Arctic',
+            'Inform human adaptation to ecosystem changes',
+            'Manage disturbances to marine and coastal ecosystems',
+        ],
+        'Marine and Coastal Living Resources': [
+            'Characterize and assess the status and trends of Arctic'
+            ' and migratory living resources',
+            'Manage Arctic and migratory living resources in a sustainable manner',
+            'Sustain marine bioprospecting in the Arctic',
+        ],
+        'Marine and Coastal Processes': [
+            'Asses the impact of changing hydrologic and cryospheric'
+            ' conditions on marine and coastal ecosystems',
+            'Improve decision making for responses to changes in'
+            ' marine and coastal conditions',
+            'Improve understanding of physical oceanography, ocean'
+            ' biogeochemistry, and their interactions',
+        ],
     },
     'Natural Resources': {},
     'Resilient Communities': {},
