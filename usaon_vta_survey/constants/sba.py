@@ -208,7 +208,21 @@ IAOA_SBA_FRAMEWORK: IaoaSbaFramework = {
             ' of infrastructure systems',
         ],
     },
-    'Marine and Coastal Ecosystems and Processes': {},
+    'Marine and Coastal Ecosystems and Processes': {
+        'Marine and Coastal Ecosystem Biodiversity': [
+            'Identify and preserve culturally important marine and coastal areas',
+            'Identify and preserve ecologically sensitive marine and coastal'
+            ' areas for biodiversity',
+            'Identify and understand the diversity of Arctic biota throughout'
+            ' their ranges',
+            'Manage and preserve Arctic biota throughout their ranges',
+            'Promote resilience and sustainability of Arctic biodiversity'
+            ' in marine and coastal ecosystems',
+        ],
+        'Marine and Coastal Ecosystem Changes': [],
+        'Marine and Coastal Living Resources': [],
+        'Marine and Coastal Processes': [],
+    },
     'Natural Resources': {},
     'Resilient Communities': {},
     'Sociocultural Services': {},
