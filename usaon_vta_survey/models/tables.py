@@ -501,7 +501,7 @@ class SocietalBenefitKeyObjective(BaseModel):
     societal_benefit_subarea_id = Column(
         String(256),
         ForeignKey('societal_benefit_subarea.id'),
-        nullable=False,
+        primary_key=True,
     )
 
     societal_benefit_sub_area = relationship(
