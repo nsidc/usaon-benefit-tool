@@ -24,6 +24,7 @@ from usaon_vta_survey.models.tables import (
     ResponseDataProductApplication,
     ResponseObservingSystem,
     ResponseObservingSystemDataProduct,
+    ResponseSocietalBenefitArea,
     Survey,
     User,
 )
@@ -43,6 +44,8 @@ class CustomModelConverter(ModelConverter):
 
 
 model_form = partial(model_form, converter=CustomModelConverter())
+# Could do a new custom converter or add an argument to allow dropdowns
+# model_form_dropdown = partial(model_form, converter=)
 
 # Workaround for missing type stubs for flask-sqlalchemy:
 #     https://github.com/dropbox/sqlalchemy-stubs/issues/76#issuecomment-595839159
@@ -78,6 +81,12 @@ FORMS_BY_MODEL: dict[BaseModel, Form] = {
     ResponseApplication: model_form(
         ResponseApplication,
         only=['name'],
+    ),
+    ResponseSocietalBenefitArea: model_form(
+        ResponseSocietalBenefitArea,
+        only=['societal_benefit_area_id'],
+        exclude_fk=False,
+        field_args={},
     ),
     # Response relationships ("edges" from Sankey diagram perspective)
     ResponseObservingSystemDataProduct: model_form(
