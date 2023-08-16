@@ -36,5 +36,5 @@ def view_response_sba(survey_id: str):
         form=form,
         survey=survey,
         response=survey.response,
-        sba=survey.response.sba,
+        applications=survey.response.applications,
     )
