@@ -43,7 +43,9 @@ class CustomModelConverter(ModelConverter):
         return super().conv_String(field_args, **extra)
 
 
-model_form = partial(model_form, converter=CustomModelConverter())
+model_form = partial(
+    model_form, converter=CustomModelConverter(), db_session=db.session
+)
 # Could do a new custom converter or add an argument to allow dropdowns
 # model_form_dropdown = partial(model_form, converter=)
 
@@ -84,7 +86,7 @@ FORMS_BY_MODEL: dict[BaseModel, Form] = {
     ),
     ResponseSocietalBenefitArea: model_form(
         ResponseSocietalBenefitArea,
-        only=['societal_benefit_area_id'],
+        only=['societal_benefit_area'],
         exclude_fk=False,
         # field_args={},
     ),
