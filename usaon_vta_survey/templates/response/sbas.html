@@ -1,0 +1,40 @@
+{% extends 'response/base.html' %}
+{% from 'macros/forms/misc.j2' import societal_benefit_area_fields %}
+
+
+{% block content %}
+
+  {{super()}}
+
+  <h3>SBAs</h3>
+  <table>
+    <tr>
+      <th>ALL SBA ID's</th>
+      </tr>
+      {% for sba in sbas %}
+        <tr>
+          <td>{{ sba.id }}</td>
+        </tr>
+      {% endfor %}
+  </table>
+
+  <table>
+    <tr>
+      <th>Assigned SBA ID</th>
+    </tr>
+    {% for societal_benefit_area in response.societal_benefit_areas %}
+      <tr>
+        <td>{{societal_benefit_area.societal_benefit_area_id}}</td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <h3>Assign societal benefit area</h3>
+  <form method="POST">
+    {{form.csrf_token}}
+    {{societal_benefit_area_fields(form)}}
+
+    <input type="submit" value="Select SBA" />
+  </form>
+
+{% endblock %}
