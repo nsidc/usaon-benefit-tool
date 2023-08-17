@@ -25,7 +25,7 @@
     </tr>
     {% for societal_benefit_area in response.societal_benefit_areas %}
       <tr>
-        <td>{{societal_benefit_area.id}}</td>
+        <td>{{societal_benefit_area.societal_benefit_area_id}}</td>
         <td>
           {% if not societal_benefit_area.input_relationships %}
             None

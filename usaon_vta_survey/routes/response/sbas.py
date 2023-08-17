@@ -15,10 +15,10 @@ from usaon_vta_survey.util.authorization import limit_response_editors
 )
 def view_response_sbas(survey_id: str):
     """View and add to observing systems associated with a response."""
+    sbas = SocietalBenefitArea.query.all()
     Form = FORMS_BY_MODEL[ResponseSocietalBenefitArea]
     survey = db.get_or_404(Survey, survey_id)
     # show the list of available SBAs
-    sbas = SocietalBenefitArea.query.all()
     response_societal_benefit_area = ResponseSocietalBenefitArea(
         response_id=survey.response_id
     )
