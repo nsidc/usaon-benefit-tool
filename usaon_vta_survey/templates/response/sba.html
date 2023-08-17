@@ -9,11 +9,12 @@
 
   <table>
     <tr>
-      <th>Application</th>
       <th>Societal Benefit Areas</th>
     </tr>
-        <td>application.name</td>
-        <td>will be either dropdown or something </td>
+    {% for sba in sbas %}
+      <tr>
+        <td>{{ sba.id }}</td>
       </tr>
+    {% endfor %}
   </table>
 {% endblock %}
