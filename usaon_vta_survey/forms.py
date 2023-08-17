@@ -56,9 +56,8 @@ BaseModel: DeclarativeMeta = db.Model
 FORMS_BY_MODEL: dict[BaseModel, Form] = {
     User: model_form(
         User,
-        only=['orcid', 'biography', 'affiliation', 'role_id'],
-        # Allows foreign key to be included in form.
-        exclude_fk=False,
+        only=['orcid', 'biography', 'affiliation', 'role'],
+        field_args={'role': {'get_label': 'id'}},
     ),
     Survey: model_form(Survey, only=['title', 'notes']),
     # Response entities ("nodes" from Sankey diagram perspective)
@@ -87,8 +86,6 @@ FORMS_BY_MODEL: dict[BaseModel, Form] = {
     ResponseSocietalBenefitArea: model_form(
         ResponseSocietalBenefitArea,
         only=['societal_benefit_area'],
-        exclude_fk=False,
-        # field_args={'get_label': 'id' },
         field_args={'societal_benefit_area': {'get_label': 'id'}},
     ),
     # Response relationships ("edges" from Sankey diagram perspective)

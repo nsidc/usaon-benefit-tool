@@ -94,6 +94,7 @@ class User(BaseModel, UserMixin):
         String,
         nullable=True,
     )
+    role = relationship('Role')
 
 
 class Survey(BaseModel):
