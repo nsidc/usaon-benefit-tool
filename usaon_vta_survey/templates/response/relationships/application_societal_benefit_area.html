@@ -54,8 +54,6 @@
       <div>
         {% if sqla_inspect(application).transient %}
           {{ application_fields(form.application.form) }}
-        {% else %}
-          <p>Name: {{application.name}}</p>
         {% endif %}
       </div>
 
@@ -70,7 +68,7 @@
 
     <h4>Relationship</h4>
     {% if sqla_inspect(relationship).transient %}
-      {{ application_fields(form.relationship.form) }}
+      {{ application_societal_benefit_area_fields(form.relationship.form) }}
     {% else %}
       {{relationship}}
     {% endif %}
