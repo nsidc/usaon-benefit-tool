@@ -6,17 +6,15 @@
 
   {{super()}}
 
-  <h3>SBAs</h3>
-  <table>
-    <tr>
-      <th>ALL SBA ID's</th>
-      </tr>
-      {% for sba in sbas %}
-        <tr>
-          <td>{{ sba.id }}</td>
-        </tr>
-      {% endfor %}
-  </table>
+  <br> </br>
+  <h3>Assign societal benefit area</h3>
+  <form method="POST">
+    {{form.csrf_token}}
+    {{societal_benefit_area_fields(form)}}
+
+    <input type="submit" value="Select SBA" />
+  </form>
+  <br> </br>
 
   <table>
     <tr>
@@ -49,13 +47,5 @@
       </tr>
     {% endfor %}
   </table>
-
-  <h3>Assign societal benefit area</h3>
-  <form method="POST">
-    {{form.csrf_token}}
-    {{societal_benefit_area_fields(form)}}
-
-    <input type="submit" value="Select SBA" />
-  </form>
 
 {% endblock %}

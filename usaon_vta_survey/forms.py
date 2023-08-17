@@ -88,7 +88,8 @@ FORMS_BY_MODEL: dict[BaseModel, Form] = {
         ResponseSocietalBenefitArea,
         only=['societal_benefit_area'],
         exclude_fk=False,
-        # field_args={},
+        # field_args={'get_label': 'id' },
+        field_args={'societal_benefit_area': {'get_label': 'id'}},
     ),
     # Response relationships ("edges" from Sankey diagram perspective)
     ResponseObservingSystemDataProduct: model_form(
