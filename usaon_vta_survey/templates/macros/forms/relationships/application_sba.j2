@@ -1,0 +1,11 @@
+{% macro application_societal_benefit_area_fields(form) -%}
+  {{form.criticality_rating.label}} {{form.criticality_rating(size=5)}}
+  {{form.performance_rating.label}} {{form.performance_rating(size=50)}}
+  {% if form.performance_rating.errors %}
+    <ul class="errors">
+    {% for error in form.performance_rating.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{%- endmacro -%}

@@ -1,0 +1,82 @@
+{% extends 'response/base.html' %}
+{% from 'macros/forms/misc.j2' import
+  application_fields,
+  sba_fields
+%}
+{% from 'macros/forms/relationships/application_sba.j2' import
+  application_sba_fields
+%}
+
+
+{% block content %}
+
+  {{super()}}
+
+  <h3>Application &lt;-&gt; Societal Benefit Area relationship</h3>
+
+  <!-- This form enables reloading the page when a drop-down is changed -->
+  <form method="GET" class="two-columns">
+
+    <div>
+      <h4>Application</h4>
+
+      <select name="application_id" onchange="this.form.submit()">
+
+        {% for app in applications %}
+          <option value="{{app.id}}" {% if app.id == application.id %}selected{% endif %}>
+            {{app.name}}
+          </option>
+        {% endfor %}
+
+      </select>
+    </div>
+
+
+    <div>
+      <h4>Societal Benefit Areas</h4>
+
+      <select name="societal_benefit_area_id" onchange="this.form.submit()">
+
+        {% for sba in societal_benefit_areas %}
+          <option value="{{sba.id}}" {% if sba.id == societal_benefit_area.id %}selected{% endif %}>
+            {{sba.societal_benefit_area_id}}
+          </option>
+        {% endfor %}
+
+      </select>
+    </div>
+  </form>
+
+  <form method="POST">
+    {{form.csrf_token}}
+
+    <div class="two-columns">
+      <div>
+        {% if sqla_inspect(application).transient %}
+          {{ application_fields(form.application.form) }}
+        {% else %}
+          <p>Name: {{application.name}}</p>
+        {% endif %}
+      </div>
+
+      <div>
+        {% if sqla_inspect(societal_benefit_area).transient %}
+          {{ societal_benefit_area_fields(form.societal_benefit_area.form) }}
+        {% else %}
+          <p>Name: {{societal_benefit_area.societal_benefit_area_id}}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <h4>Relationship</h4>
+    {% if sqla_inspect(relationship).transient %}
+      {{ application_fields(form.relationship.form) }}
+    {% else %}
+      {{relationship}}
+    {% endif %}
+
+    <input type="submit" value="Create new relationship" />
+  </form>
+
+
+{% endblock %}
