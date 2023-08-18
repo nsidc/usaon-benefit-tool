@@ -1,3 +1,9 @@
+# NEXT_VERSION
+
+* Set up/improve all relationship interfaces
+* Populate societal benfit area reference data
+* Implement role dropdown on profile page
+
 # v0.2.1 (2023-08-10)
 
 * Temporary https fix
