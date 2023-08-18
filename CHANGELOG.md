@@ -1,4 +1,4 @@
-# NEXT_VERSION
+# v0.3.0 (2023-08-17)
 
 * Set up/improve all relationship interfaces
 * Populate societal benfit area reference data
