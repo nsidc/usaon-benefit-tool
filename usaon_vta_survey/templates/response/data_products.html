@@ -8,36 +8,40 @@
 
   <h3>Data products</h3>
 
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Observing systems related</th>
-    </tr>
-    {% for data_product in response.data_products %}
-      <tr>
-        <td>{{data_product.name}}</td>
-        <td>
-          {% if not data_product.input_relationships %}
-            None
-            <br />
-          {% endif %}
+  <div class="two-columns">
+    <div>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Observing systems related</th>
+        </tr>
+        {% for data_product in response.data_products %}
+          <tr>
+            <td>{{data_product.name}}</td>
+            <td>
+              {% if not data_product.input_relationships %}
+                None
+                <br />
+              {% endif %}
+              {% for input_relationship in data_product.input_relationships %}
+                <ul>
+                  <li>{{input_relationship.observing_system.name}}: {{input_relationship.performace_rating}}</li>
+                </ul>
+              {% endfor %}
 
-          {% for observing_system_relationship in data_product.input_relationship %}
-            {{observing_system_relationship}}
-            <br />
-          {% endfor %}
-
-          <a href="{{url_for(
-                   'view_response_observing_system_data_product_relationships',
-                   survey_id=survey.id,
-                   data_product_id=data_product.id,
-                   )}}">
-            Add relationship
-          </a>
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
+              <a href="{{url_for(
+                       'view_response_observing_system_data_product_relationships',
+                       survey_id=survey.id,
+                       data_product_id=data_product.id,
+                       )}}">
+                Add relationship
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
 
   <h3>Add data product</h3>
   <form method="POST">

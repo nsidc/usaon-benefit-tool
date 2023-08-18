@@ -24,6 +24,7 @@ from usaon_vta_survey.models.tables import (
     ResponseDataProductApplication,
     ResponseObservingSystem,
     ResponseObservingSystemDataProduct,
+    ResponseSocietalBenefitArea,
     Survey,
     User,
 )
@@ -42,7 +43,9 @@ class CustomModelConverter(ModelConverter):
         return super().conv_String(field_args, **extra)
 
 
-model_form = partial(model_form, converter=CustomModelConverter())
+model_form = partial(
+    model_form, converter=CustomModelConverter(), db_session=db.session
+)
 
 # Workaround for missing type stubs for flask-sqlalchemy:
 #     https://github.com/dropbox/sqlalchemy-stubs/issues/76#issuecomment-595839159
@@ -51,9 +54,8 @@ BaseModel: DeclarativeMeta = db.Model
 FORMS_BY_MODEL: dict[BaseModel, Form] = {
     User: model_form(
         User,
-        only=['orcid', 'biography', 'affiliation', 'role_id'],
-        # Allows foreign key to be included in form.
-        exclude_fk=False,
+        only=['orcid', 'biography', 'affiliation', 'role'],
+        field_args={'role': {'get_label': 'id'}},
     ),
     Survey: model_form(Survey, only=['title', 'notes']),
     # Response entities ("nodes" from Sankey diagram perspective)
@@ -78,6 +80,11 @@ FORMS_BY_MODEL: dict[BaseModel, Form] = {
     ResponseApplication: model_form(
         ResponseApplication,
         only=['name'],
+    ),
+    ResponseSocietalBenefitArea: model_form(
+        ResponseSocietalBenefitArea,
+        only=['societal_benefit_area'],
+        field_args={'societal_benefit_area': {'get_label': 'id'}},
     ),
     # Response relationships ("edges" from Sankey diagram perspective)
     ResponseObservingSystemDataProduct: model_form(

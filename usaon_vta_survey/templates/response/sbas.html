@@ -1,0 +1,51 @@
+{% extends 'response/base.html' %}
+{% from 'macros/forms/misc.j2' import societal_benefit_area_fields %}
+
+
+{% block content %}
+
+  {{super()}}
+
+  <br> </br>
+  <h3>Assign societal benefit area</h3>
+  <form method="POST">
+    {{form.csrf_token}}
+    {{societal_benefit_area_fields(form)}}
+
+    <input type="submit" value="Select SBA" />
+  </form>
+  <br> </br>
+
+  <table>
+    <tr>
+      <th>SBA ID</th>
+      <th>Application</th>
+    </tr>
+    {% for societal_benefit_area in response.societal_benefit_areas %}
+      <tr>
+        <td>{{societal_benefit_area.societal_benefit_area_id}}</td>
+        <td>
+          {% if not societal_benefit_area.input_relationships %}
+            None
+            <br />
+          {% endif %}
+
+          {% for input_relationship in societal_benefit_area.input_relationships %}
+            <ul>
+              <li>{{input_relationship.application.name}}</li>
+            </ul>
+          {% endfor %}
+
+          <a href="{{url_for(
+            'view_response_application_societal_benefit_area_relationships',
+            survey_id=survey.id,
+            societal_benefit_area_id=societal_benefit_area.id,
+          )}}">
+            Add relationship
+          </a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+
+{% endblock %}

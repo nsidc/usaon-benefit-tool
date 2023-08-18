@@ -31,10 +31,10 @@
   {% endif %}
   <br /><br />
 
-  {{form.role_id.label}} {{form.role_id(size=50)}}
-  {% if form.role_id.errors %}
+  {{form.role.label}} {{form.role}}
+  {% if form.role.errors %}
     <ul class="errors">
-    {% for error in form.role_id.errors %}
+    {% for error in form.role.errors %}
       <li>{{ error }}</li>
     {% endfor %}
     </ul>

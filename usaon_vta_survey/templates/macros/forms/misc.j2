@@ -113,3 +113,15 @@
     </ul>
   {% endif %}
 {%- endmacro -%}
+
+
+{% macro societal_benefit_area_fields(form) -%}
+  {{form.societal_benefit_area.label}} {{form.societal_benefit_area}}
+  {% if form.societal_benefit_area.errors %}
+    <ul class="errors">
+    {% for error in form.societal_benefit_area.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{%- endmacro -%}
