@@ -64,6 +64,26 @@ class IORelationshipMixin:
         return io
 
 
+class ResponseObjectFieldMixin:
+    """Provide shared fields between all relationshio objects to reduce repition."""
+
+    short_name = Column(String(256), nullable=False)
+    full_name = Column(String(256), nullable=False)
+    organization = Column(String(256), nullable=False)
+    # should this be funding agency?
+    funder = Column(String(256), nullable=False)
+    funding_country = Column(String(256), nullable=False)
+    # clairify this
+    website_url = Column(String(256), nullable=True)
+    description = Column(String(512), nullable=True)
+    contact_name = Column(String(256), nullable=False)
+    contact_title = Column(String(256), nullable=True)
+    contact_email = Column(String(256), nullable=False)
+    # how do i make it a minimum of 3 tags?
+    tags = Column(String, nullable=False)
+    version = Column(String(64), nullable=True)
+
+
 class User(BaseModel, UserMixin):
     __tablename__ = 'user'
     id = Column(
@@ -185,7 +205,7 @@ class Response(BaseModel):
     )
 
 
-class ResponseObservingSystem(BaseModel, IORelationshipMixin):
+class ResponseObservingSystem(BaseModel, IORelationshipMixin, ResponseObjectFieldMixin):
     __tablename__ = 'response_observing_system'
     __table_args__ = (UniqueConstraint('name', 'response_id'),)
     id = Column(
@@ -212,14 +232,6 @@ class ResponseObservingSystem(BaseModel, IORelationshipMixin):
         'polymorphic_identity': ObservingSystemType.other,
         'polymorphic_on': type,
     }
-
-    url = Column(String(256), nullable=False)
-    author_name = Column(String(256), nullable=False)
-    author_email = Column(String(256), nullable=False)
-    funding_country = Column(String(256), nullable=False)
-    funding_agency = Column(String(256), nullable=False)
-    references_citations = Column(String(512), nullable=False)
-    notes = Column(String(512), nullable=True)
 
     response = relationship(
         'Response',

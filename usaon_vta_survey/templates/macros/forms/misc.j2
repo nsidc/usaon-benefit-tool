@@ -1,38 +1,38 @@
 {% macro observing_system_fields(form) -%}
-  {{form.name.label}} {{form.name(size=50)}}
-  {% if form.name.errors %}
+  {{form.short_name.label}} {{form.short_name(size=50)}}
+  {% if form.short_name.errors %}
     <ul class="errors">
-    {% for error in form.name.errors %}
+    {% for error in form.short_name.errors %}
       <li>{{ error }}</li>
     {% endfor %}
     </ul>
   {% endif %}
   <br />
 
-  {{form.url.label}} {{form.url(size=50)}}
-  {% if form.url.errors %}
+  {{form.website_url.label}} {{form.website_url(size=50)}}
+  {% if form.website_url.errors %}
     <ul class="errors">
-    {% for error in form.url.errors %}
+    {% for error in form.website_url.errors %}
       <li>{{ error }}</li>
     {% endfor %}
     </ul>
   {% endif %}
   <br />
 
-  {{form.author_name.label}} {{form.author_name(size=50)}}
-  {% if form.author_name.errors %}
+  {{form.contact_name.label}} {{form.contact_name(size=50)}}
+  {% if form.contact_name.errors %}
     <ul class="errors">
-    {% for error in form.author_name.errors %}
+    {% for error in form.contact_name.errors %}
       <li>{{ error }}</li>
     {% endfor %}
     </ul>
   {% endif %}
   <br />
 
-  {{form.author_email.label}} {{form.author_email(size=50)}}
-  {% if form.author_email.errors %}
+  {{form.contact_email.label}} {{form.contact_email(size=50)}}
+  {% if form.contact_email.errors %}
     <ul class="errors">
-    {% for error in form.author_email.errors %}
+    {% for error in form.contact_email.errors %}
       <li>{{ error }}</li>
     {% endfor %}
     </ul>
@@ -49,30 +49,30 @@
   {% endif %}
   <br />
 
-  {{form.funding_agency.label}} {{form.funding_agency(size=50)}}
-  {% if form.funding_agency.errors %}
+  {{form.organization.label}} {{form.organization(size=50)}}
+  {% if form.organization.errors %}
     <ul class="errors">
-    {% for error in form.funding_agency.errors %}
+    {% for error in form.organization.errors %}
       <li>{{ error }}</li>
     {% endfor %}
     </ul>
   {% endif %}
   <br />
 
-  {{form.references_citations.label}} {{form.references_citations(size=50)}}
-  {% if form.references_citations.errors %}
+  {{form.tags.label}} {{form.tags(size=50)}}
+  {% if form.tags.errors %}
     <ul class="errors">
-    {% for error in form.references_citations.errors %}
+    {% for error in form.tags.errors %}
       <li>{{ error }}</li>
     {% endfor %}
     </ul>
   {% endif %}
   <br />
 
-  {{form.notes.label}} {{form.notes(size=50)}}
-  {% if form.notes.errors %}
+  {{form.description.label}} {{form.description(size=50)}}
+  {% if form.description.errors %}
     <ul class="errors">
-    {% for error in form.notes.errors %}
+    {% for error in form.description.errors %}
       <li>{{ error }}</li>
     {% endfor %}
     </ul>

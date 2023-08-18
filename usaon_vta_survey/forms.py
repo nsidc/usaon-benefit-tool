@@ -62,14 +62,16 @@ FORMS_BY_MODEL: dict[BaseModel, Form] = {
     ResponseObservingSystem: model_form(
         ResponseObservingSystem,
         only=[
-            'name',
-            'url',
-            'author_name',
-            'author_email',
+            'short_name',
+            'long_name',
+            'website_url',
+            'contact_name',
+            'contact_email',
             'funding_country',
-            'funding_agency',
-            'references_citations',
-            'notes',
+            'organization',
+            'tags',
+            'version',
+            'description',
         ],
     ),
     # TODO: Restrict "rating" values to correct range
