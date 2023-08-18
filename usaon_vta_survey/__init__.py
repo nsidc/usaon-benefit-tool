@@ -29,8 +29,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DB_CONNSTR
 
 db.init_app(app)
 
-app.jinja_env.globals.update(sqla_inspect=sqla_inspect)
-app.jinja_env.globals.update(__version__=__version__)
+app.jinja_env.globals.update(sqla_inspect=sqla_inspect, __version__=__version__)
 
 # NOTE: This is a circular import, but it's specified by the Flask docs:
 #     https://flask.palletsprojects.com/en/3.1.x/patterns/packages/
