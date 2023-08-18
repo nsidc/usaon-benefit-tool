@@ -46,8 +46,6 @@ class CustomModelConverter(ModelConverter):
 model_form = partial(
     model_form, converter=CustomModelConverter(), db_session=db.session
 )
-# Could do a new custom converter or add an argument to allow dropdowns
-# model_form_dropdown = partial(model_form, converter=)
 
 # Workaround for missing type stubs for flask-sqlalchemy:
 #     https://github.com/dropbox/sqlalchemy-stubs/issues/76#issuecomment-595839159
