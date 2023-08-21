@@ -18,6 +18,37 @@
     </ul>
   {% endif %}
   <br />
+
+  {{form.organization.label}} {{form.organization(size=50)}}
+  {% if form.organization.errors %}
+    <ul class="errors">
+    {% for error in form.organization.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
+  {{form.funder.label}} {{form.funder(size=50)}}
+  {% if form.funder.errors %}
+    <ul class="errors">
+    {% for error in form.funder.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
+  {{form.funding_country.label}} {{form.funding_country(size=50)}}
+  {% if form.funding_country.errors %}
+    <ul class="errors">
+    {% for error in form.funding_country.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
   {{form.website_url.label}} {{form.website_url(size=50)}}
   {% if form.website_url.errors %}
     <ul class="errors">
@@ -38,6 +69,16 @@
   {% endif %}
   <br />
 
+  {{form.contact_title.label}} {{form.contact_title(size=50)}}
+  {% if form.contact_title.errors %}
+    <ul class="errors">
+    {% for error in form.contact_title.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
   {{form.contact_email.label}} {{form.contact_email(size=50)}}
   {% if form.contact_email.errors %}
     <ul class="errors">
@@ -48,25 +89,6 @@
   {% endif %}
   <br />
 
-  {{form.funding_country.label}} {{form.funding_country(size=50)}}
-  {% if form.funding_country.errors %}
-    <ul class="errors">
-    {% for error in form.funding_country.errors %}
-      <li>{{ error }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-  <br />
-
-  {{form.organization.label}} {{form.organization(size=50)}}
-  {% if form.organization.errors %}
-    <ul class="errors">
-    {% for error in form.organization.errors %}
-      <li>{{ error }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-  <br />
 
   {{form.tags.label}} {{form.tags(size=50)}}
   {% if form.tags.errors %}
@@ -90,33 +112,130 @@
 {%- endmacro -%}
 
 
-{% macro data_product_fields(form) -%}
-  {{form.name.label}} {{form.name(size=50)}}
-  {% if form.name.errors %}
+{% macro application_fields(form) -%}
+  {{form.short_name.label}} {{form.short_name(size=50)}}
+  {% if form.short_name.errors %}
     <ul class="errors">
-    {% for error in form.name.errors %}
+    {% for error in form.short_name.errors %}
       <li>{{ error }}</li>
     {% endfor %}
     </ul>
   {% endif %}
   <br />
 
-  {{form.performance_rating.label}} {{form.performance_rating(size=5)}}
-  {% if form.performance_rating.errors %}
+  {{form.full_name.label}} {{form.full_name(size=50)}}
+  {% if form.full_name.errors %}
     <ul class="errors">
-    {% for error in form.performance_rating.errors %}
+    {% for error in form.full_name.errors %}
       <li>{{ error }}</li>
     {% endfor %}
     </ul>
   {% endif %}
-{%- endmacro -%}
+  <br />
 
-
-{% macro application_fields(form) -%}
-  {{form.name.label}} {{form.name(size=50)}}
-  {% if form.name.errors %}
+  {{form.organization.label}} {{form.organization(size=50)}}
+  {% if form.organization.errors %}
     <ul class="errors">
-    {% for error in form.name.errors %}
+    {% for error in form.organization.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
+  {{form.funder.label}} {{form.funder(size=50)}}
+  {% if form.funder.errors %}
+    <ul class="errors">
+    {% for error in form.funder.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
+  {{form.funding_country.label}} {{form.funding_country(size=50)}}
+  {% if form.funding_country.errors %}
+    <ul class="errors">
+    {% for error in form.funding_country.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
+  {{form.website_url.label}} {{form.website_url(size=50)}}
+  {% if form.website_url.errors %}
+    <ul class="errors">
+    {% for error in form.website_url.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
+  {{form.contact_name.label}} {{form.contact_name(size=50)}}
+  {% if form.contact_name.errors %}
+    <ul class="errors">
+    {% for error in form.contact_name.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
+  {{form.contact_title.label}} {{form.contact_title(size=50)}}
+  {% if form.contact_title.errors %}
+    <ul class="errors">
+    {% for error in form.contact_title.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
+  {{form.contact_email.label}} {{form.contact_email(size=50)}}
+  {% if form.contact_email.errors %}
+    <ul class="errors">
+    {% for error in form.contact_email.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
+
+  {{form.tags.label}} {{form.tags(size=50)}}
+  {% if form.tags.errors %}
+    <ul class="errors">
+    {% for error in form.tags.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
+  {{form.description.label}} {{form.description(size=50)}}
+  {% if form.description.errors %}
+    <ul class="errors">
+    {% for error in form.description.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  {{form.performance_criteria.label}} {{form.performace_criteria(size=50)}}
+  {% if form.performace_criteria.errors %}
+    <ul class="errors">
+    {% for error in form.performace_criteria.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
+
+  {{form.performance_rating.label}} {{form.performace_rating(size=50)}}
+  {% if form.performace_rating.errors %}
+    <ul class="errors">
+    {% for error in form.performace_rating.errors %}
       <li>{{ error }}</li>
     {% endfor %}
     </ul>

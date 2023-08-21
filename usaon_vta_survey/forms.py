@@ -96,7 +96,22 @@ FORMS_BY_MODEL: dict[BaseModel, Form] = {
     ),
     ResponseApplication: model_form(
         ResponseApplication,
-        only=['name'],
+        only=[
+            'short_name',
+            'full_name',
+            'organization',
+            'funder',
+            'funding_country',
+            'website_url',
+            'description',
+            'contact_name',
+            'contact_title',
+            'contact_email',
+            'tags',
+            'version',
+            'performace_criteria',
+            'performance_rating',
+        ],
     ),
     ResponseSocietalBenefitArea: model_form(
         ResponseSocietalBenefitArea,

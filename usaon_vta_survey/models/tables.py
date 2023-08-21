@@ -65,7 +65,7 @@ class IORelationshipMixin:
 
 
 class ResponseObjectFieldMixin:
-    """Provide shared fields between all relationshio objects to reduce repition."""
+    """Provide shared fields between all relationship objects to reduce repition."""
 
     short_name = Column(String(256), nullable=False)
     full_name = Column(String(256), nullable=False)
@@ -305,7 +305,7 @@ class ResponseDataProduct(BaseModel, IORelationshipMixin, ResponseObjectFieldMix
     )
 
 
-class ResponseApplication(BaseModel, IORelationshipMixin):
+class ResponseApplication(BaseModel, IORelationshipMixin, ResponseObjectFieldMixin):
     __tablename__ = 'response_application'
     __table_args__ = (UniqueConstraint('name', 'response_id'),)
     id = Column(
@@ -322,6 +322,12 @@ class ResponseApplication(BaseModel, IORelationshipMixin):
         ForeignKey('response.id'),
         nullable=False,
     )
+
+    performance_criteria = Column(
+        String(256),
+    )
+    # limit 0-100
+    performance_rating = Column(Integer, nullable=False)
 
     response = relationship(
         'Response',
