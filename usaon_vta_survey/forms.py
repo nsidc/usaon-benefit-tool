@@ -109,7 +109,7 @@ FORMS_BY_MODEL: dict[BaseModel, Form] = {
             'contact_email',
             'tags',
             'version',
-            'performace_criteria',
+            'performance_criteria',
             'performance_rating',
         ],
     ),
