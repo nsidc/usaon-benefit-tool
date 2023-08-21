@@ -70,11 +70,9 @@ class ResponseObjectFieldMixin:
     short_name = Column(String(256), nullable=False)
     full_name = Column(String(256), nullable=False)
     organization = Column(String(256), nullable=False)
-    # should this be funding agency?
     funder = Column(String(256), nullable=False)
     funding_country = Column(String(256), nullable=False)
-    # clairify this
-    website_url = Column(String(256), nullable=True)
+    website = Column(String(256), nullable=True)
     description = Column(String(512), nullable=True)
     contact_name = Column(String(256), nullable=False)
     contact_title = Column(String(256), nullable=True)
