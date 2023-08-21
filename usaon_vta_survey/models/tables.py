@@ -128,10 +128,13 @@ class Survey(BaseModel):
         nullable=True,
     )
 
-    title = Column(
+    name = Column(
         String(128),
         nullable=False,
     )
+
+    # Do we want this to be a dropdown?
+    Status = Column(String(128), nullable=False)
 
     created_by = Column(
         String,
