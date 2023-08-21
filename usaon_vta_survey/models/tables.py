@@ -68,7 +68,7 @@ class ResponseObjectFieldMixin:
     """Provide shared fields between all relationship objects to reduce repition."""
 
     short_name = Column(String(256), nullable=False)
-    full_name = Column(String(256), nullable=False)
+    full_name = Column(String(256), nullable=True)
     organization = Column(String(256), nullable=False)
     funder = Column(String(256), nullable=False)
     funding_country = Column(String(256), nullable=False)
@@ -204,15 +204,11 @@ class Response(BaseModel):
 
 class ResponseObservingSystem(BaseModel, IORelationshipMixin, ResponseObjectFieldMixin):
     __tablename__ = 'response_observing_system'
-    __table_args__ = (UniqueConstraint('name', 'response_id'),)
+    __table_args__ = (UniqueConstraint('short_name', 'response_id'),)
     id = Column(
         Integer,
         primary_key=True,
         autoincrement=True,
-    )
-    name = Column(
-        String(256),
-        nullable=False,
     )
     response_id = Column(
         Integer,
@@ -273,15 +269,11 @@ class ResponseObservingSystemResearch(BaseModel):
 
 class ResponseDataProduct(BaseModel, IORelationshipMixin, ResponseObjectFieldMixin):
     __tablename__ = 'response_data_product'
-    __table_args__ = (UniqueConstraint('name', 'response_id'),)
+    __table_args__ = (UniqueConstraint('short_name', 'response_id'),)
     id = Column(
         Integer,
         primary_key=True,
         autoincrement=True,
-    )
-    name = Column(
-        String(256),
-        nullable=False,
     )
     response_id = Column(
         Integer,
@@ -305,15 +297,11 @@ class ResponseDataProduct(BaseModel, IORelationshipMixin, ResponseObjectFieldMix
 
 class ResponseApplication(BaseModel, IORelationshipMixin, ResponseObjectFieldMixin):
     __tablename__ = 'response_application'
-    __table_args__ = (UniqueConstraint('name', 'response_id'),)
+    __table_args__ = (UniqueConstraint('short_name', 'response_id'),)
     id = Column(
         Integer,
         primary_key=True,
         autoincrement=True,
-    )
-    name = Column(
-        String(256),
-        nullable=False,
     )
     response_id = Column(
         Integer,

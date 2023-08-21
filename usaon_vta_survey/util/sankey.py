@@ -28,7 +28,7 @@ def _data_product_application_sankey_links(
     data_product: ResponseDataProduct,
 ) -> list[tuple[str, str, int]]:
     data = [
-        (data_product.name, r.application.name, r.performance_rating)
+        (data_product.short_name, r.application.short_name, r.performance_rating)
         for r in data_product.output_relationships
     ]
     return data
