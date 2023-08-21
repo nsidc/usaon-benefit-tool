@@ -1,4 +1,4 @@
-{% macro observing_system_fields(form) -%}
+{% macro response_object_fields(form) -%}
   {{form.short_name.label}} {{form.short_name(size=50)}}
   {% if form.short_name.errors %}
     <ul class="errors">

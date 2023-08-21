@@ -1,6 +1,6 @@
 {% extends 'response/base.html' %}
 {% from 'macros/forms/misc.j2' import
-  observing_system_fields,
+  response_object_fields,
   application_fields
 %}
 {% from 'macros/forms/relationships/observingsystem_dataproduct.j2' import
@@ -61,7 +61,7 @@
     <div class="two-columns">
       <div>
         {% if sqla_inspect(observing_system).transient %}
-          {{ observing_system_fields(form.observing_system.form) }}
+          {{ response_object_fields(form.observing_system.form) }}
         {% else %}
           <p>Name: {{observing_system.name}}</p>
         {% endif %}

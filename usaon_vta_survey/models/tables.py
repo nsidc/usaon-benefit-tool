@@ -274,6 +274,7 @@ class ResponseObservingSystemResearch(BaseModel):
     intermediate_product = Column(String(256), nullable=False)
 
 
+# ADD ResponseObjectFieldMixin
 class ResponseDataProduct(BaseModel, IORelationshipMixin):
     __tablename__ = 'response_data_product'
     __table_args__ = (UniqueConstraint('name', 'response_id'),)
