@@ -1,6 +1,5 @@
 {% extends 'response/base.html' %}
-{% from 'macros/forms/misc.j2' import data_product_fields %}
-
+{% from 'macros/forms/misc.j2' import response_object_fields %}
 
 {% block content %}
 
@@ -46,7 +45,7 @@
   <h3>Add data product</h3>
   <form method="POST">
     {{form.csrf_token}}
-    {{data_product_fields(form)}}
+    {{response_object_fields(form)}}
 
     <input type="submit" value="Create new data product" />
   </form>

@@ -9,6 +9,15 @@
   {% endif %}
   <br />
 
+  {{form.full_name.label}} {{form.full_name(size=50)}}
+  {% if form.full_name.errors %}
+    <ul class="errors">
+    {% for error in form.full_name.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <br />
   {{form.website_url.label}} {{form.website_url(size=50)}}
   {% if form.website_url.errors %}
     <ul class="errors">

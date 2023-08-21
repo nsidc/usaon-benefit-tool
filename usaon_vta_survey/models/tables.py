@@ -79,7 +79,6 @@ class ResponseObjectFieldMixin:
     contact_name = Column(String(256), nullable=False)
     contact_title = Column(String(256), nullable=True)
     contact_email = Column(String(256), nullable=False)
-    # how do i make it a minimum of 3 tags?
     tags = Column(String, nullable=False)
     version = Column(String(64), nullable=True)
 
@@ -274,8 +273,7 @@ class ResponseObservingSystemResearch(BaseModel):
     intermediate_product = Column(String(256), nullable=False)
 
 
-# ADD ResponseObjectFieldMixin
-class ResponseDataProduct(BaseModel, IORelationshipMixin):
+class ResponseDataProduct(BaseModel, IORelationshipMixin, ResponseObjectFieldMixin):
     __tablename__ = 'response_data_product'
     __table_args__ = (UniqueConstraint('name', 'response_id'),)
     id = Column(
@@ -290,12 +288,6 @@ class ResponseDataProduct(BaseModel, IORelationshipMixin):
     response_id = Column(
         Integer,
         ForeignKey('response.id'),
-        nullable=False,
-    )
-
-    # TODO: Constrain to 0-100
-    performance_rating = Column(
-        SmallInteger,
         nullable=False,
     )
 
