@@ -19,7 +19,7 @@
       <th>Created by</th>
       <th>Last Edited</th>
       <th>Response</th>
-      <th>notes</th>
+      <th>Description</th>
 
   {% for survey in surveys %}
     <tr>
@@ -45,7 +45,7 @@
           None
         {% endif %}
       </td>
-      <td>{{survey.notes}}</td>
+      <td>{{survey.description}}</td>
     </tr>
   {% endfor %}
 

@@ -17,8 +17,8 @@
 			</ul>
 		{% endif %}
     <br />
-		{{form.notes.label}} {{form.notes(rows=4, cols=100)}}
-		{% if form.notes.errors %}
+		{{form.description.label}} {{form.description(rows=4, cols=100)}}
+		{% if form.description.errors %}
 			<ul class="errors">
 			{% for error in form.name.errors %}
 				<li>{{ error }}</li>
