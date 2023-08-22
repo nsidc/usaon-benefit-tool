@@ -78,7 +78,7 @@ FORMS_BY_MODEL: dict[BaseModel, Form] = {
         only=['orcid', 'biography', 'affiliation', 'role'],
         field_args={'role': {'get_label': 'id'}},
     ),
-    Survey: model_form(Survey, only=['title', 'notes']),
+    Survey: model_form(Survey, only=['title', 'description']),
     # Response entities ("nodes" from Sankey diagram perspective)
     ResponseObservingSystem: model_form(
         ResponseObservingSystem,

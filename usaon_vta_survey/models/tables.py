@@ -19,7 +19,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey, UniqueConstraint
-from sqlalchemy.types import DateTime, Enum, Integer, SmallInteger, String
+from sqlalchemy.types import Boolean, DateTime, Enum, Integer, SmallInteger, String
 from typing_extensions import NotRequired, TypedDict
 
 from usaon_vta_survey import db
@@ -133,6 +133,13 @@ class Survey(BaseModel):
         nullable=False,
     )
 
+    # Do we want this to be a dropdown?
+    status = Column(
+        String(128),
+        nullable=False,
+        default='wip',
+    )
+
     created_by = Column(
         String,
         ForeignKey('user.id'),
@@ -145,9 +152,16 @@ class Survey(BaseModel):
         nullable=False,
         default=datetime.now,
     )
-    notes = Column(
+
+    description = Column(
         String(512),
         nullable=True,
+    )
+
+    private = Column(
+        Boolean,
+        nullable=False,
+        default=False,
     )
 
     response = relationship(
