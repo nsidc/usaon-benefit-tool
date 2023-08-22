@@ -29,6 +29,21 @@ from usaon_vta_survey.models.tables import (
     User,
 )
 
+response_object_fields = [
+    'short_name',
+    'full_name',
+    'organization',
+    'funder',
+    'funding_country',
+    'website',
+    'description',
+    'contact_name',
+    'contact_title',
+    'contact_email',
+    'tags',
+    'version',
+]
+
 
 class CustomModelConverter(ModelConverter):
     @converts("String")
@@ -61,57 +76,18 @@ FORMS_BY_MODEL: dict[BaseModel, Form] = {
     # Response entities ("nodes" from Sankey diagram perspective)
     ResponseObservingSystem: model_form(
         ResponseObservingSystem,
-        only=[
-            'short_name',
-            'full_name',
-            'organization',
-            'funder',
-            'funding_country',
-            'website',
-            'description',
-            'contact_name',
-            'contact_title',
-            'contact_email',
-            'tags',
-            'version',
-        ],
+        only=response_object_fields,
     ),
     # TODO: Restrict "rating" values to correct range
     ResponseDataProduct: model_form(
         ResponseDataProduct,
-        only=[
-            'short_name',
-            'full_name',
-            'organization',
-            'funder',
-            'funding_country',
-            'website',
-            'description',
-            'contact_name',
-            'contact_title',
-            'contact_email',
-            'tags',
-            'version',
-        ],
+        only=response_object_fields,
     ),
     ResponseApplication: model_form(
         ResponseApplication,
-        only=[
-            'short_name',
-            'full_name',
-            'organization',
-            'funder',
-            'funding_country',
-            'website',
-            'description',
-            'contact_name',
-            'contact_title',
-            'contact_email',
-            'tags',
-            'version',
-            'performance_criteria',
-            'performance_rating',
-        ],
+        only=response_object_fields.append(
+            ['performance_criteria', 'performance_rating']
+        ),
     ),
     ResponseSocietalBenefitArea: model_form(
         ResponseSocietalBenefitArea,
