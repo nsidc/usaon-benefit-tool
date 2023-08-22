@@ -83,6 +83,7 @@ FORMS_BY_MODEL: dict[BaseModel, Form] = {
     ResponseObservingSystem: model_form(
         ResponseObservingSystem,
         only=common_response_object_fields,
+        field_args={'status': {'get_label': 'id'}},
     ),
     # TODO: Restrict "rating" values to correct range
     ResponseDataProduct: model_form(
