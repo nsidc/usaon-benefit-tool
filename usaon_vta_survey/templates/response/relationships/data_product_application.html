@@ -28,7 +28,7 @@
 
         {% for dp in data_products %}
           <option value="{{dp.id}}" {% if dp.id == data_product.id %}selected{% endif %}>
-            {{dp.name}}
+            {{dp.short_name}}
           </option>
         {% endfor %}
 
@@ -47,7 +47,7 @@
 
         {% for app in applications %}
           <option value="{{app.id}}" {% if app.id == application.id %}selected{% endif %}>
-            {{app.name}}
+            {{app.short_name}}
           </option>
         {% endfor %}
 
@@ -63,7 +63,7 @@
         {% if sqla_inspect(data_product).transient %}
           {{ response_object_fields(form.data_product.form) }}
         {% else %}
-          <p>Name: {{data_product.name}}</p>
+          <p>Name: {{data_product.short_name}}</p>
         {% endif %}
       </div>
 
@@ -71,7 +71,7 @@
         {% if sqla_inspect(application).transient %}
           {{ application_fields(form.application.form) }}
         {% else %}
-          <p>Name: {{application.name}}</p>
+          <p>Name: {{application.short_name}}</p>
         {% endif %}
       </div>
     </div>

@@ -18,7 +18,7 @@
         </tr>
         {% for application in response.applications %}
           <tr>
-            <td>{{application.name}}</td>
+            <td>{{application.short_name}}</td>
             <td>
               {% if not application.input_relationships %}
                 None
@@ -27,7 +27,7 @@
 
               {% for input_relationship in application.input_relationships %}
                 <ul>
-                  <li>{{input_relationship.data_product.name}}: {{input_relationship.performance_rating}}</li>
+                  <li>{{input_relationship.data_product.short_name}}: {{input_relationship.performance_rating}}</li>
                 </ul>
               {% endfor %}
 

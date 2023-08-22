@@ -24,7 +24,7 @@
 
         {% for app in applications %}
           <option value="{{app.id}}" {% if app.id == application.id %}selected{% endif %}>
-            {{app.name}}
+            {{app.short_name}}
           </option>
         {% endfor %}
 
