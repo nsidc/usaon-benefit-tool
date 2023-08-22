@@ -29,6 +29,27 @@ from usaon_vta_survey.models.tables import (
     User,
 )
 
+common_response_object_fields = [
+    'short_name',
+    'full_name',
+    'organization',
+    'funder',
+    'funding_country',
+    'website',
+    'description',
+    'contact_name',
+    'contact_title',
+    'contact_email',
+    'tags',
+    'version',
+]
+
+app_response_object_fields = [
+    *common_response_object_fields,
+    'performance_criteria',
+    'performance_rating',
+]
+
 
 class CustomModelConverter(ModelConverter):
     @converts("String")
@@ -61,25 +82,16 @@ FORMS_BY_MODEL: dict[BaseModel, Form] = {
     # Response entities ("nodes" from Sankey diagram perspective)
     ResponseObservingSystem: model_form(
         ResponseObservingSystem,
-        only=[
-            'name',
-            'url',
-            'author_name',
-            'author_email',
-            'funding_country',
-            'funding_agency',
-            'references_citations',
-            'notes',
-        ],
+        only=common_response_object_fields,
     ),
     # TODO: Restrict "rating" values to correct range
     ResponseDataProduct: model_form(
         ResponseDataProduct,
-        only=['name', 'performance_rating'],
+        only=common_response_object_fields,
     ),
     ResponseApplication: model_form(
         ResponseApplication,
-        only=['name'],
+        only=app_response_object_fields,
     ),
     ResponseSocietalBenefitArea: model_form(
         ResponseSocietalBenefitArea,

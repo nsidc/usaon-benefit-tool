@@ -14,7 +14,7 @@ def load_user(user_id: str) -> User:
 
 
 def _validate_role_change(user: User, form) -> None:
-    if not form.data['role_id'] == user.role_id and not current_user.role_id == 'admin':
+    if not form.data['role'] == user.role_id and not current_user.role_id == 'admin':
         raise RuntimeError("Only admins can edit users roles.")
 
 

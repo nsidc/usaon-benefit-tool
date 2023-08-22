@@ -1,6 +1,6 @@
 {% extends 'response/base.html' %}
 {% from 'macros/forms/misc.j2' import
-  observing_system_fields,
+  response_object_fields,
   application_fields
 %}
 {% from 'macros/forms/relationships/observingsystem_dataproduct.j2' import
@@ -28,7 +28,7 @@
 
         {% for os in observing_systems %}
           <option value="{{os.id}}" {% if os.id == observing_system.id %}selected{% endif %}>
-            {{os.name}}
+            {{os.short_name}}
           </option>
         {% endfor %}
 
@@ -47,7 +47,7 @@
 
         {% for dp in data_products %}
           <option value="{{dp.id}}" {% if dp.id == data_product.id %}selected{% endif %}>
-            {{dp.name}}
+          {{dp.short_name}}
           </option>
         {% endfor %}
 
@@ -61,9 +61,9 @@
     <div class="two-columns">
       <div>
         {% if sqla_inspect(observing_system).transient %}
-          {{ observing_system_fields(form.observing_system.form) }}
+          {{ response_object_fields(form.observing_system.form) }}
         {% else %}
-          <p>Name: {{observing_system.name}}</p>
+          <p>Name: {{observing_system.short_name}}</p>
         {% endif %}
       </div>
 
@@ -71,7 +71,7 @@
         {% if sqla_inspect(data_product).transient %}
           {{ data_product_fields(form.data_product.form) }}
         {% else %}
-          <p>Name: {{data_product.name}}</p>
+          <p>Name: {{data_product.short_name}}</p>
         {% endif %}
       </div>
     </div>

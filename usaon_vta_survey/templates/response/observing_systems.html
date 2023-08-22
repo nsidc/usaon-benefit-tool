@@ -1,5 +1,5 @@
 {% extends 'response/base.html' %}
-{% from 'macros/forms/misc.j2' import observing_system_fields %}
+{% from 'macros/forms/misc.j2' import response_object_fields %}
 
 
 {% block content %}
@@ -14,7 +14,7 @@
     </tr>
     {% for observing_system in response.observing_systems %}
       <tr>
-        <td>{{observing_system.name}}</td>
+        <td>{{observing_system.short_name}}</td>
       </tr>
     {% endfor %}
   </table>
@@ -22,7 +22,7 @@
   <h3>Add observing system</h3>
   <form method="POST">
     {{form.csrf_token}}
-    {{observing_system_fields(form)}}
+    {{response_object_fields(form)}}
 
     <input type="submit" value="Create new observing system" />
   </form>

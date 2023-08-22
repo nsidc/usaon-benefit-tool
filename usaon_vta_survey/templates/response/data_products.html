@@ -1,6 +1,5 @@
 {% extends 'response/base.html' %}
-{% from 'macros/forms/misc.j2' import data_product_fields %}
-
+{% from 'macros/forms/misc.j2' import response_object_fields %}
 
 {% block content %}
 
@@ -17,7 +16,7 @@
         </tr>
         {% for data_product in response.data_products %}
           <tr>
-            <td>{{data_product.name}}</td>
+            <td>{{data_product.short_name}}</td>
             <td>
               {% if not data_product.input_relationships %}
                 None
@@ -25,7 +24,7 @@
               {% endif %}
               {% for input_relationship in data_product.input_relationships %}
                 <ul>
-                  <li>{{input_relationship.observing_system.name}}: {{input_relationship.performace_rating}}</li>
+                  <li>{{input_relationship.observing_system.short_name}}: {{input_relationship.performace_rating}}</li>
                 </ul>
               {% endfor %}
 
@@ -46,7 +45,7 @@
   <h3>Add data product</h3>
   <form method="POST">
     {{form.csrf_token}}
-    {{data_product_fields(form)}}
+    {{response_object_fields(form)}}
 
     <input type="submit" value="Create new data product" />
   </form>
