@@ -24,6 +24,7 @@ from typing_extensions import NotRequired, TypedDict
 
 from usaon_vta_survey import db
 from usaon_vta_survey._types import ObservingSystemType
+from usaon_vta_survey.constants.survey import STATUSES
 
 # Workaround for missing type stubs for flask-sqlalchemy:
 #     https://github.com/dropbox/sqlalchemy-stubs/issues/76#issuecomment-595839159
@@ -136,7 +137,7 @@ class Survey(BaseModel):
     status_id = Column(
         String,
         ForeignKey('status.id'),
-        default="work in progress",
+        default=STATUSES[0],
         nullable=False,
     )
 
