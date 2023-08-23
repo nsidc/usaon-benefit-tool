@@ -24,6 +24,7 @@ from typing_extensions import NotRequired, TypedDict
 
 from usaon_vta_survey import db
 from usaon_vta_survey._types import ObservingSystemType
+from usaon_vta_survey.constants.status import STATUSES
 
 # Workaround for missing type stubs for flask-sqlalchemy:
 #     https://github.com/dropbox/sqlalchemy-stubs/issues/76#issuecomment-595839159
@@ -133,11 +134,11 @@ class Survey(BaseModel):
         nullable=False,
     )
 
-    # Do we want this to be a dropdown?
-    status = Column(
-        String(128),
+    status_id = Column(
+        String,
+        ForeignKey('status.id'),
+        default=STATUSES[0],
         nullable=False,
-        default='wip',
     )
 
     created_by = Column(
@@ -168,6 +169,7 @@ class Survey(BaseModel):
         'Response',
         back_populates='survey',
     )
+    status = relationship('Status')
 
 
 class Response(BaseModel):
@@ -375,6 +377,15 @@ class ResponseSocietalBenefitArea(BaseModel, IORelationshipMixin):
 
 
 # Association tables
+class Status(BaseModel):
+    __tablename__ = 'status'
+    id = Column(
+        String,
+        primary_key=True,
+        nullable=False,
+    )
+
+
 class Role(BaseModel):
     __tablename__ = 'role'
     id = Column(

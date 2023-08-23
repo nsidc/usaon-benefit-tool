@@ -5,11 +5,13 @@ from sqlalchemy.orm import Session
 from usaon_vta_survey import db
 from usaon_vta_survey.constants.roles import ROLES
 from usaon_vta_survey.constants.sba import IAOA_SBA_FRAMEWORK
+from usaon_vta_survey.constants.status import STATUSES
 from usaon_vta_survey.models.tables import (
     Role,
     SocietalBenefitArea,
     SocietalBenefitKeyObjective,
     SocietalBenefitSubArea,
+    Status,
 )
 
 
@@ -37,7 +39,21 @@ def create_tables(session: Session) -> None:
 def populate_reference_data() -> None:
     init_societal_benefit_areas(db.session)
     init_roles(db.session)
+    init_statuses(db.session)
     logger.info('Reference data loaded.')
+
+
+def init_statuses(session: Session) -> None:
+    session.add_all(
+        [
+            Status(
+                id=status,
+            )
+            for status in STATUSES
+        ]
+    )
+
+    session.commit()
 
 
 def init_roles(session: Session) -> None:
