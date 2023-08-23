@@ -22,7 +22,6 @@ from usaon_vta_survey.models.tables import (
     ResponseApplicationSocietalBenefitArea,
     ResponseDataProduct,
     ResponseDataProductApplication,
-    ResponseObservingSystem,
     ResponseObservingSystemDataProduct,
     ResponseSocietalBenefitArea,
     Survey,
@@ -80,11 +79,6 @@ FORMS_BY_MODEL: dict[BaseModel, Form] = {
     ),
     Survey: model_form(Survey, only=['title', 'description']),
     # Response entities ("nodes" from Sankey diagram perspective)
-    ResponseObservingSystem: model_form(
-        ResponseObservingSystem,
-        only=common_response_object_fields,
-        field_args={'status': {'get_label': 'id'}},
-    ),
     # TODO: Restrict "rating" values to correct range
     ResponseDataProduct: model_form(
         ResponseDataProduct,
