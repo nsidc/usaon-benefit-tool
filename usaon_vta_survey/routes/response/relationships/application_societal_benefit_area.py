@@ -214,7 +214,6 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
         return redirect(url_for('view_response_sbas', survey_id=survey.id))
 
     form = SuperForm(obj=form_obj)
-    # breakpoint()
     return render_template(
         'response/relationships/application_societal_benefit_area.html',
         form=form,
@@ -225,3 +224,15 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
         applications=survey.response.applications,
         relationship=response_application_societal_benefit_area,
     )
+
+
+@app.route(
+    '/response/<string:survey_id>/application_societal_benefit_area_relationships',
+    methods=['GET', 'POST'],
+)
+def delete_response_application_societal_benefit_area_relationships(survey_id: str):
+    """Delete application/SBA relationships to a response."""
+    societal_benefit_area_id, application_id = _request_args(request)
+    db.get_or_404(Survey, survey_id)
+
+    return ...
