@@ -24,7 +24,7 @@ from typing_extensions import NotRequired, TypedDict
 
 from usaon_vta_survey import db
 from usaon_vta_survey._types import ObservingSystemType
-from usaon_vta_survey.constants.survey import STATUSES
+from usaon_vta_survey.constants.status import STATUSES
 
 # Workaround for missing type stubs for flask-sqlalchemy:
 #     https://github.com/dropbox/sqlalchemy-stubs/issues/76#issuecomment-595839159
