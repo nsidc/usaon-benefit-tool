@@ -335,7 +335,11 @@ class ResponseApplication(BaseModel, IORelationshipMixin, ResponseObjectFieldMix
         String(256),
     )
     # limit 0-100
-    performance_rating = Column(Integer, nullable=False)
+    performance_rating = Column(
+        Integer,
+        # CheckConstraint("0<=performance_rating<=100"),
+        nullable=False,
+    )
 
     response = relationship(
         'Response',
