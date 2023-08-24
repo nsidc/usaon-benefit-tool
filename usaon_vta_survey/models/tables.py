@@ -82,21 +82,19 @@ class ResponseObjectFieldMixin:
 
 class User(BaseModel, UserMixin):
     __tablename__ = 'user'
-    # id = Column(
-    #    Integer,
-    #    autoincrement=True,
-    #    primary_key=True,
-    # )
     id = Column(
-        # This will be email from google sso
-        String,
-        nullable=False,
+        Integer,
+        autoincrement=True,
         primary_key=True,
     )
+    # TODO: Do we want to add google_id?
     email = Column(
         # This will be email from google sso
         String,
         nullable=False,
+        unique=True,
+        # we want to query by email
+        index=True,
     )
     name = Column(
         String,
@@ -150,7 +148,7 @@ class Survey(BaseModel):
     )
 
     created_by = Column(
-        String,
+        Integer,
         ForeignKey('user.id'),
         default=(lambda: current_user.id),
         nullable=False,
@@ -188,7 +186,7 @@ class Response(BaseModel):
         autoincrement=True,
     )
     created_by = Column(
-        String,
+        Integer,
         ForeignKey('user.id'),
         default=(lambda: current_user.id),
         nullable=False,
@@ -405,6 +403,9 @@ class Role(BaseModel):
 
 class ResponseObservingSystemDataProduct(BaseModel):
     __tablename__ = 'response_observing_system_data_product'
+    __table_args__ = (
+        UniqueConstraint('response_observing_system_id', 'response_data_product_id'),
+    )
     id = Column(
         Integer,
         autoincrement=True,
@@ -413,12 +414,10 @@ class ResponseObservingSystemDataProduct(BaseModel):
     response_observing_system_id = Column(
         Integer,
         ForeignKey('response_observing_system.id'),
-        primary_key=True,
     )
     response_data_product_id = Column(
         Integer,
         ForeignKey('response_data_product.id'),
-        primary_key=True,
     )
 
     # TODO: Constrain ratings 0-100
@@ -439,6 +438,9 @@ class ResponseObservingSystemDataProduct(BaseModel):
 
 class ResponseDataProductApplication(BaseModel):
     __tablename__ = 'response_data_product_application'
+    __table_args__ = (
+        UniqueConstraint('response_data_product_id', 'response_application_id'),
+    )
     id = Column(
         Integer,
         autoincrement=True,
@@ -474,6 +476,11 @@ class ResponseDataProductApplication(BaseModel):
 
 class ResponseApplicationSocietalBenefitArea(BaseModel):
     __tablename__ = 'response_application_societal_benefit_area'
+    __table_args__ = (
+        UniqueConstraint(
+            'response_application_id', 'response_societal_benefit_area_id'
+        ),
+    )
     id = Column(
         Integer,
         autoincrement=True,
@@ -482,12 +489,10 @@ class ResponseApplicationSocietalBenefitArea(BaseModel):
     response_application_id = Column(
         Integer,
         ForeignKey('response_application.id'),
-        primary_key=True,
     )
     response_societal_benefit_area_id = Column(
         Integer,
         ForeignKey('response_societal_benefit_area.id'),
-        primary_key=True,
     )
 
     # TODO: Constrain ratings 0-100
