@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<h1>{% block title %}Profile | {{ user.id }} {% endblock %}</h1>
+<h1>{% block title %}Profile | {{ user.email }} {% endblock %}</h1>
 <h2>Name: {{ user.name }}</h2>
 {% if not current_user.id==user.id %}
   <h3 style='color:red'>This is another users profile.</h3>

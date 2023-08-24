@@ -9,13 +9,11 @@ warning:
 
 TODO: Add check constraints for numeric fields where we know the min/max.
 """
-import uuid
 from datetime import datetime
 from functools import cache
 from typing import Final
 
 from flask_login import UserMixin, current_user
-from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey, UniqueConstraint
@@ -85,10 +83,18 @@ class ResponseObjectFieldMixin:
 class User(BaseModel, UserMixin):
     __tablename__ = 'user'
     id = Column(
+        Integer,
+        autoincrement=True,
+        primary_key=True,
+    )
+    # TODO: Do we want to add google_id?
+    email = Column(
         # This will be email from google sso
         String,
-        primary_key=True,
         nullable=False,
+        unique=True,
+        # we want to query by email
+        index=True,
     )
     name = Column(
         String,
@@ -118,9 +124,9 @@ class User(BaseModel, UserMixin):
 class Survey(BaseModel):
     __tablename__ = 'survey'
     id = Column(
-        UUID(as_uuid=True),
+        Integer,
         primary_key=True,
-        default=uuid.uuid4,
+        autoincrement=True,
     )
 
     response_id = Column(
@@ -142,7 +148,7 @@ class Survey(BaseModel):
     )
 
     created_by = Column(
-        String,
+        Integer,
         ForeignKey('user.id'),
         default=(lambda: current_user.id),
         nullable=False,
@@ -180,7 +186,7 @@ class Response(BaseModel):
         autoincrement=True,
     )
     created_by = Column(
-        String,
+        Integer,
         ForeignKey('user.id'),
         default=(lambda: current_user.id),
         nullable=False,
@@ -329,7 +335,11 @@ class ResponseApplication(BaseModel, IORelationshipMixin, ResponseObjectFieldMix
         String(256),
     )
     # limit 0-100
-    performance_rating = Column(Integer, nullable=False)
+    performance_rating = Column(
+        Integer,
+        # CheckConstraint("0<=performance_rating<=100"),
+        nullable=False,
+    )
 
     response = relationship(
         'Response',
@@ -397,15 +407,21 @@ class Role(BaseModel):
 
 class ResponseObservingSystemDataProduct(BaseModel):
     __tablename__ = 'response_observing_system_data_product'
+    __table_args__ = (
+        UniqueConstraint('response_observing_system_id', 'response_data_product_id'),
+    )
+    id = Column(
+        Integer,
+        autoincrement=True,
+        primary_key=True,
+    )
     response_observing_system_id = Column(
         Integer,
         ForeignKey('response_observing_system.id'),
-        primary_key=True,
     )
     response_data_product_id = Column(
         Integer,
         ForeignKey('response_data_product.id'),
-        primary_key=True,
     )
 
     # TODO: Constrain ratings 0-100
@@ -426,15 +442,22 @@ class ResponseObservingSystemDataProduct(BaseModel):
 
 class ResponseDataProductApplication(BaseModel):
     __tablename__ = 'response_data_product_application'
+    __table_args__ = (
+        UniqueConstraint('response_data_product_id', 'response_application_id'),
+    )
+    id = Column(
+        Integer,
+        autoincrement=True,
+        primary_key=True,
+    )
+
     response_data_product_id = Column(
         Integer,
         ForeignKey('response_data_product.id'),
-        primary_key=True,
     )
     response_application_id = Column(
         Integer,
         ForeignKey('response_application.id'),
-        primary_key=True,
     )
 
     # TODO: Constrain ratings 0-100
@@ -455,15 +478,23 @@ class ResponseDataProductApplication(BaseModel):
 
 class ResponseApplicationSocietalBenefitArea(BaseModel):
     __tablename__ = 'response_application_societal_benefit_area'
+    __table_args__ = (
+        UniqueConstraint(
+            'response_application_id', 'response_societal_benefit_area_id'
+        ),
+    )
+    id = Column(
+        Integer,
+        autoincrement=True,
+        primary_key=True,
+    )
     response_application_id = Column(
         Integer,
         ForeignKey('response_application.id'),
-        primary_key=True,
     )
     response_societal_benefit_area_id = Column(
         Integer,
         ForeignKey('response_societal_benefit_area.id'),
-        primary_key=True,
     )
 
     # TODO: Constrain ratings 0-100
