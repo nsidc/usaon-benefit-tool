@@ -7,8 +7,11 @@ def ensure_user_exists(google_json: dict) -> User:
 
     Note: Does this include user updates for something like a name change?
     """
-    user = User(id=google_json['email'], name=google_json['name'])
+    user = User(
+        id=google_json['id'], email=google_json['email'], name=google_json['name']
+    )
     user_db = db.session.get(User, user.id)
+    # breakpoint()
     if user_db:
         return user_db
     else:

@@ -9,13 +9,11 @@ warning:
 
 TODO: Add check constraints for numeric fields where we know the min/max.
 """
-import uuid
 from datetime import datetime
 from functools import cache
 from typing import Final
 
 from flask_login import UserMixin, current_user
-from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey, UniqueConstraint
@@ -84,10 +82,20 @@ class ResponseObjectFieldMixin:
 
 class User(BaseModel, UserMixin):
     __tablename__ = 'user'
+    # id = Column(
+    #    Integer,
+    #    autoincrement=True,
+    #    primary_key=True,
+    # )
     id = Column(
         # This will be email from google sso
         String,
+        nullable=False,
         primary_key=True,
+    )
+    email = Column(
+        # This will be email from google sso
+        String,
         nullable=False,
     )
     name = Column(
@@ -118,9 +126,9 @@ class User(BaseModel, UserMixin):
 class Survey(BaseModel):
     __tablename__ = 'survey'
     id = Column(
-        UUID(as_uuid=True),
+        Integer,
         primary_key=True,
-        default=uuid.uuid4,
+        autoincrement=True,
     )
 
     response_id = Column(
@@ -397,6 +405,11 @@ class Role(BaseModel):
 
 class ResponseObservingSystemDataProduct(BaseModel):
     __tablename__ = 'response_observing_system_data_product'
+    id = Column(
+        Integer,
+        autoincrement=True,
+        primary_key=True,
+    )
     response_observing_system_id = Column(
         Integer,
         ForeignKey('response_observing_system.id'),
@@ -426,6 +439,12 @@ class ResponseObservingSystemDataProduct(BaseModel):
 
 class ResponseDataProductApplication(BaseModel):
     __tablename__ = 'response_data_product_application'
+    id = Column(
+        Integer,
+        autoincrement=True,
+        primary_key=True,
+    )
+
     response_data_product_id = Column(
         Integer,
         ForeignKey('response_data_product.id'),
@@ -455,6 +474,11 @@ class ResponseDataProductApplication(BaseModel):
 
 class ResponseApplicationSocietalBenefitArea(BaseModel):
     __tablename__ = 'response_application_societal_benefit_area'
+    id = Column(
+        Integer,
+        autoincrement=True,
+        primary_key=True,
+    )
     response_application_id = Column(
         Integer,
         ForeignKey('response_application.id'),
