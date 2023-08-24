@@ -454,12 +454,10 @@ class ResponseDataProductApplication(BaseModel):
     response_data_product_id = Column(
         Integer,
         ForeignKey('response_data_product.id'),
-        primary_key=True,
     )
     response_application_id = Column(
         Integer,
         ForeignKey('response_application.id'),
-        primary_key=True,
     )
 
     # TODO: Constrain ratings 0-100
