@@ -11,6 +11,7 @@
 
       <tr>
         <th>id</th>
+        <th>email</th>
         <th>Name</th>
         <th>Role</th>
         <th>Affiliation</th>
@@ -20,6 +21,7 @@
     {% for user in users %}
       <tr>
         <td>{{user.id}} </td>
+        <td>{{user.email}} </td>
         <td>{{user.name}}</td>
         <td>{{user.role_id}}</td>
         <td>{{user.affiliation}}</td>
