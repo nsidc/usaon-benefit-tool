@@ -83,8 +83,6 @@ def _response_data_product_application(
     *,
     data_product_id: int | None,
     application_id: int | None,
-    # A002 error - ask matt
-    id: int | None,
 ) -> ResponseDataProductApplication:
     """Return a relationship db object.
 
@@ -93,7 +91,6 @@ def _response_data_product_application(
     """
     if data_product_id and application_id:
         # If not found, will be `None`
-        # TODO: Resolve error here
         response_data_product_application = (
             db.session.query(ResponseDataProductApplication)
             .filter(
@@ -149,7 +146,6 @@ def view_response_data_product_application_relationships(survey_id: str):
     response_data_product_application = _response_data_product_application(
         data_product_id=data_product_id,
         application_id=application_id,
-        id=id,
     )
 
     response_data_product = _response_data_product(
