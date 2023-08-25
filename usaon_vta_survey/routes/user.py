@@ -1,11 +1,9 @@
 from flask import render_template, request
-from flask_login import LoginManager, current_user
+from flask_login import current_user, login_required
 
-from usaon_vta_survey import app, db
+from usaon_vta_survey import app, db, login_manager
 from usaon_vta_survey.forms import FORMS_BY_MODEL
 from usaon_vta_survey.models.tables import User
-
-login_manager = LoginManager(app)
 
 
 @login_manager.user_loader
@@ -19,6 +17,7 @@ def _validate_role_change(user: User, form) -> None:
 
 
 @app.route('/user/<user_id>', methods=['POST', 'GET'])
+@login_required
 def user(user_id: str):
     Form = FORMS_BY_MODEL[User]
     user = db.get_or_404(User, user_id)

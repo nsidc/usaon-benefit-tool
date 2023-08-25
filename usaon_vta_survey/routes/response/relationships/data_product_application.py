@@ -1,4 +1,5 @@
 from flask import Request, redirect, render_template, request, url_for
+from flask_login import login_required
 from flask_wtf import FlaskForm
 from wtforms import FormField
 
@@ -125,6 +126,7 @@ def _request_args(request: Request) -> tuple[int | None, int | None]:
     '/response/<string:survey_id>/data_product_application_relationships',
     methods=['GET', 'POST'],
 )
+@login_required
 def view_response_data_product_application_relationships(survey_id: str):
     """View and add application/dataproduct relationships to a response.
 

@@ -1,4 +1,5 @@
 from flask import redirect, render_template, request, url_for
+from flask_login import login_required
 
 from usaon_vta_survey import app, db
 from usaon_vta_survey.forms import FORMS_BY_MODEL
@@ -8,6 +9,7 @@ from usaon_vta_survey.util.sankey import applications_sankey
 
 
 @app.route('/response/<string:survey_id>/applications', methods=['GET', 'POST'])
+@login_required
 def view_response_applications(survey_id: str):
     """View and add to applications associated with a response."""
     Form = FORMS_BY_MODEL[ResponseApplication]
