@@ -1,4 +1,5 @@
 from flask import Request, redirect, render_template, request, url_for
+from flask_login import login_required
 from flask_wtf import FlaskForm
 from wtforms import FormField
 
@@ -128,6 +129,7 @@ def _request_args(request: Request) -> tuple[int | None, int | None]:
     '/response/<string:survey_id>/application_societal_benefit_area_relationships',
     methods=['GET', 'POST'],
 )
+@login_required
 def view_response_application_societal_benefit_area_relationships(survey_id: str):
     """View and add application/SBA relationships to a response.
 

@@ -1,4 +1,5 @@
 from flask import redirect, render_template, request, url_for
+from flask_login import login_required
 
 from usaon_vta_survey import app, db
 from usaon_vta_survey.forms import FORMS_BY_MODEL
@@ -6,6 +7,7 @@ from usaon_vta_survey.models.tables import Survey
 
 
 @app.route('/survey/new', methods=['GET', 'POST'])
+@login_required
 def new_survey():
     Form = FORMS_BY_MODEL[Survey]
     survey = Survey()
@@ -26,6 +28,7 @@ def new_survey():
 
 
 @app.route('/survey/<string:survey_id>')
+@login_required
 def view_survey(survey_id: str):
     # Fetch survey by id
     survey = db.get_or_404(Survey, survey_id)

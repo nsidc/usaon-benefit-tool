@@ -21,11 +21,7 @@
       <div class="flash">{{ message }}</div>
     {% endfor %}
 
-    {% if not current_user.is_authenticated %}
-      <h3>Please login to use this application.</h3>
-    {% else %}
-      {% block content %}{% endblock %}
-    {% endif %}
+    {% block content %}{% endblock %}
 
   </section>
   <footer>

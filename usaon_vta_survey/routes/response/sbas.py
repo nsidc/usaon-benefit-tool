@@ -1,4 +1,5 @@
 from flask import redirect, render_template, request, url_for
+from flask_login import login_required
 
 from usaon_vta_survey import app, db
 from usaon_vta_survey.forms import FORMS_BY_MODEL
@@ -13,6 +14,7 @@ from usaon_vta_survey.util.authorization import limit_response_editors
 @app.route(
     '/response/<string:survey_id>/societal_benefit_areas', methods=['GET', 'POST']
 )
+@login_required
 def view_response_sbas(survey_id: str):
     """View and add to observing systems associated with a response."""
     sbas = SocietalBenefitArea.query.all()
