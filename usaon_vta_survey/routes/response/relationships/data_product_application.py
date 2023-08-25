@@ -90,7 +90,6 @@ def _response_data_product_application(
     in the db.
     """
     if data_product_id and application_id:
-        # If not found, will be `None`
         response_data_product_application = (
             db.session.query(ResponseDataProductApplication)
             .filter(
@@ -218,3 +217,16 @@ def view_response_data_product_application_relationships(survey_id: str):
         applications=survey.response.applications,
         relationship=response_data_product_application,
     )
+
+    @app.route(
+        '/response/<string:survey_id>/data_product_application_relationships',
+        methods=['GET', 'POST'],
+    )
+    def delete_response_application_societal_benefit_area_relationship(survey_id: str):
+        """Delete application/SBA relationships to a response."""
+        societal_benefit_area_id, application_id = _request_args(request)
+        db.get_or_404(Survey, survey_id)
+
+        return render_template(
+            'response/relationships/data_product_application.html',
+        )

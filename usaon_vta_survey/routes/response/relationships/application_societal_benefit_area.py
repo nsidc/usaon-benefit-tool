@@ -236,7 +236,7 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
     '/response/<string:survey_id>/application_societal_benefit_area_relationships',
     methods=['GET', 'POST'],
 )
-def delete_response_application_societal_benefit_area_relationships(survey_id: str):
+def delete_response_application_societal_benefit_area_relationship(survey_id: str):
     """Delete application/SBA relationships to a response."""
     societal_benefit_area_id, application_id = _request_args(request)
     db.get_or_404(Survey, survey_id)
