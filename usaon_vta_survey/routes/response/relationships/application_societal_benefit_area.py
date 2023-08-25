@@ -97,9 +97,15 @@ def _response_application_societal_benefit_area(
     """
     if societal_benefit_area_id and application_id:
         # If not found, will be `None`
-        response_application_societal_benefit_area = db.session.get(
-            ResponseApplicationSocietalBenefitArea,
-            (societal_benefit_area_id, application_id),
+        response_application_societal_benefit_area = (
+            db.session.query(ResponseApplicationSocietalBenefitArea)
+            .filter(
+                ResponseApplicationSocietalBenefitArea.response_societal_benefit_area_id
+                == societal_benefit_area_id
+                and ResponseApplicationSocietalBenefitArea.response_application_id
+                == application_id
+            )
+            .one_or_none()
         )
     else:
         response_application_societal_benefit_area = None
