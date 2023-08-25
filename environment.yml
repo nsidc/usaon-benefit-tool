@@ -39,3 +39,4 @@ dependencies:
   - pip:
     - wtforms-sqlalchemy
     - flask-dance
+    - mock-alchemy~=0.2.6
