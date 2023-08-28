@@ -26,6 +26,8 @@ export DB_USER=...
 export DB_PASSWORD=...
 ```
 
+Note: these can be put in a `.env` file so that all variables are assigned.
+
 ### Start the service
 
 Bring up the docker container:
