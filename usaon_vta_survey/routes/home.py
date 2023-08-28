@@ -1,6 +1,10 @@
+from flask import render_template
+
 from usaon_vta_survey import app
 
 
-@app.route("/home")
+@app.route("/")
 def root():
-    return "Welcome!"
+    return render_template(
+        'home.html',
+    )
