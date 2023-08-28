@@ -5,7 +5,6 @@ from usaon_vta_survey import app
 from usaon_vta_survey.models.tables import Survey
 
 
-@app.route('/')
 @app.route('/surveys')
 @login_required
 def view_surveys():
