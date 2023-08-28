@@ -2,6 +2,7 @@ import os
 from typing import Final
 
 from flask import Flask
+from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from sqlalchemy import inspect as sqla_inspect
@@ -28,6 +29,7 @@ app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'youcanneverguess'
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_CONNSTR
 
 db.init_app(app)
+bootstrap = Bootstrap5(app)
 
 app.jinja_env.globals.update(sqla_inspect=sqla_inspect, __version__=__version__)
 
