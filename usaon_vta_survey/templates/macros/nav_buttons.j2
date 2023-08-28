@@ -1,7 +1,6 @@
 {% macro nav_buttons(current_user) -%}
   {% from "bootstrap5/nav.html" import render_nav_item %}
 
-  {{ render_nav_item("root", "Home")}}
   {% if current_user.is_authenticated %}
     {{ render_nav_item("user", "Profile", user_id=current_user.id)}}
 

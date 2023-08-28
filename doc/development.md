@@ -26,7 +26,7 @@ export DB_USER=...
 export DB_PASSWORD=...
 ```
 
-Note: these can be put in a `.env` file so that all variables are assigned.
+Note: these can be put in a `.env` file so that all variables are assigned. This file is part of `.gitignore` so that no secrets are committed to github. 
 
 ### Start the service
 
