@@ -1,4 +1,4 @@
-FROM mambaorg/micromamba:0.23.3
+FROM mambaorg/micromamba:1.5.0
 
 # TODO: Figure out a better way to run tasks without requiring container
 # configuration
@@ -11,18 +11,12 @@ ARG MAMBA_DOCKERFILE_ACTIVATE=1
 
 COPY ./conda-lock.yml .
 
-RUN micromamba create -n usaon-vta-survey -f conda-lock.yml
-
-RUN micromamba clean --all --yes
-
 RUN micromamba install -y \
     # NOTE: -p is important to install to the "base" env
     -p /opt/conda \
     -f conda-lock.yml
+RUN micromamba clean --all --yes
 
-# Seemed like conda-lock was a bit off about the pip installs
-RUN pip install wtforms_sqlalchemy
-RUN pip install flask-dance
 
 # Install source
 COPY ./setup.py .
@@ -34,7 +28,7 @@ COPY ./usaon_vta_survey ./usaon_vta_survey
 ENV FLASK_APP=usaon_vta_survey
 
 
-# Did the build work?
+# Test dependencies
 RUN python -c "import flask"
 RUN which flask
 

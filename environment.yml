@@ -37,6 +37,7 @@ dependencies:
   - pyopenssl
 
   - pip:
+    # TODO: Get these on conda-forge
     - wtforms-sqlalchemy
     - flask-dance
-    - mock-alchemy~=0.2.6
+    - bootstrap-flask ~=2.3.0
