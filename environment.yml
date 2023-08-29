@@ -41,4 +41,4 @@ dependencies:
     - wtforms-sqlalchemy
     - flask-dance
     - bootstrap-flask ~=2.3.0
-    - mock-alchemy~=0.2.6
+    # - mock-alchemy~=0.2.6

@@ -13,8 +13,8 @@
 version: 1
 metadata:
   content_hash:
-    linux-64: d8b69bc636a23839893edf789d637d665cafe2d0cbb2b26c9bea77e579ad120d
-    osx-64: de64b803a77cc09f032fd1ade06f72e28161d09174ea21ded1c8823d6e6bdd31
+    linux-64: 9ca80891f27e24e051d196d3207ca70b13a78ad0e6a235fac7dd3981069b6b5b
+    osx-64: b1a86cfc4d33775b9f37a8bb04c9164feae7fb434c18b6dd8d8042f088cba2ba
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -1187,16 +1187,16 @@ package:
     sha256: 2577c501a2fb8d05a304c09d090d6e47c306fef15809d102b327cf8364bddab5
   category: main
   optional: false
-- name: sqlalchemy
-  version: 2.0.20
+- name: wtforms-sqlalchemy
+  version: '0.3'
   manager: pip
   platform: linux-64
   dependencies:
-    typing-extensions: '>=4.2.0'
-    greenlet: '!=0.4.17'
-  url: https://files.pythonhosted.org/packages/9f/94/8a20e0b867857cacf7e1269efc02aa81866071df844a2598fa34245a50df/SQLAlchemy-2.0.20-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+    wtforms: '>=1.0.5'
+    sqlalchemy: '>=0.7.10'
+  url: https://files.pythonhosted.org/packages/62/71/a5624ff63f4024d27489263b56e3ab6a5122087eb432d14617cfed90ec3d/WTForms_SQLAlchemy-0.3-py3-none-any.whl
   hash:
-    sha256: a3f0dd6d15b6dc8b28a838a5c48ced7455c3e1fb47b89da9c79cc2090b072a50
+    sha256: 90195d7592bf256d82498c42c79d416832e4a4e6fbca4f1e745a018f66d26c47
   category: main
   optional: false
 - name: flask-dance
@@ -1213,29 +1213,6 @@ package:
   url: https://files.pythonhosted.org/packages/a6/31/cfd6c5c2e7a8ee47a55388b26e5752c8e78eb53e6bc98b5a932cd61fca91/flask_dance-7.0.0-py3-none-any.whl
   hash:
     sha256: 935f5806d587eed94b53cf356ee921466bb32ba83405ed5a4e8ac8ea859620dc
-  category: main
-  optional: false
-- name: mock-alchemy
-  version: 0.2.6
-  manager: pip
-  platform: linux-64
-  dependencies:
-    sqlalchemy: '>=2.0.6,<3.0.0'
-  url: https://files.pythonhosted.org/packages/aa/93/8d1f7ee9fa858d1c13511de6e0bedf7f57d15e9c7aab0e9fdf4d66074417/mock_alchemy-0.2.6-py3-none-any.whl
-  hash:
-    sha256: d5e17f2c92d0299d70cd9a0d3c8f96f759a81c285c76b03f4192451583bf865f
-  category: main
-  optional: false
-- name: wtforms-sqlalchemy
-  version: '0.3'
-  manager: pip
-  platform: linux-64
-  dependencies:
-    wtforms: '>=1.0.5'
-    sqlalchemy: '>=0.7.10'
-  url: https://files.pythonhosted.org/packages/62/71/a5624ff63f4024d27489263b56e3ab6a5122087eb432d14617cfed90ec3d/WTForms_SQLAlchemy-0.3-py3-none-any.whl
-  hash:
-    sha256: 90195d7592bf256d82498c42c79d416832e4a4e6fbca4f1e745a018f66d26c47
   category: main
   optional: false
 - name: bzip2
@@ -2290,16 +2267,16 @@ package:
     sha256: 2577c501a2fb8d05a304c09d090d6e47c306fef15809d102b327cf8364bddab5
   category: main
   optional: false
-- name: sqlalchemy
-  version: 2.0.20
+- name: wtforms-sqlalchemy
+  version: '0.3'
   manager: pip
   platform: osx-64
   dependencies:
-    typing-extensions: '>=4.2.0'
-    greenlet: '!=0.4.17'
-  url: https://files.pythonhosted.org/packages/fe/1c/d3ca3095528c262125251ee42782086d1d2bad4e59adf0dbdd9540147c23/SQLAlchemy-2.0.20-cp310-cp310-macosx_10_9_x86_64.whl
+    wtforms: '>=1.0.5'
+    sqlalchemy: '>=0.7.10'
+  url: https://files.pythonhosted.org/packages/62/71/a5624ff63f4024d27489263b56e3ab6a5122087eb432d14617cfed90ec3d/WTForms_SQLAlchemy-0.3-py3-none-any.whl
   hash:
-    sha256: 759b51346aa388c2e606ee206c0bc6f15a5299f6174d1e10cadbe4530d3c7a98
+    sha256: 90195d7592bf256d82498c42c79d416832e4a4e6fbca4f1e745a018f66d26c47
   category: main
   optional: false
 - name: flask-dance
@@ -2316,28 +2293,5 @@ package:
   url: https://files.pythonhosted.org/packages/a6/31/cfd6c5c2e7a8ee47a55388b26e5752c8e78eb53e6bc98b5a932cd61fca91/flask_dance-7.0.0-py3-none-any.whl
   hash:
     sha256: 935f5806d587eed94b53cf356ee921466bb32ba83405ed5a4e8ac8ea859620dc
-  category: main
-  optional: false
-- name: mock-alchemy
-  version: 0.2.6
-  manager: pip
-  platform: osx-64
-  dependencies:
-    sqlalchemy: '>=2.0.6,<3.0.0'
-  url: https://files.pythonhosted.org/packages/aa/93/8d1f7ee9fa858d1c13511de6e0bedf7f57d15e9c7aab0e9fdf4d66074417/mock_alchemy-0.2.6-py3-none-any.whl
-  hash:
-    sha256: d5e17f2c92d0299d70cd9a0d3c8f96f759a81c285c76b03f4192451583bf865f
-  category: main
-  optional: false
-- name: wtforms-sqlalchemy
-  version: '0.3'
-  manager: pip
-  platform: osx-64
-  dependencies:
-    wtforms: '>=1.0.5'
-    sqlalchemy: '>=0.7.10'
-  url: https://files.pythonhosted.org/packages/62/71/a5624ff63f4024d27489263b56e3ab6a5122087eb432d14617cfed90ec3d/WTForms_SQLAlchemy-0.3-py3-none-any.whl
-  hash:
-    sha256: 90195d7592bf256d82498c42c79d416832e4a4e6fbca4f1e745a018f66d26c47
   category: main
   optional: false
