@@ -94,9 +94,15 @@ def _response_observing_system_data_product(
     """
     if data_product_id and observing_system_id:
         # If not found, will be `None`
-        response_observing_system_data_product = db.session.get(
-            ResponseObservingSystemDataProduct,
-            (data_product_id, observing_system_id),
+        response_observing_system_data_product = (
+            db.session.query(ResponseObservingSystemDataProduct)
+            .filter(
+                ResponseObservingSystemDataProduct.response_data_product_id
+                == data_product_id
+                and ResponseObservingSystemDataProduct.response_observing_system_id
+                == observing_system_id
+            )
+            .one_or_none()
         )
     else:
         response_observing_system_data_product = None

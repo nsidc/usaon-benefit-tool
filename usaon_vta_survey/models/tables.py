@@ -7,16 +7,16 @@ TODO: Considered documented approach at the end of this section to mitigate abov
 warning:
     https://docs.sqlalchemy.org/en/14/orm/basic_relationships.html#late-evaluation-of-relationship-arguments
 
-TODO: Add check constraints for numeric fields where we know the min/max.
 """
 from datetime import datetime
 from functools import cache
 from typing import Final
 
 from flask_login import UserMixin, current_user
+from sqlalchemy import CheckConstraint
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import relationship
-from sqlalchemy.schema import Column, ForeignKey, UniqueConstraint
+from sqlalchemy.schema import Column, ForeignKey, Index, UniqueConstraint
 from sqlalchemy.types import Boolean, DateTime, Enum, Integer, SmallInteger, String
 from typing_extensions import NotRequired, TypedDict
 
@@ -119,6 +119,10 @@ class User(BaseModel, UserMixin):
         nullable=True,
     )
     role = relationship('Role')
+    responses = relationship(
+        'Response',
+        back_populates='created_by',
+    )
 
 
 class Survey(BaseModel):
@@ -185,7 +189,7 @@ class Response(BaseModel):
         primary_key=True,
         autoincrement=True,
     )
-    created_by = Column(
+    created_by_id = Column(
         Integer,
         ForeignKey('user.id'),
         default=(lambda: current_user.id),
@@ -205,6 +209,10 @@ class Response(BaseModel):
     survey = relationship(
         'Survey',
         back_populates='response',
+    )
+    created_by = relationship(
+        'User',
+        back_populates='responses',
     )
     observing_systems = relationship(
         'ResponseObservingSystem',
@@ -334,10 +342,11 @@ class ResponseApplication(BaseModel, IORelationshipMixin, ResponseObjectFieldMix
     performance_criteria = Column(
         String(256),
     )
-    # limit 0-100
     performance_rating = Column(
         Integer,
-        # CheckConstraint("0<=performance_rating<=100"),
+        CheckConstraint(
+            'performance_rating>0 and performance_rating<101', name='0-100'
+        ),
         nullable=False,
     )
 
@@ -409,6 +418,12 @@ class ResponseObservingSystemDataProduct(BaseModel):
     __tablename__ = 'response_observing_system_data_product'
     __table_args__ = (
         UniqueConstraint('response_observing_system_id', 'response_data_product_id'),
+        Index(
+            f'idx_{__tablename__}',
+            'response_observing_system_id',
+            'response_data_product_id',
+            unique=True,
+        ),
     )
     id = Column(
         Integer,
@@ -418,15 +433,28 @@ class ResponseObservingSystemDataProduct(BaseModel):
     response_observing_system_id = Column(
         Integer,
         ForeignKey('response_observing_system.id'),
+        index=True,
     )
     response_data_product_id = Column(
         Integer,
         ForeignKey('response_data_product.id'),
+        index=True,
     )
 
-    # TODO: Constrain ratings 0-100
-    criticality_rating = Column(SmallInteger, nullable=False)
-    performance_rating = Column(SmallInteger, nullable=False)
+    criticality_rating = Column(
+        SmallInteger,
+        CheckConstraint(
+            'criticality_rating>=0 and criticality_rating<=100', name='c0-100'
+        ),
+        nullable=False,
+    )
+    performance_rating = Column(
+        SmallInteger,
+        CheckConstraint(
+            'performance_rating>=0 and performance_rating<=100', name='0-100'
+        ),
+        nullable=False,
+    )
     rationale = Column(String(512), nullable=True)
     needed_improvements = Column(String(512), nullable=True)
 
@@ -444,6 +472,12 @@ class ResponseDataProductApplication(BaseModel):
     __tablename__ = 'response_data_product_application'
     __table_args__ = (
         UniqueConstraint('response_data_product_id', 'response_application_id'),
+        Index(
+            f'idx_{__tablename__}',
+            'response_data_product_id',
+            'response_application_id',
+            unique=True,
+        ),
     )
     id = Column(
         Integer,
@@ -454,15 +488,28 @@ class ResponseDataProductApplication(BaseModel):
     response_data_product_id = Column(
         Integer,
         ForeignKey('response_data_product.id'),
+        index=True,
     )
     response_application_id = Column(
         Integer,
         ForeignKey('response_application.id'),
+        index=True,
     )
 
-    # TODO: Constrain ratings 0-100
-    criticality_rating = Column(SmallInteger, nullable=False)
-    performance_rating = Column(SmallInteger, nullable=False)
+    criticality_rating = Column(
+        SmallInteger,
+        CheckConstraint(
+            'criticality_rating>=0 and criticality_rating<=100', name='c0-100'
+        ),
+        nullable=False,
+    )
+    performance_rating = Column(
+        SmallInteger,
+        CheckConstraint(
+            'performance_rating>=0 and performance_rating<=100', name='0-100'
+        ),
+        nullable=False,
+    )
     rationale = Column(String(512), nullable=True)
     needed_improvements = Column(String(512), nullable=True)
 
@@ -482,6 +529,12 @@ class ResponseApplicationSocietalBenefitArea(BaseModel):
         UniqueConstraint(
             'response_application_id', 'response_societal_benefit_area_id'
         ),
+        Index(
+            'idx_{__tablename__}',
+            'response_application_id',
+            'response_societal_benefit_area_id',
+            unique=True,
+        ),
     )
     id = Column(
         Integer,
@@ -491,14 +544,21 @@ class ResponseApplicationSocietalBenefitArea(BaseModel):
     response_application_id = Column(
         Integer,
         ForeignKey('response_application.id'),
+        index=True,
     )
     response_societal_benefit_area_id = Column(
         Integer,
         ForeignKey('response_societal_benefit_area.id'),
+        index=True,
     )
 
-    # TODO: Constrain ratings 0-100
-    performance_rating = Column(SmallInteger, nullable=False)
+    performance_rating = Column(
+        SmallInteger,
+        CheckConstraint(
+            'performance_rating>=0 and performance_rating<=100', name='0-100'
+        ),
+        nullable=False,
+    )
 
     application = relationship(
         'ResponseApplication',
