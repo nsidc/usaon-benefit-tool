@@ -9,7 +9,9 @@ from functools import partial
 
 from flask_wtf import FlaskForm
 from sqlalchemy.ext.declarative import DeclarativeMeta
-from wtforms import fields
+
+# Figure out how to use submit fields
+from wtforms import fields  # , SubmitField
 from wtforms_sqlalchemy.orm import (
     ModelConverter,
     converts,
