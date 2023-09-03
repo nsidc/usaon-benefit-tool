@@ -21,10 +21,10 @@ services:
       - "USAON_VTA_LOGIN_DISABLED=true"
       # Use a local file DB instead of a remote one:
       - "USAON_VTA_DB_SQLITE=true"
+      # Disable error handlers and allow exceptions to propagate:
+      - "USAON_VTA_TESTING=True"
       # Enable the in-browser debugger:
       - "FLASK_DEBUG=True"
-      # Disable error handlers and allow exceptions to propagate:
-      - "FLASK_TESTING=True"
     
 
       # Development DANGER ZONE: Do not use the below settings except for
