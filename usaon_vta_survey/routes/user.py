@@ -13,6 +13,15 @@ def load_user(user_id: str) -> User:
     return User.query.get(user_id)
 
 
+if app.config["LOGIN_DISABLED"]:
+    # HACK: Always logged in as dev user when login is disabled
+    import flask_login.utils as flask_login_utils
+
+    from usaon_vta_survey.util.dev import DEV_USER
+
+    flask_login_utils._get_user = lambda: DEV_USER
+
+
 def _validate_role_change(user: User, form) -> None:
     if not form.data['role'] == user.role_id and not current_user.role_id == 'admin':
         raise RuntimeError("Only admins can edit users roles.")
