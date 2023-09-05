@@ -7,10 +7,7 @@
   {% if not current_user.role_id=='admin' %}
     <h3>You don't belong here! This page is for admins only.</h3>
   {% else %}
-
-    {% for user in users %}
-      {{ render_table(users, show_actions=True, edit_url=url_for('user', user_id=user.id)) }}
-    {% endfor %}
+    {{ render_table(users, show_actions=True, edit_url=url_for('user', user_id=users.id)) }}
 
     </table>
   {% endif %}
