@@ -11,7 +11,7 @@ from flask_wtf import FlaskForm
 from sqlalchemy.ext.declarative import DeclarativeMeta
 
 # Figure out how to use submit fields
-from wtforms import fields  # , SubmitField
+from wtforms import fields
 from wtforms_sqlalchemy.orm import (
     ModelConverter,
     converts,
@@ -71,6 +71,7 @@ model_form = partial(
     converter=CustomModelConverter(),
     db_session=db.session,
     base_class=FlaskForm,
+    # submit_button=SubmitField('submit'),
 )
 
 # Workaround for missing type stubs for flask-sqlalchemy:
