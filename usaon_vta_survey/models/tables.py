@@ -119,10 +119,10 @@ class User(BaseModel, UserMixin):
         nullable=True,
     )
     role = relationship('Role')
-    responses = relationship(
-        'Response',
-        back_populates='created_by',
-    )
+    # responses = relationship(
+    #     'Response',
+    #     back_populates='created_by',
+    # )
 
 
 class Survey(BaseModel):
@@ -189,12 +189,18 @@ class Response(BaseModel):
         primary_key=True,
         autoincrement=True,
     )
-    created_by_id = Column(
+    created_by = Column(
         Integer,
         ForeignKey('user.id'),
         default=(lambda: current_user.id),
         nullable=False,
     )
+    # created_by_id = Column(
+    #     Integer,
+    #     ForeignKey('user.id'),
+    #     default=(lambda: current_user.id),
+    #     nullable=False,
+    # )
     created_timestamp = Column(
         DateTime,
         nullable=False,
@@ -210,10 +216,10 @@ class Response(BaseModel):
         'Survey',
         back_populates='response',
     )
-    created_by = relationship(
-        'User',
-        back_populates='responses',
-    )
+    # created_by = relationship(
+    #     'User',
+    #     back_populates='responses',
+    # )
     observing_systems = relationship(
         'ResponseObservingSystem',
         back_populates='response',
