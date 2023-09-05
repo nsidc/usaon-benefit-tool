@@ -9,9 +9,7 @@ from functools import partial
 
 from flask_wtf import FlaskForm
 from sqlalchemy.ext.declarative import DeclarativeMeta
-
-# Figure out how to use submit fields
-from wtforms import fields
+from wtforms import SubmitField, fields
 from wtforms_sqlalchemy.orm import (
     ModelConverter,
     converts,
@@ -71,7 +69,6 @@ model_form = partial(
     converter=CustomModelConverter(),
     db_session=db.session,
     base_class=FlaskForm,
-    # submit_button=SubmitField('submit'),
 )
 
 # Workaround for missing type stubs for flask-sqlalchemy:
@@ -128,3 +125,6 @@ FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
         only=['performance_rating'],
     ),
 }
+# TODO: Make this less hacky
+for form in FORMS_BY_MODEL.values():
+    form.submit_button = SubmitField('submit')
