@@ -34,7 +34,7 @@ docker-compose up -d
 
 ### Initialize the database
 
-NOTE: In dev this will deploy the Sqlite DB, in all other environments we deploy the db using the [usaon-vta-db project](https://github.com/nsidc/usaon-vta-db).
+NOTE: In dev this will initialize the SQLite DB. In all other environments we deploy the db using the [usaon-vta-db project](https://github.com/nsidc/usaon-vta-db).
 
 Run `./scripts/invoke_in_container.sh db.init`
 
