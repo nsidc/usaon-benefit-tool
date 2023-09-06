@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% from 'macros/forms/user_profile.j2' import user_fields %}
+{% from 'bootstrap5/form.html' import render_form %}
 
 
 {% block content %}
@@ -10,13 +10,9 @@
   <h3 style='color:red'>This is another users profile.</h3>
 {% endif %}
 
-  <form method="POST">
-        {{form.csrf_token}}
-        {{user_fields(form)}}
-        <br>
+<form method="POST">
 
-    <input type="submit" value="Submit" />
+  {{render_form(form, button_map={'submit_button': 'primary'}) }}
 
-  </form>
-
+</form>
 {% endblock %}

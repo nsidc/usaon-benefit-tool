@@ -7,9 +7,9 @@ objects of that class to appropriate field/column?
 """
 from functools import partial
 
+from flask_wtf import FlaskForm
 from sqlalchemy.ext.declarative import DeclarativeMeta
-from wtforms import fields
-from wtforms.form import Form
+from wtforms import SubmitField, fields
 from wtforms_sqlalchemy.orm import (
     ModelConverter,
     converts,
@@ -65,14 +65,17 @@ class CustomModelConverter(ModelConverter):
 
 
 model_form = partial(
-    model_form, converter=CustomModelConverter(), db_session=db.session
+    model_form,
+    converter=CustomModelConverter(),
+    db_session=db.session,
+    base_class=FlaskForm,
 )
 
 # Workaround for missing type stubs for flask-sqlalchemy:
 #     https://github.com/dropbox/sqlalchemy-stubs/issues/76#issuecomment-595839159
 BaseModel: DeclarativeMeta = db.Model
 
-FORMS_BY_MODEL: dict[BaseModel, Form] = {
+FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
     User: model_form(
         User,
         only=['orcid', 'biography', 'affiliation', 'role'],
@@ -122,3 +125,7 @@ FORMS_BY_MODEL: dict[BaseModel, Form] = {
         only=['performance_rating'],
     ),
 }
+# HACK: Add a submit button so bootstrap-flask's render_form macro can work
+# TODO: Make this less hacky
+for form in FORMS_BY_MODEL.values():
+    form.submit_button = SubmitField('submit')
