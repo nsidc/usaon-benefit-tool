@@ -125,6 +125,7 @@ FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
         only=['performance_rating'],
     ),
 }
+# HACK: Add a submit button so bootstrap-flask's render_form macro can work
 # TODO: Make this less hacky
 for form in FORMS_BY_MODEL.values():
     form.submit_button = SubmitField('submit')
