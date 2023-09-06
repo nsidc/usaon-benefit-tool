@@ -30,10 +30,11 @@ def db_connstr(app: Flask) -> str:
         )
         return connstr
     else:
-        host = os.environ['USAON_VTA_DB_HOST']
-        port = os.environ['USAON_VTA_DB_PORT']
-        user = os.environ['USAON_VTA_DB_USER']
-        password = os.environ['USAON_VTA_DB_PASSWORD']
+        # TODOL figure out why os.environ doesn't work here
+        host = os.getenv('USAON_VTA_DB_HOST')
+        port = os.getenv('USAON_VTA_DB_PORT')
+        user = os.getenv('USAON_VTA_DB_USER')
+        password = os.getenv('USAON_VTA_DB_PASSWORD')
 
         connstr = f'postgresql://{user}:{password}@{host}:{port}/usaon-vta'
         return connstr
