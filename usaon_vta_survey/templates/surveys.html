@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% from 'bootstrap4/table.html' import render_table %}
+{% from 'bootstrap5/utils.html' import render_icon %}
 
 
 {% block content %}
@@ -10,7 +11,42 @@
   {% endif %}
   <br />
   <br />
-  {{ render_table(surveys, show_actions=True, view_url=('view_response',[('survey_id',':id')])) }}
+  <table class='table'>
 
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Response Id</th>
+        <th>Title</th>
+        <th>Created On</th>
+        <th>Created by</th>
+        <th>Response last updated</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Private</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+  {% for survey in surveys %}
+    <tbody>
+      <tr>
+        <td>{{survey.id}}</td>
+        <td>{{survey.response.id}}</td>
+        <td>{{survey.title}}</td>
+        <td>{{survey.created_timestamp}}</td>
+        <td>{{survey.created_by.email}}</td>
+        <td>{{survey.response.updated_timestamp}}</td>
+        <td>{{survey.description}}</td>
+        <td>{{survey.status.id}}</td>
+        <td>{{survey.private}}</td>
+        <td>
+          <a href="{{url_for('view_survey', survey_id=survey.id)}}">{{render_icon('eye-fill')}}</a>
+        </td>
+      </tr>
+    </tbody>
+  {% endfor %}
+
+  </table>
 
 {% endblock %}
