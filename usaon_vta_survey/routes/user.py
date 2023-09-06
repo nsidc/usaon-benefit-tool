@@ -31,7 +31,7 @@ def user(user_id: str):
             db.session.add(user)
             db.session.commit()
 
-            flash('You have updated your profile', 'success')
+            flash(f"You have updated {user.email}'s profile", 'success')
 
             return render_template('profile.html', form=form, user=user)
     form = Form(obj=user)
