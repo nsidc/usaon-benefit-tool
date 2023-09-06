@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% from 'bootstrap5/table.html' import render_table %}
 
 {% block content %}
   <h2>{% block title %}Users{% endblock %}</h1>
@@ -7,28 +7,7 @@
   {% if not current_user.role_id=='admin' %}
     <h3>You don't belong here! This page is for admins only.</h3>
   {% else %}
-    <table>
-
-      <tr>
-        <th>id</th>
-        <th>email</th>
-        <th>Name</th>
-        <th>Role</th>
-        <th>Affiliation</th>
-        <th>Bio</th>
-      </tr>
-
-    {% for user in users %}
-      <tr>
-        <td>{{user.id}} </td>
-        <td>{{user.email}} </td>
-        <td>{{user.name}}</td>
-        <td>{{user.role_id}}</td>
-        <td>{{user.affiliation}}</td>
-        <td>{{user.biography}}</td>
-        <td><a href="{{url_for('user', user_id=user.id)}}">edit</a></td>
-      </tr>
-    {% endfor %}
+    {{ render_table(users, show_actions=True, edit_url=('user', [('user_id',':id')])) }}
 
     </table>
   {% endif %}

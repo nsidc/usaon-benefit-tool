@@ -1,3 +1,4 @@
+import os
 import sys
 from pathlib import Path
 
@@ -5,6 +6,10 @@ from invoke import task
 
 from .util import print_and_run
 
+# NOTE: This is a hack, we want to be able to run pytest
+# without setting environment variables.
+os.environ['USAON_VTA_DB_SQLITE'] = 'true'
+os.environ['FLASK_DEBUG'] = 'true'
 PROJECT_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(PROJECT_DIR)
 

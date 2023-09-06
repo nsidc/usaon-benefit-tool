@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import flash, render_template, request
 from flask_login import current_user, login_required
 
 from usaon_vta_survey import app, db, login_manager
@@ -9,6 +9,15 @@ from usaon_vta_survey.models.tables import User
 @login_manager.user_loader
 def load_user(user_id: str) -> User:
     return User.query.get(user_id)
+
+
+if app.config["LOGIN_DISABLED"]:
+    # HACK: Always logged in as dev user when login is disabled
+    import flask_login.utils as flask_login_utils
+
+    from usaon_vta_survey.util.dev import DEV_USER
+
+    flask_login_utils._get_user = lambda: DEV_USER
 
 
 def _validate_role_change(user: User, form) -> None:
@@ -29,6 +38,8 @@ def user(user_id: str):
             form.populate_obj(user)
             db.session.add(user)
             db.session.commit()
+
+            flash(f"You have updated {user.email}'s profile", 'success')
 
             return render_template('profile.html', form=form, user=user)
     form = Form(obj=user)

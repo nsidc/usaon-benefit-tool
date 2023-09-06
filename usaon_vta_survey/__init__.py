@@ -8,8 +8,9 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from sqlalchemy import inspect as sqla_inspect
 
-from usaon_vta_survey.constants.db import DB_CONNSTR
 from usaon_vta_survey.constants.version import VERSION
+from usaon_vta_survey.util.db.connect import db_connstr
+from usaon_vta_survey.util.envvar import envvar_is_true
 
 __version__: Final[str] = VERSION
 
@@ -28,7 +29,8 @@ db = SQLAlchemy(
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'youcanneverguess')
-app.config['SQLALCHEMY_DATABASE_URI'] = DB_CONNSTR
+app.config['LOGIN_DISABLED'] = envvar_is_true("USAON_VTA_LOGIN_DISABLED")
+app.config['SQLALCHEMY_DATABASE_URI'] = db_connstr(app)
 
 db.init_app(app)
 bootstrap = Bootstrap5(app)

@@ -2,7 +2,7 @@ from loguru import logger
 from sqlalchemy import MetaData
 from sqlalchemy.orm import Session
 
-from usaon_vta_survey import db
+from usaon_vta_survey import app, db
 from usaon_vta_survey.constants.roles import ROLES
 from usaon_vta_survey.constants.sba import IAOA_SBA_FRAMEWORK
 from usaon_vta_survey.constants.status import STATUSES
@@ -13,6 +13,7 @@ from usaon_vta_survey.models.tables import (
     SocietalBenefitSubArea,
     Status,
 )
+from usaon_vta_survey.util.dev import DEV_USER
 
 
 def recreate_tables() -> None:
@@ -40,6 +41,10 @@ def populate_reference_data() -> None:
     init_societal_benefit_areas(db.session)
     init_roles(db.session)
     init_statuses(db.session)
+
+    if app.config["LOGIN_DISABLED"]:
+        init_dev_user(db.session)
+
     logger.info('Reference data loaded.')
 
 
@@ -66,6 +71,12 @@ def init_roles(session: Session) -> None:
         ]
     )
 
+    session.commit()
+
+
+def init_dev_user(session: Session) -> None:
+    logger.warning("Inserting dev user. This should not happen in production!")
+    session.add(DEV_USER)
     session.commit()
 
 
