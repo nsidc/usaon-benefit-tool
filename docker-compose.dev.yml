@@ -21,8 +21,6 @@ services:
       - "USAON_VTA_LOGIN_DISABLED=true"
       # Use a local file DB instead of a remote one:
       - "USAON_VTA_DB_SQLITE=true"
-      # Enable the in-browser debugger:
-      - "FLASK_DEBUG=True"
       # Disable error handlers and allow exceptions to propagate:
       - "FLASK_TESTING=True"
     
