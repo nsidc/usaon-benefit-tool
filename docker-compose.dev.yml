@@ -7,14 +7,29 @@ services:
     # Flask development server with live debugger and hot reloading:
     command: "flask run --host 0.0.0.0"
     build: "."
-    ports:
-      - "5000:5000"
-    environment:
-      - "FLASK_DEBUG=True"
-      - "FLASK_SECRET_KEY=supersecret"
-        # https://flask-dance.readthedocs.io/en/v0.8.0/quickstarts/google.html#code
-        # Allow http in dev. DO NOT USE IN PROD.
-      - "OAUTHLIB_INSECURE_TRANSPORT=1"
+    # To make volume mounting (especially for new volume mounts like the DB)
+    # easier, override the micromamba non-root user:
+    user: "root"
     volumes:
       - "./usaon_vta_survey:/usaon-vta-survey/usaon_vta_survey:ro"
       - "./tasks:/usaon-vta-survey/tasks:ro"
+      - "./_db:/db:rw"
+    ports:
+      - "5000:5000"
+    environment:
+      # Disable login:
+      - "USAON_VTA_LOGIN_DISABLED=true"
+      # Use a local file DB instead of a remote one:
+      - "USAON_VTA_DB_SQLITE=true"
+      # Disable error handlers and allow exceptions to propagate:
+      - "FLASK_TESTING=True"
+    
+
+      # Development DANGER ZONE: Do not use the below settings except for
+      # development. These settings are insecure in production.
+
+      # In dev, we don't need to secure our sessions
+      - "FLASK_SECRET_KEY=supersecret"
+      # Allow http in dev
+      #     https://flask-dance.readthedocs.io/en/v0.8.0/quickstarts/google.html#code
+      - "OAUTHLIB_INSECURE_TRANSPORT=1"

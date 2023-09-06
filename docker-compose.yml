@@ -1,22 +1,9 @@
 version: '3.7'
 
-x-base: &base
-  networks:
-    - "usaon-vta"
-  restart: "always"
-  logging:
-    options:
-      max-size: "1m"
-      max-file: "1"
-
-
-networks:
-  usaon-vta:
-
 services:
   usaon-vta-survey:
-    <<: *base
     image: "nsidc/usaon-vta-survey:${USAON_VTA_SURVEY_VERSION:-latest}"
+    restart: "always"
     # HACK: run the app on the flask dev server with an adhoc cert.
     # TODO: Remove this `command` once we have a more mature solution for
     # distributing certs to our pre-production and production environment.
@@ -24,25 +11,6 @@ services:
     ports:
       - "443:5000"
     environment:
-      - "DB_USER=${DB_USER:?DB_USER must be set}"
-      - "DB_PASSWORD=${DB_PASSWORD:?DB_PASSWORD must be set}"
-      - "FLASK_SECRET_KEY"
-        # https://flask-dance.readthedocs.io/en/v0.8.0/quickstarts/google.html#code
+      # Flask Dance recommends setting this in production:
+      #     https://flask-dance.readthedocs.io/en/v0.8.0/quickstarts/google.html#code
       - "OAUTHLIB_RELAX_TOKEN_SCOPE=1"
-      - "USAON_VTA_GOOGLE_CLIENT_ID=${USAON_VTA_GOOGLE_CLIENT_ID:?USAON_VTA_GOOGLE_CLIENT_ID must be set}"
-      - "USAON_VTA_GOOGLE_CLIENT_SECRET=${USAON_VTA_GOOGLE_CLIENT_SECRET:?USAON_VTA_GOOGLE_CLIENT_SECRET must be set}"
-
-  # A proxy to the real DB
-  db:
-    <<: *base
-    image: "haproxy:1.8-alpine"
-    ports:
-      - "5432:5432"
-    volumes:
-      - "./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"
-    environment:
-      # cname
-      - "BACKEND_HOST=${DB_HOST:?DB_HOST must be set}"
-      # 5432
-      - "BACKEND_PORT=${DB_PORT:?DB_PORT must be set}"
-      - "FRONTEND_PORT=5432"

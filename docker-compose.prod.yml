@@ -1,0 +1,45 @@
+version: '3.7'
+
+networks:
+  usaon-vta:
+
+x-base: &base
+  networks:
+    - "usaon-vta"
+  restart: "always"
+  logging:
+    options:
+      max-size: "1m"
+      max-file: "1"
+
+
+services:
+  usaon-vta-survey:
+    <<: *base
+    image: "nsidc/usaon-vta-survey:${USAON_VTA_SURVEY_VERSION:?USAON_VTA_SURVEY_VERSION must be set}"
+    environment:
+      # Use the proxy container to talk to the DB:
+      - "USAON_VTA_DB_HOST=db"
+      - "USAON_VTA_DB_PORT=5432"
+      - "USAON_VTA_DB_USER=${USAON_VTA_DB_USER:?USAON_VTA_DB_USER must be set}"
+      - "USAON_VTA_DB_PASSWORD=${USAON_VTA_DB_PASSWORD:?USAON_VTA_DB_PASSWORD must be set}"
+      # Creds for talking to Google:
+      - "USAON_VTA_GOOGLE_CLIENT_ID=${USAON_VTA_GOOGLE_CLIENT_ID:?USAON_VTA_GOOGLE_CLIENT_ID must be set}"
+      - "USAON_VTA_GOOGLE_CLIENT_SECRET=${USAON_VTA_GOOGLE_CLIENT_SECRET:?USAON_VTA_GOOGLE_CLIENT_SECRET must be set}"
+      # Needed for secure session management:
+      - "FLASK_SECRET_KEY=${FLASK_SECRET_KEY:?FLASK_SECRET_KEY must be set}"
+
+  # A proxy to the real DB
+  db:
+    <<: *base
+    image: "haproxy:1.8-alpine"
+    ports:
+      - "5432:5432"
+    volumes:
+      - "./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"
+    environment:
+      # cname
+      - "BACKEND_HOST=${DB_HOST:?DB_HOST must be set}"
+      # 5432
+      - "BACKEND_PORT=${DB_PORT:?DB_PORT must be set}"
+      - "FRONTEND_PORT=5432"
