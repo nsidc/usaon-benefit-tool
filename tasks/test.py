@@ -29,6 +29,13 @@ def typecheck(ctx):
     print('🎉🦆 Type checking passed.')
 
 
+@task()
+def unit(ctx):
+    """Run unit tests."""
+    print_and_run(f'cd {PROJECT_DIR} && pytest')
+    print('🎉🦆 Unit checking passed.')
+
+
 @task(
     pre=[typecheck],
     default=True,

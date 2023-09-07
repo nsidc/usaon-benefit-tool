@@ -3,6 +3,7 @@ from typing import Final
 
 from flask import Flask
 from flask_bootstrap import Bootstrap5
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from sqlalchemy import inspect as sqla_inspect
@@ -25,6 +26,7 @@ db = SQLAlchemy(
     )
 )
 
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'youcanneverguess')
 app.config['LOGIN_DISABLED'] = envvar_is_true("USAON_VTA_LOGIN_DISABLED")
@@ -32,6 +34,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = db_connstr(app)
 
 db.init_app(app)
 bootstrap = Bootstrap5(app)
+
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+login_manager.login_message_category = 'info'
 
 app.jinja_env.globals.update(sqla_inspect=sqla_inspect, __version__=__version__)
 

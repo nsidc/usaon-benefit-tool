@@ -1,7 +1,7 @@
 import os
 import time
 
-from flask import redirect, session, url_for
+from flask import redirect, render_template, session, url_for
 from flask_dance.contrib.google import google, make_google_blueprint
 from flask_login import login_user
 
@@ -18,6 +18,11 @@ app.register_blueprint(blueprint, url_prefix="/google_oauth")
 
 @app.route("/login")
 def login():
+    return render_template('login.html')
+
+
+@app.route("/login_start")
+def login_start():
     if not google.authorized:
         return redirect(url_for("google.login"))
     resp = google.get("/oauth2/v2/userinfo")
