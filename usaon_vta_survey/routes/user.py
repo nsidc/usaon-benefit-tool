@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import flash, render_template, request
 from flask_login import LoginManager, current_user
 
 from usaon_vta_survey import app, db
@@ -39,6 +39,8 @@ def user(user_id: str):
             form.populate_obj(user)
             db.session.add(user)
             db.session.commit()
+
+            flash(f"You have updated {user.email}'s profile", 'success')
 
             return render_template('profile.html', form=form, user=user)
     form = Form(obj=user)

@@ -123,6 +123,10 @@ class User(BaseModel, UserMixin):
         'Response',
         back_populates='created_by',
     )
+    surveys = relationship(
+        'Survey',
+        back_populates='created_by',
+    )
 
 
 class Survey(BaseModel):
@@ -151,7 +155,7 @@ class Survey(BaseModel):
         nullable=False,
     )
 
-    created_by = Column(
+    created_by_id = Column(
         Integer,
         ForeignKey('user.id'),
         default=(lambda: current_user.id),
@@ -178,6 +182,10 @@ class Survey(BaseModel):
     response = relationship(
         'Response',
         back_populates='survey',
+    )
+    created_by = relationship(
+        'User',
+        back_populates='surveys',
     )
     status = relationship('Status')
 

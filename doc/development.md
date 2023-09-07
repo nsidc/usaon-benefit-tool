@@ -2,11 +2,6 @@
 
 ## How to run the application for development
 
-### Deploy the development database
-
-Deploy [usaon-vta-db](https://github.com/nsidc/usaon-vta-db) and follow instructions in
-that repo.
-
 
 ### Symlink dev config
 
@@ -38,6 +33,8 @@ docker-compose up -d
 
 
 ### Initialize the database
+
+NOTE: In dev this will initialize the SQLite DB. In all other environments we deploy the db using the [usaon-vta-db project](https://github.com/nsidc/usaon-vta-db).
 
 Run `./scripts/invoke_in_container.sh db.init`
 
