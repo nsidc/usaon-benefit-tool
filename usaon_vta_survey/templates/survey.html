@@ -19,7 +19,7 @@
     </a>
     <p> Response by: {{ survey.response.created_by.email}} </p>
   {% else %}
-    <p>No response available. Create response using this link:</p>
+    <p>No response available.</p>
     <a href="{{url_for('view_response', survey_id=survey.id, _external=True)}}">
       Create response
     </a>
