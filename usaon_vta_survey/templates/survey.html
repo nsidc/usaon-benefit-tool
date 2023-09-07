@@ -19,8 +19,10 @@
     </a>
     <p> Response by: {{ survey.response.created_by.email}} </p>
   {% else %}
-    <p>No response available. Send this URL to respondent(s):</p>
-    <input size=100 value="{{url_for('view_response', survey_id=survey.id, _external=True)}}" />
+    <p>No response available. Create response using this link:</p>
+    <a href="{{url_for('view_response', survey_id=survey.id, _external=True)}}">
+      Create response
+    </a>
 
     <p><i>
       IMPORTANT: Advise respondents that this application does not support concurrent or collaborative editing.
