@@ -102,6 +102,7 @@ FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
         field_args={'societal_benefit_area': {'get_label': 'id'}},
     ),
     # Response relationships ("edges" from Sankey diagram perspective)
+    # Response relationships not working with FlaskForm
     ResponseObservingSystemDataProduct: model_form(
         ResponseObservingSystemDataProduct,
         only=[
