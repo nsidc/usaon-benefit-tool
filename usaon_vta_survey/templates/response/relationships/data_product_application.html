@@ -1,11 +1,4 @@
 {% extends 'response/base.html' %}
-{% from 'macros/forms/relationships/dataproduct_application.j2' import
-  data_product_application_fields
-%}
-{% from 'macros/forms/misc.j2' import
-  application_fields,
-  response_object_fields
-%}
 {% from 'bootstrap5/form.html' import render_form %}
 
 
@@ -57,6 +50,7 @@
   </form>
 
   <form method="POST">
+    {{form.csrf_token}}
 
     <div class="two-columns">
       <div>
@@ -78,7 +72,7 @@
 
     <h4>Relationship</h4>
     {% if sqla_inspect(relationship).transient %}
-      {{ render_form(form, button_map={'submit_button': 'primary'})}}
+      {{ render_form(form.relationship.form, button_map={'submit_button': 'primary'})}}
     {% else %}
       {{relationship}}
     {% endif %}

@@ -1,11 +1,4 @@
 {% extends 'response/base.html' %}
-{% from 'macros/forms/misc.j2' import
-  response_object_fields,
-  application_fields
-%}
-{% from 'macros/forms/relationships/observingsystem_dataproduct.j2' import
-  observing_system_data_product_fields
-%}
 {% from 'bootstrap5/form.html' import render_form %}
 
 
@@ -62,7 +55,7 @@
     <div class="two-columns">
       <div>
         {% if sqla_inspect(observing_system).transient %}
-          {{ response_object_fields(form.observing_system.form) }}
+          {{ render_form(form.observing_system.form) }}
         {% else %}
           <p>Name: {{observing_system.short_name}}</p>
         {% endif %}
@@ -70,7 +63,7 @@
 
       <div>
         {% if sqla_inspect(data_product).transient %}
-          {{ data_product_fields(form.data_product.form) }}
+          {{ rednder_form(form.data_product.form) }}
         {% else %}
           <p>Name: {{data_product.short_name}}</p>
         {% endif %}
@@ -79,12 +72,11 @@
 
     <h4>Relationship</h4>
     {% if sqla_inspect(relationship).transient %}
-      {{ observing_system_data_product_fields(form.relationship.form) }}
+      {{ render_form(form.relationship.form) }}
     {% else %}
       {{relationship}}
     {% endif %}
 
-    <input type="submit" value="Create new relationship" />
   </form>
 
 

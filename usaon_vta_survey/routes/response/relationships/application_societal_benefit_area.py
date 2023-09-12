@@ -194,6 +194,7 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
     if request.method == 'POST':
         limit_response_editors()
         form = SuperForm(request.form, obj=form_obj)
+        form.relationship._fields.pop('csrf_token')
 
         if form.validate():
             # Add only submitted sub-forms into the db session
