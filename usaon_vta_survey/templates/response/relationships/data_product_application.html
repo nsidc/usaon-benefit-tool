@@ -7,7 +7,6 @@
 
 {% block content %}
 
-  {{super()}}
 
   <h3>Data Product &lt;-&gt; Application relationship</h3>
 
@@ -53,7 +52,6 @@
   </form>
 
   <form method="POST">
-    {{form.csrf_token}}
 
     <div class="two-columns">
       <div>
@@ -75,7 +73,7 @@
 
     <h4>Relationship</h4>
     {% if sqla_inspect(relationship).transient %}
-      {{ data_product_application_fields(form.relationship.form) }}
+      {{ render_form(form, button_map={'submit_button': 'primary'})}}
     {% else %}
       {{relationship}}
     {% endif %}

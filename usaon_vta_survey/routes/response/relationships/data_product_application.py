@@ -182,6 +182,7 @@ def view_response_data_product_application_relationships(survey_id: str):
         limit_response_editors()
         form = SuperForm(request.form, obj=form_obj)
 
+        # breakpoint()
         if form.validate():
             # Add only submitted sub-forms into the db session
             for key, obj in form_obj.items():
