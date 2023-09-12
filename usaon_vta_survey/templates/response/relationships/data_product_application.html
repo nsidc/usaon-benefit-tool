@@ -1,11 +1,8 @@
 {% extends 'response/base.html' %}
-{% from 'macros/forms/misc.j2' import
-  application_fields,
-  response_object_fields
-%}
 {% from 'macros/forms/relationships/dataproduct_application.j2' import
   data_product_application_fields
 %}
+{% from 'bootstrap5/form.html' import render_form %}
 
 
 {% block content %}
@@ -61,7 +58,7 @@
     <div class="two-columns">
       <div>
         {% if sqla_inspect(data_product).transient %}
-          {{ response_object_fields(form.data_product.form) }}
+          {{ render_form(form, button_map={'submit_button': 'primary'}) }}
         {% else %}
           <p>Name: {{data_product.short_name}}</p>
         {% endif %}
@@ -69,7 +66,7 @@
 
       <div>
         {% if sqla_inspect(application).transient %}
-          {{ application_fields(form.application.form) }}
+          {{ render_form(form, button_map={'submit_button': 'primary'}) }}
         {% else %}
           <p>Name: {{application.short_name}}</p>
         {% endif %}
@@ -83,7 +80,6 @@
       {{relationship}}
     {% endif %}
 
-    <input type="submit" value="Create new relationship" />
   </form>
 
 
