@@ -2,11 +2,16 @@
 {% from 'macros/forms/relationships/dataproduct_application.j2' import
   data_product_application_fields
 %}
+{% from 'macros/forms/misc.j2' import
+  application_fields,
+  response_object_fields
+%}
 {% from 'bootstrap5/form.html' import render_form %}
 
 
 {% block content %}
 
+  {{super()}}
 
   <h3>Data Product &lt;-&gt; Application relationship</h3>
 
@@ -56,7 +61,7 @@
     <div class="two-columns">
       <div>
         {% if sqla_inspect(data_product).transient %}
-          {{ render_form(form, button_map={'submit_button': 'primary'}) }}
+          {{ render_form(form.data_product.form) }}
         {% else %}
           <p>Name: {{data_product.short_name}}</p>
         {% endif %}
@@ -64,7 +69,7 @@
 
       <div>
         {% if sqla_inspect(application).transient %}
-          {{ render_form(form, button_map={'submit_button': 'primary'}) }}
+          {{ render_form(form.application.form) }}
         {% else %}
           <p>Name: {{application.short_name}}</p>
         {% endif %}
