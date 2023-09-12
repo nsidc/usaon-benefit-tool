@@ -13,6 +13,7 @@ from usaon_vta_survey.util.db.connect import db_connstr
 from usaon_vta_survey.util.envvar import envvar_is_true
 
 __version__: Final[str] = VERSION
+os.environ['SCRIPT_NAME'] = '/apps/value-tree-analysis'
 
 db = SQLAlchemy(
     metadata=MetaData(
@@ -30,7 +31,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'youcanneverguess')
 app.config['LOGIN_DISABLED'] = envvar_is_true("USAON_VTA_LOGIN_DISABLED")
 app.config['SQLALCHEMY_DATABASE_URI'] = db_connstr(app)
-app.wsgi_app = ProxyFix(app.wsgi_app, x_prefix='/apps/value-tree-analysis')
+app.wsgi_app = ProxyFix(app.wsgi_app, x_prefix=1)
 
 db.init_app(app)
 bootstrap = Bootstrap5(app)
