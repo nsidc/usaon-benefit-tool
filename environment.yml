@@ -22,6 +22,7 @@ dependencies:
   - flask-wtf ~=1.0
   - flask-login ~=0.6.2
   - gunicorn ~=21.2
+  - werkzeug 
   
   - requests 
   - oauthlib
