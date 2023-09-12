@@ -1,5 +1,6 @@
 {% extends 'response/base.html' %}
 {% from 'macros/forms/misc.j2' import response_object_fields %}
+{% from 'bootstrap5/form.html' import render_form %}
 
 {% block content %}
 
@@ -44,10 +45,8 @@
 
   <h3>Add data product</h3>
   <form method="POST">
-    {{form.csrf_token}}
-    {{response_object_fields(form)}}
+    {{render_form(form, button_map={'submit_button': 'primary'}) }}
 
-    <input type="submit" value="Create new data product" />
   </form>
 
 {% endblock %}
