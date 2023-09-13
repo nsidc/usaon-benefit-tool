@@ -1,3 +1,6 @@
+# NEXT_VERSION
+* Bugfix environment variables
+
 # v0.4.0 (2023-09-13)
 * Stop using current_user and use true value for created_by on surveys page 
 * Display version on webapp
