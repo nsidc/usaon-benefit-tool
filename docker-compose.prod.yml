@@ -39,7 +39,7 @@ services:
       - "./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"
     environment:
       # cname
-      - "BACKEND_HOST=${DB_HOST:?DB_HOST must be set}"
+      - "BACKEND_HOST=${USAON_VTA_DB_HOST:?USAON_VTA_DB_HOST must be set}"
       # 5432
-      - "BACKEND_PORT=${DB_PORT:?DB_PORT must be set}"
+      - "BACKEND_PORT=${USAON_VTA_DB_PORT:?USAON_VTA_DB_PORT must be set}"
       - "FRONTEND_PORT=5432"

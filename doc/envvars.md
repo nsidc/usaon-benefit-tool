@@ -15,9 +15,8 @@
 ## Database
 
 All of the below environment variables are required.
-Todo: update to USAON_VTA_DB_HOST
-* `DB_HOST`: The host on which the database is running (NOTE: Only postgres supported)
-* `DB_PORT`: The access port for the database
-* `DB_USER`: Username with permissions to create tables, delete tables, insert, update,
+* `USAON_VTA_DB_HOST`: The host on which the database is running (NOTE: Only postgres supported)
+* `USAON_VTA_DB_PORT`: The access port for the database
+* `USAON_VTA_DB_USER`: Username with permissions to create tables, delete tables, insert, update,
     delete
-* `DB_PASSWORD`: Password for the above user
+* `USAON_VTA_DB_PASSWORD`: Password for the above user
