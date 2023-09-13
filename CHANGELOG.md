@@ -1,3 +1,13 @@
+# NEXT_VERSION
+* Stop using current_user and use true value for created_by on surveys page 
+* Display version on webapp
+* Combine common response object database fields 
+* Show respondents on survey page 
+* Install bootstrap and update UI
+* Update response link to be clickable 
+* Implement X-forwarded-proxy 
+
+
 # v0.3.0 (2023-08-17)
 
 * Set up/improve all relationship interfaces
