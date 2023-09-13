@@ -1,4 +1,4 @@
-# NEXT_VERSION
+# v0.4.1 (2023-09-13)
 * Bugfix environment variables
 
 # v0.4.0 (2023-09-13)
