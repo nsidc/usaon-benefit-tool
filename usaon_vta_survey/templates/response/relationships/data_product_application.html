@@ -72,7 +72,7 @@
 
     <h4>Relationship</h4>
     {% if sqla_inspect(relationship).transient %}
-      {{ render_form(form.relationship.form, button_map={'submit_button': 'create relationship'})}}
+      {{ render_form(form.relationship.form)}}
     {% else %}
       {{relationship}}
     {% endif %}
