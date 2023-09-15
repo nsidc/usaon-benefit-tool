@@ -1,4 +1,3 @@
-import os
 import sys
 from pathlib import Path
 
@@ -7,7 +6,7 @@ from invoke import task
 from .util import print_and_run
 
 # TODO: Put this in a function where you want to run pytest
-# WARNING: If uncommented this will cause major issues. 
+# WARNING: If uncommented this will cause major issues.
 # (Will set the variables true for invoke tasks in all envs)
 # Causes issues with DB in non-dev envs
 # NOTE: This is a hack, we want to be able to run pytest
