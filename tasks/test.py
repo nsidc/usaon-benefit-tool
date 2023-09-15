@@ -6,10 +6,14 @@ from invoke import task
 
 from .util import print_and_run
 
+# TODO: Put this in a function where you want to run pytest
+# WARNING: If uncommented this will cause major issues. 
+# (Will set the variables true for invoke tasks in all envs)
+# Causes issues with DB in non-dev envs
 # NOTE: This is a hack, we want to be able to run pytest
 # without setting environment variables.
-os.environ['USAON_VTA_DB_SQLITE'] = 'true'
-os.environ['FLASK_DEBUG'] = 'true'
+# os.environ['USAON_VTA_DB_SQLITE'] = 'true'
+# os.environ['FLASK_DEBUG'] = 'true'
 PROJECT_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(PROJECT_DIR)
 
