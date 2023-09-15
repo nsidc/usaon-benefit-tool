@@ -1,4 +1,3 @@
-import os
 import sys
 from pathlib import Path
 
@@ -18,14 +17,10 @@ def typecheck(ctx):
     """Run mypy static type analysis."""
     from usaon_vta_survey.constants.paths import PACKAGE_DIR
 
-    # NOTE: This is a hack, we want to be able to run pytest and mypy
-    # without setting environment variables.
-    os.environ['USAON_VTA_DB_SQLITE'] = 'true'
-    os.environ['FLASK_DEBUG'] = 'true'
-
     print_and_run(
         f'cd {PROJECT_DIR} &&'
         f' mypy --config-file={PROJECT_DIR}/.mypy.ini {PACKAGE_DIR}',
+        env={'USAON_VTA_DB_SQLITE': 'true', 'FLASK_DEBUG': 'true'},
     )
     print('🎉🦆 Type checking passed.')
 
