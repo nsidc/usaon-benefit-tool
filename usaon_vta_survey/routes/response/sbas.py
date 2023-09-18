@@ -1,16 +1,17 @@
 from flask import redirect, render_template, request, url_for
 
-from usaon_vta_survey import app, db
+from usaon_vta_survey import db
 from usaon_vta_survey.forms import FORMS_BY_MODEL
 from usaon_vta_survey.models.tables import (
     ResponseSocietalBenefitArea,
     SocietalBenefitArea,
     Survey,
 )
+from usaon_vta_survey.routes import root_blueprint
 from usaon_vta_survey.util.authorization import limit_response_editors
 
 
-@app.route(
+@root_blueprint.route(
     '/response/<string:survey_id>/societal_benefit_areas', methods=['GET', 'POST']
 )
 def view_response_sbas(survey_id: str):

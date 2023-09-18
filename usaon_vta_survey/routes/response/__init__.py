@@ -1,11 +1,12 @@
 from flask import render_template
 
-from usaon_vta_survey import app, db
+from usaon_vta_survey import db
 from usaon_vta_survey.models.tables import Response, Survey
+from usaon_vta_survey.routes import root_blueprint
 from usaon_vta_survey.util.authorization import limit_response_editors
 
 
-@app.route('/response/<string:survey_id>', methods=['GET'])
+@root_blueprint.route('/response/<string:survey_id>', methods=['GET'])
 def view_response(survey_id: str):
     """View or create response to a survey."""
     # Anyone should be able to view a survey

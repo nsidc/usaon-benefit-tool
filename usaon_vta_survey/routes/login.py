@@ -6,6 +6,7 @@ from flask_dance.contrib.google import google, make_google_blueprint
 from flask_login import login_user
 
 from usaon_vta_survey import app
+from usaon_vta_survey.routes import root_blueprint
 from usaon_vta_survey.util.db.user import ensure_user_exists
 
 blueprint = make_google_blueprint(
@@ -13,10 +14,11 @@ blueprint = make_google_blueprint(
     client_secret=os.getenv('USAON_VTA_GOOGLE_CLIENT_SECRET'),
     scope=["profile", "email"],
 )
+# TODO: Figure out how to handle this with app factory
 app.register_blueprint(blueprint, url_prefix="/google_oauth")
 
 
-@app.route("/login")
+@root_blueprint.route("/login")
 def login():
     if not google.authorized:
         return redirect(url_for("google.login"))

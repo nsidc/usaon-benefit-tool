@@ -2,7 +2,7 @@ from flask import Request, redirect, render_template, request, url_for
 from flask_wtf import FlaskForm
 from wtforms import FormField
 
-from usaon_vta_survey import app, db
+from usaon_vta_survey import db
 from usaon_vta_survey.forms import FORMS_BY_MODEL
 from usaon_vta_survey.models.tables import (
     ResponseApplication,
@@ -10,6 +10,7 @@ from usaon_vta_survey.models.tables import (
     ResponseSocietalBenefitArea,
     Survey,
 )
+from usaon_vta_survey.routes import root_blueprint
 from usaon_vta_survey.util.authorization import limit_response_editors
 
 
@@ -130,7 +131,7 @@ def _request_args(request: Request) -> tuple[int | None, int | None]:
     return societal_benefit_area_id, application_id
 
 
-@app.route(
+@root_blueprint.route(
     '/response/<string:survey_id>/application_societal_benefit_area_relationships',
     methods=['GET', 'POST'],
 )
@@ -232,7 +233,7 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
     )
 
 
-@app.route(
+@root_blueprint.route(
     '/response/<string:survey_id>/application_societal_benefit_area_relationships',
     methods=['GET', 'POST'],
 )

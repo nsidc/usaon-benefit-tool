@@ -4,6 +4,7 @@ from flask_login import LoginManager, current_user
 from usaon_vta_survey import app, db
 from usaon_vta_survey.forms import FORMS_BY_MODEL
 from usaon_vta_survey.models.tables import User
+from usaon_vta_survey.routes import root_blueprint
 
 login_manager = LoginManager(app)
 
@@ -13,6 +14,7 @@ def load_user(user_id: str) -> User:
     return User.query.get(user_id)
 
 
+# TODO: figure out how to handle this with app factory
 if app.config["LOGIN_DISABLED"]:
     # HACK: Always logged in as dev user when login is disabled
     import flask_login.utils as flask_login_utils
@@ -27,7 +29,7 @@ def _validate_role_change(user: User, form) -> None:
         raise RuntimeError("Only admins can edit users roles.")
 
 
-@app.route('/user/<user_id>', methods=['POST', 'GET'])
+@root_blueprint.route('/user/<user_id>', methods=['POST', 'GET'])
 def user(user_id: str):
     Form = FORMS_BY_MODEL[User]
     user = db.get_or_404(User, user_id)
