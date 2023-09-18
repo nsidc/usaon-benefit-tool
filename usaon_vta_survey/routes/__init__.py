@@ -17,4 +17,4 @@ import usaon_vta_survey.routes.users
 
 from flask import Blueprint
 
-root_blueprint = Blueprint(prefix='/')
+root_blueprint = Blueprint('', __name__, url_prefix='/')
