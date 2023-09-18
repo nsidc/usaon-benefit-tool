@@ -10,7 +10,7 @@ from usaon_vta_survey.models.tables import (
     ResponseObservingSystemDataProduct,
     Survey,
 )
-from usaon_vta_survey.routes import root_blueprint
+from usaon_vta_survey.routes.response import bp
 from usaon_vta_survey.util.authorization import limit_response_editors
 
 
@@ -126,8 +126,8 @@ def _request_args(request: Request) -> tuple[int | None, int | None]:
     return data_product_id, observing_system_id
 
 
-@root_blueprint.route(
-    '/response/<string:survey_id>/observing_system_data_product_relationships',
+@bp.route(
+    '/<string:survey_id>/observing_system_data_product_relationships',
     methods=['GET', 'POST'],
 )
 def view_response_observing_system_data_product_relationships(survey_id: str):

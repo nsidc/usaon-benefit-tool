@@ -10,7 +10,7 @@ from usaon_vta_survey.models.tables import (
     ResponseDataProductApplication,
     Survey,
 )
-from usaon_vta_survey.routes import root_blueprint
+from usaon_vta_survey.routes.response import bp
 from usaon_vta_survey.util.authorization import limit_response_editors
 
 
@@ -122,8 +122,8 @@ def _request_args(request: Request) -> tuple[int | None, int | None]:
     return data_product_id, application_id
 
 
-@root_blueprint.route(
-    '/response/<string:survey_id>/data_product_application_relationships',
+@bp.route(
+    '/<string:survey_id>/data_product_application_relationships',
     methods=['GET', 'POST'],
 )
 def view_response_data_product_application_relationships(survey_id: str):
@@ -219,8 +219,8 @@ def view_response_data_product_application_relationships(survey_id: str):
         relationship=response_data_product_application,
     )
 
-    @root_blueprint.route(
-        '/response/<string:survey_id>/data_product_application_relationships',
+    @bp.route(
+        '/<string:survey_id>/data_product_application_relationships',
         methods=['GET', 'POST'],
     )
     def delete_response_application_societal_benefit_area_relationship(survey_id: str):
