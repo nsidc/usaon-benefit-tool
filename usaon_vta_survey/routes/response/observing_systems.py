@@ -4,13 +4,11 @@ from usaon_vta_survey import db
 from usaon_vta_survey._types import ObservingSystemType
 from usaon_vta_survey.forms import FORMS_BY_MODEL
 from usaon_vta_survey.models.tables import ResponseObservingSystem, Survey
-from usaon_vta_survey.routes import root_blueprint
+from usaon_vta_survey.routes.response import bp
 from usaon_vta_survey.util.authorization import limit_response_editors
 
 
-@root_blueprint.route(
-    '/response/<string:survey_id>/observing_systems', methods=['GET', 'POST']
-)
+@bp.route('/response/<string:survey_id>/observing_systems', methods=['GET', 'POST'])
 def view_response_observing_systems(survey_id: str):
     """View and add to observing systems associated with a response."""
     Form = FORMS_BY_MODEL[ResponseObservingSystem]

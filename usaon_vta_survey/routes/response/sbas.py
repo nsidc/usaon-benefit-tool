@@ -7,11 +7,11 @@ from usaon_vta_survey.models.tables import (
     SocietalBenefitArea,
     Survey,
 )
-from usaon_vta_survey.routes import root_blueprint
+from usaon_vta_survey.routes.response import bp
 from usaon_vta_survey.util.authorization import limit_response_editors
 
 
-@root_blueprint.route(
+@bp.route(
     '/response/<string:survey_id>/societal_benefit_areas', methods=['GET', 'POST']
 )
 def view_response_sbas(survey_id: str):

@@ -49,6 +49,10 @@ def create_app():
 
     app.register_blueprint(root_blueprint)
 
+    from usaon_vta_survey.routes import response
+
+    app.register_blueprint(response.bp)
+
     app.jinja_env.globals.update(sqla_inspect=sqla_inspect, __version__=__version__)
 
     return app
