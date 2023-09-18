@@ -2,7 +2,7 @@ from loguru import logger
 from sqlalchemy import MetaData
 from sqlalchemy.orm import Session
 
-from usaon_vta_survey import app, db
+from usaon_vta_survey import create_app, db
 from usaon_vta_survey.constants.roles import ROLES
 from usaon_vta_survey.constants.sba import IAOA_SBA_FRAMEWORK
 from usaon_vta_survey.constants.status import STATUSES
@@ -14,6 +14,8 @@ from usaon_vta_survey.models.tables import (
     Status,
 )
 from usaon_vta_survey.util.dev import DEV_USER
+
+app = create_app()
 
 
 def recreate_tables() -> None:

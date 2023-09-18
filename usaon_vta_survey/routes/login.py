@@ -5,8 +5,8 @@ from flask import redirect, session, url_for
 from flask_dance.contrib.google import google, make_google_blueprint
 from flask_login import login_user
 
-from usaon_vta_survey import app
 from usaon_vta_survey.routes import root_blueprint
+from usaon_vta_survey.util.db.setup import app
 from usaon_vta_survey.util.db.user import ensure_user_exists
 
 blueprint = make_google_blueprint(
