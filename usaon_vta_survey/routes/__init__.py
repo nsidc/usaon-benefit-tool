@@ -1,5 +1,3 @@
-from flask import Blueprint
-
 # may not need this anymore once setting up blueprints is complete in regular __init__
 import usaon_vta_survey.routes.response
 import usaon_vta_survey.routes.response.applications
@@ -16,5 +14,7 @@ import usaon_vta_survey.routes.user
 import usaon_vta_survey.routes.survey
 import usaon_vta_survey.routes.surveys
 import usaon_vta_survey.routes.users
+
+from flask import Blueprint
 
 root_blueprint = Blueprint(prefix='/')

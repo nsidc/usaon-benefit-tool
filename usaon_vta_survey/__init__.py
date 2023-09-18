@@ -9,7 +9,6 @@ from sqlalchemy import inspect as sqla_inspect
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from usaon_vta_survey.constants.version import VERSION
-from usaon_vta_survey.routes import root_blueprint
 from usaon_vta_survey.util.db.connect import db_connstr
 from usaon_vta_survey.util.envvar import envvar_is_true
 
@@ -43,8 +42,12 @@ def create_app():
     if envvar_is_true("USAON_VTA_PROXY"):
         app.wsgi_app = ProxyFix(app.wsgi_app, x_prefix=1)  # type: ignore
 
+    from usaon_vta_survey.model import db
+
     db.init_app(app)
     Bootstrap5(app)
+
+    from usaon_vta_survey.routes import root_blueprint
 
     app.register_blueprint(root_blueprint)
 
