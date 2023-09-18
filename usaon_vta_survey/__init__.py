@@ -42,8 +42,6 @@ def create_app():
     if envvar_is_true("USAON_VTA_PROXY"):
         app.wsgi_app = ProxyFix(app.wsgi_app, x_prefix=1)  # type: ignore
 
-    from usaon_vta_survey.model import db
-
     db.init_app(app)
     Bootstrap5(app)
 
