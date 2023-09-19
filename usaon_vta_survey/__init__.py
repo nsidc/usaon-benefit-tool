@@ -56,6 +56,9 @@ def create_app():
     from usaon_vta_survey.routes.surveys import surveys_bp
 
     app.register_blueprint(surveys_bp)
+    from usaon_vta_survey.routes.survey import survey_bp
+
+    app.register_blueprint(survey_bp)
     from usaon_vta_survey.routes.users import users_bp
 
     app.register_blueprint(users_bp)
