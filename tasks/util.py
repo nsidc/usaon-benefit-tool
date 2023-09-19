@@ -7,6 +7,8 @@ PROJECT_DIR = Path(__file__).parent.parent
 
 
 def print_and_run(cmd, **run_kwargs):
+    # os.environ['FLASK_DEBUG'] = 'true'
+    # os.environ['USAON_VTA_DB_SQLITE'] = 'true'
     print(cmd)
     kwargs = {
         'pty': True,
