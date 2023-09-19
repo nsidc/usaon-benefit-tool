@@ -1,12 +1,10 @@
 import os
 import time
 
-from flask import redirect, session, url_for
+from flask import Blueprint, redirect, session, url_for
 from flask_dance.contrib.google import google, make_google_blueprint
 from flask_login import login_user
 
-from usaon_vta_survey.routes import login_bp
-from usaon_vta_survey.util.db.setup import app
 from usaon_vta_survey.util.db.user import ensure_user_exists
 
 blueprint = make_google_blueprint(
@@ -14,9 +12,8 @@ blueprint = make_google_blueprint(
     client_secret=os.getenv('USAON_VTA_GOOGLE_CLIENT_SECRET'),
     scope=["profile", "email"],
 )
-# TODO: Figure out how to handle this with app factory
-# NOTE: moving this into `usaon-vta-survey/__init`
-app.register_blueprint(blueprint, url_prefix="/google_oauth")
+
+login_bp = Blueprint('login', __name__, url_prefix='/login')
 
 
 @login_bp.route("")
