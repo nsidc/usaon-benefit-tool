@@ -1,18 +1,18 @@
 {% macro nav_buttons(current_user) -%}
   {% from "bootstrap5/nav.html" import render_nav_item %}
 
-  {{ render_nav_item("root", "Home")}}
-  {{ render_nav_item("view_surveys", "Surveys")}}
+  {{ render_nav_item("root.root", "Home")}}
+  {{ render_nav_item("surveys.view_surveys", "Surveys")}}
   {% if current_user.is_authenticated %}
     {{ render_nav_item("user", "Profile", user_id=current_user.id)}}
 
     {% if current_user.role_id=="admin" %}
-      {{ render_nav_item("view_users", "Users")}}
+      {{ render_nav_item("users.view_users", "Users")}}
       {{ render_nav_item("logout", "Log out")}}
     {% else %}
       {{ render_nav_item("logout", "Log out")}}
     {% endif %}
   {% else %}
-    {{ render_nav_item("login", "Log in")}}
+    {{ render_nav_item("login.login", "Log in")}}
   {% endif %}
 {%- endmacro -%}

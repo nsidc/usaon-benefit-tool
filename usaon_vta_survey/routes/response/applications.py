@@ -24,7 +24,9 @@ def view_response_applications(survey_id: str):
             db.session.add(response_application)
             db.session.commit()
 
-        return redirect(url_for('view_response_applications', survey_id=survey.id))
+        return redirect(
+            url_for('response.view_response_applications', survey_id=survey.id)
+        )
 
     form = Form(obj=response_application)
     return render_template(

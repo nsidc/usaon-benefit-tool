@@ -1,10 +1,11 @@
-from flask import render_template
+from flask import Blueprint, render_template
 
 from usaon_vta_survey.models.tables import Survey
-from usaon_vta_survey.routes.root import root_blueprint
+
+surveys_bp = Blueprint('surveys', __name__, url_prefix='/surveys')
 
 
-@root_blueprint.route('/surveys')
+@surveys_bp.route('')
 def view_surveys():
     surveys = Survey.query.order_by(Survey.created_timestamp).all()
     return render_template(

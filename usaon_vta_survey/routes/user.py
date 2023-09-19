@@ -1,5 +1,5 @@
 from flask import flash, render_template, request
-from flask_login import LoginManager, current_user
+from flask_login import current_user
 
 from usaon_vta_survey import db
 from usaon_vta_survey.forms import FORMS_BY_MODEL
@@ -7,10 +7,9 @@ from usaon_vta_survey.models.tables import User
 from usaon_vta_survey.routes.root import root_blueprint
 from usaon_vta_survey.util.db.setup import app
 
-login_manager = LoginManager(app)
 
-
-@login_manager.user_loader
+# TODO: discover if this is porrible with app factory
+# @login_manager.user_loader
 def load_user(user_id: str) -> User:
     return User.query.get(user_id)
 

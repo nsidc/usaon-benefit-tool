@@ -1,10 +1,11 @@
-from flask import render_template
+from flask import Blueprint, render_template
 
 from usaon_vta_survey.models.tables import User
-from usaon_vta_survey.routes.root import root_blueprint
+
+users_bp = Blueprint('users', __name__, url_prefix='/users')
 
 
-@root_blueprint.route('/users')
+@users_bp.route('')
 def view_users():
     users = User.query.order_by(User.name).all()
     return render_template(

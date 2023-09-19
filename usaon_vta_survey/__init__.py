@@ -3,6 +3,7 @@ from typing import Final
 
 from flask import Flask
 from flask_bootstrap import Bootstrap5
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from sqlalchemy import inspect as sqla_inspect
@@ -44,15 +45,23 @@ def create_app():
 
     db.init_app(app)
     Bootstrap5(app)
+    LoginManager(app)
 
-    from usaon_vta_survey.routes.root import root_blueprint
+    from usaon_vta_survey.routes.root import root_bp
 
-    app.register_blueprint(root_blueprint)
+    app.register_blueprint(root_bp)
+    from usaon_vta_survey.routes.surveys import surveys_bp
+
+    app.register_blueprint(surveys_bp)
+    from usaon_vta_survey.routes.users import users_bp
+
+    app.register_blueprint(users_bp)
 
     from usaon_vta_survey.routes import response
 
     app.register_blueprint(response.bp)
 
+    # breakpoint()
     app.jinja_env.globals.update(sqla_inspect=sqla_inspect, __version__=__version__)
 
     return app
