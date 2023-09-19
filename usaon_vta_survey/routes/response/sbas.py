@@ -11,9 +11,7 @@ from usaon_vta_survey.routes.response import bp
 from usaon_vta_survey.util.authorization import limit_response_editors
 
 
-@bp.route(
-    '/response/<string:survey_id>/societal_benefit_areas', methods=['GET', 'POST']
-)
+@bp.route('/<string:survey_id>/societal_benefit_areas', methods=['GET', 'POST'])
 def view_response_sbas(survey_id: str):
     """View and add to observing systems associated with a response."""
     sbas = SocietalBenefitArea.query.all()
