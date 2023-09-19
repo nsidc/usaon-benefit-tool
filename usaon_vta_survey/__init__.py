@@ -30,7 +30,10 @@ db = SQLAlchemy(
     )
 )
 
+login_manager = LoginManager()
 
+
+@login_manager.user_loader
 def create_app():
     """Create and configure the app."""
     # TODO: enable override config to test_config
@@ -45,7 +48,7 @@ def create_app():
 
     db.init_app(app)
     Bootstrap5(app)
-    LoginManager(app)
+    login_manager.init_app(app)
 
     from usaon_vta_survey.routes.root import root_bp
 
@@ -56,7 +59,9 @@ def create_app():
     from usaon_vta_survey.routes.users import users_bp
 
     app.register_blueprint(users_bp)
+    from usaon_vta_survey.routes.login import blueprint
 
+    app.register_blueprint(blueprint, url_prefix="/google_oauth")
     from usaon_vta_survey.routes import response
 
     app.register_blueprint(response.bp)
