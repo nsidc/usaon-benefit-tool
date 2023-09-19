@@ -1,7 +1,7 @@
 from flask import render_template
 
 from usaon_vta_survey.models.tables import User
-from usaon_vta_survey.routes import root_blueprint
+from usaon_vta_survey.routes.root import root_blueprint
 
 
 @root_blueprint.route('/users')

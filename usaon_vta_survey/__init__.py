@@ -45,9 +45,9 @@ def create_app():
     db.init_app(app)
     Bootstrap5(app)
 
-    from usaon_vta_survey.routes import root_blueprint
+    from usaon_vta_survey.routes import root
 
-    app.register_blueprint(root_blueprint)
+    app.register_blueprint(root.root_blueprint)
 
     from usaon_vta_survey.routes import response
 

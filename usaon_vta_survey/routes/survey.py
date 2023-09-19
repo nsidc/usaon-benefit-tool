@@ -3,7 +3,7 @@ from flask import redirect, render_template, request, url_for
 from usaon_vta_survey import db
 from usaon_vta_survey.forms import FORMS_BY_MODEL
 from usaon_vta_survey.models.tables import Survey
-from usaon_vta_survey.routes import root_blueprint
+from usaon_vta_survey.routes.root import root_blueprint
 
 
 @root_blueprint.route('/survey/new', methods=['GET', 'POST'])

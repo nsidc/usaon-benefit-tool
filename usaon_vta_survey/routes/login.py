@@ -5,7 +5,7 @@ from flask import redirect, session, url_for
 from flask_dance.contrib.google import google, make_google_blueprint
 from flask_login import login_user
 
-from usaon_vta_survey.routes import root_blueprint
+from usaon_vta_survey.routes.root import root_blueprint
 from usaon_vta_survey.util.db.setup import app
 from usaon_vta_survey.util.db.user import ensure_user_exists
 
@@ -15,6 +15,7 @@ blueprint = make_google_blueprint(
     scope=["profile", "email"],
 )
 # TODO: Figure out how to handle this with app factory
+# NOTE: moving this into `usaon-vta-survey/__init`
 app.register_blueprint(blueprint, url_prefix="/google_oauth")
 
 
@@ -31,7 +32,7 @@ def login():
     return redirect('/')
 
 
-@app.before_request
+@root_blueprint.before_request
 def before_request():
     """Handle expired google tokens as a pre-request hook."""
     if token := (s := session).get('google_oauth_token'):

@@ -1,9 +1,9 @@
-from flask import render_template
+from flask import Blueprint, render_template
 
-from usaon_vta_survey.routes import root_blueprint
+root_blueprint = Blueprint('root', __name__, url_prefix='/')
 
 
-@root_blueprint.route("/")
+@root_blueprint.route('')
 def root():
     return render_template(
         'home.html',

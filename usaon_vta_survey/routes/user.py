@@ -4,7 +4,7 @@ from flask_login import LoginManager, current_user
 from usaon_vta_survey import db
 from usaon_vta_survey.forms import FORMS_BY_MODEL
 from usaon_vta_survey.models.tables import User
-from usaon_vta_survey.routes import root_blueprint
+from usaon_vta_survey.routes.root import root_blueprint
 from usaon_vta_survey.util.db.setup import app
 
 login_manager = LoginManager(app)
