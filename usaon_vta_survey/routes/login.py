@@ -1,7 +1,6 @@
 import os
-import time
 
-from flask import Blueprint, redirect, session, url_for
+from flask import Blueprint, redirect, url_for
 from flask_dance.contrib.google import google, make_google_blueprint
 from flask_login import login_user
 
@@ -24,15 +23,17 @@ def login():
     assert resp.ok, resp.text
 
     user = ensure_user_exists(resp.json())
+    # breakpoint()
     login_user(user)
 
     return redirect('/')
 
 
-@login_bp.before_request
-def before_request():
-    """Handle expired google tokens as a pre-request hook."""
-    if token := (s := session).get('google_oauth_token'):
-        print("Token expiring in", token['expires_at'] - time.time())
-        if time.time() >= token['expires_at']:
-            del s['google_oauth_token']
+# this may be the login issue
+# @app.before_request
+# def before_request():
+#     """Handle expired google tokens as a pre-request hook."""
+#     if token := (s := session).get('google_oauth_token'):
+#         print("Token expiring in", token['expires_at'] - time.time())
+#         if time.time() >= token['expires_at']:
+#             del s['google_oauth_token']

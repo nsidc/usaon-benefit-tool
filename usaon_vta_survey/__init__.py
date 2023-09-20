@@ -1,7 +1,8 @@
 import os
+import time
 from typing import Final
 
-from flask import Flask
+from flask import Flask, session
 from flask_bootstrap import Bootstrap5
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
@@ -45,6 +46,14 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = db_connstr(app)
     if envvar_is_true("USAON_VTA_PROXY"):
         app.wsgi_app = ProxyFix(app.wsgi_app, x_prefix=1)  # type: ignore
+
+    @app.before_request
+    def before_request():
+        """Handle expired google tokens as a pre-request hook."""
+        if token := (s := session).get('google_oauth_token'):
+            print("Token expiring in", token['expires_at'] - time.time())
+            if time.time() >= token['expires_at']:
+                del s['google_oauth_token']
 
     db.init_app(app)
     Bootstrap5(app)
