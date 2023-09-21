@@ -4,7 +4,7 @@ from usaon_vta_survey import db
 from usaon_vta_survey.forms import FORMS_BY_MODEL
 from usaon_vta_survey.models.tables import Survey
 
-survey_bp = Blueprint('survey', '/survey')
+survey_bp = Blueprint('survey', __name__, url_prefix='/survey')
 
 
 @survey_bp.route('/new', methods=['GET', 'POST'])
@@ -21,7 +21,7 @@ def new_survey():
             db.session.add(survey)
             db.session.commit()
 
-            return redirect(url_for('view_survey', survey_id=survey.id))
+            return redirect(url_for('survey.view_survey', survey_id=survey.id))
 
     form = Form(obj=survey)
     return render_template('new_survey.html', form=form)
