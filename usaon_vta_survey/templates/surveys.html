@@ -41,7 +41,7 @@
         <td>{{survey.status.id}}</td>
         <td>{{survey.private}}</td>
         <td>
-          <a href="{{url_for('view_survey', survey_id=survey.id)}}">{{render_icon('eye-fill')}}</a>
+          <a href="{{url_for('survey.view_survey', survey_id=survey.id)}}">{{render_icon('eye-fill')}}</a>
         </td>
       </tr>
     </tbody>
