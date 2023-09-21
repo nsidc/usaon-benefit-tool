@@ -1,3 +1,4 @@
+from flask import current_app
 from loguru import logger
 from sqlalchemy import MetaData
 from sqlalchemy.orm import Session
@@ -42,8 +43,8 @@ def populate_reference_data() -> None:
     init_roles(db.session)
     init_statuses(db.session)
 
-    # if app.config["LOGIN_DISABLED"]:
-    #     init_dev_user(db.session)
+    if current_app.config["LOGIN_DISABLED"]:
+        init_dev_user(db.session)
 
     logger.info('Reference data loaded.')
 

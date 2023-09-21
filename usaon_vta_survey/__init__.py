@@ -31,10 +31,7 @@ db = SQLAlchemy(
     )
 )
 
-login_manager = LoginManager()
 
-
-@login_manager.user_loader
 def create_app():
     """Create and configure the app."""
     # TODO: enable override config to test_config
@@ -47,6 +44,17 @@ def create_app():
     if envvar_is_true("USAON_VTA_PROXY"):
         app.wsgi_app = ProxyFix(app.wsgi_app, x_prefix=1)  # type: ignore
 
+    db.init_app(app)
+    Bootstrap5(app)
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+
+    from usaon_vta_survey.models.tables import User
+
+    @login_manager.user_loader
+    def load_user(user_id: str) -> User:
+        return User.query.get(user_id)
+
     @app.before_request
     def before_request():
         """Handle expired google tokens as a pre-request hook."""
@@ -54,10 +62,6 @@ def create_app():
             print("Token expiring in", token['expires_at'] - time.time())
             if time.time() >= token['expires_at']:
                 del s['google_oauth_token']
-
-    db.init_app(app)
-    Bootstrap5(app)
-    login_manager.init_app(app)
 
     from usaon_vta_survey.routes.root import root_bp
 
@@ -81,7 +85,6 @@ def create_app():
 
     app.register_blueprint(response.bp)
 
-    # breakpoint()
     app.jinja_env.globals.update(sqla_inspect=sqla_inspect, __version__=__version__)
 
     return app
