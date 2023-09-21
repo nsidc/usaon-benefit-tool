@@ -72,12 +72,18 @@ def create_app():
     from usaon_vta_survey.routes.survey import survey_bp
 
     app.register_blueprint(survey_bp)
+    from usaon_vta_survey.routes.user import user_bp
+
+    app.register_blueprint(user_bp)
     from usaon_vta_survey.routes.users import users_bp
 
     app.register_blueprint(users_bp)
     from usaon_vta_survey.routes.login import login_bp
 
     app.register_blueprint(login_bp)
+    from usaon_vta_survey.routes.logout import logout_bp
+
+    app.register_blueprint(logout_bp)
     from usaon_vta_survey.routes.google import blueprint
 
     app.register_blueprint(blueprint, url_prefix="/google_oauth")

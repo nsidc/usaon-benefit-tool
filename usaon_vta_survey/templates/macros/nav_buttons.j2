@@ -8,9 +8,9 @@
 
     {% if current_user.role_id=="admin" %}
       {{ render_nav_item("users.view_users", "Users")}}
-      {{ render_nav_item("root.logout", "Log out")}}
+      {{ render_nav_item("logout.logout", "Log out")}}
     {% else %}
-      {{ render_nav_item("root.logout", "Log out")}}
+      {{ render_nav_item("logout.logout", "Log out")}}
     {% endif %}
   {% else %}
     {{ render_nav_item("login.login", "Log in")}}
