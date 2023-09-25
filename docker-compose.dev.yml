@@ -23,6 +23,7 @@ services:
       - "USAON_VTA_DB_SQLITE=true"
         # Enable the in-browser debugger: 
       - "FLASK_DEBUG=True"
+      # NOTE: This is temporary until issue #144 is resolved
       # Creds for talking to Google:
       - "USAON_VTA_GOOGLE_CLIENT_ID=${USAON_VTA_GOOGLE_CLIENT_ID:?USAON_VTA_GOOGLE_CLIENT_ID must be set}"
       - "USAON_VTA_GOOGLE_CLIENT_SECRET=${USAON_VTA_GOOGLE_CLIENT_SECRET:?USAON_VTA_GOOGLE_CLIENT_SECRET must be set}"
