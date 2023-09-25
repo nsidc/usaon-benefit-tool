@@ -10,7 +10,6 @@ login_bp = Blueprint('login', __name__, url_prefix='/login')
 @login_bp.route("")
 def login():
     if not google.authorized:
-        # breakpoint()
         return redirect(url_for("google.login"))
     resp = google.get("/oauth2/v2/userinfo")
     assert resp.ok, resp.text
