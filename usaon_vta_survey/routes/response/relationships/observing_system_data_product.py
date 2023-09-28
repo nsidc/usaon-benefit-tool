@@ -1,4 +1,4 @@
-from flask import Request, redirect, render_template, request, url_for
+from flask import Blueprint, Request, redirect, render_template, request, url_for
 from flask_wtf import FlaskForm
 from wtforms import FormField
 
@@ -10,7 +10,6 @@ from usaon_vta_survey.models.tables import (
     ResponseObservingSystemDataProduct,
     Survey,
 )
-from usaon_vta_survey.routes.response import bp
 from usaon_vta_survey.util.authorization import limit_response_editors
 
 
@@ -126,8 +125,15 @@ def _request_args(request: Request) -> tuple[int | None, int | None]:
     return data_product_id, observing_system_id
 
 
-@bp.route(
-    '/<string:survey_id>/observing_system_data_product_relationships',
+observing_system_data_product_bp = Blueprint(
+    'observing_system_data_product',
+    __name__,
+    url_prefix='/response/<string:survey_id>/observing_system_data_product_relationships',
+)
+
+
+@observing_system_data_product_bp.route(
+    '',
     methods=['GET', 'POST'],
 )
 def view_response_observing_system_data_product_relationships(survey_id: str):
@@ -211,7 +217,9 @@ def view_response_observing_system_data_product_relationships(survey_id: str):
 
             db.session.commit()
 
-        return redirect(url_for('view_response_data_products', survey_id=survey.id))
+        return redirect(
+            url_for('data_product.view_response_data_products', survey_id=survey.id)
+        )
 
     form = SuperForm(obj=form_obj)
     return render_template(

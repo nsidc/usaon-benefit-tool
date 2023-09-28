@@ -34,7 +34,7 @@ def view_response_sbas(survey_id: str):
             db.session.add(response_societal_benefit_area)
             db.session.commit()
 
-        return redirect(url_for('view_response_sbas', survey_id=survey.id))
+        return redirect(url_for('sba.view_response_sbas', survey_id=survey.id))
 
     form = Form(obj=response_societal_benefit_area)
     return render_template(

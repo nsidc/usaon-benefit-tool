@@ -31,7 +31,7 @@ def view_response_observing_systems(survey_id: str):
             db.session.commit()
 
             redirect_url = url_for(
-                'view_response_observing_systems',
+                'obs.view_response_observing_systems',
                 survey_id=survey.id,
             )
             return redirect(redirect_url)

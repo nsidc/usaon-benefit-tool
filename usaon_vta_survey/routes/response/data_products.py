@@ -26,7 +26,9 @@ def view_response_data_products(survey_id: str):
             db.session.add(response_data_product)
             db.session.commit()
 
-        return redirect(url_for('view_response_data_products', survey_id=survey.id))
+        return redirect(
+            url_for('data_product.view_response_data_products', survey_id=survey.id)
+        )
 
     form = Form(obj=response_data_product)
     return render_template(

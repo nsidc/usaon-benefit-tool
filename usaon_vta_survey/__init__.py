@@ -70,6 +70,15 @@ def create_app():
     from usaon_vta_survey.routes.response.applications import application_bp
     from usaon_vta_survey.routes.response.data_products import dp_bp
     from usaon_vta_survey.routes.response.observing_systems import obs_bp
+    from usaon_vta_survey.routes.response.relationships.application_societal_benefit_area import (
+        application_societal_benefit_area_bp,
+    )
+    from usaon_vta_survey.routes.response.relationships.data_product_application import (
+        data_product_application_bp,
+    )
+    from usaon_vta_survey.routes.response.relationships.observing_system_data_product import (
+        observing_system_data_product_bp,
+    )
     from usaon_vta_survey.routes.response.sbas import sba_bp
     from usaon_vta_survey.routes.root import root_bp
     from usaon_vta_survey.routes.survey import survey_bp
@@ -90,6 +99,9 @@ def create_app():
     app.register_blueprint(sba_bp)
     app.register_blueprint(application_bp)
     app.register_blueprint(dp_bp)
+    app.register_blueprint(observing_system_data_product_bp)
+    app.register_blueprint(data_product_application_bp)
+    app.register_blueprint(application_societal_benefit_area_bp)
 
     app.jinja_env.globals.update(sqla_inspect=sqla_inspect, __version__=__version__)
 

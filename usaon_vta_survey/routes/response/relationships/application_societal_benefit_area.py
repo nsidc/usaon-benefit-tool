@@ -1,4 +1,4 @@
-from flask import Request, redirect, render_template, request, url_for
+from flask import Blueprint, Request, redirect, render_template, request, url_for
 from flask_wtf import FlaskForm
 from wtforms import FormField
 
@@ -10,7 +10,6 @@ from usaon_vta_survey.models.tables import (
     ResponseSocietalBenefitArea,
     Survey,
 )
-from usaon_vta_survey.routes.response import bp
 from usaon_vta_survey.util.authorization import limit_response_editors
 
 
@@ -131,8 +130,15 @@ def _request_args(request: Request) -> tuple[int | None, int | None]:
     return societal_benefit_area_id, application_id
 
 
-@bp.route(
-    '/<string:survey_id>/application_societal_benefit_area_relationships',
+application_societal_benefit_area_bp = Blueprint(
+    'application_societal_benefit_area',
+    __name__,
+    url_prefix='/response/<string:survey_id>/application_societal_benefit_area_relationships',
+)
+
+
+@application_societal_benefit_area_bp.route(
+    '',
     methods=['GET', 'POST'],
 )
 def view_response_application_societal_benefit_area_relationships(survey_id: str):
@@ -219,7 +225,7 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
 
             db.session.commit()
 
-        return redirect(url_for('view_response_sbas', survey_id=survey.id))
+        return redirect(url_for('sba.view_response_sbas', survey_id=survey.id))
 
     form = SuperForm(obj=form_obj)
     return render_template(
@@ -234,13 +240,13 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
     )
 
 
-@bp.route(
-    '/<string:survey_id>/application_societal_benefit_area_relationships',
-    methods=['GET', 'POST'],
-)
-def delete_response_application_societal_benefit_area_relationship(survey_id: str):
-    """Delete application/SBA relationships to a response."""
-    societal_benefit_area_id, application_id = _request_args(request)
-    db.get_or_404(Survey, survey_id)
-
-    return ...
+# @bp.route(
+#     '/<string:survey_id>/application_societal_benefit_area_relationships',
+#     methods=['GET', 'POST'],
+# )
+# def delete_response_application_societal_benefit_area_relationship(survey_id: str):
+#     """Delete application/SBA relationships to a response."""
+#     societal_benefit_area_id, application_id = _request_args(request)
+#     db.get_or_404(Survey, survey_id)
+#
+#     return ...
