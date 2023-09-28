@@ -1,11 +1,14 @@
 import os
+import time
 from typing import Final
 
-from flask import Flask
+from flask import Flask, session
 from flask_bootstrap import Bootstrap5
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from sqlalchemy import inspect as sqla_inspect
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from usaon_vta_survey.constants.version import VERSION
 from usaon_vta_survey.util.db.connect import db_connstr
@@ -13,6 +16,9 @@ from usaon_vta_survey.util.envvar import envvar_is_true
 
 __version__: Final[str] = VERSION
 
+
+# TODO: Figure out where to put this. model.py?
+# https://flask.palletsprojects.com/en/2.3.x/patterns/appfactories/#factories-extensions
 db = SQLAlchemy(
     metadata=MetaData(
         naming_convention={
@@ -25,16 +31,66 @@ db = SQLAlchemy(
     )
 )
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'youcanneverguess')
-app.config['LOGIN_DISABLED'] = envvar_is_true("USAON_VTA_LOGIN_DISABLED")
-app.config['SQLALCHEMY_DATABASE_URI'] = db_connstr(app)
 
-db.init_app(app)
-bootstrap = Bootstrap5(app)
+def create_app():
+    """Create and configure the app."""
+    # TODO: enable override config to test_config
+    # https://flask.palletsprojects.com/en/2.3.x/tutorial/factory/
 
-app.jinja_env.globals.update(sqla_inspect=sqla_inspect, __version__=__version__)
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'youcanneverguess')
+    app.config['LOGIN_DISABLED'] = envvar_is_true("USAON_VTA_LOGIN_DISABLED")
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_connstr(app)
+    if envvar_is_true("USAON_VTA_PROXY"):
+        app.wsgi_app = ProxyFix(app.wsgi_app, x_prefix=1)  # type: ignore
 
-# NOTE: This is a circular import, but it's specified by the Flask docs:
-#     https://flask.palletsprojects.com/en/3.1.x/patterns/packages/
-import usaon_vta_survey.routes  # noqa: E402, F401
+    db.init_app(app)
+    Bootstrap5(app)
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+
+    from usaon_vta_survey.models.tables import User
+
+    @login_manager.user_loader
+    def load_user(user_id: str) -> User:
+        return User.query.get(user_id)
+
+    @app.before_request
+    def before_request():
+        """Handle expired google tokens as a pre-request hook."""
+        if token := (s := session).get('google_oauth_token'):
+            print("Token expiring in", token['expires_at'] - time.time())
+            if time.time() >= token['expires_at']:
+                del s['google_oauth_token']
+
+    from usaon_vta_survey.routes.google import blueprint
+    from usaon_vta_survey.routes.login import login_bp
+    from usaon_vta_survey.routes.logout import logout_bp
+    from usaon_vta_survey.routes.response import bp
+    from usaon_vta_survey.routes.response.applications import application_bp
+    from usaon_vta_survey.routes.response.data_products import dp_bp
+    from usaon_vta_survey.routes.response.observing_systems import obs_bp
+    from usaon_vta_survey.routes.response.sbas import sba_bp
+    from usaon_vta_survey.routes.root import root_bp
+    from usaon_vta_survey.routes.survey import survey_bp
+    from usaon_vta_survey.routes.surveys import surveys_bp
+    from usaon_vta_survey.routes.user import user_bp
+    from usaon_vta_survey.routes.users import users_bp
+
+    app.register_blueprint(root_bp)
+    app.register_blueprint(surveys_bp)
+    app.register_blueprint(survey_bp)
+    app.register_blueprint(user_bp)
+    app.register_blueprint(users_bp)
+    app.register_blueprint(login_bp)
+    app.register_blueprint(logout_bp)
+    app.register_blueprint(blueprint, url_prefix="/google_oauth")
+    app.register_blueprint(bp)
+    app.register_blueprint(obs_bp)
+    app.register_blueprint(sba_bp)
+    app.register_blueprint(application_bp)
+    app.register_blueprint(dp_bp)
+
+    app.jinja_env.globals.update(sqla_inspect=sqla_inspect, __version__=__version__)
+
+    return app

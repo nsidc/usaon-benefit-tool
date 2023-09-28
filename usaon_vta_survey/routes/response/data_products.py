@@ -1,12 +1,16 @@
-from flask import redirect, render_template, request, url_for
+from flask import Blueprint, redirect, render_template, request, url_for
 
-from usaon_vta_survey import app, db
+from usaon_vta_survey import db
 from usaon_vta_survey.forms import FORMS_BY_MODEL
 from usaon_vta_survey.models.tables import ResponseDataProduct, Survey
 from usaon_vta_survey.util.authorization import limit_response_editors
 
+dp_bp = Blueprint(
+    'data_product', __name__, url_prefix='/response/<string:survey_id>/data_products'
+)
 
-@app.route('/response/<string:survey_id>/data_products', methods=['GET', 'POST'])
+
+@dp_bp.route('', methods=['GET', 'POST'])
 def view_response_data_products(survey_id: str):
     """View and add to data products associated with a response."""
     Form = FORMS_BY_MODEL[ResponseDataProduct]

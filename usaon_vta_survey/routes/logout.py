@@ -1,10 +1,10 @@
-from flask import redirect
+from flask import Blueprint, redirect
 from flask_login import logout_user
 
-from usaon_vta_survey import app
+logout_bp = Blueprint('logout', __name__, url_prefix='/logout')
 
 
-@app.route("/logout")
+@logout_bp.route("")
 def logout():
     logout_user()
     return redirect("/")

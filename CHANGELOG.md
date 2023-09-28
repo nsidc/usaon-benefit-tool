@@ -1,3 +1,16 @@
+# v0.4.1 (2023-09-13)
+* Bugfix environment variables
+
+# v0.4.0 (2023-09-13)
+* Stop using current_user and use true value for created_by on surveys page 
+* Display version on webapp
+* Combine common response object database fields 
+* Show respondents on survey page 
+* Install bootstrap and update UI
+* Update response link to be clickable 
+* Implement X-forwarded-proxy 
+
+
 # v0.3.0 (2023-08-17)
 
 * Set up/improve all relationship interfaces
