@@ -1,8 +1,9 @@
+from flask import current_app
 from loguru import logger
 from sqlalchemy import MetaData
 from sqlalchemy.orm import Session
 
-from usaon_vta_survey import app, db
+from usaon_vta_survey import db
 from usaon_vta_survey.constants.roles import ROLES
 from usaon_vta_survey.constants.sba import IAOA_SBA_FRAMEWORK
 from usaon_vta_survey.constants.status import STATUSES
@@ -42,7 +43,7 @@ def populate_reference_data() -> None:
     init_roles(db.session)
     init_statuses(db.session)
 
-    if app.config["LOGIN_DISABLED"]:
+    if current_app.config["LOGIN_DISABLED"]:
         init_dev_user(db.session)
 
     logger.info('Reference data loaded.')
