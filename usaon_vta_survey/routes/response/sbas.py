@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, url_for
+from flask import Blueprint, redirect, render_template, request, url_for
 
 from usaon_vta_survey import db
 from usaon_vta_survey.forms import FORMS_BY_MODEL
@@ -7,11 +7,14 @@ from usaon_vta_survey.models.tables import (
     SocietalBenefitArea,
     Survey,
 )
-from usaon_vta_survey.routes.response import bp
 from usaon_vta_survey.util.authorization import limit_response_editors
 
+sba_bp = Blueprint(
+    'sba', __name__, url_prefix='/response/<string:survey_id>/societal_benefit_areas'
+)
 
-@bp.route('/<string:survey_id>/societal_benefit_areas', methods=['GET', 'POST'])
+
+@sba_bp.route('', methods=['GET', 'POST'])
 def view_response_sbas(survey_id: str):
     """View and add to observing systems associated with a response."""
     sbas = SocietalBenefitArea.query.all()

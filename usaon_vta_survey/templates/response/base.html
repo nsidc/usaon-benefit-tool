@@ -15,25 +15,25 @@
       </li>
 
       <li>
-        <a href="{{url_for('response.view_response_observing_systems', survey_id=survey.id)}}">
+        <a href="{{url_for('obs.view_response_observing_systems', survey_id=survey.id)}}">
           Observing systems ({{survey.response.observing_systems | length}})
         </a>
       </li>
 
       <li>
-        <a href="{{url_for('view_response_data_products', survey_id=survey.id)}}">
+        <a href="{{url_for('data_product.view_response_data_products', survey_id=survey.id)}}">
           Data products ({{survey.response.data_products | length}})
         </a>
       </li>
 
       <li>
-        <a href="{{url_for('view_response_applications', survey_id=survey.id)}}">
+        <a href="{{url_for('application.view_response_applications', survey_id=survey.id)}}">
           Applications ({{survey.response.applications | length}})
         </a>
       </li>
 
       <li>
-        <a href="{{url_for('view_response_sbas', survey_id=survey.id)}}">
+        <a href="{{url_for('sba.view_response_sbas', survey_id=survey.id)}}">
           Societal Benefit Areas ({{survey.response.societal_benefit_areas | length}})
         </a>
       </li>

@@ -63,10 +63,14 @@ def create_app():
             if time.time() >= token['expires_at']:
                 del s['google_oauth_token']
 
-    from usaon_vta_survey.routes import response
     from usaon_vta_survey.routes.google import blueprint
     from usaon_vta_survey.routes.login import login_bp
     from usaon_vta_survey.routes.logout import logout_bp
+    from usaon_vta_survey.routes.response import bp
+    from usaon_vta_survey.routes.response.applications import application_bp
+    from usaon_vta_survey.routes.response.data_products import dp_bp
+    from usaon_vta_survey.routes.response.observing_systems import obs_bp
+    from usaon_vta_survey.routes.response.sbas import sba_bp
     from usaon_vta_survey.routes.root import root_bp
     from usaon_vta_survey.routes.survey import survey_bp
     from usaon_vta_survey.routes.surveys import surveys_bp
@@ -81,7 +85,11 @@ def create_app():
     app.register_blueprint(login_bp)
     app.register_blueprint(logout_bp)
     app.register_blueprint(blueprint, url_prefix="/google_oauth")
-    app.register_blueprint(response.bp)
+    app.register_blueprint(bp)
+    app.register_blueprint(obs_bp)
+    app.register_blueprint(sba_bp)
+    app.register_blueprint(application_bp)
+    app.register_blueprint(dp_bp)
 
     app.jinja_env.globals.update(sqla_inspect=sqla_inspect, __version__=__version__)
 
