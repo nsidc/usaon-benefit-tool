@@ -1,5 +1,5 @@
 from flask import Blueprint, Request, redirect, render_template, request, url_for
-from flask_wtf import FlaskForm
+from usaon_vvta_survey.util.superform import SuperForm
 from wtforms import FormField
 
 from usaon_vta_survey import db
@@ -14,7 +14,7 @@ from usaon_vta_survey.util.authorization import limit_response_editors
 
 
 def _update_super_form(
-    super_form: type[FlaskForm],
+    super_form: type[SuperForm],
     /,
     *,
     societal_benefit_area_id: int | None,
@@ -150,7 +150,7 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
     societal_benefit_area_id, application_id = _request_args(request)
     survey = db.get_or_404(Survey, survey_id)
 
-    class SuperForm(FlaskForm):
+    class ApplicationSocietalBenefitAreaForm(SuperForm):
         """Combine all necessary forms into one super-form.
 
         NOTE: Additional class attributes are added dynamically below.
@@ -176,7 +176,7 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
     )
 
     _update_super_form(
-        SuperForm,
+        ApplicationSocietalBenefitAreaForm,
         societal_benefit_area_id=societal_benefit_area_id,
         application_id=application_id,
     )
@@ -200,8 +200,7 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
 
     if request.method == 'POST':
         limit_response_editors()
-        form = SuperForm(request.form, obj=form_obj)
-        form.relationship._fields.pop('csrf_token')
+        form = ApplicationSocietalBenefitAreaForm(request.form, obj=form_obj)
 
         if form.validate():
             # Add only submitted sub-forms into the db session
@@ -227,7 +226,7 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
 
         return redirect(url_for('sba.view_response_sbas', survey_id=survey.id))
 
-    form = SuperForm(obj=form_obj)
+    form = ApplicationSocietalBenefitAreaForm(obj=form_obj)
     return render_template(
         'response/relationships/application_societal_benefit_area.html',
         form=form,

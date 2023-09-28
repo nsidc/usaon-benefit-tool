@@ -141,7 +141,6 @@ def view_response_data_product_application_relationships(survey_id: str):
     data_product_id, application_id = _request_args(request)
     survey = db.get_or_404(Survey, survey_id)
 
-    # class SuperForm(FlaskForm):
     class ResponseDataProductApplicationForm(SuperForm):
         """Combine all necessary forms into one super-form.
 
@@ -150,8 +149,7 @@ def view_response_data_product_application_relationships(survey_id: str):
 
         relationship = FormField(FORMS_BY_MODEL[ResponseDataProductApplication])
 
-    # looking for submit button at this point
-    # breakpoint()
+    # submit_button present on dir(SuperForm)
     response_data_product_application = _response_data_product_application(
         data_product_id=data_product_id,
         application_id=application_id,
@@ -177,6 +175,7 @@ def view_response_data_product_application_relationships(survey_id: str):
         data_product_id=data_product_id,
         application_id=application_id,
     )
+    # submit_button present in 2 places
     # breakpoint()
 
     form_obj: dict[
@@ -189,11 +188,13 @@ def view_response_data_product_application_relationships(survey_id: str):
         'relationship': response_data_product_application,
     }
 
+    # breakpoint()
     if request.method == 'POST':
         # currently cant get here because we have no submit button
         limit_response_editors()
         form = ResponseDataProductApplicationForm(request.form, obj=form_obj)
 
+        # breakpoint()
         if form.validate():
             # Add only submitted sub-forms into the db session
             for key, obj in form_obj.items():

@@ -1,5 +1,5 @@
 from flask import Blueprint, Request, redirect, render_template, request, url_for
-from flask_wtf import FlaskForm
+from usaon_vvta_survey.util.superform import SuperForm
 from wtforms import FormField
 
 from usaon_vta_survey import db
@@ -14,7 +14,7 @@ from usaon_vta_survey.util.authorization import limit_response_editors
 
 
 def _update_super_form(
-    super_form: type[FlaskForm],
+    super_form: type[SuperForm],
     /,
     *,
     data_product_id: int | None,
@@ -145,7 +145,7 @@ def view_response_observing_system_data_product_relationships(survey_id: str):
     data_product_id, observing_system_id = _request_args(request)
     survey = db.get_or_404(Survey, survey_id)
 
-    class SuperForm(FlaskForm):
+    class ObservingSystemDataProductForm(SuperForm):
         """Combine all necessary forms into one super-form.
 
         NOTE: Additional class attributes are added dynamically below.
@@ -169,7 +169,7 @@ def view_response_observing_system_data_product_relationships(survey_id: str):
     )
 
     _update_super_form(
-        SuperForm,
+        ObservingSystemDataProductForm,
         observing_system_id=observing_system_id,
         data_product_id=data_product_id,
     )
@@ -193,7 +193,7 @@ def view_response_observing_system_data_product_relationships(survey_id: str):
 
     if request.method == 'POST':
         limit_response_editors()
-        form = SuperForm(request.form, obj=form_obj)
+        form = ObservingSystemDataProductForm(request.form, obj=form_obj)
 
         if form.validate():
             # Add only submitted sub-forms into the db session
@@ -221,7 +221,7 @@ def view_response_observing_system_data_product_relationships(survey_id: str):
             url_for('data_product.view_response_data_products', survey_id=survey.id)
         )
 
-    form = SuperForm(obj=form_obj)
+    form = ObservingSystemDataProductForm(obj=form_obj)
     return render_template(
         'response/relationships/observing_system_data_product.html',
         form=form,
