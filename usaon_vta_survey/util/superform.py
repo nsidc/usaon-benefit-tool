@@ -9,7 +9,7 @@ class SuperForm(FlaskForm):
     """
 
     relationship: FormField
-    submit_button = SubmitField('submit')
+    # submit_button = SubmitField('submit')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -19,17 +19,20 @@ class SuperForm(FlaskForm):
         self._cleanup_submit_buttons()
 
     @property
-    def subforms(self):
-        subforms = [
-            field for field in self._fields.values() if isinstance(field, FormField)
-        ]
+    def subforms(self) -> list:
+        subforms = {
+            key: field
+            for key, field in self._fields.items()
+            if isinstance(field, FormField) and 'relationship' not in key
+        }
+        subforms = list(subforms.values())
         return subforms
 
     def _cleanup_submit_buttons(self):
         """Remove all submit buttons from subforms."""
         for subform in self.subforms:
             for key, field in subform._fields.copy().items():
+                # make this real code, look at subform type
                 if isinstance(field, SubmitField):
                     subform._fields.pop(key)
         # TODO: generate submit_button text from list of subforms
-        # self.submit_button = SubmitField('submit relationship')

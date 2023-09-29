@@ -176,7 +176,6 @@ def view_response_data_product_application_relationships(survey_id: str):
         application_id=application_id,
     )
     # submit_button present in 2 places
-    # breakpoint()
 
     form_obj: dict[
         str,
@@ -188,13 +187,11 @@ def view_response_data_product_application_relationships(survey_id: str):
         'relationship': response_data_product_application,
     }
 
-    # breakpoint()
     if request.method == 'POST':
         # currently cant get here because we have no submit button
         limit_response_editors()
         form = ResponseDataProductApplicationForm(request.form, obj=form_obj)
 
-        # breakpoint()
         if form.validate():
             # Add only submitted sub-forms into the db session
             for key, obj in form_obj.items():
@@ -222,7 +219,6 @@ def view_response_data_product_application_relationships(survey_id: str):
         )
 
     form = ResponseDataProductApplicationForm(obj=form_obj)
-    # breakpoint()
     return render_template(
         'response/relationships/data_product_application.html',
         form=form,

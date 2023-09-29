@@ -1,5 +1,4 @@
 from flask import Blueprint, Request, redirect, render_template, request, url_for
-from usaon_vvta_survey.util.superform import SuperForm
 from wtforms import FormField
 
 from usaon_vta_survey import db
@@ -11,6 +10,7 @@ from usaon_vta_survey.models.tables import (
     Survey,
 )
 from usaon_vta_survey.util.authorization import limit_response_editors
+from usaon_vta_survey.util.superform import SuperForm
 
 
 def _update_super_form(
