@@ -20,12 +20,12 @@ class SuperForm(FlaskForm):
 
     @property
     def subforms(self) -> list:
-        subforms = {
+        subforms_dict = {
             key: field
             for key, field in self._fields.items()
             if isinstance(field, FormField) and 'relationship' not in key
         }
-        subforms = list(subforms.values())
+        subforms = list(subforms_dict.values())
         return subforms
 
     def _cleanup_submit_buttons(self):
