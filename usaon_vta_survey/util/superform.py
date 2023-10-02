@@ -9,7 +9,7 @@ class SuperForm(FlaskForm):
     """
 
     relationship: FormField
-    # submit_button = SubmitField('submit')
+    submit_button = SubmitField('submit')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -20,12 +20,15 @@ class SuperForm(FlaskForm):
 
     @property
     def subforms(self) -> list:
-        subforms_dict = {
-            key: field
-            for key, field in self._fields.items()
-            if isinstance(field, FormField) and 'relationship' not in key
-        }
-        subforms = list(subforms_dict.values())
+        # subforms_dict = {
+        #     key: field
+        #     for key, field in self._fields.items()
+        #     if isinstance(field, FormField) and 'relationship' not in key
+        # }
+        # subforms = list(subforms_dict.values())
+        subforms = [
+            field for field in self._fields.values() if isinstance(field, FormField)
+        ]
         return subforms
 
     def _cleanup_submit_buttons(self):

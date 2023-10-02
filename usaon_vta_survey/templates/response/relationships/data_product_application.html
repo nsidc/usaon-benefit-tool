@@ -1,5 +1,5 @@
 {% extends 'response/base.html' %}
-{% from 'bootstrap5/form.html' import render_form %}
+{% from 'bootstrap5/form.html' import render_form, render_field %}
 
 
 {% block content %}
@@ -76,6 +76,8 @@
     {% else %}
       {{relationship}}
     {% endif %}
+    
+    {{ render_field(form.submit_button) }}
 
   </form>
 
