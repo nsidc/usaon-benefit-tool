@@ -48,29 +48,7 @@
 
   <form method="POST">
     {{form.csrf_token}}
-
-    <div class="two-columns">
-      <div>
-        {% if sqla_inspect(application).transient %}
-          {{ render_form(form.application.form) }}
-        {% endif %}
-      </div>
-
-      <div>
-        {% if sqla_inspect(societal_benefit_area).transient %}
-          {{ render_form(form.societal_benefit_area.form) }}
-        {% else %}
-          <p>Name: {{societal_benefit_area.societal_benefit_area_id}}</p>
-        {% endif %}
-      </div>
-    </div>
-
-    <h4>Relationship</h4>
-    {% if sqla_inspect(relationship).transient %}
-      {{ render_form(form.relationship.form) }}
-    {% else %}
-      {{relationship}}
-    {% endif %}
+    {{render_form(form)}}
 
   </form>
 
