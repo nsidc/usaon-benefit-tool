@@ -63,7 +63,7 @@ def create_app():
             if time.time() >= token['expires_at']:
                 del s['google_oauth_token']
 
-    from usaon_vta_survey.routes.google import blueprint
+    from usaon_vta_survey.routes.google import google_bp
     from usaon_vta_survey.routes.login import login_bp
     from usaon_vta_survey.routes.logout import logout_bp
     from usaon_vta_survey.routes.response import response_bp
@@ -93,7 +93,7 @@ def create_app():
     app.register_blueprint(users_bp)
     app.register_blueprint(login_bp)
     app.register_blueprint(logout_bp)
-    app.register_blueprint(blueprint, url_prefix="/google_oauth")
+    app.register_blueprint(google_bp, url_prefix="/google_oauth")
     app.register_blueprint(response_bp)
     app.register_blueprint(observing_system_bp)
     app.register_blueprint(societal_benefit_area_bp)
