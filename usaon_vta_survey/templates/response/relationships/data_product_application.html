@@ -52,34 +52,7 @@
   <form method="POST">
     {{form.csrf_token}}
 
-    <div class="two-columns">
-      <div>
-        {% if sqla_inspect(data_product).transient %}
-          {{ render_form(form.data_product.form) }}
-        {% else %}
-          <p>Name: {{data_product.short_name}}</p>
-        {% endif %}
-      </div>
-
-      <div>
-        {% if sqla_inspect(application).transient %}
-          {{ render_form(form.application.form) }}
-        {% else %}
-          <p>Name: {{application.short_name}}</p>
-        {% endif %}
-      </div>
-    </div>
-
-    <h4>Relationship</h4>
-    {% if sqla_inspect(relationship).transient %}
-      {{ render_form(form.relationship.form)}}
-    {% else %}
-      {{relationship}}
-    {% endif %}
-    
-    {{ render_field(form.submit_button) }}
-
-  </form>
+    {{render_form(form)}}
 
 
 {% endblock %}

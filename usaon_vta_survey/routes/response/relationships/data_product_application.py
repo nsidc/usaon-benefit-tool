@@ -149,7 +149,6 @@ def view_response_data_product_application_relationships(survey_id: str):
 
         relationship = FormField(FORMS_BY_MODEL[ResponseDataProductApplication])
 
-    # submit_button present on dir(SuperForm)
     response_data_product_application = _response_data_product_application(
         data_product_id=data_product_id,
         application_id=application_id,
@@ -175,7 +174,6 @@ def view_response_data_product_application_relationships(survey_id: str):
         data_product_id=data_product_id,
         application_id=application_id,
     )
-    # submit_button present in 2 places
 
     form_obj: dict[
         str,
@@ -188,7 +186,6 @@ def view_response_data_product_application_relationships(survey_id: str):
     }
 
     if request.method == 'POST':
-        # currently cant get here because we have no submit button
         limit_response_editors()
         form = ResponseDataProductApplicationForm(request.form, obj=form_obj)
 
