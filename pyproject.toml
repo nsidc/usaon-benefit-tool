@@ -41,6 +41,7 @@ ignore = [
 "tasks/format.py" = ["A001"]
 "usaon_vta_survey/forms.py" = ["N802"]
 "usaon_vta_survey/routes/__init__.py" = ["F401", "I001"]
+"usaon_vta_survey/__init__.py" = ["E501"]
 
 [tool.ruff.isort]
 known-third-party = ["luigi"]

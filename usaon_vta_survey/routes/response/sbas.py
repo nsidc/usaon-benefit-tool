@@ -9,12 +9,12 @@ from usaon_vta_survey.models.tables import (
 )
 from usaon_vta_survey.util.authorization import limit_response_editors
 
-sba_bp = Blueprint(
+societal_benefit_area_bp = Blueprint(
     'sba', __name__, url_prefix='/response/<string:survey_id>/societal_benefit_areas'
 )
 
 
-@sba_bp.route('', methods=['GET', 'POST'])
+@societal_benefit_area_bp.route('', methods=['GET', 'POST'])
 def view_response_sbas(survey_id: str):
     """View and add to observing systems associated with a response."""
     sbas = SocietalBenefitArea.query.all()
@@ -34,7 +34,7 @@ def view_response_sbas(survey_id: str):
             db.session.add(response_societal_benefit_area)
             db.session.commit()
 
-        return redirect(url_for('view_response_sbas', survey_id=survey.id))
+        return redirect(url_for('sba.view_response_sbas', survey_id=survey.id))
 
     form = Form(obj=response_societal_benefit_area)
     return render_template(

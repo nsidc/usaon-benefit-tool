@@ -1,5 +1,4 @@
-from flask import Request, redirect, render_template, request, url_for
-from flask_wtf import FlaskForm
+from flask import Blueprint, Request, redirect, render_template, request, url_for
 from wtforms import FormField
 
 from usaon_vta_survey import db
@@ -10,12 +9,12 @@ from usaon_vta_survey.models.tables import (
     ResponseSocietalBenefitArea,
     Survey,
 )
-from usaon_vta_survey.routes.response import bp
 from usaon_vta_survey.util.authorization import limit_response_editors
+from usaon_vta_survey.util.superform import SuperForm
 
 
 def _update_super_form(
-    super_form: type[FlaskForm],
+    super_form: type[SuperForm],
     /,
     *,
     societal_benefit_area_id: int | None,
@@ -131,8 +130,15 @@ def _request_args(request: Request) -> tuple[int | None, int | None]:
     return societal_benefit_area_id, application_id
 
 
-@bp.route(
-    '/<string:survey_id>/application_societal_benefit_area_relationships',
+application_societal_benefit_area_bp = Blueprint(
+    'application_societal_benefit_area',
+    __name__,
+    url_prefix='/response/<string:survey_id>/application_societal_benefit_area_relationships',
+)
+
+
+@application_societal_benefit_area_bp.route(
+    '',
     methods=['GET', 'POST'],
 )
 def view_response_application_societal_benefit_area_relationships(survey_id: str):
@@ -144,7 +150,7 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
     societal_benefit_area_id, application_id = _request_args(request)
     survey = db.get_or_404(Survey, survey_id)
 
-    class SuperForm(FlaskForm):
+    class ApplicationSocietalBenefitAreaForm(SuperForm):
         """Combine all necessary forms into one super-form.
 
         NOTE: Additional class attributes are added dynamically below.
@@ -170,7 +176,7 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
     )
 
     _update_super_form(
-        SuperForm,
+        ApplicationSocietalBenefitAreaForm,
         societal_benefit_area_id=societal_benefit_area_id,
         application_id=application_id,
     )
@@ -194,7 +200,7 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
 
     if request.method == 'POST':
         limit_response_editors()
-        form = SuperForm(request.form, obj=form_obj)
+        form = ApplicationSocietalBenefitAreaForm(request.form, obj=form_obj)
 
         if form.validate():
             # Add only submitted sub-forms into the db session
@@ -218,9 +224,9 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
 
             db.session.commit()
 
-        return redirect(url_for('view_response_sbas', survey_id=survey.id))
+        return redirect(url_for('sba.view_response_sbas', survey_id=survey.id))
 
-    form = SuperForm(obj=form_obj)
+    form = ApplicationSocietalBenefitAreaForm(obj=form_obj)
     return render_template(
         'response/relationships/application_societal_benefit_area.html',
         form=form,
@@ -233,13 +239,13 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
     )
 
 
-@bp.route(
-    '/<string:survey_id>/application_societal_benefit_area_relationships',
-    methods=['GET', 'POST'],
-)
-def delete_response_application_societal_benefit_area_relationship(survey_id: str):
-    """Delete application/SBA relationships to a response."""
-    societal_benefit_area_id, application_id = _request_args(request)
-    db.get_or_404(Survey, survey_id)
-
-    return ...
+# @bp.route(
+#     '/<string:survey_id>/application_societal_benefit_area_relationships',
+#     methods=['GET', 'POST'],
+# )
+# def delete_response_application_societal_benefit_area_relationship(survey_id: str):
+#     """Delete application/SBA relationships to a response."""
+#     societal_benefit_area_id, application_id = _request_args(request)
+#     db.get_or_404(Survey, survey_id)
+#
+#     return ...

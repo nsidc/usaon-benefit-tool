@@ -5,12 +5,12 @@ from usaon_vta_survey.forms import FORMS_BY_MODEL
 from usaon_vta_survey.models.tables import ResponseDataProduct, Survey
 from usaon_vta_survey.util.authorization import limit_response_editors
 
-dp_bp = Blueprint(
+data_product_bp = Blueprint(
     'data_product', __name__, url_prefix='/response/<string:survey_id>/data_products'
 )
 
 
-@dp_bp.route('', methods=['GET', 'POST'])
+@data_product_bp.route('', methods=['GET', 'POST'])
 def view_response_data_products(survey_id: str):
     """View and add to data products associated with a response."""
     Form = FORMS_BY_MODEL[ResponseDataProduct]
@@ -26,7 +26,9 @@ def view_response_data_products(survey_id: str):
             db.session.add(response_data_product)
             db.session.commit()
 
-        return redirect(url_for('view_response_data_products', survey_id=survey.id))
+        return redirect(
+            url_for('data_product.view_response_data_products', survey_id=survey.id)
+        )
 
     form = Form(obj=response_data_product)
     return render_template(

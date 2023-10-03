@@ -1,11 +1,5 @@
 {% extends 'response/base.html' %}
-{% from 'macros/forms/misc.j2' import
-  application_fields,
-  societal_benefit_area_fields
-%}
-{% from 'macros/forms/relationships/application_sba.j2' import
-  application_societal_benefit_area_fields
-%}
+{% from 'bootstrap5/form.html' import render_form %}
 
 
 {% block content %}
@@ -22,6 +16,10 @@
 
       <select name="application_id" onchange="this.form.submit()">
 
+        <option value="" {% if sqla_inspect(application).transient %}selected{% endif %}>
+          New application
+        </option>
+
         {% for app in applications %}
           <option value="{{app.id}}" {% if app.id == application.id %}selected{% endif %}>
             {{app.short_name}}
@@ -37,6 +35,7 @@
 
       <select name="societal_benefit_area_id" onchange="this.form.submit()">
 
+
         {% for sba in societal_benefit_areas %}
           <option value="{{sba.id}}" {% if sba.id == societal_benefit_area.id %}selected{% endif %}>
             {{sba.societal_benefit_area_id}}
@@ -49,31 +48,8 @@
 
   <form method="POST">
     {{form.csrf_token}}
+    {{render_form(form)}}
 
-    <div class="two-columns">
-      <div>
-        {% if sqla_inspect(application).transient %}
-          {{ application_fields(form.application.form) }}
-        {% endif %}
-      </div>
-
-      <div>
-        {% if sqla_inspect(societal_benefit_area).transient %}
-          {{ societal_benefit_area_fields(form.societal_benefit_area.form) }}
-        {% else %}
-          <p>Name: {{societal_benefit_area.societal_benefit_area_id}}</p>
-        {% endif %}
-      </div>
-    </div>
-
-    <h4>Relationship</h4>
-    {% if sqla_inspect(relationship).transient %}
-      {{ application_societal_benefit_area_fields(form.relationship.form) }}
-    {% else %}
-      {{relationship}}
-    {% endif %}
-
-    <input type="submit" value="Create new relationship" />
   </form>
 
 

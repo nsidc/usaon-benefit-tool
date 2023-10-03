@@ -1,5 +1,6 @@
 {% extends 'response/base.html' %}
-{% from 'macros/forms/misc.j2' import societal_benefit_area_fields %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% from 'bootstrap5/utils.html' import render_icon %}
 
 
 {% block content %}
@@ -9,10 +10,8 @@
   <br> </br>
   <h3>Assign societal benefit area</h3>
   <form method="POST">
-    {{form.csrf_token}}
-    {{societal_benefit_area_fields(form)}}
+    {{render_form(form, button_map={'submit_button': 'primary'}) }}
 
-    <input type="submit" value="Select SBA" />
   </form>
   <br> </br>
 
@@ -37,11 +36,11 @@
           {% endfor %}
 
           <a href="{{url_for(
-            'view_response_application_societal_benefit_area_relationships',
+            'application_societal_benefit_area.view_response_application_societal_benefit_area_relationships',
             survey_id=survey.id,
             societal_benefit_area_id=societal_benefit_area.id,
           )}}">
-            Add relationship
+            {{render_icon('plus-circle-fill')}}
           </a>
         </td>
       </tr>
