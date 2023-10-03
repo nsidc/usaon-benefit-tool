@@ -13,8 +13,8 @@
 version: 1
 metadata:
   content_hash:
-    linux-64: 6bdeefa05f6478489486e99bc8b64329fe90d10c9638d8da594668e128856171
-    osx-64: 2a1ca5cbb1f8d514a77a9863641ac42eda08db5eb0ea4228f17644a61d794ad7
+    linux-64: 08cec8240351704a0e0c5dfe47b89a48623b4f8bed658ff7484fe8abd0f08ccf
+    osx-64: 8df2c769aaf083fd3dfe66298fe76bd0d9dd0ae50cc0ea57ef0aaa9b45850a7f
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -756,6 +756,18 @@ package:
     sha256: 38d16b5c53ec1af845d37d22e7bb0e6c934c7f19499123507c5a470f6f8b7dde
   category: main
   optional: false
+- name: urlobject
+  version: 2.4.3
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: ''
+  url: https://conda.anaconda.org/conda-forge/noarch/urlobject-2.4.3-py_1.tar.bz2
+  hash:
+    md5: 91140cccf570095e69d84b58075bc9b2
+    sha256: 21354dad71b83bf6d0224f962565018c055f2d7f60205851491b9ff8f1d04936
+  category: main
+  optional: false
 - name: wheel
   version: 0.41.2
   manager: conda
@@ -1251,14 +1263,36 @@ package:
     sha256: b4ffac42cec8a6c38c528d7c0c5023557ea97b581dbe61bb290d8e630a246e1b
   category: main
   optional: false
-- name: urlobject
-  version: 2.4.3
-  manager: pip
+- name: requests-oauthlib
+  version: 1.3.1
+  manager: conda
   platform: linux-64
-  dependencies: {}
-  url: https://files.pythonhosted.org/packages/e2/b8/1d0a916f4b34c4618846e6da0e4eeaa8fcb4a2f39e006434fe38acb74b34/URLObject-2.4.3.tar.gz
+  dependencies:
+    oauthlib: '>=3.0.0'
+    python: '>=3.4'
+    requests: '>=2.0.0'
+  url: https://conda.anaconda.org/conda-forge/noarch/requests-oauthlib-1.3.1-pyhd8ed1ab_0.tar.bz2
   hash:
-    sha256: 47b2e20e6ab9c8366b2f4a3566b6ff4053025dad311c4bb71279bbcfa2430caa
+    md5: 61b279f051eef9c89d58f4d813e75e04
+    sha256: 889e3c1b84467b64046776db95dc4c5ea4dad5afaa5ec18ad811bd95c63286b0
+  category: main
+  optional: false
+- name: flask-dance
+  version: 7.0.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    flask: '>=2.0.3'
+    oauthlib: '>=3.2'
+    python: '>=3.7'
+    requests: '>=2.0'
+    requests-oauthlib: '>=1.0.0'
+    urlobject: ''
+    werkzeug: ''
+  url: https://conda.anaconda.org/conda-forge/noarch/flask-dance-7.0.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: a0007a17aa03b39c941f921f082afe9e
+    sha256: 7f3b75ba7f321c9058e0adbd4113fe3bfad3fc28ea266fb42f7636091cd4ca34
   category: main
   optional: false
 - name: bootstrap-flask
@@ -1273,18 +1307,6 @@ package:
     sha256: a5a2376d64bfd835bd17322912d2c2045ecb48728b9d3aca0271900a0b027759
   category: main
   optional: false
-- name: requests-oauthlib
-  version: 1.3.1
-  manager: pip
-  platform: linux-64
-  dependencies:
-    oauthlib: '>=3.0.0'
-    requests: '>=2.0.0'
-  url: https://files.pythonhosted.org/packages/6f/bb/5deac77a9af870143c684ab46a7934038a53eb4aa975bc0687ed6ca2c610/requests_oauthlib-1.3.1-py2.py3-none-any.whl
-  hash:
-    sha256: 2577c501a2fb8d05a304c09d090d6e47c306fef15809d102b327cf8364bddab5
-  category: main
-  optional: false
 - name: wtforms-sqlalchemy
   version: '0.3'
   manager: pip
@@ -1295,22 +1317,6 @@ package:
   url: https://files.pythonhosted.org/packages/62/71/a5624ff63f4024d27489263b56e3ab6a5122087eb432d14617cfed90ec3d/WTForms_SQLAlchemy-0.3-py3-none-any.whl
   hash:
     sha256: 90195d7592bf256d82498c42c79d416832e4a4e6fbca4f1e745a018f66d26c47
-  category: main
-  optional: false
-- name: flask-dance
-  version: 7.0.0
-  manager: pip
-  platform: linux-64
-  dependencies:
-    requests: '>=2.0'
-    oauthlib: '>=3.2'
-    requests-oauthlib: '>=1.0.0'
-    flask: '>=2.0.3'
-    werkzeug: '*'
-    urlobject: '*'
-  url: https://files.pythonhosted.org/packages/a6/31/cfd6c5c2e7a8ee47a55388b26e5752c8e78eb53e6bc98b5a932cd61fca91/flask_dance-7.0.0-py3-none-any.whl
-  hash:
-    sha256: 935f5806d587eed94b53cf356ee921466bb32ba83405ed5a4e8ac8ea859620dc
   category: main
   optional: false
 - name: bzip2
@@ -1939,6 +1945,18 @@ package:
     sha256: 38d16b5c53ec1af845d37d22e7bb0e6c934c7f19499123507c5a470f6f8b7dde
   category: main
   optional: false
+- name: urlobject
+  version: 2.4.3
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: ''
+  url: https://conda.anaconda.org/conda-forge/noarch/urlobject-2.4.3-py_1.tar.bz2
+  hash:
+    md5: 91140cccf570095e69d84b58075bc9b2
+    sha256: 21354dad71b83bf6d0224f962565018c055f2d7f60205851491b9ff8f1d04936
+  category: main
+  optional: false
 - name: wheel
   version: 0.41.2
   manager: conda
@@ -2428,14 +2446,36 @@ package:
     sha256: b4ffac42cec8a6c38c528d7c0c5023557ea97b581dbe61bb290d8e630a246e1b
   category: main
   optional: false
-- name: urlobject
-  version: 2.4.3
-  manager: pip
+- name: requests-oauthlib
+  version: 1.3.1
+  manager: conda
   platform: osx-64
-  dependencies: {}
-  url: https://files.pythonhosted.org/packages/e2/b8/1d0a916f4b34c4618846e6da0e4eeaa8fcb4a2f39e006434fe38acb74b34/URLObject-2.4.3.tar.gz
+  dependencies:
+    python: '>=3.4'
+    requests: '>=2.0.0'
+    oauthlib: '>=3.0.0'
+  url: https://conda.anaconda.org/conda-forge/noarch/requests-oauthlib-1.3.1-pyhd8ed1ab_0.tar.bz2
   hash:
-    sha256: 47b2e20e6ab9c8366b2f4a3566b6ff4053025dad311c4bb71279bbcfa2430caa
+    md5: 61b279f051eef9c89d58f4d813e75e04
+    sha256: 889e3c1b84467b64046776db95dc4c5ea4dad5afaa5ec18ad811bd95c63286b0
+  category: main
+  optional: false
+- name: flask-dance
+  version: 7.0.0
+  manager: conda
+  platform: osx-64
+  dependencies:
+    werkzeug: ''
+    urlobject: ''
+    python: '>=3.7'
+    requests-oauthlib: '>=1.0.0'
+    requests: '>=2.0'
+    flask: '>=2.0.3'
+    oauthlib: '>=3.2'
+  url: https://conda.anaconda.org/conda-forge/noarch/flask-dance-7.0.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: a0007a17aa03b39c941f921f082afe9e
+    sha256: 7f3b75ba7f321c9058e0adbd4113fe3bfad3fc28ea266fb42f7636091cd4ca34
   category: main
   optional: false
 - name: bootstrap-flask
@@ -2450,18 +2490,6 @@ package:
     sha256: a5a2376d64bfd835bd17322912d2c2045ecb48728b9d3aca0271900a0b027759
   category: main
   optional: false
-- name: requests-oauthlib
-  version: 1.3.1
-  manager: pip
-  platform: osx-64
-  dependencies:
-    oauthlib: '>=3.0.0'
-    requests: '>=2.0.0'
-  url: https://files.pythonhosted.org/packages/6f/bb/5deac77a9af870143c684ab46a7934038a53eb4aa975bc0687ed6ca2c610/requests_oauthlib-1.3.1-py2.py3-none-any.whl
-  hash:
-    sha256: 2577c501a2fb8d05a304c09d090d6e47c306fef15809d102b327cf8364bddab5
-  category: main
-  optional: false
 - name: wtforms-sqlalchemy
   version: '0.3'
   manager: pip
@@ -2472,21 +2500,5 @@ package:
   url: https://files.pythonhosted.org/packages/62/71/a5624ff63f4024d27489263b56e3ab6a5122087eb432d14617cfed90ec3d/WTForms_SQLAlchemy-0.3-py3-none-any.whl
   hash:
     sha256: 90195d7592bf256d82498c42c79d416832e4a4e6fbca4f1e745a018f66d26c47
-  category: main
-  optional: false
-- name: flask-dance
-  version: 7.0.0
-  manager: pip
-  platform: osx-64
-  dependencies:
-    requests: '>=2.0'
-    oauthlib: '>=3.2'
-    requests-oauthlib: '>=1.0.0'
-    flask: '>=2.0.3'
-    werkzeug: '*'
-    urlobject: '*'
-  url: https://files.pythonhosted.org/packages/a6/31/cfd6c5c2e7a8ee47a55388b26e5752c8e78eb53e6bc98b5a932cd61fca91/flask_dance-7.0.0-py3-none-any.whl
-  hash:
-    sha256: 935f5806d587eed94b53cf356ee921466bb32ba83405ed5a4e8ac8ea859620dc
   category: main
   optional: false

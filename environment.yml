@@ -20,6 +20,7 @@ dependencies:
   # Runtime dependencies:
   - flask ~=2.2
   - flask-wtf ~=1.0
+  - flask-dance ~=7.0.0
   - flask-login ~=0.6.2
   - gunicorn ~=21.2
   
@@ -32,6 +33,7 @@ dependencies:
   - flask-sqlalchemy ~=3.0
 
   - loguru ~=0.6.0
+    # - werkzeug==0.16.1
 
   # Optional dependency enables adhoc ssl certs in dev:
   - pyopenssl
@@ -39,5 +41,4 @@ dependencies:
   - pip:
     # TODO: Get these on conda-forge
     - wtforms-sqlalchemy
-    - flask-dance
     - bootstrap-flask ~=2.3.0
