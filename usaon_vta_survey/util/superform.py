@@ -12,10 +12,9 @@ class SuperForm(FlaskForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # removing CSRF token from the subform because
-        # it was breaking wtforms due to csrf_token in unexpected spot
-        self.relationship._fields.pop('csrf_token')
+        self._fix_csrf_token()
         self._cleanup_submit_buttons()
+        self._resort_fields()
 
     @property
     def subforms(self) -> list:
@@ -34,3 +33,12 @@ class SuperForm(FlaskForm):
                 if isinstance(field, SubmitField):
                     subform._fields.pop(key)
                     subform._fields.pop('csrf_token')
+
+    def _resort_fields(self):
+        """Make sure relationship is at the bottom."""
+        self._fields.move_to_end('relationship')
+
+    def _fix_csrf_token(self):
+        # removing CSRF token from the subform because
+        # it was breaking wtforms due to csrf_token in unexpected spot
+        self.relationship._fields.pop('csrf_token')
