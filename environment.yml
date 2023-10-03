@@ -9,14 +9,13 @@ dependencies:
   - python ~=3.10.6
 
   # Dev dependencies:
-  - bump-my-version ~=0.9.2
-    # - bump2version ~=1.0
   - invoke ~=1.7
   - pytest ~=7.1
   - mypy ~=0.942
   - shellcheck ~=0.8.0
   - typing-extensions ~=4.4
   - pre-commit
+  - bump-my-version ~=0.9.2
 
   # Runtime dependencies:
   - flask ~=2.2
