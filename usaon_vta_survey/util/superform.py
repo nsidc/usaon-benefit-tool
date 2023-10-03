@@ -25,9 +25,6 @@ class SuperForm(FlaskForm):
             if isinstance(field, FormField) and 'relationship' not in key
         }
         subforms = list(subforms_dict.values())
-        # subforms = [
-        #     field for field in self._fields.values() if isinstance(field, FormField)
-        # ]
         return subforms
 
     def _cleanup_submit_buttons(self):
