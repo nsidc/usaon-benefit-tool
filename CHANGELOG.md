@@ -1,4 +1,4 @@
-# NEXT_VERSION
+# v0.5.0 (2023-10-03)
 * Bugfix relationship creation
 * Fix envarrs for google login/non dev environment
 
