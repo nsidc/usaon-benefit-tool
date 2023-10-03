@@ -13,8 +13,8 @@
 version: 1
 metadata:
   content_hash:
-    linux-64: 08cec8240351704a0e0c5dfe47b89a48623b4f8bed658ff7484fe8abd0f08ccf
-    osx-64: 8df2c769aaf083fd3dfe66298fe76bd0d9dd0ae50cc0ea57ef0aaa9b45850a7f
+    linux-64: 4081c2ddb9df7f64e5a211a8dc06262a889aa04945b9079aa6dbda420b322b1c
+    osx-64: 60311ed97658af81b27d12c19c73531201b5c00e61bb0cb3e390cab77d782554
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -351,6 +351,45 @@ package:
   hash:
     md5: eb6f1df105f37daedd6dca78523baa75
     sha256: 05e2a7ce916d259f11979634f770f31027d0a5d18463b094e64a30500f900699
+  category: main
+  optional: false
+- name: backports
+  version: '1.0'
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: '>=2.7'
+  url: https://conda.anaconda.org/conda-forge/noarch/backports-1.0-pyhd8ed1ab_3.conda
+  hash:
+    md5: 54ca2e08b3220c148a1d8329c2678e02
+    sha256: 711602276ae39276cb0faaca6fd0ac851fff0ca17151917569174841ef830bbd
+  category: main
+  optional: false
+- name: backports.zoneinfo
+  version: 0.2.1
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: '>=3.10,<3.11.0a0'
+    python_abi: 3.10.*
+  url: https://conda.anaconda.org/conda-forge/linux-64/backports.zoneinfo-0.2.1-py310hff52083_8.conda
+  hash:
+    md5: a8d590bf67c0df86e375bad5bfb18680
+    sha256: 18f868c36a5c6493c92acaab3753e9869b48bd486b2fcbc8e96d54b09c6a7512
+  category: main
+  optional: false
+- name: billiard
+  version: 4.1.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    libgcc-ng: '>=12'
+    python: '>=3.10,<3.11.0a0'
+    python_abi: 3.10.*
+  url: https://conda.anaconda.org/conda-forge/linux-64/billiard-4.1.0-py310h2372a71_1.conda
+  hash:
+    md5: a731ba9aa11bd3ba7ffa6b16ff2c4026
+    sha256: 35e2713ec4e6d51e399bb4a0bd2fa0329c206a16b813bd1fdd6dd74cbe6d8639
   category: main
   optional: false
 - name: blinker
@@ -693,6 +732,30 @@ package:
     sha256: a42f826e958a8d22e65b3394f437af7332610e43ee313393d1cf143f0a2d274b
   category: main
   optional: false
+- name: python-tzdata
+  version: '2023.3'
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/python-tzdata-2023.3-pyhd8ed1ab_0.conda
+  hash:
+    md5: 2590495f608a63625e165915fb4e2e34
+    sha256: 0108888507014fb24573c31e4deceb61c99e63d37776dddcadd7c89b2ecae0b6
+  category: main
+  optional: false
+- name: pytz
+  version: 2023.3.post1
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/pytz-2023.3.post1-pyhd8ed1ab_0.conda
+  hash:
+    md5: c93346b446cd08c169d843ae5fc0da97
+    sha256: 6b680e63d69aaf087cd43ca765a23838723ef59b0a328799e6363eb13f52c49e
+  category: main
+  optional: false
 - name: pyyaml
   version: 6.0.1
   manager: conda
@@ -718,6 +781,18 @@ package:
   hash:
     md5: fc2166155db840c634a1291a5c35a709
     sha256: 851901b1f8f2049edb36a675f0c3f9a98e1495ef4eb214761b048c6f696a06f7
+  category: main
+  optional: false
+- name: six
+  version: 1.16.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: ''
+  url: https://conda.anaconda.org/conda-forge/noarch/six-1.16.0-pyh6c4a22f_0.tar.bz2
+  hash:
+    md5: e5f25f8dbc060e9a8d912e432202afc2
+    sha256: a85c38227b446f42c5b90d9b642f2c0567880c15d72492d8da074a59c8f91dd6
   category: main
   optional: false
 - name: tomli
@@ -768,6 +843,18 @@ package:
     sha256: 21354dad71b83bf6d0224f962565018c055f2d7f60205851491b9ff8f1d04936
   category: main
   optional: false
+- name: vine
+  version: 5.0.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/vine-5.0.0-pyhd8ed1ab_1.tar.bz2
+  hash:
+    md5: 7cb5b514698cfd164ad5103e58e1e201
+    sha256: 53e1239bd2ef11f75d381ba6944d8339a247e42d088de87b9d9f751ddf7176bc
+  category: main
+  optional: false
 - name: wheel
   version: 0.41.2
   manager: conda
@@ -792,6 +879,33 @@ package:
     sha256: bced1423fdbf77bca0a735187d05d9b9812d2163f60ab426fc10f11f92ecbe26
   category: main
   optional: false
+- name: amqp
+  version: 5.1.1
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: '>=3.6'
+    vine: 5.0.0
+  url: https://conda.anaconda.org/conda-forge/noarch/amqp-5.1.1-pyhd8ed1ab_0.tar.bz2
+  hash:
+    md5: a59814fb9125df2a852373254c76cc08
+    sha256: 4f941528fd16ea3c92cfd6a7107e7b079dc5298e7863667b57ef1f86c2776d2c
+  category: main
+  optional: false
+- name: backports.functools_lru_cache
+  version: 1.6.5
+  manager: conda
+  platform: linux-64
+  dependencies:
+    backports: ''
+    python: '>=3.6'
+    setuptools: ''
+  url: https://conda.anaconda.org/conda-forge/noarch/backports.functools_lru_cache-1.6.5-pyhd8ed1ab_0.conda
+  hash:
+    md5: 6b1b907661838a75d067a22f87996b2e
+    sha256: 7027bb689dd4ca4a08e3b25805de9d04239be6b31125993558f21f102a9d2700
+  category: main
+  optional: false
 - name: cffi
   version: 1.16.0
   manager: conda
@@ -806,6 +920,32 @@ package:
   hash:
     md5: 45846a970e71ac98fd327da5d40a0a2c
     sha256: 007e7f69ab45553b7bf11f2c1b8d3f3a13fd42997266a0d57795f41c7d38df36
+  category: main
+  optional: false
+- name: click-didyoumean
+  version: 0.3.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    click: '>=7'
+    python: '>=3.6.2,<4.0.0'
+  url: https://conda.anaconda.org/conda-forge/noarch/click-didyoumean-0.3.0-pyhd8ed1ab_0.tar.bz2
+  hash:
+    md5: a49aa7bc1a82485f6a0a8849dcfefcad
+    sha256: e1af96905976a83f5545b0914830e272415e2e66428165fdf178e73dc4bc9cff
+  category: main
+  optional: false
+- name: click-plugins
+  version: 1.1.1
+  manager: conda
+  platform: linux-64
+  dependencies:
+    click: '>=3.0'
+    python: ''
+  url: https://conda.anaconda.org/conda-forge/noarch/click-plugins-1.1.1-py_0.tar.bz2
+  hash:
+    md5: 4fd2c6b53934bd7d96d1f3fdaf99b79f
+    sha256: ddef6e559dde6673ee504b0e29dd814d36e22b6b9b1f519fa856ee268905bf92
   category: main
   optional: false
 - name: gunicorn
@@ -940,6 +1080,19 @@ package:
     sha256: 150bfb2a86dffd4ce1e91c2d61dde5779fb3ee338675e210fec4ef508ffff28c
   category: main
   optional: false
+- name: python-dateutil
+  version: 2.8.2
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: '>=3.6'
+    six: '>=1.5'
+  url: https://conda.anaconda.org/conda-forge/noarch/python-dateutil-2.8.2-pyhd8ed1ab_0.tar.bz2
+  hash:
+    md5: dd999d1cc9f79e67dbb855c8924c7984
+    sha256: 54d7785c7678166aa45adeaccfc1d2b8c3c799ca2dc05d4a82bb39b1968bd7da
+  category: main
+  optional: false
 - name: sqlalchemy
   version: 1.4.49
   manager: conda
@@ -982,16 +1135,16 @@ package:
   category: main
   optional: false
 - name: werkzeug
-  version: 3.0.0
+  version: 2.2.3
   manager: conda
   platform: linux-64
   dependencies:
     markupsafe: '>=2.1.1'
-    python: '>=3.8'
-  url: https://conda.anaconda.org/conda-forge/noarch/werkzeug-3.0.0-pyhd8ed1ab_0.conda
+    python: '>=3.7'
+  url: https://conda.anaconda.org/conda-forge/noarch/werkzeug-2.2.3-pyhd8ed1ab_0.conda
   hash:
-    md5: 52819df4ed72d46e60a18df5bec86e31
-    sha256: 19c292c9d2c491cdd3a8219da2447412b008f7ae3f2eb6750353db8dd39765a9
+    md5: 94dea682ba9d8e091e1f46872886fb1f
+    sha256: 38f68541580b74ed91396a67766fb96088f7b161bfd203675ed7a257d642e2e3
   category: main
   optional: false
 - name: wtforms
@@ -1023,22 +1176,19 @@ package:
     sha256: 62480313c6944b301c7763a667893f31a18e8c16be8bd9528180ef2d5f07e9ad
   category: main
   optional: false
-- name: flask
-  version: 2.3.3
+- name: kombu
+  version: 5.3.2
   manager: conda
   platform: linux-64
   dependencies:
-    blinker: '>=1.6.2'
-    click: '>=8.1.3'
-    importlib-metadata: '>=3.6.0'
-    itsdangerous: '>=2.1.2'
-    jinja2: '>=3.1.2'
-    python: '>=3.8'
-    werkzeug: '>=2.3.7'
-  url: https://conda.anaconda.org/conda-forge/noarch/flask-2.3.3-pyhd8ed1ab_0.conda
+    amqp: '>=5.1.1,<6.0.0'
+    python: '>=3.10,<3.11.0a0'
+    python_abi: 3.10.*
+    vine: ''
+  url: https://conda.anaconda.org/conda-forge/linux-64/kombu-5.3.2-py310hff52083_1.conda
   hash:
-    md5: 9b0d29067484a8dfacfae85b8fba81bc
-    sha256: 4f84ffdc5471236e8225db86c7508426b46aa2c3802d58ca40b3c3e174533b39
+    md5: 42e61a8738dca543a79bc9973f6b9615
+    sha256: e336d3958cf284e8bf4909536a6b9919b9f1848caa11a7c4b0580b91805c296f
   category: main
   optional: false
 - name: platformdirs
@@ -1116,47 +1266,17 @@ package:
     sha256: 7bcb662f8d8181d77d77605c6e176a5bc6a421025a8969c6d793fe47134285bd
   category: main
   optional: false
-- name: flask-login
-  version: 0.6.2
+- name: wcwidth
+  version: 0.2.8
   manager: conda
   platform: linux-64
   dependencies:
-    flask: '>=1.0.4'
-    python: '>=3.7'
-    werkzeug: '>=1.0.1'
-  url: https://conda.anaconda.org/conda-forge/noarch/flask-login-0.6.2-pyhd8ed1ab_0.tar.bz2
+    backports.functools_lru_cache: ''
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/wcwidth-0.2.8-pyhd8ed1ab_0.conda
   hash:
-    md5: 427457b9179d5f1d65b11ca7761e60ee
-    sha256: 39efb8711fcafaf82f2e69f97288f950d0dd5bbe14dedbc6648a28b77f0fcabf
-  category: main
-  optional: false
-- name: flask-sqlalchemy
-  version: 3.0.3
-  manager: conda
-  platform: linux-64
-  dependencies:
-    flask: '>=2.2'
-    python: '>=3.7'
-    sqlalchemy: '>=1.4.18'
-  url: https://conda.anaconda.org/conda-forge/noarch/flask-sqlalchemy-3.0.3-pyhd8ed1ab_0.conda
-  hash:
-    md5: 6a301e2aa76aef91787e15f59ab03390
-    sha256: 460693607ab0e2feb600bb755851c0c19db8d6dbd1c7636904c8de6f2c63040d
-  category: main
-  optional: false
-- name: flask-wtf
-  version: 1.1.1
-  manager: conda
-  platform: linux-64
-  dependencies:
-    flask: ''
-    itsdangerous: ''
-    python: '>=3.7'
-    wtforms: ''
-  url: https://conda.anaconda.org/conda-forge/noarch/flask-wtf-1.1.1-pyhd8ed1ab_0.conda
-  hash:
-    md5: 09444b8c665b230a6d5b7963b5e5191d
-    sha256: 01aca463a9dc39224c0ea1ffdeb373ddc4bf9fc4bd3d48c1748ef8674a1362ce
+    md5: 367386d2575a0e62412448eda1012efd
+    sha256: e3b6d2041b4d175a1437dccc71b4ef2e53111dfcc64b219fef4bed379e6ef236
   category: main
   optional: false
 - name: identify
@@ -1185,6 +1305,19 @@ package:
   hash:
     md5: 8f882b197fd9c4941a787926baea4868
     sha256: 0cfd5146a91d3974f4abfc2a45de890371d510a77238fe553e036ec8c031dc5b
+  category: main
+  optional: false
+- name: prompt-toolkit
+  version: 3.0.39
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: '>=3.7'
+    wcwidth: ''
+  url: https://conda.anaconda.org/conda-forge/noarch/prompt-toolkit-3.0.39-pyha770c72_0.conda
+  hash:
+    md5: a4986c6bb5b0d05a38855b0880a5f425
+    sha256: 10e7fdc75d4b85633be6b12a70b857053987127a808caa0f88b2cba4b3ce6359
   category: main
   optional: false
 - name: pyopenssl
@@ -1263,6 +1396,18 @@ package:
     sha256: b4ffac42cec8a6c38c528d7c0c5023557ea97b581dbe61bb290d8e630a246e1b
   category: main
   optional: false
+- name: prompt_toolkit
+  version: 3.0.39
+  manager: conda
+  platform: linux-64
+  dependencies:
+    prompt-toolkit: '>=3.0.39,<3.0.40.0a0'
+  url: https://conda.anaconda.org/conda-forge/noarch/prompt_toolkit-3.0.39-hd8ed1ab_0.conda
+  hash:
+    md5: 4bbbe67d5df19db30f04b8e344dc9976
+    sha256: 89f7fecc7355181dbc2ab851e668a2fce6aa4830b336a34c93b59bda93206270
+  category: main
+  optional: false
 - name: requests-oauthlib
   version: 1.3.1
   manager: conda
@@ -1275,6 +1420,63 @@ package:
   hash:
     md5: 61b279f051eef9c89d58f4d813e75e04
     sha256: 889e3c1b84467b64046776db95dc4c5ea4dad5afaa5ec18ad811bd95c63286b0
+  category: main
+  optional: false
+- name: click-repl
+  version: 0.3.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    click: ''
+    prompt_toolkit: ''
+    python: '>=3.6'
+    six: ''
+  url: https://conda.anaconda.org/conda-forge/noarch/click-repl-0.3.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: 27eb8f68250666c1a19d1b6ec9d12c4e
+    sha256: 69c16e0b89e1fb4fc444af4798ef1222b3075d074cbcbe70b9af793668200a14
+  category: main
+  optional: false
+- name: celery
+  version: 5.3.4
+  manager: conda
+  platform: linux-64
+  dependencies:
+    backports.zoneinfo: '>=0.2.1'
+    billiard: '>=4.1.0,<5.0'
+    click: '>=8.1.2,<9.0'
+    click-didyoumean: '>=0.3.0'
+    click-plugins: '>=1.1.1'
+    click-repl: '>=0.2.0'
+    importlib-metadata: '>=3.6'
+    kombu: '>=5.3.2,<6.0'
+    python: '>=3.7'
+    python-dateutil: '>=2.8.2'
+    python-tzdata: '>=2022.7'
+    pytz: '>=2021.3'
+    vine: '>=5.0.0,<6.0'
+  url: https://conda.anaconda.org/conda-forge/noarch/celery-5.3.4-pyhd8ed1ab_1.conda
+  hash:
+    md5: 64a66acef34f7cca60b929b8228951f1
+    sha256: b93109413da956e6e2a37b0a852ccb15a45f706c7ce718f9ea094c660b18b5e3
+  category: main
+  optional: false
+- name: flask
+  version: 2.2.5
+  manager: conda
+  platform: linux-64
+  dependencies:
+    celery: '>=5.2.7'
+    click: '>=8.0'
+    importlib-metadata: '>=3.6.0'
+    itsdangerous: '>=2.0'
+    jinja2: '>=3.0'
+    python: '>=3.7'
+    werkzeug: '>=2.2.2'
+  url: https://conda.anaconda.org/conda-forge/noarch/flask-2.2.5-pyhd8ed1ab_0.conda
+  hash:
+    md5: 66c558a28b9b47c1e2aa8e8cb80b9037
+    sha256: 9356ae47278788439770eb9d05bfeb72c39a53a8b10a0e534b612f99b9c18e9b
   category: main
   optional: false
 - name: flask-dance
@@ -1293,6 +1495,49 @@ package:
   hash:
     md5: a0007a17aa03b39c941f921f082afe9e
     sha256: 7f3b75ba7f321c9058e0adbd4113fe3bfad3fc28ea266fb42f7636091cd4ca34
+  category: main
+  optional: false
+- name: flask-login
+  version: 0.6.2
+  manager: conda
+  platform: linux-64
+  dependencies:
+    flask: '>=1.0.4'
+    python: '>=3.7'
+    werkzeug: '>=1.0.1'
+  url: https://conda.anaconda.org/conda-forge/noarch/flask-login-0.6.2-pyhd8ed1ab_0.tar.bz2
+  hash:
+    md5: 427457b9179d5f1d65b11ca7761e60ee
+    sha256: 39efb8711fcafaf82f2e69f97288f950d0dd5bbe14dedbc6648a28b77f0fcabf
+  category: main
+  optional: false
+- name: flask-sqlalchemy
+  version: 3.0.3
+  manager: conda
+  platform: linux-64
+  dependencies:
+    flask: '>=2.2'
+    python: '>=3.7'
+    sqlalchemy: '>=1.4.18'
+  url: https://conda.anaconda.org/conda-forge/noarch/flask-sqlalchemy-3.0.3-pyhd8ed1ab_0.conda
+  hash:
+    md5: 6a301e2aa76aef91787e15f59ab03390
+    sha256: 460693607ab0e2feb600bb755851c0c19db8d6dbd1c7636904c8de6f2c63040d
+  category: main
+  optional: false
+- name: flask-wtf
+  version: 1.1.1
+  manager: conda
+  platform: linux-64
+  dependencies:
+    flask: ''
+    itsdangerous: ''
+    python: '>=3.7'
+    wtforms: ''
+  url: https://conda.anaconda.org/conda-forge/noarch/flask-wtf-1.1.1-pyhd8ed1ab_0.conda
+  hash:
+    md5: 09444b8c665b230a6d5b7963b5e5191d
+    sha256: 01aca463a9dc39224c0ea1ffdeb373ddc4bf9fc4bd3d48c1748ef8674a1362ce
   category: main
   optional: false
 - name: bootstrap-flask
@@ -1546,6 +1791,44 @@ package:
   hash:
     md5: b5a30a0ff9f7b85fe4e3195bc12d4b66
     sha256: 9ae08b408c7c352be4dd927b50eb7c2b11d9053409f21c8ed608ac04636edcf6
+  category: main
+  optional: false
+- name: backports
+  version: '1.0'
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=2.7'
+  url: https://conda.anaconda.org/conda-forge/noarch/backports-1.0-pyhd8ed1ab_3.conda
+  hash:
+    md5: 54ca2e08b3220c148a1d8329c2678e02
+    sha256: 711602276ae39276cb0faaca6fd0ac851fff0ca17151917569174841ef830bbd
+  category: main
+  optional: false
+- name: backports.zoneinfo
+  version: 0.2.1
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.10,<3.11.0a0'
+    python_abi: 3.10.*
+  url: https://conda.anaconda.org/conda-forge/osx-64/backports.zoneinfo-0.2.1-py310h2ec42d9_8.conda
+  hash:
+    md5: 38ee987ff476741a4736147b0c97a6a2
+    sha256: 9a818e62c31824c05892d78e8a16d1bb03be62785bfd391f4b19b976f2e842c7
+  category: main
+  optional: false
+- name: billiard
+  version: 4.1.0
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.10,<3.11.0a0'
+    python_abi: 3.10.*
+  url: https://conda.anaconda.org/conda-forge/osx-64/billiard-4.1.0-py310h6729b98_1.conda
+  hash:
+    md5: befc33b3e4f33228a0699ff47aef9325
+    sha256: e4c9891450b8507523a76e5a2c260c9161ed493251e494c5dcae91eaaa113e36
   category: main
   optional: false
 - name: blinker
@@ -1883,6 +2166,30 @@ package:
     sha256: a42f826e958a8d22e65b3394f437af7332610e43ee313393d1cf143f0a2d274b
   category: main
   optional: false
+- name: python-tzdata
+  version: '2023.3'
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/python-tzdata-2023.3-pyhd8ed1ab_0.conda
+  hash:
+    md5: 2590495f608a63625e165915fb4e2e34
+    sha256: 0108888507014fb24573c31e4deceb61c99e63d37776dddcadd7c89b2ecae0b6
+  category: main
+  optional: false
+- name: pytz
+  version: 2023.3.post1
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/pytz-2023.3.post1-pyhd8ed1ab_0.conda
+  hash:
+    md5: c93346b446cd08c169d843ae5fc0da97
+    sha256: 6b680e63d69aaf087cd43ca765a23838723ef59b0a328799e6363eb13f52c49e
+  category: main
+  optional: false
 - name: pyyaml
   version: 6.0.1
   manager: conda
@@ -1907,6 +2214,18 @@ package:
   hash:
     md5: fc2166155db840c634a1291a5c35a709
     sha256: 851901b1f8f2049edb36a675f0c3f9a98e1495ef4eb214761b048c6f696a06f7
+  category: main
+  optional: false
+- name: six
+  version: 1.16.0
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: ''
+  url: https://conda.anaconda.org/conda-forge/noarch/six-1.16.0-pyh6c4a22f_0.tar.bz2
+  hash:
+    md5: e5f25f8dbc060e9a8d912e432202afc2
+    sha256: a85c38227b446f42c5b90d9b642f2c0567880c15d72492d8da074a59c8f91dd6
   category: main
   optional: false
 - name: tomli
@@ -1957,6 +2276,18 @@ package:
     sha256: 21354dad71b83bf6d0224f962565018c055f2d7f60205851491b9ff8f1d04936
   category: main
   optional: false
+- name: vine
+  version: 5.0.0
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/vine-5.0.0-pyhd8ed1ab_1.tar.bz2
+  hash:
+    md5: 7cb5b514698cfd164ad5103e58e1e201
+    sha256: 53e1239bd2ef11f75d381ba6944d8339a247e42d088de87b9d9f751ddf7176bc
+  category: main
+  optional: false
 - name: wheel
   version: 0.41.2
   manager: conda
@@ -1981,6 +2312,33 @@ package:
     sha256: bced1423fdbf77bca0a735187d05d9b9812d2163f60ab426fc10f11f92ecbe26
   category: main
   optional: false
+- name: amqp
+  version: 5.1.1
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.6'
+    vine: 5.0.0
+  url: https://conda.anaconda.org/conda-forge/noarch/amqp-5.1.1-pyhd8ed1ab_0.tar.bz2
+  hash:
+    md5: a59814fb9125df2a852373254c76cc08
+    sha256: 4f941528fd16ea3c92cfd6a7107e7b079dc5298e7863667b57ef1f86c2776d2c
+  category: main
+  optional: false
+- name: backports.functools_lru_cache
+  version: 1.6.5
+  manager: conda
+  platform: osx-64
+  dependencies:
+    setuptools: ''
+    backports: ''
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/backports.functools_lru_cache-1.6.5-pyhd8ed1ab_0.conda
+  hash:
+    md5: 6b1b907661838a75d067a22f87996b2e
+    sha256: 7027bb689dd4ca4a08e3b25805de9d04239be6b31125993558f21f102a9d2700
+  category: main
+  optional: false
 - name: cffi
   version: 1.16.0
   manager: conda
@@ -1994,6 +2352,32 @@ package:
   hash:
     md5: b9e6213f0eb91f40c009ce69139c1869
     sha256: 37802485964f1a3137ed6ab21ebc08fe9d35e7dc4da39f2b72a814644dd1ac15
+  category: main
+  optional: false
+- name: click-didyoumean
+  version: 0.3.0
+  manager: conda
+  platform: osx-64
+  dependencies:
+    click: '>=7'
+    python: '>=3.6.2,<4.0.0'
+  url: https://conda.anaconda.org/conda-forge/noarch/click-didyoumean-0.3.0-pyhd8ed1ab_0.tar.bz2
+  hash:
+    md5: a49aa7bc1a82485f6a0a8849dcfefcad
+    sha256: e1af96905976a83f5545b0914830e272415e2e66428165fdf178e73dc4bc9cff
+  category: main
+  optional: false
+- name: click-plugins
+  version: 1.1.1
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: ''
+    click: '>=3.0'
+  url: https://conda.anaconda.org/conda-forge/noarch/click-plugins-1.1.1-py_0.tar.bz2
+  hash:
+    md5: 4fd2c6b53934bd7d96d1f3fdaf99b79f
+    sha256: ddef6e559dde6673ee504b0e29dd814d36e22b6b9b1f519fa856ee268905bf92
   category: main
   optional: false
 - name: gunicorn
@@ -2127,6 +2511,19 @@ package:
     sha256: 150bfb2a86dffd4ce1e91c2d61dde5779fb3ee338675e210fec4ef508ffff28c
   category: main
   optional: false
+- name: python-dateutil
+  version: 2.8.2
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.6'
+    six: '>=1.5'
+  url: https://conda.anaconda.org/conda-forge/noarch/python-dateutil-2.8.2-pyhd8ed1ab_0.tar.bz2
+  hash:
+    md5: dd999d1cc9f79e67dbb855c8924c7984
+    sha256: 54d7785c7678166aa45adeaccfc1d2b8c3c799ca2dc05d4a82bb39b1968bd7da
+  category: main
+  optional: false
 - name: sqlalchemy
   version: 1.4.49
   manager: conda
@@ -2168,16 +2565,16 @@ package:
   category: main
   optional: false
 - name: werkzeug
-  version: 3.0.0
+  version: 2.2.3
   manager: conda
   platform: osx-64
   dependencies:
-    python: '>=3.8'
+    python: '>=3.7'
     markupsafe: '>=2.1.1'
-  url: https://conda.anaconda.org/conda-forge/noarch/werkzeug-3.0.0-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/werkzeug-2.2.3-pyhd8ed1ab_0.conda
   hash:
-    md5: 52819df4ed72d46e60a18df5bec86e31
-    sha256: 19c292c9d2c491cdd3a8219da2447412b008f7ae3f2eb6750353db8dd39765a9
+    md5: 94dea682ba9d8e091e1f46872886fb1f
+    sha256: 38f68541580b74ed91396a67766fb96088f7b161bfd203675ed7a257d642e2e3
   category: main
   optional: false
 - name: wtforms
@@ -2208,22 +2605,19 @@ package:
     sha256: b7d1107314032985c82b6d03bb8603570d6e18f1a5f73c5162d32fc4c1c94e7e
   category: main
   optional: false
-- name: flask
-  version: 2.3.3
+- name: kombu
+  version: 5.3.2
   manager: conda
   platform: osx-64
   dependencies:
-    python: '>=3.8'
-    click: '>=8.1.3'
-    jinja2: '>=3.1.2'
-    importlib-metadata: '>=3.6.0'
-    itsdangerous: '>=2.1.2'
-    blinker: '>=1.6.2'
-    werkzeug: '>=2.3.7'
-  url: https://conda.anaconda.org/conda-forge/noarch/flask-2.3.3-pyhd8ed1ab_0.conda
+    amqp: '>=5.1.1,<6.0.0'
+    python: '>=3.10,<3.11.0a0'
+    python_abi: 3.10.*
+    vine: ''
+  url: https://conda.anaconda.org/conda-forge/osx-64/kombu-5.3.2-py310h2ec42d9_1.conda
   hash:
-    md5: 9b0d29067484a8dfacfae85b8fba81bc
-    sha256: 4f84ffdc5471236e8225db86c7508426b46aa2c3802d58ca40b3c3e174533b39
+    md5: 4c713ac498df080dfa0aa5f08b94c4c1
+    sha256: 8ab891408560e7fb36bd955d4ba60d4dae7fa527ea352c156b836dd7a1ae3ceb
   category: main
   optional: false
 - name: platformdirs
@@ -2299,47 +2693,17 @@ package:
     sha256: 662d357d36210e7cad2072e5e071b98fc18985ec36293f43139812efc29c6b4b
   category: main
   optional: false
-- name: flask-login
-  version: 0.6.2
+- name: wcwidth
+  version: 0.2.8
   manager: conda
   platform: osx-64
   dependencies:
-    python: '>=3.7'
-    flask: '>=1.0.4'
-    werkzeug: '>=1.0.1'
-  url: https://conda.anaconda.org/conda-forge/noarch/flask-login-0.6.2-pyhd8ed1ab_0.tar.bz2
+    backports.functools_lru_cache: ''
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/wcwidth-0.2.8-pyhd8ed1ab_0.conda
   hash:
-    md5: 427457b9179d5f1d65b11ca7761e60ee
-    sha256: 39efb8711fcafaf82f2e69f97288f950d0dd5bbe14dedbc6648a28b77f0fcabf
-  category: main
-  optional: false
-- name: flask-sqlalchemy
-  version: 3.0.3
-  manager: conda
-  platform: osx-64
-  dependencies:
-    python: '>=3.7'
-    flask: '>=2.2'
-    sqlalchemy: '>=1.4.18'
-  url: https://conda.anaconda.org/conda-forge/noarch/flask-sqlalchemy-3.0.3-pyhd8ed1ab_0.conda
-  hash:
-    md5: 6a301e2aa76aef91787e15f59ab03390
-    sha256: 460693607ab0e2feb600bb755851c0c19db8d6dbd1c7636904c8de6f2c63040d
-  category: main
-  optional: false
-- name: flask-wtf
-  version: 1.1.1
-  manager: conda
-  platform: osx-64
-  dependencies:
-    flask: ''
-    itsdangerous: ''
-    wtforms: ''
-    python: '>=3.7'
-  url: https://conda.anaconda.org/conda-forge/noarch/flask-wtf-1.1.1-pyhd8ed1ab_0.conda
-  hash:
-    md5: 09444b8c665b230a6d5b7963b5e5191d
-    sha256: 01aca463a9dc39224c0ea1ffdeb373ddc4bf9fc4bd3d48c1748ef8674a1362ce
+    md5: 367386d2575a0e62412448eda1012efd
+    sha256: e3b6d2041b4d175a1437dccc71b4ef2e53111dfcc64b219fef4bed379e6ef236
   category: main
   optional: false
 - name: identify
@@ -2368,6 +2732,19 @@ package:
   hash:
     md5: 8f882b197fd9c4941a787926baea4868
     sha256: 0cfd5146a91d3974f4abfc2a45de890371d510a77238fe553e036ec8c031dc5b
+  category: main
+  optional: false
+- name: prompt-toolkit
+  version: 3.0.39
+  manager: conda
+  platform: osx-64
+  dependencies:
+    wcwidth: ''
+    python: '>=3.7'
+  url: https://conda.anaconda.org/conda-forge/noarch/prompt-toolkit-3.0.39-pyha770c72_0.conda
+  hash:
+    md5: a4986c6bb5b0d05a38855b0880a5f425
+    sha256: 10e7fdc75d4b85633be6b12a70b857053987127a808caa0f88b2cba4b3ce6359
   category: main
   optional: false
 - name: pyopenssl
@@ -2446,6 +2823,18 @@ package:
     sha256: b4ffac42cec8a6c38c528d7c0c5023557ea97b581dbe61bb290d8e630a246e1b
   category: main
   optional: false
+- name: prompt_toolkit
+  version: 3.0.39
+  manager: conda
+  platform: osx-64
+  dependencies:
+    prompt-toolkit: '>=3.0.39,<3.0.40.0a0'
+  url: https://conda.anaconda.org/conda-forge/noarch/prompt_toolkit-3.0.39-hd8ed1ab_0.conda
+  hash:
+    md5: 4bbbe67d5df19db30f04b8e344dc9976
+    sha256: 89f7fecc7355181dbc2ab851e668a2fce6aa4830b336a34c93b59bda93206270
+  category: main
+  optional: false
 - name: requests-oauthlib
   version: 1.3.1
   manager: conda
@@ -2458,6 +2847,63 @@ package:
   hash:
     md5: 61b279f051eef9c89d58f4d813e75e04
     sha256: 889e3c1b84467b64046776db95dc4c5ea4dad5afaa5ec18ad811bd95c63286b0
+  category: main
+  optional: false
+- name: click-repl
+  version: 0.3.0
+  manager: conda
+  platform: osx-64
+  dependencies:
+    six: ''
+    click: ''
+    prompt_toolkit: ''
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/click-repl-0.3.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: 27eb8f68250666c1a19d1b6ec9d12c4e
+    sha256: 69c16e0b89e1fb4fc444af4798ef1222b3075d074cbcbe70b9af793668200a14
+  category: main
+  optional: false
+- name: celery
+  version: 5.3.4
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.7'
+    backports.zoneinfo: '>=0.2.1'
+    pytz: '>=2021.3'
+    python-dateutil: '>=2.8.2'
+    importlib-metadata: '>=3.6'
+    vine: '>=5.0.0,<6.0'
+    click-plugins: '>=1.1.1'
+    click-repl: '>=0.2.0'
+    billiard: '>=4.1.0,<5.0'
+    click: '>=8.1.2,<9.0'
+    click-didyoumean: '>=0.3.0'
+    python-tzdata: '>=2022.7'
+    kombu: '>=5.3.2,<6.0'
+  url: https://conda.anaconda.org/conda-forge/noarch/celery-5.3.4-pyhd8ed1ab_1.conda
+  hash:
+    md5: 64a66acef34f7cca60b929b8228951f1
+    sha256: b93109413da956e6e2a37b0a852ccb15a45f706c7ce718f9ea094c660b18b5e3
+  category: main
+  optional: false
+- name: flask
+  version: 2.2.5
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.7'
+    jinja2: '>=3.0'
+    click: '>=8.0'
+    importlib-metadata: '>=3.6.0'
+    itsdangerous: '>=2.0'
+    werkzeug: '>=2.2.2'
+    celery: '>=5.2.7'
+  url: https://conda.anaconda.org/conda-forge/noarch/flask-2.2.5-pyhd8ed1ab_0.conda
+  hash:
+    md5: 66c558a28b9b47c1e2aa8e8cb80b9037
+    sha256: 9356ae47278788439770eb9d05bfeb72c39a53a8b10a0e534b612f99b9c18e9b
   category: main
   optional: false
 - name: flask-dance
@@ -2476,6 +2922,49 @@ package:
   hash:
     md5: a0007a17aa03b39c941f921f082afe9e
     sha256: 7f3b75ba7f321c9058e0adbd4113fe3bfad3fc28ea266fb42f7636091cd4ca34
+  category: main
+  optional: false
+- name: flask-login
+  version: 0.6.2
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.7'
+    flask: '>=1.0.4'
+    werkzeug: '>=1.0.1'
+  url: https://conda.anaconda.org/conda-forge/noarch/flask-login-0.6.2-pyhd8ed1ab_0.tar.bz2
+  hash:
+    md5: 427457b9179d5f1d65b11ca7761e60ee
+    sha256: 39efb8711fcafaf82f2e69f97288f950d0dd5bbe14dedbc6648a28b77f0fcabf
+  category: main
+  optional: false
+- name: flask-sqlalchemy
+  version: 3.0.3
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.7'
+    flask: '>=2.2'
+    sqlalchemy: '>=1.4.18'
+  url: https://conda.anaconda.org/conda-forge/noarch/flask-sqlalchemy-3.0.3-pyhd8ed1ab_0.conda
+  hash:
+    md5: 6a301e2aa76aef91787e15f59ab03390
+    sha256: 460693607ab0e2feb600bb755851c0c19db8d6dbd1c7636904c8de6f2c63040d
+  category: main
+  optional: false
+- name: flask-wtf
+  version: 1.1.1
+  manager: conda
+  platform: osx-64
+  dependencies:
+    flask: ''
+    itsdangerous: ''
+    wtforms: ''
+    python: '>=3.7'
+  url: https://conda.anaconda.org/conda-forge/noarch/flask-wtf-1.1.1-pyhd8ed1ab_0.conda
+  hash:
+    md5: 09444b8c665b230a6d5b7963b5e5191d
+    sha256: 01aca463a9dc39224c0ea1ffdeb373ddc4bf9fc4bd3d48c1748ef8674a1362ce
   category: main
   optional: false
 - name: bootstrap-flask

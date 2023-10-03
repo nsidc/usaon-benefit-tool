@@ -33,7 +33,7 @@ dependencies:
   - flask-sqlalchemy ~=3.0
 
   - loguru ~=0.6.0
-    # - werkzeug==0.16.1
+  - werkzeug ~=2.2.3
 
   # Optional dependency enables adhoc ssl certs in dev:
   - pyopenssl
