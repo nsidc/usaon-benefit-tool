@@ -1,3 +1,7 @@
+# NEXT_VERSION
+* Bugfix relationship creation
+* Fix envarrs for google login/non dev environment
+
 # v0.4.1 (2023-09-13)
 * Bugfix environment variables
 
