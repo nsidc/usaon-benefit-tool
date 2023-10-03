@@ -2,11 +2,11 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
   
 title: "US Arctic Observation Network Benefit Tool"
-doi: 10.5281/zenodo.8403760
-  
+doi: "10.5281/zenodo.8403759"
+
 type: "software"
 license: ["MIT"]
-  
+
 version: 0.5.0
 date-released: "2023-10-03"
 url: "https://github.com/nsidc/usaon-vta-survey"
