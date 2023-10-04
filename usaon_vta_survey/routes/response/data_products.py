@@ -4,6 +4,7 @@ from usaon_vta_survey import db
 from usaon_vta_survey.forms import FORMS_BY_MODEL
 from usaon_vta_survey.models.tables import ResponseDataProduct, Survey
 from usaon_vta_survey.util.authorization import limit_response_editors
+from usaon_vta_survey.util.sankey import data_products_sankey
 
 data_product_bp = Blueprint(
     'data_product', __name__, url_prefix='/response/<string:survey_id>/data_products'
@@ -37,4 +38,5 @@ def view_response_data_products(survey_id: str):
         survey=survey,
         response=survey.response,
         data_products=survey.response.data_products,
+        sankey_series=data_products_sankey(survey.response),
     )

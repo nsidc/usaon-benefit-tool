@@ -23,6 +23,7 @@ def view_response(survey_id: str):
         db.session.add(survey)
         db.session.commit()
 
+    # breakpoint()
     return render_template(
         'response/view.html',
         survey=survey,

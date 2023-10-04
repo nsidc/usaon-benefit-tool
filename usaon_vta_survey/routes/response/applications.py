@@ -32,6 +32,7 @@ def view_response_applications(survey_id: str):
         )
 
     form = Form(obj=response_application)
+    # breakpoint()
     return render_template(
         'response/applications.html',
         form=form,
