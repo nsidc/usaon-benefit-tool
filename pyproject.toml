@@ -59,8 +59,8 @@ tag = false
 
 [[tool.bumpversion.files]]
 filename = "usaon_vta_survey/constants/version.py"
-search = 'VERSION: "v{current_version}"'
-replace = 'VERSION: "v{new_version}"'
+search = 'VERSION = "{current_version}"'
+replace = 'VERSION = "{new_version}"'
 
 [[tool.bumpversion.files]]
 filename = "setup.py"
