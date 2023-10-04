@@ -20,8 +20,12 @@
 
       <table>
         <tr>
-          <th>SBA ID</th>
-          <th>Application</th>
+          <th rowspan="2">SBA ID</th>
+          <th colspan="2">Application</th>
+        </tr>
+        <tr>
+          <th>Name</th>
+          <th>Performance Rating</th>
         </tr>
         {% for societal_benefit_area in response.societal_benefit_areas %}
           <tr>
@@ -45,6 +49,13 @@
               )}}">
                 {{render_icon('plus-circle-fill')}}
               </a>
+            </td>
+            <td>
+              {% for input_relationship in societal_benefit_area.input_relationships %}
+                <ul>
+                  <li>{{input_relationship.performance_rating}}</li>
+                </ul>
+              {% endfor %}
             </td>
           </tr>
         {% endfor %}

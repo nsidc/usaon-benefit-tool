@@ -13,8 +13,13 @@
     <div>
       <table>
         <tr>
+          <th rowspan="2">Name</th>
+          <th colspan="3">Observing systems related</th>
+        </tr>
+        <tr>
           <th>Name</th>
-          <th>Observing systems related</th>
+          <th>Performance Rating</th>
+          <th>Criticality Rating</th>
         </tr>
         {% for data_product in response.data_products %}
           <tr>
@@ -26,7 +31,7 @@
               {% endif %}
               {% for input_relationship in data_product.input_relationships %}
                 <ul>
-                  <li>{{input_relationship.observing_system.short_name}}: {{input_relationship.performace_rating}}</li>
+                  <li>{{input_relationship.observing_system.short_name}}</li>
                 </ul>
               {% endfor %}
 
@@ -37,6 +42,20 @@
                        )}}">
                 {{render_icon('plus-circle-fill')}}
               </a>
+            </td>
+            <td>
+              {% for input_relationship in data_product.input_relationships %}
+                <ul>
+                  <li>{{input_relationship.performance_rating}}</li>
+                </ul>
+              {% endfor %}
+            </td>
+            <td>
+              {% for input_relationship in data_product.input_relationships %}
+                <ul>
+                  <li>{{input_relationship.criticality_rating}}</li>
+                </ul>
+              {% endfor %}
             </td>
           </tr>
         {% endfor %}

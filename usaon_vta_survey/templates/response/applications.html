@@ -14,8 +14,13 @@
     <div>
       <table>
         <tr>
+          <th rowspan="2">Name</th>
+          <th colspan="3">Data products related</th>
+        </tr>
+        <tr>
           <th>Name</th>
-          <th>Data products related</th>
+          <th>Performance Rating</th>
+          <th>Criticality Rating</th>
         </tr>
         {% for application in response.applications %}
           <tr>
@@ -28,7 +33,7 @@
 
               {% for input_relationship in application.input_relationships %}
                 <ul>
-                  <li>{{input_relationship.data_product.short_name}}: {{input_relationship.performance_rating}}</li>
+                  <li>{{input_relationship.data_product.short_name}}</li>
                 </ul>
               {% endfor %}
 
@@ -39,6 +44,20 @@
               )}}">{{render_icon('plus-circle-fill')}}
               </a>
               <br/>
+            </td>
+            <td>
+              {% for input_relationship in application.input_relationships %}
+                <ul>
+                  <li>{{input_relationship.performance_rating}}</li>
+                </ul>
+              {% endfor %}
+            </td>
+            <td>
+              {% for input_relationship in application.input_relationships %}
+                <ul>
+                  <li>{{input_relationship.criticality_rating}}</li>
+                </ul>
+              {% endfor %}
             </td>
           </tr>
         {% endfor %}
