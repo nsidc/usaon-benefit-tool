@@ -51,3 +51,38 @@ max-complexity = 8
 
 [tool.ruff.flake8-quotes]
 inline-quotes = "double"
+
+[tool.bumpversion]
+current_version = "0.5.0"
+commit = false
+tag = false
+
+[[tool.bumpversion.files]]
+filename = "usaon_vta_survey/constants/version.py"
+search = 'VERSION = "{current_version}"'
+replace = 'VERSION = "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "setup.py"
+search = 'version="{current_version}"'
+replace = 'version="{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "CITATION.cff"
+search = 'version: "{current_version}"'
+replace = 'version: "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "CITATION.cff"
+search = 'date-released: "\d{{4}}-\d{{2}}-\d{{2}}"'
+replace = 'date-released: "{now:%Y-%m-%d}"'
+
+[[tool.bumpversion.files]]
+filename = "CHANGELOG.md"
+search = "NEXT_VERSION"
+replace = "v{new_version} ({now:%Y-%m-%d})"
+
+[[tool.bumpversion.files]]
+filename = "VERSION.env"
+search = 'export USAON_VTA_SURVEY_VERSION="v{current_version}"'
+replace = 'export USAON_VTA_SURVEY_VERSION="v{new_version}"'
