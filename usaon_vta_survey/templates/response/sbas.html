@@ -4,47 +4,81 @@
 
 
 {% block content %}
+  {% include 'includes/highcharts.html' %}
 
   {{super()}}
 
-  <br> </br>
-  <h3>Assign societal benefit area</h3>
-  <form method="POST">
-    {{render_form(form, button_map={'submit_button': 'primary'}) }}
+  <div class="two-columns">
+    <div>
+      <br> </br>
+      <h3>Assign societal benefit area</h3>
+      <form method="POST">
+        {{render_form(form, button_map={'submit_button': 'primary'}) }}
 
-  </form>
-  <br> </br>
+      </form>
+      <br> </br>
 
-  <table>
-    <tr>
-      <th>SBA ID</th>
-      <th>Application</th>
-    </tr>
-    {% for societal_benefit_area in response.societal_benefit_areas %}
-      <tr>
-        <td>{{societal_benefit_area.societal_benefit_area_id}}</td>
-        <td>
-          {% if not societal_benefit_area.input_relationships %}
-            None
-            <br />
-          {% endif %}
+      <table>
+        <tr>
+          <th>SBA ID</th>
+          <th>Application</th>
+        </tr>
+        {% for societal_benefit_area in response.societal_benefit_areas %}
+          <tr>
+            <td>{{societal_benefit_area.societal_benefit_area_id}}</td>
+            <td>
+              {% if not societal_benefit_area.input_relationships %}
+                None
+                <br />
+              {% endif %}
 
-          {% for input_relationship in societal_benefit_area.input_relationships %}
-            <ul>
-              <li>{{input_relationship.application.short_name}}</li>
-            </ul>
-          {% endfor %}
+              {% for input_relationship in societal_benefit_area.input_relationships %}
+                <ul>
+                  <li>{{input_relationship.application.short_name}}</li>
+                </ul>
+              {% endfor %}
 
-          <a href="{{url_for(
-            'application_societal_benefit_area.view_response_application_societal_benefit_area_relationships',
-            survey_id=survey.id,
-            societal_benefit_area_id=societal_benefit_area.id,
-          )}}">
-            {{render_icon('plus-circle-fill')}}
-          </a>
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
+              <a href="{{url_for(
+                'application_societal_benefit_area.view_response_application_societal_benefit_area_relationships',
+                survey_id=survey.id,
+                societal_benefit_area_id=societal_benefit_area.id,
+              )}}">
+                {{render_icon('plus-circle-fill')}}
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
 
+    {% if sankey_series == [] %}
+      <div>Please input at least one relationship to display diagram</div>
+    {% else %}
+      <figure class="highcharts-figure">
+        <div id="highcharts-container" />
+      </figure>
+    {% endif %}
+  </div>
+
+  <script>
+		Highcharts.chart('highcharts-container', {
+			chart: {
+				type: 'sankey',
+			},
+			title: {
+				text: 'U.S. AON Value Tree Analysis Diagram',
+				style: {fontSize: '20px'},
+			},
+			accessibility: {
+				description: 'Sankey plot for U.S. AON Value Tree',
+				point: {
+					valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.'
+				}
+			},
+			series: [{
+				keys: ['from', 'to', 'weight'],
+        data: {{sankey_series | safe}},
+			}]
+		});
+  </script>
 {% endblock %}

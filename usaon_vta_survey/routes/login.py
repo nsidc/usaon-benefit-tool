@@ -15,7 +15,6 @@ def login():
     assert resp.ok, resp.text
 
     user = ensure_user_exists(resp.json())
-    # breakpoint()
     login_user(user)
 
     return redirect('/')

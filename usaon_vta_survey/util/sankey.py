@@ -21,7 +21,7 @@ def data_products_sankey(response: Response) -> list[list[object]]:
     return data
 
 
-def societal_benefit_area_sankey(response: Response) -> list[list[object]]:
+def societal_benefit_areas_sankey(response: Response) -> list[list[object]]:
     """Provide Sankey data structure of applications, formatted for Highcharts."""
     # Convert tuples to lists for passing to Javascript-land:
     data = [list(e) for e in _societal_benefit_areas_sankey(response)]
