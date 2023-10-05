@@ -56,11 +56,13 @@
         {% endfor %}
       </table>
       <br></br>
-      <h3>Assign societal benefit area</h3>
-      <form method="POST">
-        {{render_form(form, button_map={'submit_button': 'primary'}) }}
+      {% if not current_user.role_id=='analyst' %}
+        <h3>Assign societal benefit area</h3>
+        <form method="POST">
+          {{render_form(form, button_map={'submit_button': 'primary'}) }}
 
-      </form>
+        </form>
+      {% endif %}
     </div>
 
     {% if sankey_series == [] %}

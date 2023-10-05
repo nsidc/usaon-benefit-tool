@@ -76,31 +76,33 @@
     {% endif %}
   </div>
 
-  <h3>Add application</h3>
-  <form method="POST">
-    {{render_form(form, button_map={'submit_button': 'primary'}) }}
+  {% if not current_user.role_id=='analyst' %}
+    <h3>Add application</h3>
+    <form method="POST">
+      {{render_form(form, button_map={'submit_button': 'primary'}) }}
 
-  </form>
+    </form>
 
-  <script>
-		Highcharts.chart('highcharts-container', {
-			chart: {
-				type: 'sankey',
-			},
-			title: {
-				text: 'U.S. AON Value Tree Analysis Diagram',
-				style: {fontSize: '20px'},
-			},
-			accessibility: {
-				description: 'Sankey plot for U.S. AON Value Tree',
-				point: {
-					valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.'
-				}
-			},
-			series: [{
-				keys: ['from', 'to', 'weight'],
-        data: {{sankey_series | safe}},
-			}]
-		});
-  </script>
+    <script>
+      Highcharts.chart('highcharts-container', {
+        chart: {
+          type: 'sankey',
+        },
+        title: {
+          text: 'U.S. AON Value Tree Analysis Diagram',
+          style: {fontSize: '20px'},
+        },
+        accessibility: {
+          description: 'Sankey plot for U.S. AON Value Tree',
+          point: {
+            valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.'
+          }
+        },
+        series: [{
+          keys: ['from', 'to', 'weight'],
+          data: {{sankey_series | safe}},
+        }]
+      });
+    </script>
+  {% endif %}
 {% endblock %}
