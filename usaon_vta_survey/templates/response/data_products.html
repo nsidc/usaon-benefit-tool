@@ -30,25 +30,25 @@
                 None
                 <br />
               {% endif %}
-              {% for input_relationship in data_product.input_relationships %}
-                <ul>
+              <ul>
+                {% for input_relationship in data_product.input_relationships %}
                   <li>{{input_relationship.observing_system.short_name}}</li>
-                </ul>
-              {% endfor %}
+                {% endfor %}
+              </ul>
             </td>
             <td>
-              {% for input_relationship in data_product.input_relationships %}
-                <ul>
+              <ul>
+                {% for input_relationship in data_product.input_relationships %}
                   <li>{{input_relationship.performance_rating}}</li>
-                </ul>
-              {% endfor %}
+                {% endfor %}
+              </ul>
             </td>
             <td>
-              {% for input_relationship in data_product.input_relationships %}
-                <ul>
+              <ul>
+                {% for input_relationship in data_product.input_relationships %}
                   <li>{{input_relationship.criticality_rating}}</li>
-                </ul>
-              {% endfor %}
+                {% endfor %}
+              </ul>
             </td>
             <td>
               <a href="{{url_for(

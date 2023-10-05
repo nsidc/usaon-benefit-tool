@@ -30,18 +30,18 @@
                 <br />
               {% endif %}
 
-              {% for input_relationship in societal_benefit_area.input_relationships %}
-                <ul>
+              <ul>
+                {% for input_relationship in societal_benefit_area.input_relationships %}
                   <li>{{input_relationship.application.short_name}}</li>
-                </ul>
-              {% endfor %}
+                {% endfor %}
+              </ul>
             </td>
             <td>
-              {% for input_relationship in societal_benefit_area.input_relationships %}
-                <ul>
+              <ul>
+                {% for input_relationship in societal_benefit_area.input_relationships %}
                   <li>{{input_relationship.performance_rating}}</li>
-                </ul>
-              {% endfor %}
+                {% endfor %}
+              </ul>
             </td>
             <td>
               <a href="{{url_for(
