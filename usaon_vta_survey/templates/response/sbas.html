@@ -10,18 +10,11 @@
 
   <div class="two-columns">
     <div>
-      <br> </br>
-      <h3>Assign societal benefit area</h3>
-      <form method="POST">
-        {{render_form(form, button_map={'submit_button': 'primary'}) }}
-
-      </form>
-      <br> </br>
-
+      <h3>Societal benefit areas</h3>
       <table>
         <tr>
           <th rowspan="2">SBA ID</th>
-          <th colspan="2">Application</th>
+          <th colspan="2">Related Applications</th>
         </tr>
         <tr>
           <th>Name</th>
@@ -60,6 +53,12 @@
           </tr>
         {% endfor %}
       </table>
+      <br></br>
+      <h3>Assign societal benefit area</h3>
+      <form method="POST">
+        {{render_form(form, button_map={'submit_button': 'primary'}) }}
+
+      </form>
     </div>
 
     {% if sankey_series == [] %}
