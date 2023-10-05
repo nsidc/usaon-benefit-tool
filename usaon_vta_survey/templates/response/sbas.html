@@ -14,11 +14,12 @@
       <table>
         <tr>
           <th rowspan="2">SBA ID</th>
-          <th colspan="2">Related Applications</th>
+          <th colspan="3">Related Applications</th>
         </tr>
         <tr>
           <th>Name</th>
           <th>Performance Rating</th>
+          <th>Actions</th>
         </tr>
         {% for societal_benefit_area in response.societal_benefit_areas %}
           <tr>
@@ -34,14 +35,6 @@
                   <li>{{input_relationship.application.short_name}}</li>
                 </ul>
               {% endfor %}
-
-              <a href="{{url_for(
-                'application_societal_benefit_area.view_response_application_societal_benefit_area_relationships',
-                survey_id=survey.id,
-                societal_benefit_area_id=societal_benefit_area.id,
-              )}}">
-                {{render_icon('plus-circle-fill')}}
-              </a>
             </td>
             <td>
               {% for input_relationship in societal_benefit_area.input_relationships %}
@@ -49,6 +42,15 @@
                   <li>{{input_relationship.performance_rating}}</li>
                 </ul>
               {% endfor %}
+            </td>
+            <td>
+              <a href="{{url_for(
+                'application_societal_benefit_area.view_response_application_societal_benefit_area_relationships',
+                survey_id=survey.id,
+                societal_benefit_area_id=societal_benefit_area.id,
+              )}}">
+                {{render_icon('plus-circle-fill')}}
+              </a>
             </td>
           </tr>
         {% endfor %}
