@@ -3,6 +3,7 @@
 {% from 'bootstrap5/utils.html' import render_icon %}
 
 {% block content %}
+  {% include 'includes/highcharts.html' %}
 
   {{super()}}
 
@@ -12,8 +13,14 @@
     <div>
       <table>
         <tr>
+          <th rowspan="2">Name</th>
+          <th colspan="4">Related Observing Systems</th>
+        </tr>
+        <tr>
           <th>Name</th>
-          <th>Observing systems related</th>
+          <th>Performance Rating</th>
+          <th>Criticality Rating</th>
+          <th>Actions</th>
         </tr>
         {% for data_product in response.data_products %}
           <tr>
@@ -23,12 +30,27 @@
                 None
                 <br />
               {% endif %}
-              {% for input_relationship in data_product.input_relationships %}
-                <ul>
-                  <li>{{input_relationship.observing_system.short_name}}: {{input_relationship.performace_rating}}</li>
-                </ul>
-              {% endfor %}
-
+              <ul>
+                {% for input_relationship in data_product.input_relationships %}
+                  <li>{{input_relationship.observing_system.short_name}}</li>
+                {% endfor %}
+              </ul>
+            </td>
+            <td>
+              <ul>
+                {% for input_relationship in data_product.input_relationships %}
+                  <li>{{input_relationship.performance_rating}}</li>
+                {% endfor %}
+              </ul>
+            </td>
+            <td>
+              <ul>
+                {% for input_relationship in data_product.input_relationships %}
+                  <li>{{input_relationship.criticality_rating}}</li>
+                {% endfor %}
+              </ul>
+            </td>
+            <td>
               <a href="{{url_for(
                        'observing_system_data_product.view_response_observing_system_data_product_relationships',
                        survey_id=survey.id,
@@ -41,12 +63,44 @@
         {% endfor %}
       </table>
     </div>
+
+    {% if sankey_series == [] %}
+      <div>Please input at least one dataproduct-to-observing systems relationship to display diagram</div>
+    {% else %}
+      <figure class="highcharts-figure">
+        <div id="highcharts-container" />
+      </figure>
+    {% endif %}
   </div>
 
-  <h3>Add data product</h3>
-  <form method="POST">
-    {{render_form(form, button_map={'submit_button': 'primary'}) }}
 
-  </form>
+  {% if not current_user.role_id not in ['admin', 'respondent'] %}
+    <h3>Add data product</h3>
+    <form method="POST">
+      {{render_form(form, button_map={'submit_button': 'primary'}) }}
+    </form>
+  {% endif %}
+
+  <script>
+    Highcharts.chart('highcharts-container', {
+      chart: {
+        type: 'sankey',
+      },
+      title: {
+        text: 'U.S. AON Value Tree Analysis Diagram',
+        style: {fontSize: '20px'},
+      },
+      accessibility: {
+        description: 'Sankey plot for U.S. AON Value Tree',
+        point: {
+          valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.'
+        }
+      },
+      series: [{
+        keys: ['from', 'to', 'weight'],
+        data: {{sankey_series | safe}},
+      }]
+    });
+  </script>
 
 {% endblock %}

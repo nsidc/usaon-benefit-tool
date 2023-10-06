@@ -6,51 +6,55 @@
 
   {{super()}}
 
-  <h3>Observing System &lt;-&gt; Data Product relationship</h3>
+  {% if not current_user.role_id=='analyst' %}
+    <h3>Observing System &lt;-&gt; Data Product relationship</h3>
 
-  <!-- This form enables reloading the page when a drop-down is changed -->
-  <form method="GET" class="two-columns">
+    <!-- This form enables reloading the page when a drop-down is changed -->
+    <form method="GET" class="two-columns">
 
-    <div>
-      <h4>Obserivng Systems</h4>
+      <div>
+        <h4>Obserivng Systems</h4>
 
-      <select name="observing_system_id" onchange="this.form.submit()">
+        <select name="observing_system_id" onchange="this.form.submit()">
 
-        <option value="" {% if sqla_inspect(observing_system).transient %}selected{% endif %}>
-          New observing system
-        </option>
-
-        {% for os in observing_systems %}
-          <option value="{{os.id}}" {% if os.id == observing_system.id %}selected{% endif %}>
-            {{os.short_name}}
+          <option value="" {% if sqla_inspect(observing_system).transient %}selected{% endif %}>
+            New observing system
           </option>
-        {% endfor %}
 
-      </select>
-    </div>
+          {% for os in observing_systems %}
+            <option value="{{os.id}}" {% if os.id == observing_system.id %}selected{% endif %}>
+              {{os.short_name}}
+            </option>
+          {% endfor %}
+
+        </select>
+      </div>
 
 
-    <div>
-      <h4>Data Product</h4>
+      <div>
+        <h4>Data Product</h4>
 
-      <select name="data_product_id" onchange="this.form.submit()">
+        <select name="data_product_id" onchange="this.form.submit()">
 
-        <option value="" {% if sqla_inspect(data_product).transient %}selected{% endif %}>
-          Create new data product
-        </option>
-
-        {% for dp in data_products %}
-          <option value="{{dp.id}}" {% if dp.id == data_product.id %}selected{% endif %}>
-          {{dp.short_name}}
+          <option value="" {% if sqla_inspect(data_product).transient %}selected{% endif %}>
+            Create new data product
           </option>
-        {% endfor %}
 
-      </select>
-    </div>
-  </form>
+          {% for dp in data_products %}
+            <option value="{{dp.id}}" {% if dp.id == data_product.id %}selected{% endif %}>
+            {{dp.short_name}}
+            </option>
+          {% endfor %}
 
-  <form method="POST">
-    {{form.csrf_token}}
-    {{render_form(form)}}
+        </select>
+      </div>
+    </form>
+
+    <form method="POST">
+      {{form.csrf_token}}
+      {{render_form(form)}}
+  {% else %}
+    <h3>You do not have permissions to add relationships.</h3>
+  {% endif %}
 
 {% endblock %}

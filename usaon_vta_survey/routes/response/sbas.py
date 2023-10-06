@@ -8,6 +8,7 @@ from usaon_vta_survey.models.tables import (
     Survey,
 )
 from usaon_vta_survey.util.authorization import limit_response_editors
+from usaon_vta_survey.util.sankey import societal_benefit_areas_sankey
 
 societal_benefit_area_bp = Blueprint(
     'sba', __name__, url_prefix='/response/<string:survey_id>/societal_benefit_areas'
@@ -44,4 +45,5 @@ def view_response_sbas(survey_id: str):
         sbas=sbas,
         response=survey.response,
         societal_benefit_areas=survey.response.societal_benefit_areas,
+        sankey_series=societal_benefit_areas_sankey(survey.response),
     )

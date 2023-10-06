@@ -2,10 +2,40 @@
 
 
 {% block content %}
+  {% include 'includes/highcharts.html' %}
 
   {{super()}}
 
   <p>Created: {{response.created_timestamp}}</p>
   <p>Last updated: {{response.updated_timestamp}}</p>
 
+  {% if sankey == [] %}
+    <div>Please input at least one relationship to display diagram</div>
+  {% else %}
+    <figure class="highcharts-figure">
+      <div id="highcharts-container" />
+    </figure>
+  {% endif %}
+
+  <script>
+		Highcharts.chart('highcharts-container', {
+			chart: {
+				type: 'sankey',
+			},
+			title: {
+				text: 'U.S. AON Benefit Tool Diagram',
+				style: {fontSize: '20px'},
+			},
+			accessibility: {
+				description: 'Sankey plot for Benefit Tool',
+				point: {
+					valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.'
+				}
+			},
+			series: [{
+				keys: ['from', 'to', 'weight'],
+        data: {{sankey | safe}},
+			}]
+		});
+  </script>
 {% endblock %}

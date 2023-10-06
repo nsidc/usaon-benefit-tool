@@ -4,7 +4,7 @@ from sqlalchemy import MetaData
 from sqlalchemy.orm import Session
 
 from usaon_vta_survey import db
-from usaon_vta_survey.constants.roles import ROLES
+from usaon_vta_survey.constants.rbac import ROLES
 from usaon_vta_survey.constants.sba import IAOA_SBA_FRAMEWORK
 from usaon_vta_survey.constants.status import STATUSES
 from usaon_vta_survey.models.tables import (

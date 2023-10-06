@@ -19,10 +19,12 @@
     {% endfor %}
   </table>
 
-  <h3>Add observing system</h3>
-  <form method="POST">
-    {{render_form(form, button_map={'submit_button': 'primary'}) }}
 
-  </form>
+  {% if not current_user.role_id not in ['admin', 'respondent'] %}
+    <h3>Add observing system</h3>
+    <form method="POST">
+      {{render_form(form, button_map={'submit_button': 'primary'}) }}
 
+    </form>
+  {% endif %}
 {% endblock %}
