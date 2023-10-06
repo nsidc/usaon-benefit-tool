@@ -1,5 +1,0 @@
-ROLES = [
-    'admin',
-    'respondent',
-    'analyst',
-]
