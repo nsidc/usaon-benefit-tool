@@ -74,7 +74,7 @@
   </div>
 
 
-  {% if not current_user.role_id=='analyst' %}
+  {% if not current_user.role_id not in ['admin', 'respondent'] %}
     <h3>Add data product</h3>
     <form method="POST">
       {{render_form(form, button_map={'submit_button': 'primary'}) }}
