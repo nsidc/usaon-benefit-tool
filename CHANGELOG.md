@@ -1,3 +1,9 @@
+# v0.6.0 (2023-10-06)
+* Create citation/zenodo tag
+* Block new response objects being created by analyst
+* Show sankey previews on all relationship pages
+* Show full sankey preview on response home page
+
 # v0.5.0 (2023-10-03)
 * Bugfix relationship creation
 * Fix envarrs for google login/non dev environment
