@@ -1,5 +1,3 @@
-# from typing import Literal
-
 # Role: Literal['admin'] | Literal['respondent'] | Literal['analyst']
 
 # ROLES: Role[list[str]] = [
@@ -11,7 +9,7 @@
 # roles_allowed = {
 #
 # }
-ROLES: [list[str]] = [
+ROLES: list[str] = [
     'admin',
     'respondent',
     'analyst',
