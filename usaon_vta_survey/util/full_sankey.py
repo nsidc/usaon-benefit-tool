@@ -15,7 +15,7 @@ def sankey(response: Response) -> list[list[object]]:
 
 
 def _sankey(response: Response) -> list[tuple[str, str, int]]:
-    """Provide a sankey data structure of applications."""
+    """Provide a sankey data structure of response objects."""
     data1 = _applications_sankey(response)
     data2 = _data_products_sankey(response)
     data3 = _societal_benefit_areas_sankey(response)
