@@ -51,6 +51,16 @@
               )}}">
                 {{render_icon('plus-circle-fill')}}
               </a>
+              {% for input_relationship in societal_benefit_area.input_relationships %}
+                <li>
+                <a href="{{url_for(
+                    'application_societal_benefit_area.delete_response_application_societal_benefit_area_relationship',
+                    survey_id=survey.id,
+                    response_application_societal_benefit_area_id=input_relationship.id,
+                    )}}">{{render_icon('file-minus-fill')}}
+                </a>
+                </li>
+              {% endfor %}
             </td>
           </tr>
         {% endfor %}

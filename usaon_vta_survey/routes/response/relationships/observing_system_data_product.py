@@ -232,3 +232,23 @@ def view_response_observing_system_data_product_relationships(survey_id: str):
         data_products=survey.response.data_products,
         relationship=response_observing_system_data_product,
     )
+
+
+@observing_system_data_product_bp.route(
+    '/<int:response_observing_system_data_product_id>',
+    methods=['GET', 'POST'],
+)
+def delete_response_observing_system_data_product_relationship(
+    survey_id: int, response_observing_system_data_product_id: int
+):
+    """Delete data product/observing system relationship."""
+    survey = db.get_or_404(Survey, survey_id)
+    response_observing_system_data_product = db.get_or_404(
+        ResponseObservingSystemDataProduct, response_observing_system_data_product_id
+    )
+    db.session.delete(response_observing_system_data_product)
+    db.session.commit()
+
+    return redirect(
+        url_for('data_product.view_response_data_products', survey_id=survey.id)
+    )

@@ -58,6 +58,16 @@
                        )}}">
                 {{render_icon('plus-circle-fill')}}
               </a>
+              {% for input_relationship in data_product.input_relationships %}
+                <li>
+                <a href="{{url_for(
+                    'observing_system_data_product.delete_response_observing_system_data_product_relationship',
+                    survey_id=survey.id,
+                    response_observing_system_data_product_id=input_relationship.id,
+                    )}}">{{render_icon('file-minus-fill')}}
+                </a>
+                </li>
+              {% endfor %}
             </td>
           </tr>
         {% endfor %}

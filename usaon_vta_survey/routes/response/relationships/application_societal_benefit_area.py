@@ -239,13 +239,20 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
     )
 
 
-# @bp.route(
-#     '/<string:survey_id>/application_societal_benefit_area_relationships',
-#     methods=['GET', 'POST'],
-# )
-# def delete_response_application_societal_benefit_area_relationship(survey_id: str):
-#     """Delete application/SBA relationships to a response."""
-#     societal_benefit_area_id, application_id = _request_args(request)
-#     db.get_or_404(Survey, survey_id)
-#
-#     return ...
+@application_societal_benefit_area_bp.route(
+    '/<int:response_application_societal_benefit_area_id>',
+    methods=['GET', 'DELETE'],
+)
+def delete_response_application_societal_benefit_area_relationship(
+    survey_id: int, response_application_societal_benefit_area_id: int
+):
+    """Delete application/data product relationship."""
+    survey = db.get_or_404(Survey, survey_id)
+    response_application_societal_benefit_area = db.get_or_404(
+        ResponseApplicationSocietalBenefitArea,
+        response_application_societal_benefit_area_id,
+    )
+    db.session.delete(response_application_societal_benefit_area)
+    db.session.commit()
+
+    return redirect(url_for('sba.view_response_sbas', survey_id=survey.id))
