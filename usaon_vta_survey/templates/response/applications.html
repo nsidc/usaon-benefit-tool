@@ -33,14 +33,7 @@
               {% endif %}
               <ul>
                 {% for input_relationship in application.input_relationships %}
-                  <li>{{input_relationship.data_product.short_name}}
-                    <form method='DELETE' action={{url_for(
-                      'data_product_application.delete_response_data_product_application_relationships',
-                      survey_id=survey.id,
-                      response_data_product_application_id=input_relationship.id,                     )}}>
-                      <input type='submit' value='delete'/>
-                    </form>
-                  </li>
+                  <li>{{input_relationship.data_product.short_name}}</li>
                 {% endfor %}
               </ul>
               <br/>
@@ -66,9 +59,16 @@
                 application_id=application.id,
               )}}">{{render_icon('plus-circle-fill')}}
               </a>
-              &nbsp;
+              {% for input_relationship in application.input_relationships %}
+                <li>
+                <a href="{{url_for(
+                    'data_product_application.delete_response_data_product_application_relationships',
+                    survey_id=survey.id,
+                    response_data_product_application_id=input_relationship.id,
+                    )}}">{{render_icon('file-minus-fill')}}
                 </a>
-              </p>
+                </li>
+              {% endfor %}
             </td>
           </tr>
         {% endfor %}
