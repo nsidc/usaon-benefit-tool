@@ -33,7 +33,14 @@
               {% endif %}
               <ul>
                 {% for input_relationship in application.input_relationships %}
-                  <li>{{input_relationship.data_product.short_name}}</li>
+                  <li>{{input_relationship.data_product.short_name}}
+                    <form method='DELETE' action={{url_for(
+                      'data_product_application.delete_response_data_product_application_relationships',
+                      survey_id=survey.id,
+                      response_data_product_application_id=input_relationship.id,                     )}}>
+                      <input type='submit' value='delete'/>
+                    </form>
+                  </li>
                 {% endfor %}
               </ul>
               <br/>
@@ -59,6 +66,9 @@
                 application_id=application.id,
               )}}">{{render_icon('plus-circle-fill')}}
               </a>
+              &nbsp;
+                </a>
+              </p>
             </td>
           </tr>
         {% endfor %}
@@ -76,6 +86,7 @@
 
   {% if not current_user.role_id not in ['admin', 'respondent'] %}
     <h3>Add application</h3>
+    <!-- probably wanna remove this form tag bc of render_form-->
     <form method="POST">
       {{render_form(form, button_map={'submit_button': 'primary'}) }}
 

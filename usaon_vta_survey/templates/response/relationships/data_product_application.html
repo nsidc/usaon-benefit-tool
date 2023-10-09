@@ -50,10 +50,12 @@
       </div>
     </form>
 
+    <!-- look into this -->
     <form method="POST">
       {{form.csrf_token}}
 
       {{render_form(form)}}
+    </form>
       
   {% else %}
     <h3>You do not have permissions to add relationships.</h3>
