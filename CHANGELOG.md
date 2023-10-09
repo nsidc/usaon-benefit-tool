@@ -1,3 +1,7 @@
+# v0.7.0 (2023-10-09)
+* Bugfix: proxy redirect for login/logout
+* Update DB for analyst to be default role
+
 # v0.6.0 (2023-10-06)
 * Create citation/zenodo tag
 * Block new response objects being created by analyst
