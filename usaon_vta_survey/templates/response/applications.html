@@ -1,6 +1,7 @@
 {% extends 'response/base.html' %}
 {% from 'bootstrap5/form.html' import render_form %}
 {% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'macros/javascript_highcharts.j2' import highcharts %}
 
 
 {% block content %}
@@ -61,11 +62,15 @@
               </a>
               {% for input_relationship in application.input_relationships %}
                 <li>
-                <a href="{{url_for(
+                <form action="{{url_for(
                     'data_product_application.delete_response_data_product_application_relationships',
                     survey_id=survey.id,
                     response_data_product_application_id=input_relationship.id,
-                    )}}">{{render_icon('file-minus-fill')}}
+                    )}}" method="POST">
+                  <input type="hidden" name="_method" value="DELETE" />
+                  <input type="hidden" name="_token" value="{{ csrf_token }}" />
+                  <input type="submit" value="Delete"/>
+                </form>
                 </a>
                 </li>
               {% endfor %}
@@ -92,26 +97,7 @@
 
     </form>
   {% endif %}
+   
+  {{ highcharts(sankey_series) }}
 
-  <script>
-    Highcharts.chart('highcharts-container', {
-      chart: {
-        type: 'sankey',
-      },
-      title: {
-        text: 'U.S. AON Value Tree Analysis Diagram',
-        style: {fontSize: '20px'},
-      },
-      accessibility: {
-        description: 'Sankey plot for U.S. AON Value Tree',
-        point: {
-          valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.'
-        }
-      },
-      series: [{
-        keys: ['from', 'to', 'weight'],
-        data: {{sankey_series | safe}},
-      }]
-    });
-  </script>
 {% endblock %}

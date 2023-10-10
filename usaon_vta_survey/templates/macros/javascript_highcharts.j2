@@ -1,0 +1,23 @@
+{% macro highcharts(sankey_series) -%}
+  <script>
+    Highcharts.chart('highcharts-container', {
+      chart: {
+        type: 'sankey',
+      },
+      title: {
+        text: 'U.S. AON Value Tree Analysis Diagram',
+        style: {fontSize: '20px'},
+      },
+      accessibility: {
+        description: 'Sankey plot for U.S. AON Value Tree',
+        point: {
+          valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.'
+        }
+      },
+      series: [{
+        keys: ['from', 'to', 'weight'],
+        data: {{sankey_series | safe}},
+      }]
+    });
+  </script>
+{% endmacro %}
