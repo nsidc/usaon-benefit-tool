@@ -1,8 +1,8 @@
 {% extends 'response/base.html' %}
 {% from 'bootstrap5/form.html' import render_form %}
 {% from 'bootstrap5/utils.html' import render_icon %}
-{% from 'macros/javascript_highcharts.j2' import highcharts %}
-
+{% from 'macros/javascript_highcharts.j2' import add_javascript__highcharts %}
+{% from 'macros/javascript_delete.j2' import add_javascript__delete %}
 
 {% block content %}
   {% include 'includes/highcharts.html' %}
@@ -62,15 +62,11 @@
               </a>
               {% for input_relationship in application.input_relationships %}
                 <li>
-                <form action="{{url_for(
+                <a href="#" onclick="remove_relationship('{{url_for(
                     'data_product_application.delete_response_data_product_application_relationships',
                     survey_id=survey.id,
                     response_data_product_application_id=input_relationship.id,
-                    )}}" method="POST">
-                  <input type="hidden" name="_method" value="DELETE" />
-                  <input type="hidden" name="_token" value="{{ csrf_token }}" />
-                  <input type="submit" value="Delete"/>
-                </form>
+                    )}}')">delete
                 </a>
                 </li>
               {% endfor %}
@@ -86,6 +82,7 @@
       <figure class="highcharts-figure">
         <div id="highcharts-container" />
       </figure>
+      {{ add_javascript__highcharts(sankey_series) }}
     {% endif %}
   </div>
 
@@ -98,6 +95,6 @@
     </form>
   {% endif %}
    
-  {{ highcharts(sankey_series) }}
+  {{ add_javascript__delete() }}
 
 {% endblock %}

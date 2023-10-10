@@ -1,0 +1,7 @@
+{% macro add_javascript__delete() -%}
+  <script>
+    function remove_relationship(url) {
+      fetch(url, { method: 'DELETE'});
+        }
+  </script>
+{% endmacro  %}

@@ -231,19 +231,17 @@ def view_response_data_product_application_relationships(survey_id: str):
 
 @data_product_application_bp.route(
     '/<int:response_data_product_application_id>',
-    methods=['GET', 'DELETE'],
+    methods=['DELETE'],
 )
 def delete_response_data_product_application_relationships(
     survey_id: int, response_data_product_application_id: int
 ):
     """Delete application/data product relationship."""
-    survey = db.get_or_404(Survey, survey_id)
+    db.get_or_404(Survey, survey_id)
     response_data_product_application = db.get_or_404(
         ResponseDataProductApplication, response_data_product_application_id
     )
     db.session.delete(response_data_product_application)
     db.session.commit()
 
-    return redirect(
-        url_for('application.view_response_applications', survey_id=survey.id)
-    )
+    return None
