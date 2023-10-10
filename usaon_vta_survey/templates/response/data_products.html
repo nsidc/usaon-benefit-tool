@@ -2,6 +2,7 @@
 {% from 'bootstrap5/form.html' import render_form %}
 {% from 'bootstrap5/utils.html' import render_icon %}
 {% from 'macros/javascript_highcharts.j2' import add_javascript__highcharts %}
+{% from 'macros/javascript_delete.j2' import add_javascript__delete %}
 
 {% block content %}
   {% include 'includes/highcharts.html' %}
@@ -61,11 +62,14 @@
               </a>
               {% for input_relationship in data_product.input_relationships %}
                 <li>
-                <a href="{{url_for(
+                <a href="#" onclick="remove_relationship('{{url_for(
                     'observing_system_data_product.delete_response_observing_system_data_product_relationship',
                     survey_id=survey.id,
                     response_observing_system_data_product_id=input_relationship.id,
-                    )}}">{{render_icon('file-minus-fill')}}
+                            )}}',
+                            '{{url_for('data_product.view_response_data_products', survey_id=survey.id)}}'
+                            )">{{render_icon('file-minus-fill')}}
+
                 </a>
                 </li>
               {% endfor %}

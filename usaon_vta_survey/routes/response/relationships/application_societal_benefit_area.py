@@ -255,4 +255,7 @@ def delete_response_application_societal_benefit_area_relationship(
     db.session.delete(response_application_societal_benefit_area)
     db.session.commit()
 
-    return redirect(url_for('sba.view_response_sbas', survey_id=survey.id))
+    return redirect(
+        url_for('sba.view_response_sbas', survey_id=survey.id),
+        code=303,
+    )

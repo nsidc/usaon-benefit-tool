@@ -66,7 +66,9 @@
                     'data_product_application.delete_response_data_product_application_relationships',
                     survey_id=survey.id,
                     response_data_product_application_id=input_relationship.id,
-                    )}}')">delete
+                            )}}',
+                            '{{url_for('application.view_response_applications', survey_id=survey.id)}}',
+                            )">{{render_icon('file-minus-fill')}}
                 </a>
                 </li>
               {% endfor %}

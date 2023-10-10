@@ -1,6 +1,7 @@
 {% extends 'response/base.html' %}
 {% from 'bootstrap5/form.html' import render_form %}
 {% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'macros/javascript_delete.j2' import add_javascript__delete %}
 {% from 'macros/javascript_highcharts.j2' import add_javascript__highcharts %}
 
 
@@ -54,11 +55,12 @@
               </a>
               {% for input_relationship in societal_benefit_area.input_relationships %}
                 <li>
-                <a href="{{url_for(
+                <a href="#" onclick="remove_relationship('{{url_for(
                     'application_societal_benefit_area.delete_response_application_societal_benefit_area_relationship',
                     survey_id=survey.id,
-                    response_application_societal_benefit_area_id=input_relationship.id,
-                    )}}">{{render_icon('file-minus-fill')}}
+                    response_application_societal_benefit_area_id=input_relationship.id)}}',
+                    '{{url_for('application.view_response_applications', survey_id=survey.id)}}',
+                    )">{{render_icon('file-minus-fill')}}
                 </a>
                 </li>
               {% endfor %}

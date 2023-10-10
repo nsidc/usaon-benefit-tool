@@ -1,4 +1,4 @@
-from flask import Blueprint, Request, redirect, render_template, request, url_for
+from flask import Blueprint, Request, flash, redirect, render_template, request, url_for
 from wtforms import FormField
 
 from usaon_vta_survey import db
@@ -248,7 +248,10 @@ def delete_response_observing_system_data_product_relationship(
     )
     db.session.delete(response_observing_system_data_product)
     db.session.commit()
+    # TODO: figure out why this isnt working
+    flash('You have deleted this relationship')
 
     return redirect(
-        url_for('data_product.view_response_data_products', survey_id=survey.id)
+        url_for('data_product.view_response_data_products', survey_id=survey.id),
+        code=303,
     )
