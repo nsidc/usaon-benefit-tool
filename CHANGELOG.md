@@ -1,3 +1,6 @@
+# v0.7.1 (2023-10-10)
+* Bugfix: proxy redirect for new survey
+
 # v0.7.0 (2023-10-09)
 * Bugfix: proxy redirect for login/logout
 * Update DB for analyst to be default role
