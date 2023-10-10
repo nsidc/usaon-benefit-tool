@@ -236,7 +236,7 @@ def view_response_observing_system_data_product_relationships(survey_id: str):
 
 @observing_system_data_product_bp.route(
     '/<int:response_observing_system_data_product_id>',
-    methods=['GET', 'POST'],
+    methods=['DELETE'],
 )
 def delete_response_observing_system_data_product_relationship(
     survey_id: int, response_observing_system_data_product_id: int

@@ -241,7 +241,7 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
 
 @application_societal_benefit_area_bp.route(
     '/<int:response_application_societal_benefit_area_id>',
-    methods=['GET', 'DELETE'],
+    methods=['DELETE'],
 )
 def delete_response_application_societal_benefit_area_relationship(
     survey_id: int, response_application_societal_benefit_area_id: int
