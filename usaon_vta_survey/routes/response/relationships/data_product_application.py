@@ -1,4 +1,4 @@
-from flask import Blueprint, Request, flash, redirect, render_template, request, url_for
+from flask import Blueprint, Request, redirect, render_template, request, url_for
 from wtforms import FormField
 
 from usaon_vta_survey import db
@@ -243,7 +243,6 @@ def delete_response_data_product_application_relationships(
     )
     db.session.delete(response_data_product_application)
     db.session.commit()
-    flash('You have deleted this relationship')
 
     return redirect(
         url_for('application.view_response_applications', survey_id=survey.id),
