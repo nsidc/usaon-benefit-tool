@@ -1,6 +1,7 @@
 {% extends 'response/base.html' %}
 {% from 'bootstrap5/form.html' import render_form %}
 {% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'macros/javascript_highcharts.j2' import add_javascript__highcharts %}
 
 {% block content %}
   {% include 'includes/highcharts.html' %}
@@ -80,6 +81,7 @@
       <figure class="highcharts-figure">
         <div id="highcharts-container" />
       </figure>
+      {{ add_javascript__highcharts(sankey_series) }}
     {% endif %}
   </div>
 
@@ -90,27 +92,5 @@
       {{render_form(form, button_map={'submit_button': 'primary'}) }}
     </form>
   {% endif %}
-
-  <script>
-    Highcharts.chart('highcharts-container', {
-      chart: {
-        type: 'sankey',
-      },
-      title: {
-        text: 'U.S. AON Value Tree Analysis Diagram',
-        style: {fontSize: '20px'},
-      },
-      accessibility: {
-        description: 'Sankey plot for U.S. AON Value Tree',
-        point: {
-          valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.'
-        }
-      },
-      series: [{
-        keys: ['from', 'to', 'weight'],
-        data: {{sankey_series | safe}},
-      }]
-    });
-  </script>
 
 {% endblock %}
