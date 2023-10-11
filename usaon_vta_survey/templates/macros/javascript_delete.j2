@@ -1,7 +1,8 @@
 {% macro add_javascript__delete() -%}
   <script>
     function remove_relationship(url, redirect_url) {
-      fetch(url, { method: 'DELETE'});
+      fetch(url, { method: 'DELETE'})
+          .catch(error => console.log(error));
       location.assign(redirect_url);
         }
   </script>
