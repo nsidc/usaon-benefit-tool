@@ -17,7 +17,7 @@ def login():
     user = ensure_user_exists(resp.json())
     login_user(user)
 
-    return redirect('/')
+    return redirect(url_for('root.root'))
 
 
 # this may be the login issue
