@@ -121,10 +121,11 @@ def _request_args(request: Request) -> tuple[int | None, int | None]:
     return data_product_id, application_id
 
 
+# NOTE: consider making this a child of response_bp
 data_product_application_bp = Blueprint(
     'data_product_application',
     __name__,
-    url_prefix='/<string:survey_id>/data_product_application_relationships',
+    url_prefix='/response/<int:survey_id>/data_product_application_relationships',
 )
 
 
@@ -227,15 +228,23 @@ def view_response_data_product_application_relationships(survey_id: str):
         relationship=response_data_product_application,
     )
 
-    # @bp.route(
-    #     '/<string:survey_id>/data_product_application_relationships',
-    #     methods=['GET', 'POST'],
-    # )
-    # def delete_response_application_societalbenefit_area_relationship(survey_id: str):
-    #     """Delete application/SBA relationships to a response."""
-    #     societal_benefit_area_id, application_id = _request_args(request)
-    #     db.get_or_404(Survey, survey_id)
 
-    #     return render_template(
-    #         'response/relationships/data_product_application.html',
-    #     )
+@data_product_application_bp.route(
+    '/<int:response_data_product_application_id>',
+    methods=['DELETE'],
+)
+def delete_response_data_product_application_relationships(
+    survey_id: int, response_data_product_application_id: int
+):
+    """Delete application/data product relationship."""
+    survey = db.get_or_404(Survey, survey_id)
+    response_data_product_application = db.get_or_404(
+        ResponseDataProductApplication, response_data_product_application_id
+    )
+    db.session.delete(response_data_product_application)
+    db.session.commit()
+
+    return redirect(
+        url_for('application.view_response_applications', survey_id=survey.id),
+        code=303,
+    )

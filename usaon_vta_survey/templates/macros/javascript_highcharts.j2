@@ -1,0 +1,23 @@
+{% macro add_javascript__highcharts(sankey_series) -%}
+  <script>
+    Highcharts.chart('highcharts-container', {
+      chart: {
+        type: 'sankey',
+      },
+      title: {
+        text: 'U.S. AON Benefit Tool Diagram',
+        style: {fontSize: '20px'},
+      },
+      accessibility: {
+        description: 'Sankey plot for U.S. AON Benefit Tool',
+        point: {
+          valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.'
+        }
+      },
+      series: [{
+        keys: ['from', 'to', 'weight'],
+        data: {{sankey_series | safe}},
+      }]
+    });
+  </script>
+{% endmacro %}

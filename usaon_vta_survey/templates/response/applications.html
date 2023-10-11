@@ -1,7 +1,8 @@
 {% extends 'response/base.html' %}
 {% from 'bootstrap5/form.html' import render_form %}
 {% from 'bootstrap5/utils.html' import render_icon %}
-
+{% from 'macros/javascript_highcharts.j2' import add_javascript__highcharts %}
+{% from 'macros/javascript_delete.j2' import add_javascript__delete %}
 
 {% block content %}
   {% include 'includes/highcharts.html' %}
@@ -59,6 +60,17 @@
                 application_id=application.id,
               )}}">{{render_icon('plus-circle-fill')}}
               </a>
+              {% for input_relationship in application.input_relationships %}
+                <li>
+                <a href="#" onclick="remove_relationship('{{url_for(
+                    'data_product_application.delete_response_data_product_application_relationships',
+                    survey_id=survey.id,
+                    response_data_product_application_id=input_relationship.id,
+                            )}}'
+                            )">{{render_icon('file-minus-fill')}}
+                </a>
+                </li>
+              {% endfor %}
             </td>
           </tr>
         {% endfor %}
@@ -71,36 +83,19 @@
       <figure class="highcharts-figure">
         <div id="highcharts-container" />
       </figure>
+      {{ add_javascript__highcharts(sankey_series) }}
     {% endif %}
   </div>
 
   {% if not current_user.role_id not in ['admin', 'respondent'] %}
     <h3>Add application</h3>
+    <!-- probably wanna remove this form tag bc of render_form-->
     <form method="POST">
       {{render_form(form, button_map={'submit_button': 'primary'}) }}
 
     </form>
   {% endif %}
+   
+  {{ add_javascript__delete() }}
 
-  <script>
-    Highcharts.chart('highcharts-container', {
-      chart: {
-        type: 'sankey',
-      },
-      title: {
-        text: 'U.S. AON Value Tree Analysis Diagram',
-        style: {fontSize: '20px'},
-      },
-      accessibility: {
-        description: 'Sankey plot for U.S. AON Value Tree',
-        point: {
-          valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.'
-        }
-      },
-      series: [{
-        keys: ['from', 'to', 'weight'],
-        data: {{sankey_series | safe}},
-      }]
-    });
-  </script>
 {% endblock %}

@@ -27,5 +27,5 @@ def view_response(survey_id: str):
         'response/view.html',
         survey=survey,
         response=survey.response,
-        sankey=sankey(survey.response),
+        sankey_series=sankey(survey.response),
     )
