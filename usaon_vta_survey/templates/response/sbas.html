@@ -25,7 +25,15 @@
         </tr>
         {% for societal_benefit_area in response.societal_benefit_areas %}
           <tr>
-            <td>{{societal_benefit_area.societal_benefit_area_id}}</td>
+            <td>{{societal_benefit_area.societal_benefit_area_id}}
+            <a href="#" onclick="remove('{{url_for(
+                'sba.delete_response_sba',
+                survey_id=survey.id,
+                response_societal_benefit_area_id=societal_benefit_area.id,
+                        )}}'
+                        )">{{render_icon('file-minus-fill')}}
+            </a>
+            </td>
             <td>
               {% if not societal_benefit_area.input_relationships %}
                 None

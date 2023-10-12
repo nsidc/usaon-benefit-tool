@@ -26,7 +26,15 @@
         </tr>
         {% for data_product in response.data_products %}
           <tr>
-            <td>{{data_product.short_name}}</td>
+            <td>{{data_product.short_name}}
+            <a href="#" onclick="remove('{{url_for(
+                'data_product.delete_response_data_product',
+                survey_id=survey.id,
+                response_data_product_id=data_product.id,
+                        )}}'
+                        )">{{render_icon('file-minus-fill')}}
+            </a>
+            </td>
             <td>
               {% if not data_product.input_relationships %}
                 None
