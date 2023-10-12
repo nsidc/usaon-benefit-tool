@@ -31,7 +31,7 @@
                 survey_id=survey.id,
                 response_societal_benefit_area_id=societal_benefit_area.id,
                         )}}'
-                        )">{{render_icon('file-minus-fill')}}
+                        )">{{render_icon('file-minus-fill', color='danger')}}
             </a>
             </td>
             <td>
@@ -67,7 +67,7 @@
                     'application_societal_benefit_area.delete_response_application_societal_benefit_area_relationship',
                     survey_id=survey.id,
                     response_application_societal_benefit_area_id=input_relationship.id)}}'
-                    )">{{render_icon('file-minus-fill')}}
+                    )">{{render_icon('file-minus-fill', color='danger')}}
                 </a>
                 </li>
               {% endfor %}
