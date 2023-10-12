@@ -2,8 +2,14 @@
   <script>
     function remove(url, response) {
       fetch(url, { method: 'DELETE'})
-            .then(response => {location.assign(response.url)})
-          .catch(error => console.log(error));
+          .then(response => {
+              if (response.ok && response.redirected) {
+                    location.assign(response.url)
+              } else {
+                    console.error(`Something unexpected happened when trying to delete ${response.url}`)
+              } 
+          })
+          .catch(error => console.error(error));
         }
   </script>
 {% endmacro  %}

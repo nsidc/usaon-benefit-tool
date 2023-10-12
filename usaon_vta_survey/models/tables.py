@@ -323,7 +323,7 @@ class ResponseDataProduct(BaseModel, IORelationshipMixin, ResponseObjectFieldMix
     response = relationship(
         'Response',
         back_populates='data_products',
-        cascade="all, delete",
+        # cascade="all, delete",
     )
     input_relationships = relationship(
         'ResponseObservingSystemDataProduct',
@@ -363,7 +363,7 @@ class ResponseApplication(BaseModel, IORelationshipMixin, ResponseObjectFieldMix
     response = relationship(
         'Response',
         back_populates='applications',
-        cascade="all, delete",
+        # cascade="all, delete",
     )
     input_relationships = relationship(
         'ResponseDataProductApplication',
