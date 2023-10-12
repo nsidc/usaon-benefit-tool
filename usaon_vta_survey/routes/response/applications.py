@@ -42,7 +42,7 @@ def view_response_applications(survey_id: int):
     )
 
 
-@application_bp.route('<int:response_application_id>', methods=['DELETE'])
+@application_bp.route('/<int:response_application_id>', methods=['DELETE'])
 def delete_response_application(survey_id: int, response_application_id: int):
     """Delete application response object from survey."""
     survey = db.get_or_404(Survey, survey_id)

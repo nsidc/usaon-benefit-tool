@@ -55,7 +55,7 @@
               </a>
               {% for input_relationship in societal_benefit_area.input_relationships %}
                 <li>
-                <a href="#" onclick="remove_relationship('{{url_for(
+                <a href="#" onclick="remove('{{url_for(
                     'application_societal_benefit_area.delete_response_application_societal_benefit_area_relationship',
                     survey_id=survey.id,
                     response_application_societal_benefit_area_id=input_relationship.id)}}'
