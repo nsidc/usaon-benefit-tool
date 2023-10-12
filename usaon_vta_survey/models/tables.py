@@ -267,11 +267,11 @@ class ResponseObservingSystem(BaseModel, IORelationshipMixin, ResponseObjectFiel
     response = relationship(
         'Response',
         back_populates='observing_systems',
-        cascade="all, delete",
     )
     output_relationships = relationship(
         'ResponseObservingSystemDataProduct',
         back_populates='observing_system',
+        cascade="all, delete",
     )
 
 
@@ -323,15 +323,16 @@ class ResponseDataProduct(BaseModel, IORelationshipMixin, ResponseObjectFieldMix
     response = relationship(
         'Response',
         back_populates='data_products',
-        # cascade="all, delete",
     )
     input_relationships = relationship(
         'ResponseObservingSystemDataProduct',
         back_populates='data_product',
+        cascade="all, delete",
     )
     output_relationships = relationship(
         'ResponseDataProductApplication',
         back_populates='data_product',
+        cascade="all, delete",
     )
 
 
@@ -363,15 +364,16 @@ class ResponseApplication(BaseModel, IORelationshipMixin, ResponseObjectFieldMix
     response = relationship(
         'Response',
         back_populates='applications',
-        # cascade="all, delete",
     )
     input_relationships = relationship(
         'ResponseDataProductApplication',
         back_populates='application',
+        cascade="all, delete",
     )
     output_relationships = relationship(
         'ResponseApplicationSocietalBenefitArea',
         back_populates='application',
+        cascade="all, delete",
     )
 
 
@@ -403,6 +405,7 @@ class ResponseSocietalBenefitArea(BaseModel, IORelationshipMixin):
     input_relationships = relationship(
         'ResponseApplicationSocietalBenefitArea',
         back_populates='societal_benefit_area',
+        cascade="all, delete",
     )
 
 
