@@ -7,12 +7,12 @@ from usaon_vta_survey.util.authorization import limit_response_editors
 from usaon_vta_survey.util.sankey import applications_sankey
 
 application_bp = Blueprint(
-    'application', __name__, url_prefix='/response/<string:survey_id>/applications'
+    'application', __name__, url_prefix='/response/<int:survey_id>/applications'
 )
 
 
 @application_bp.route('', methods=['GET', 'POST'])
-def view_response_applications(survey_id: str):
+def view_response_applications(survey_id: int):
     """View and add to applications associated with a response."""
     Form = FORMS_BY_MODEL[ResponseApplication]
     survey = db.get_or_404(Survey, survey_id)
@@ -39,4 +39,18 @@ def view_response_applications(survey_id: str):
         response=survey.response,
         applications=survey.response.applications,
         sankey_series=applications_sankey(survey.response),
+    )
+
+
+@application_bp.route('<int:response_application_id>', methods=['DELETE'])
+def delete_response_application(survey_id: int, response_application_id: int):
+    """Delete application response object from survey."""
+    survey = db.get_or_404(Survey, survey_id)
+    response_application = db.get_or_404(ResponseApplication, response_application_id)
+    db.session.delete(response_application)
+    db.session.commit()
+
+    return redirect(
+        url_for('application.view_response_applications', survey_id=survey.id),
+        code=303,
     )

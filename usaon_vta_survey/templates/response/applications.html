@@ -26,7 +26,15 @@
         </tr>
         {% for application in response.applications %}
           <tr>
-            <td>{{application.short_name}}</td>
+            <td>{{application.short_name}}
+            <a href="#" onclick="remove('{{url_for(
+                'application.delete_response_application',
+                survey_id=survey.id,
+                response_application_id=application.id,
+                        )}}'
+                        )">{{render_icon('file-minus-fill')}}
+            </a>
+            </td>
             <td>
               {% if not application.input_relationships %}
                 None
@@ -62,7 +70,7 @@
               </a>
               {% for input_relationship in application.input_relationships %}
                 <li>
-                <a href="#" onclick="remove_relationship('{{url_for(
+                <a href="#" onclick="remove('{{url_for(
                     'data_product_application.delete_response_data_product_application_relationships',
                     survey_id=survey.id,
                     response_data_product_application_id=input_relationship.id,
