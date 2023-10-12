@@ -267,6 +267,7 @@ class ResponseObservingSystem(BaseModel, IORelationshipMixin, ResponseObjectFiel
     response = relationship(
         'Response',
         back_populates='observing_systems',
+        cascade="all, delete",
     )
     output_relationships = relationship(
         'ResponseObservingSystemDataProduct',
@@ -322,6 +323,7 @@ class ResponseDataProduct(BaseModel, IORelationshipMixin, ResponseObjectFieldMix
     response = relationship(
         'Response',
         back_populates='data_products',
+        cascade="all, delete",
     )
     input_relationships = relationship(
         'ResponseObservingSystemDataProduct',
@@ -361,6 +363,7 @@ class ResponseApplication(BaseModel, IORelationshipMixin, ResponseObjectFieldMix
     response = relationship(
         'Response',
         back_populates='applications',
+        cascade="all, delete",
     )
     input_relationships = relationship(
         'ResponseDataProductApplication',
