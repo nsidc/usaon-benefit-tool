@@ -2,7 +2,7 @@
 {% from 'bootstrap5/form.html' import render_form %}
 {% from 'bootstrap5/utils.html' import render_icon %}
 {% from 'macros/javascript_highcharts.j2' import add_javascript__highcharts %}
-{% from 'macros/javascript_delete.j2' import add_javascript__delete %}
+{% from 'macros/javascript_remove.j2' import add_javascript__remove %}
 
 {% block content %}
   {% include 'includes/highcharts.html' %}
@@ -104,6 +104,6 @@
     </form>
   {% endif %}
    
-  {{ add_javascript__delete() }}
+  {{ add_javascript__remove() }}
 
 {% endblock %}
