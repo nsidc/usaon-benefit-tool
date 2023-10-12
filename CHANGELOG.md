@@ -1,3 +1,6 @@
+# v0.8.0 (2023-10-12)
+* Enable deleting relationships
+
 # v0.7.1 (2023-10-10)
 * Bugfix: proxy redirect for new survey
 
