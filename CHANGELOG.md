@@ -1,3 +1,6 @@
+# v1.0.0 (2023-10-15)
+* Enable deleting response objects/cascading deletes
+
 # v0.8.0 (2023-10-12)
 * Enable deleting relationships
 
