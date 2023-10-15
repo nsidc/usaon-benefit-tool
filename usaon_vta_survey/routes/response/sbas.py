@@ -47,3 +47,21 @@ def view_response_sbas(survey_id: str):
         societal_benefit_areas=survey.response.societal_benefit_areas,
         sankey_series=societal_benefit_areas_sankey(survey.response),
     )
+
+
+@societal_benefit_area_bp.route(
+    '/<int:response_societal_benefit_area_id>', methods=['DELETE']
+)
+def delete_response_sba(survey_id: int, response_societal_benefit_area_id: int):
+    """Delete societal benefit area response object from survey."""
+    survey = db.get_or_404(Survey, survey_id)
+    response_sba = db.get_or_404(
+        ResponseSocietalBenefitArea, response_societal_benefit_area_id
+    )
+    db.session.delete(response_sba)
+    db.session.commit()
+
+    return redirect(
+        url_for('sba.view_response_sbas', survey_id=survey.id),
+        code=303,
+    )

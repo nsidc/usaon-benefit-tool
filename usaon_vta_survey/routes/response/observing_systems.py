@@ -44,3 +44,19 @@ def view_response_observing_systems(survey_id: str):
         response=survey.response,
         observing_systems=survey.response.observing_systems,
     )
+
+
+@observing_system_bp.route('/<int:response_observing_system_id>', methods=['DELETE'])
+def delete_response_observing_system(survey_id: int, response_observing_system_id: int):
+    """Delete observing system response object from survey."""
+    survey = db.get_or_404(Survey, survey_id)
+    response_observing_system = db.get_or_404(
+        ResponseObservingSystem, response_observing_system_id
+    )
+    db.session.delete(response_observing_system)
+    db.session.commit()
+
+    return redirect(
+        url_for('obs.view_response_observing_systems', survey_id=survey.id),
+        code=303,
+    )

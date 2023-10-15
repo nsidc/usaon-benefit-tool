@@ -40,3 +40,17 @@ def view_response_data_products(survey_id: str):
         data_products=survey.response.data_products,
         sankey_series=data_products_sankey(survey.response),
     )
+
+
+@data_product_bp.route('/<int:response_data_product_id>', methods=['DELETE'])
+def delete_response_data_product(survey_id: int, response_data_product_id: int):
+    """Delete data product response object from survey."""
+    survey = db.get_or_404(Survey, survey_id)
+    response_data_product = db.get_or_404(ResponseDataProduct, response_data_product_id)
+    db.session.delete(response_data_product)
+    db.session.commit()
+
+    return redirect(
+        url_for('data_product.view_response_data_products', survey_id=survey.id),
+        code=303,
+    )

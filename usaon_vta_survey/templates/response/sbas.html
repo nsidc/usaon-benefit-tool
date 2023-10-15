@@ -1,7 +1,7 @@
 {% extends 'response/base.html' %}
 {% from 'bootstrap5/form.html' import render_form %}
 {% from 'bootstrap5/utils.html' import render_icon %}
-{% from 'macros/javascript_delete.j2' import add_javascript__delete %}
+{% from 'macros/javascript_remove.j2' import add_javascript__remove %}
 {% from 'macros/javascript_highcharts.j2' import add_javascript__highcharts %}
 
 
@@ -25,7 +25,15 @@
         </tr>
         {% for societal_benefit_area in response.societal_benefit_areas %}
           <tr>
-            <td>{{societal_benefit_area.societal_benefit_area_id}}</td>
+            <td>{{societal_benefit_area.societal_benefit_area_id}}
+            <a href="#" onclick="remove('{{url_for(
+                'sba.delete_response_sba',
+                survey_id=survey.id,
+                response_societal_benefit_area_id=societal_benefit_area.id,
+                        )}}'
+                        )">{{render_icon('file-minus-fill', color='danger')}}
+            </a>
+            </td>
             <td>
               {% if not societal_benefit_area.input_relationships %}
                 None
@@ -55,11 +63,11 @@
               </a>
               {% for input_relationship in societal_benefit_area.input_relationships %}
                 <li>
-                <a href="#" onclick="remove_relationship('{{url_for(
+                <a href="#" onclick="remove('{{url_for(
                     'application_societal_benefit_area.delete_response_application_societal_benefit_area_relationship',
                     survey_id=survey.id,
                     response_application_societal_benefit_area_id=input_relationship.id)}}'
-                    )">{{render_icon('file-minus-fill')}}
+                    )">{{render_icon('file-minus-fill', color='danger')}}
                 </a>
                 </li>
               {% endfor %}
@@ -86,5 +94,5 @@
       {{ add_javascript__highcharts(sankey_series) }}
     {% endif %}
   </div>
-  {{ add_javascript__delete() }}
+  {{ add_javascript__remove() }}
 {% endblock %}

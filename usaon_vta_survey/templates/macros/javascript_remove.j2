@@ -1,0 +1,15 @@
+{% macro add_javascript__remove() -%}
+  <script>
+    function remove(url, response) {
+      fetch(url, { method: 'DELETE'})
+          .then(response => {
+              if (response.ok && response.redirected) {
+                    location.assign(response.url)
+              } else {
+                    console.error(`Something unexpected happened with query: DELETE ${response.url}: ${response.body}`)
+              } 
+          })
+          .catch(error => console.error(error));
+        }
+  </script>
+{% endmacro  %}

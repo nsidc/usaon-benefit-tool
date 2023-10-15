@@ -1,9 +1,0 @@
-{% macro add_javascript__delete() -%}
-  <script>
-    function remove_relationship(url, response) {
-      fetch(url, { method: 'DELETE'})
-            .then(response => {location.assign(response.url)})
-          .catch(error => console.log(error));
-        }
-  </script>
-{% endmacro  %}
