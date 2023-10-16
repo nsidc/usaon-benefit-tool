@@ -3,14 +3,14 @@
 
 <!doctype html>
 <head>
-  <title>{% block title %}{% endblock %} - US AON VTA Survey</title>
+  <title>{% block title %}{% endblock %} - US AON Benefit Tool</title>
   {{ bootstrap.load_css() }}
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-    <h1>US AON Benefit Tool Survey System</h1>
+    <h1>US AON Benefit Tool</h1>
     <ul class="navbar-nav">
       {{ nav_buttons(current_user) }}
     </ul>
