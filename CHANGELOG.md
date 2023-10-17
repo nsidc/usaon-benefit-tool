@@ -1,3 +1,7 @@
+# v1.0.1 (2023-10-16)
+* Fix link on home page
+* Update VTA to Benefit tool in more places
+
 # v1.0.0 (2023-10-15)
 * Enable deleting response objects/cascading deletes
 
