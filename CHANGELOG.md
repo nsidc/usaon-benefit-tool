@@ -1,3 +1,6 @@
+# NEXT_VERSION
+* Bugfix: allow non-admin users to edit their profiles
+
 # v1.0.1 (2023-10-16)
 * Fix link on home page
 * Update VTA to Benefit tool in more places
