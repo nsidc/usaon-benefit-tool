@@ -16,7 +16,7 @@ from usaon_vta_survey.models.tables import User
 
 
 def _validate_role_change(user: User, form) -> None:
-    if not form.data['role'] == user.role_id and not current_user.role_id == 'admin':
+    if form.data['role'] != user.role and current_user.role_id != 'admin':
         raise RuntimeError("Only admins can edit users roles.")
 
 
