@@ -1,4 +1,4 @@
-# NEXT_VERSION
+# v1.0.2 (2023-10-26)
 * Bugfix: allow non-admin users to edit their profiles
 
 # v1.0.1 (2023-10-16)
