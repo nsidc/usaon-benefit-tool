@@ -1,3 +1,6 @@
+# v1.1.0 (2023-11-01)
+* Add description and links to the home page that will help users navigate the site
+
 # v1.0.2 (2023-10-26)
 * Bugfix: allow non-admin users to edit their profiles
 
