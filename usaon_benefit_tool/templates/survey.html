@@ -1,28 +1,50 @@
 {% extends 'base.html' %}
-
+{% from 'macros/javascript_highcharts.j2' import add_javascript__highcharts %}
 
 {% block content %}
 
-  <h2>{% block title %}Survey Title: {{survey.title}}{% endblock %}</h2>
-  <h4>Survey ID : {{survey.id}}</h4>
-
-  <i>Created: {{survey.created_timestamp}}</i>
-
-  <h3>Notes</h3>
+  <h2>{% block title %}Title: {{survey.title}}{% endblock %}</h2>
+  
+  <br>
+  <h3>Description</h3>
   <p>{{survey.description}}</p>
-
-  <h3>Response</h3>
 
   {% if survey.response_id %}
     <a href="{{url_for('response.view_response', survey_id=survey.id, _external=True)}}">
-      View response
+      View or edit response
     </a>
-    <p> Response by: {{ survey.response.created_by.email}} </p>
+    <p> Response created by: {{ survey.response.created_by.email}} </p>
   {% else %}
     <p>No response available.</p>
     <a href="{{url_for('response.view_response', survey_id=survey.id, _external=True)}}">
       Create response
     </a>
+
+  <br>
+  <h4>Diagram</h4>
+
+
+{% block content %}
+  {% include 'includes/highcharts.html' %}
+
+  {{super()}}
+
+  <p>Created: {{response.created_timestamp}}</p>
+  <p>Last updated: {{response.updated_timestamp}}</p>
+
+  {% if sankey_series == [] %}
+    <div>Please input at least one relationship to display diagram</div>
+  {% else %}
+    <figure class="highcharts-figure">
+      <div id="highcharts-container" />
+    </figure>
+    {{ add_javascript__highcharts(sankey_series) }}
+  {% endif %}
+
+  <br>
+  <i>ID : {{survey.id}}</i>
+
+  <i>Created: {{survey.created_timestamp}}</i>
 
     <p><i>
       IMPORTANT: Advise respondents that this application does not support concurrent or collaborative editing.
