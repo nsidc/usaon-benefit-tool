@@ -1,5 +1,4 @@
-# Database
-
+# Database setup
 
 It's expected that you'll set up a DB separately from the app. The app uses a proxy
 container to enable it to talk to an external DB through the hostname `db`.
