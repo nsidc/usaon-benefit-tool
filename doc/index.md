@@ -4,5 +4,5 @@ subtitle: "Software documentation"
 ---
 
 :::{.callout-important}
-For user documentation, please see https://usaon.org/evaluation-and-planning/benefit-tool
+For user documentation, please see [the official page for the Benefit Tool](https://usaon.org/evaluation-and-planning/benefit-tool).
 :::
