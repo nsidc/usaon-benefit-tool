@@ -1,6 +1,11 @@
+ci:
+  autoupdate_schedule: "monthly"
+  autoupdate_commit_msg: "chore: update pre-commit hooks"
+  autofix_prs: false # Comment "pre-commit.ci autofix" on a PR to trigger
+
+
 default_language_version:
   python: "python3.10"
-
 
 repos:
 
