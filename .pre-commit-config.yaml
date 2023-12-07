@@ -24,6 +24,22 @@ repos:
     hooks:
       - id: "black"
 
+  # Format and validate CFF. NOTE: pre-commit doesn't recognize CFF as YAML
+  # (https://github.com/pre-commit/identify/pull/435), so we may need to
+  # specify the prettier hook twice if we want to format other things and avoid
+  # a messy regex.
+  - repo: "https://github.com/pre-commit/mirrors-prettier"
+    rev: "v3.1.0"
+    hooks:
+      - id: "prettier"
+        files: "CITATION.cff"
+  - repo: "https://github.com/citation-file-format/cffconvert"
+    rev: "054bda51dbe278b3e86f27c890e3f3ac877d616c"
+    hooks:
+      - id: "validate-cff"
+        args:
+          - "--verbose"
+
   #  TODO: Enable vulture
   # - repo: "https://github.com/jendrikseipp/vulture"
   #   rev: "v2.7"
