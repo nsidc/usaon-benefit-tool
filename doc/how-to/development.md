@@ -12,7 +12,7 @@ ln -s docker-compose.dev.yml docker-compose.override.yml
 
 ### Define environment variables
 
-Define the environment variables as specified in [envvars.md](./envvars.md):
+Define the environment variables as specified in [envvars.md](/reference/envvars.md):
 
 ```bash
 export USAON_VTA_DB_HOST=...

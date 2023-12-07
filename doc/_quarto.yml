@@ -1,0 +1,40 @@
+project:
+  type: "website"
+
+
+website:
+  title: "US AON Benefit Tool"
+  site-url: "https://nsidc.github.io/usaon-benefit-tool"
+
+  repo-url: "https://github.com/nsidc/usaon-benefit-tool"
+  repo-actions:
+    - "edit"
+    - "source"
+    - "issue"
+
+
+  page-footer:
+    right: "This page is built with [Quarto](https://quarto.org/)."
+    left: "&copy;"
+
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - text: "How to"
+        href: "how-to/index.md"
+      - text: "Reference"
+        href: "reference/index.md"
+
+      # Separator:
+      - text: "---"
+
+      - text: "Notes"
+        href: "notes/index.md"
+
+
+format:
+  html:
+    from: "markdown+emoji"
+    theme: ["cosmo", "style.scss"]
+    toc: true
