@@ -1,0 +1,595 @@
+<mxfile host="app.diagrams.net" modified="2022-12-15T22:25:20.507Z" agent="5.0 (X11)" etag="Avpi__oS7D9Mms4BfCT1" version="20.7.3" type="device" pages="4">
+  <diagram id="JYvHmb7hiJtnykxBGkx0" name="Survey System Context">
+    <mxGraphModel dx="1188" dy="370" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="SXIEKRHDpayBBfr9AC7T-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="SXIEKRHDpayBBfr9AC7T-1" target="SXIEKRHDpayBBfr9AC7T-3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SXIEKRHDpayBBfr9AC7T-5" value="Administer Response Object Registry" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="SXIEKRHDpayBBfr9AC7T-4" vertex="1" connectable="0">
+          <mxGeometry x="0.6467" relative="1" as="geometry">
+            <mxPoint x="-180" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SXIEKRHDpayBBfr9AC7T-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="SXIEKRHDpayBBfr9AC7T-1" target="SXIEKRHDpayBBfr9AC7T-3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SXIEKRHDpayBBfr9AC7T-9" value="Administer new Application /&lt;br&gt;Societal Benefit Surveys" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="SXIEKRHDpayBBfr9AC7T-7" vertex="1" connectable="0">
+          <mxGeometry x="0.0273" y="3" relative="1" as="geometry">
+            <mxPoint x="-34" y="3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SXIEKRHDpayBBfr9AC7T-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="SXIEKRHDpayBBfr9AC7T-1" target="SXIEKRHDpayBBfr9AC7T-3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="140" y="280" as="sourcePoint" />
+            <mxPoint x="290" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SXIEKRHDpayBBfr9AC7T-18" value="Validate responses" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];spacingTop=7;" parent="SXIEKRHDpayBBfr9AC7T-17" vertex="1" connectable="0">
+          <mxGeometry x="-0.6082" y="-5" relative="1" as="geometry">
+            <mxPoint x="65" y="3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="Admin" c4Type="Person" c4Description="Administers and validates surveys. Administers the response object registry." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="SXIEKRHDpayBBfr9AC7T-1">
+          <mxCell style="html=1;fontSize=11;dashed=0;whiteSpace=wrap;fillColor=#083F75;strokeColor=#06315C;fontColor=#ffffff;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0]];resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="10" y="80" width="200" height="180" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="VTA Survey System" c4Type="Software System" c4Description="Allows for creation and completion of USAON Value Tree Analysis surveys." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="SXIEKRHDpayBBfr9AC7T-3">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#1061B0;fontColor=#ffffff;align=center;arcSize=10;strokeColor=#0D5091;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="430" y="305" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="[System Context] USAON Survey System" c4Type="ContainerScopeBoundary" c4Description="A context-level view of the USAON VTA Survey System" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;&lt;div style=&quot;text-align: left&quot;&gt;%c4Name%&lt;/div&gt;&lt;/b&gt;&lt;/font&gt;&lt;div style=&quot;text-align: left&quot;&gt;%c4Description%&lt;/div&gt;" id="SXIEKRHDpayBBfr9AC7T-6">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;metaEdit=1;allowArrows=0;resizable=1;rotatable=0;connectable=0;recursiveResize=0;expand=0;pointerEvents=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="10" y="770" width="260" height="40" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="SXIEKRHDpayBBfr9AC7T-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.25;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="SXIEKRHDpayBBfr9AC7T-8" target="SXIEKRHDpayBBfr9AC7T-3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SXIEKRHDpayBBfr9AC7T-25" value="Respond to Application&amp;nbsp; Surveys" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="SXIEKRHDpayBBfr9AC7T-24" vertex="1" connectable="0">
+          <mxGeometry x="0.0357" y="1" relative="1" as="geometry">
+            <mxPoint x="13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SXIEKRHDpayBBfr9AC7T-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.75;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.75;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="SXIEKRHDpayBBfr9AC7T-8" target="SXIEKRHDpayBBfr9AC7T-3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SXIEKRHDpayBBfr9AC7T-27" value="Respond to Societal Benefit Surveys" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="SXIEKRHDpayBBfr9AC7T-26" vertex="1" connectable="0">
+          <mxGeometry x="0.0974" y="-1" relative="1" as="geometry">
+            <mxPoint x="42" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="Expert" c4Type="Person" c4Description="A respondent to Application or Societal Benefit Survey(s)." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="SXIEKRHDpayBBfr9AC7T-8">
+          <mxCell style="html=1;fontSize=11;dashed=0;whiteSpace=wrap;fillColor=#083F75;strokeColor=#06315C;fontColor=#ffffff;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0]];resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="890" y="80" width="200" height="180" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="SXIEKRHDpayBBfr9AC7T-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="SXIEKRHDpayBBfr9AC7T-14" target="SXIEKRHDpayBBfr9AC7T-3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SXIEKRHDpayBBfr9AC7T-16" value="Produce VTA diagrams&lt;br&gt;from responses" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="SXIEKRHDpayBBfr9AC7T-15" vertex="1" connectable="0">
+          <mxGeometry x="0.74" y="2" relative="1" as="geometry">
+            <mxPoint x="-68" y="55" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="Analyst" c4Type="Person" c4Description="A producer of Value Tree Analysis Sankey Diagrams from survey data" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="SXIEKRHDpayBBfr9AC7T-14">
+          <mxCell style="html=1;fontSize=11;dashed=0;whiteSpace=wrap;fillColor=#083F75;strokeColor=#06315C;fontColor=#ffffff;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0]];resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="10" y="440" width="200" height="180" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="SXIEKRHDpayBBfr9AC7T-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="SXIEKRHDpayBBfr9AC7T-19" target="SXIEKRHDpayBBfr9AC7T-3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SXIEKRHDpayBBfr9AC7T-21" value="View VTA diagrams" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];spacing=2;spacingTop=-7;" parent="SXIEKRHDpayBBfr9AC7T-20" vertex="1" connectable="0">
+          <mxGeometry x="0.163" y="3" relative="1" as="geometry">
+            <mxPoint x="15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="Viewer" c4Type="Person" c4Description="Consumes visualizations produced within the USAON VTA Survey System" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="SXIEKRHDpayBBfr9AC7T-19">
+          <mxCell style="html=1;fontSize=11;dashed=0;whiteSpace=wrap;fillColor=#083F75;strokeColor=#06315C;fontColor=#ffffff;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0]];resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="890" y="440" width="200" height="180" as="geometry" />
+          </mxCell>
+        </object>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="8eUl7OJ8XqfmRrWuw4AO" name="Survey System Containers">
+    <mxGraphModel dx="1188" dy="370" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <object placeholders="1" c4Name="USAON Value Tree Analysis Survey System" c4Type="SystemScopeBoundary" c4Application="Software System" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;&lt;div style=&quot;text-align: left&quot;&gt;%c4Name%&lt;/div&gt;&lt;/b&gt;&lt;/font&gt;&lt;div style=&quot;text-align: left&quot;&gt;[%c4Application%]&lt;/div&gt;" id="8KHpPurIbAaRUkf83f5y-1">
+          <mxCell style="rounded=1;fontSize=11;whiteSpace=wrap;html=1;dashed=1;arcSize=20;fillColor=none;strokeColor=#666666;fontColor=#333333;labelBackgroundColor=none;align=left;verticalAlign=bottom;labelBorderColor=none;spacingTop=0;spacing=10;dashPattern=8 4;metaEdit=1;rotatable=0;perimeter=rectanglePerimeter;noLabel=0;labelPadding=0;allowArrows=0;connectable=0;expand=0;recursiveResize=0;editable=1;pointerEvents=0;absoluteArcSize=1;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="40" y="240" width="830" height="560" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="Survey DB" c4Container="Container" c4Technology="PostgreSQL" c4Description="Description of storage type container role/responsibility." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Type%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Container%:&amp;nbsp;%c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#E6E6E6&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="OoYqRgNYLa9QkeA4gNLZ-1">
+          <mxCell style="shape=cylinder3;size=15;whiteSpace=wrap;html=1;boundedLbl=1;rounded=0;labelBackgroundColor=none;fillColor=#23A2D9;fontSize=12;fontColor=#ffffff;align=center;strokeColor=#0E7DAD;metaEdit=1;points=[[0.5,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.5,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="335" y="630" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;" parent="1" source="OoYqRgNYLa9QkeA4gNLZ-30" target="OoYqRgNYLa9QkeA4gNLZ-12" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="795" y="306" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-14" value="Redirect users&lt;br&gt;for authentication" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="OoYqRgNYLa9QkeA4gNLZ-13" vertex="1" connectable="0">
+          <mxGeometry x="-0.3336" y="1" relative="1" as="geometry">
+            <mxPoint x="16" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="OoYqRgNYLa9QkeA4gNLZ-4" target="OoYqRgNYLa9QkeA4gNLZ-30" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="115" y="306" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-22" value="Respond to&lt;br&gt;Application&lt;br&gt;Surveys" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="OoYqRgNYLa9QkeA4gNLZ-10" vertex="1" connectable="0">
+          <mxGeometry x="-0.2625" relative="1" as="geometry">
+            <mxPoint y="-37" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;startArrow=none;startFill=0;endArrow=classic;endFill=1;entryX=0.121;entryY=0.04;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="OoYqRgNYLa9QkeA4gNLZ-4" target="OoYqRgNYLa9QkeA4gNLZ-30" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="207.48000000000002" y="260.4599999999999" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-24" value="Respond to&lt;br&gt;Societal Benefit&lt;br&gt;Surveys" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="OoYqRgNYLa9QkeA4gNLZ-23" vertex="1" connectable="0">
+          <mxGeometry x="-0.1275" y="-2" relative="1" as="geometry">
+            <mxPoint x="16" y="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="Expert" c4Type="Person" c4Description="..." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="OoYqRgNYLa9QkeA4gNLZ-4">
+          <mxCell style="html=1;fontSize=11;dashed=0;whiteSpace=wrap;fillColor=#083F75;strokeColor=#06315C;fontColor=#ffffff;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0]];resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="40" y="1" width="200" height="180" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="OoYqRgNYLa9QkeA4gNLZ-5" target="OoYqRgNYLa9QkeA4gNLZ-30" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="261" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-17" value="Create&lt;br&gt;surveys" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="OoYqRgNYLa9QkeA4gNLZ-8" vertex="1" connectable="0">
+          <mxGeometry x="0.35" y="-1" relative="1" as="geometry">
+            <mxPoint x="1" y="-14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.348;entryY=0.029;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=none;startFill=0;endArrow=classic;endFill=1;" parent="1" source="OoYqRgNYLa9QkeA4gNLZ-5" target="OoYqRgNYLa9QkeA4gNLZ-30" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="351.6400000000001" y="259.74" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-19" value="Manage &lt;br&gt;user roles" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="OoYqRgNYLa9QkeA4gNLZ-18" vertex="1" connectable="0">
+          <mxGeometry x="-0.1623" relative="1" as="geometry">
+            <mxPoint x="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.663;entryY=0.017;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=none;startFill=0;endArrow=classic;endFill=1;" parent="1" source="OoYqRgNYLa9QkeA4gNLZ-5" target="OoYqRgNYLa9QkeA4gNLZ-30" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="564.4800000000002" y="260.73" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-21" value="Solicit&lt;br&gt;Expert&lt;br&gt;Responses" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="OoYqRgNYLa9QkeA4gNLZ-20" vertex="1" connectable="0">
+          <mxGeometry x="0.1727" y="1" relative="1" as="geometry">
+            <mxPoint x="-15" y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.757;entryY=0.005;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=none;startFill=0;endArrow=classic;endFill=1;" parent="1" source="OoYqRgNYLa9QkeA4gNLZ-5" target="OoYqRgNYLa9QkeA4gNLZ-30" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="629.76" y="261" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-26" value="Validate responses,&lt;br&gt;curate Response&lt;br&gt;Library" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="OoYqRgNYLa9QkeA4gNLZ-25" vertex="1" connectable="0">
+          <mxGeometry x="-0.4573" y="-3" relative="1" as="geometry">
+            <mxPoint x="11" y="52" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;exitPerimeter=0;startArrow=none;startFill=0;endArrow=classic;endFill=1;entryX=0.257;entryY=0.029;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="OoYqRgNYLa9QkeA4gNLZ-5" target="OoYqRgNYLa9QkeA4gNLZ-30" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="290.0000000000001" y="261" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="290" y="136" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-28" value="Curate Response&lt;br&gt;Object Registry" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];spacingTop=5;" parent="OoYqRgNYLa9QkeA4gNLZ-27" vertex="1" connectable="0">
+          <mxGeometry x="0.1488" y="1" relative="1" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="Admin" c4Type="Person" c4Description="..." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="OoYqRgNYLa9QkeA4gNLZ-5">
+          <mxCell style="html=1;fontSize=11;dashed=0;whiteSpace=wrap;fillColor=#083F75;strokeColor=#06315C;fontColor=#ffffff;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0]];resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="355" y="1" width="200" height="180" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.964;entryY=0.005;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="OoYqRgNYLa9QkeA4gNLZ-6" target="OoYqRgNYLa9QkeA4gNLZ-30" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769.8400000000001" y="260.73" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-29" value="Select responses&lt;br&gt;for Analyses" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="OoYqRgNYLa9QkeA4gNLZ-11" vertex="1" connectable="0">
+          <mxGeometry x="-0.1813" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="Analyst" c4Type="Person" c4Description="..." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="OoYqRgNYLa9QkeA4gNLZ-6">
+          <mxCell style="html=1;fontSize=11;dashed=0;whiteSpace=wrap;fillColor=#083F75;strokeColor=#06315C;fontColor=#ffffff;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0]];resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="670" y="1" width="200" height="180" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;startArrow=classic;startFill=1;endArrow=none;endFill=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="OoYqRgNYLa9QkeA4gNLZ-12" target="OoYqRgNYLa9QkeA4gNLZ-31" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="960" y="111" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OoYqRgNYLa9QkeA4gNLZ-16" value="Log in to&lt;br&gt;authenticate" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="OoYqRgNYLa9QkeA4gNLZ-15" vertex="1" connectable="0">
+          <mxGeometry x="0.0202" relative="1" as="geometry">
+            <mxPoint y="-13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="Google Single Sign On" c4Type="External Software System" c4Description="Allows users to authenticate (prove who they are) without us having to store their credentials or PII." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="OoYqRgNYLa9QkeA4gNLZ-12">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#8C8496;fontColor=#ffffff;align=center;arcSize=10;strokeColor=#736782;metaEdit=1;resizable=1;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="910" y="246" width="150" height="154" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="Web GUI" c4Container="Container" c4Technology="Flask (Python) or React (Typescript)" c4Description="Handles ALL user interactions to do with Value Tree Analysis: Creating surveys, collecting responses, validating responses, and analyzing responses.&#xa;&#xa;This component may be served directly by the API (e.g. Flask app) depending on the degree of client-side interaction." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Type%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Container%:&amp;nbsp;%c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#E6E6E6&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="OoYqRgNYLa9QkeA4gNLZ-30">
+          <mxCell style="shape=mxgraph.c4.webBrowserContainer2;whiteSpace=wrap;html=1;boundedLbl=1;rounded=0;labelBackgroundColor=none;strokeColor=#118ACD;fillColor=#23A2D9;strokeColor=#118ACD;strokeColor2=#0E7DAD;fontSize=12;fontColor=#ffffff;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.5,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];resizable=1;" parent="1" vertex="1">
+            <mxGeometry x="115" y="261" width="680" height="129" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="All users" c4Type="Person" c4Description="" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="OoYqRgNYLa9QkeA4gNLZ-31">
+          <mxCell style="html=1;fontSize=11;dashed=0;whiteSpace=wrap;fillColor=#083F75;strokeColor=#06315C;fontColor=#ffffff;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0]];resizable=1;" parent="1" vertex="1">
+            <mxGeometry x="955" y="51" width="60" height="80" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="[Containers] USAON VTA Survey System" c4Type="ContainerDiagramTitle" c4Description="Description of &quot;containers&quot; within the USAON VTA Survey System" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;&lt;div style=&quot;text-align: left&quot;&gt;%c4Name%&lt;/div&gt;&lt;/b&gt;&lt;/font&gt;&lt;div style=&quot;text-align: left&quot;&gt;%c4Description%&lt;/div&gt;" id="OoYqRgNYLa9QkeA4gNLZ-33">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;metaEdit=1;allowArrows=0;resizable=1;rotatable=0;connectable=0;recursiveResize=0;expand=0;pointerEvents=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="10" y="800" width="380" height="40" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="-kOgEa6x1SJWl7xELMyl-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;endArrow=classic;endFill=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="-kOgEa6x1SJWl7xELMyl-1" target="OoYqRgNYLa9QkeA4gNLZ-1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-kOgEa6x1SJWl7xELMyl-3" value="Create, read, update, delete" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];spacingTop=0;" parent="-kOgEa6x1SJWl7xELMyl-2" vertex="1" connectable="0">
+          <mxGeometry x="-0.1611" relative="1" as="geometry">
+            <mxPoint y="11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-kOgEa6x1SJWl7xELMyl-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;endArrow=classic;endFill=1;dashed=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="-kOgEa6x1SJWl7xELMyl-1" target="OoYqRgNYLa9QkeA4gNLZ-30" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-kOgEa6x1SJWl7xELMyl-5" value="HTTP Requests" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="-kOgEa6x1SJWl7xELMyl-4" vertex="1" connectable="0">
+          <mxGeometry x="0.35" y="1" relative="1" as="geometry">
+            <mxPoint x="1" y="14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GUb4flFDx3lzFAhnk8gi-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;endArrow=classic;endFill=1;" parent="1" source="-kOgEa6x1SJWl7xELMyl-1" target="OoYqRgNYLa9QkeA4gNLZ-12" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GUb4flFDx3lzFAhnk8gi-2" value="Authentication dance" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="GUb4flFDx3lzFAhnk8gi-1" vertex="1" connectable="0">
+          <mxGeometry x="-0.011" y="-4" relative="1" as="geometry">
+            <mxPoint x="-17" y="-4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="Survey API" c4Type="Container" c4Technology="Python (e.g. FastAPI/Flask + SQLAlchemy)" c4Description="Understands the data model. Converts user interactions (e.g. submit Response or validate Survey, or create Analysis) into records in the database." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#E6E6E6&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-kOgEa6x1SJWl7xELMyl-1">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;labelBackgroundColor=none;fillColor=#23A2D9;fontColor=#ffffff;align=center;arcSize=10;strokeColor=#0E7DAD;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="335" y="440" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="xcPEvrOD1L_9xmLPiqGM" name="Survey API Components">
+    <mxGraphModel dx="1188" dy="370" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <object placeholders="1" c4Name="[Components] Survey API" c4Type="ContainerDiagramTitle" c4Description="Component-level view of Survey API" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;&lt;div style=&quot;text-align: left&quot;&gt;%c4Name%&lt;/div&gt;&lt;/b&gt;&lt;/font&gt;&lt;div style=&quot;text-align: left&quot;&gt;%c4Description%&lt;/div&gt;" id="F_J93c1k4X-SJRGMN5PN-1">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;metaEdit=1;allowArrows=0;resizable=1;rotatable=0;connectable=0;recursiveResize=0;expand=0;pointerEvents=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="10" y="800" width="260" height="40" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Survey API" c4Type="ContainerScopeBoundary" c4Application="Container" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;&lt;div style=&quot;text-align: left&quot;&gt;%c4Name%&lt;/div&gt;&lt;/b&gt;&lt;/font&gt;&lt;div style=&quot;text-align: left&quot;&gt;[%c4Application%]&lt;/div&gt;" id="F_J93c1k4X-SJRGMN5PN-3">
+          <mxCell style="rounded=1;fontSize=11;whiteSpace=wrap;html=1;dashed=1;arcSize=20;fillColor=none;strokeColor=#666666;fontColor=#333333;labelBackgroundColor=none;align=left;verticalAlign=bottom;labelBorderColor=none;spacingTop=0;spacing=10;dashPattern=8 4;metaEdit=1;rotatable=0;perimeter=rectanglePerimeter;noLabel=0;labelPadding=0;allowArrows=0;connectable=0;expand=0;recursiveResize=0;editable=1;pointerEvents=0;absoluteArcSize=1;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="40" y="160" width="760" height="620" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="-ykP13_0jYQWJBa37Lls-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.234;exitY=0.982;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;endArrow=classic;endFill=1;" parent="1" source="-ykP13_0jYQWJBa37Lls-1" target="-ykP13_0jYQWJBa37Lls-4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-ykP13_0jYQWJBa37Lls-7" value="Admin:&lt;br&gt;Configure roles,&lt;br&gt;Authorize users" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="-ykP13_0jYQWJBa37Lls-6" vertex="1" connectable="0">
+          <mxGeometry x="0.0215" relative="1" as="geometry">
+            <mxPoint y="-14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-ykP13_0jYQWJBa37Lls-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;endArrow=classic;endFill=1;exitX=0.678;exitY=0.976;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="-ykP13_0jYQWJBa37Lls-1" target="-ykP13_0jYQWJBa37Lls-8" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="540" y="120" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-ykP13_0jYQWJBa37Lls-10" value="Admin: Curate&lt;br&gt;Response Objects" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="-ykP13_0jYQWJBa37Lls-9" vertex="1" connectable="0">
+          <mxGeometry x="-0.3264" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4MTK6sr7jdqkoW7NMWpE-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;endArrow=none;endFill=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="kcgqFyCrdJywsYL4o7GL-1" target="4MTK6sr7jdqkoW7NMWpE-2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="210" y="570" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="240" y="560" />
+              <mxPoint x="950" y="560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4MTK6sr7jdqkoW7NMWpE-4" value="Authentication dance" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="4MTK6sr7jdqkoW7NMWpE-3" vertex="1" connectable="0">
+          <mxGeometry x="-0.1382" relative="1" as="geometry">
+            <mxPoint x="294" y="-180" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kcgqFyCrdJywsYL4o7GL-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;endArrow=none;endFill=0;" parent="1" source="-ykP13_0jYQWJBa37Lls-1" target="4MTK6sr7jdqkoW7NMWpE-2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kcgqFyCrdJywsYL4o7GL-5" value="Authentication dance" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="kcgqFyCrdJywsYL4o7GL-4" vertex="1" connectable="0">
+          <mxGeometry x="0.2635" y="1" relative="1" as="geometry">
+            <mxPoint x="10" y="26" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Type="Web GUI" c4Container="Container" c4Technology="HTML / Javascript" c4Description="May be HTML served by API component or an independent Javascript app (e.g. React).&#xa;Communicates by HTTP requests to API endpoints in either case." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Type%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Container%:&amp;nbsp;%c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#E6E6E6&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-ykP13_0jYQWJBa37Lls-1">
+          <mxCell style="shape=mxgraph.c4.webBrowserContainer2;whiteSpace=wrap;html=1;boundedLbl=1;rounded=0;labelBackgroundColor=none;strokeColor=#118ACD;fillColor=#23A2D9;strokeColor=#118ACD;strokeColor2=#0E7DAD;fontSize=12;fontColor=#ffffff;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.5,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];resizable=1;" parent="1" vertex="1">
+            <mxGeometry x="80" y="20" width="680" height="90" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="29sEYfbbjDKsj3eEmyyi-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;startArrow=classic;startFill=1;endArrow=classic;endFill=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="-ykP13_0jYQWJBa37Lls-2" target="29sEYfbbjDKsj3eEmyyi-21" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="800" y="400.17647058823536" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4MTK6sr7jdqkoW7NMWpE-1" value="Init, create,&lt;br&gt;read, update,&lt;br&gt;delete" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="29sEYfbbjDKsj3eEmyyi-5" vertex="1" connectable="0">
+          <mxGeometry x="0.2848" y="-1" relative="1" as="geometry">
+            <mxPoint x="21" y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Type="Survey DB" c4Container="Container" c4Technology="PostgreSQL" c4Description="Remembers state of RBAC, Response Object Registry, Survey Response Library, and Analysis Library." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Type%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Container%:&amp;nbsp;%c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#E6E6E6&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-ykP13_0jYQWJBa37Lls-2">
+          <mxCell style="shape=cylinder3;size=15;whiteSpace=wrap;html=1;boundedLbl=1;rounded=0;labelBackgroundColor=none;fillColor=#8C8496;fontSize=12;fontColor=#ffffff;align=center;strokeColor=#0E7DAD;metaEdit=1;points=[[0.5,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.5,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="830" y="580" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Role Based Access Control (RBAC)" c4Type="Component" c4Technology="Python" c4Description="Knows about roles (Admin, Expert, Analyst). Allows viewing and modifying role(s) of users. Enables all other components to authorize users by role." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-ykP13_0jYQWJBa37Lls-4">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="120" y="200" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="-ykP13_0jYQWJBa37Lls-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.853;entryY=1.022;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;endArrow=classic;endFill=1;" parent="1" source="-ykP13_0jYQWJBa37Lls-8" target="-ykP13_0jYQWJBa37Lls-1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-ykP13_0jYQWJBa37Lls-12" value="Expert: Add or use&lt;br&gt;Response Objects&lt;br&gt;in Response" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="-ykP13_0jYQWJBa37Lls-11" vertex="1" connectable="0">
+          <mxGeometry x="0.2567" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="Response Object Registry" c4Type="Component" c4Technology="Python" c4Description="Knows about response object categories (Observing System, Data Product, Application, Societal Benefit Area). Allows curation of pre-defined response objects." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-ykP13_0jYQWJBa37Lls-8">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="480" y="200" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="29sEYfbbjDKsj3eEmyyi-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;startArrow=classic;startFill=1;endArrow=classic;endFill=1;entryX=0.571;entryY=1.013;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="-ykP13_0jYQWJBa37Lls-13" target="-ykP13_0jYQWJBa37Lls-1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="590" y="400" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="660" y="340" />
+              <mxPoint x="468" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="29sEYfbbjDKsj3eEmyyi-20" value="Admin:&lt;br&gt;Solicit Response from&lt;br&gt;Expert / Expert Cohort,&lt;br&gt;Validate Responses" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="29sEYfbbjDKsj3eEmyyi-1" vertex="1" connectable="0">
+          <mxGeometry x="-0.8016" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="29sEYfbbjDKsj3eEmyyi-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.532;entryY=1.033;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;endArrow=classic;endFill=1;" parent="1" source="-ykP13_0jYQWJBa37Lls-13" target="-ykP13_0jYQWJBa37Lls-1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="540" y="370" />
+              <mxPoint x="442" y="370" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="29sEYfbbjDKsj3eEmyyi-13" value="Expert /  Expert Cohort:&lt;br&gt;Submit Response" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="29sEYfbbjDKsj3eEmyyi-12" vertex="1" connectable="0">
+          <mxGeometry x="-0.5265" y="-1" relative="1" as="geometry">
+            <mxPoint x="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="29sEYfbbjDKsj3eEmyyi-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;endArrow=none;endFill=0;" parent="1" source="-ykP13_0jYQWJBa37Lls-13" target="-ykP13_0jYQWJBa37Lls-8" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="760" y="500" />
+              <mxPoint x="760" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="29sEYfbbjDKsj3eEmyyi-17" value="Expert:&lt;br&gt;Search or create&lt;br&gt;Response Objects" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="29sEYfbbjDKsj3eEmyyi-16" vertex="1" connectable="0">
+          <mxGeometry x="0.1625" y="2" relative="1" as="geometry">
+            <mxPoint x="12" y="69" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="Survey Response Library" c4Type="Component" c4Technology="Python" c4Description="Knows about Responses to Application and Societal Benefit Surveys solicited and completed. Allows browsing by tags and titles." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-ykP13_0jYQWJBa37Lls-13">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="480" y="400" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="29sEYfbbjDKsj3eEmyyi-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;startArrow=classic;startFill=1;endArrow=classic;endFill=1;entryX=0.465;entryY=1.033;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="29sEYfbbjDKsj3eEmyyi-6" target="-ykP13_0jYQWJBa37Lls-1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="430" y="140" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="300" y="370" />
+              <mxPoint x="396" y="370" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="29sEYfbbjDKsj3eEmyyi-8" value="Analyst: Create&lt;br&gt;new Analysis" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="29sEYfbbjDKsj3eEmyyi-7" vertex="1" connectable="0">
+          <mxGeometry x="-0.5131" y="2" relative="1" as="geometry">
+            <mxPoint x="-18" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="29sEYfbbjDKsj3eEmyyi-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.422;entryY=1.022;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;endArrow=classic;endFill=1;" parent="1" source="29sEYfbbjDKsj3eEmyyi-6" target="-ykP13_0jYQWJBa37Lls-1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="340" />
+              <mxPoint x="367" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="29sEYfbbjDKsj3eEmyyi-10" value="User: View Analysis" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="29sEYfbbjDKsj3eEmyyi-9" vertex="1" connectable="0">
+          <mxGeometry x="-0.7044" y="1" relative="1" as="geometry">
+            <mxPoint x="40" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="29sEYfbbjDKsj3eEmyyi-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;endArrow=none;endFill=0;" parent="1" source="29sEYfbbjDKsj3eEmyyi-6" target="-ykP13_0jYQWJBa37Lls-13" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="240" y="540" />
+              <mxPoint x="600" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="29sEYfbbjDKsj3eEmyyi-19" value="Analyst: Browse Responses for Analysis" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="29sEYfbbjDKsj3eEmyyi-18" vertex="1" connectable="0">
+          <mxGeometry x="0.175" y="1" relative="1" as="geometry">
+            <mxPoint x="-35" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="Analysis Library" c4Type="Component" c4Technology="Python" c4Description="Enables browsing and creation of analyses. An analysis consists of a collection of Responses." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="29sEYfbbjDKsj3eEmyyi-6">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="120" y="400" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Data Model (ORM)" c4Type="Component" c4Technology="Python (SQLAlchemy)" c4Description="Knows about database schema. Enables all other components to interact with the database." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="29sEYfbbjDKsj3eEmyyi-21">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="480" y="580" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Google Single Sign On" c4Type="External Software System" c4Description="Allows users to authenticate (prove who they are) without us having to store their credentials or PII." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="4MTK6sr7jdqkoW7NMWpE-2">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#8C8496;fontColor=#ffffff;align=center;arcSize=10;strokeColor=#736782;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="830" y="160" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Authentication" c4Type="Component" c4Technology="Python (OAuthLib)" c4Description="Knows how to do the OAuth / OpenID authentication dance with Google. Keeps track of which users have authorized with this app. DOES NOT store any PII except the user identifier (e-mail address)." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="kcgqFyCrdJywsYL4o7GL-1">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="120" y="580" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="dkyvwnBiW_iq2VhVX2JP" name="Web GUI Components">
+    <mxGraphModel dx="1188" dy="370" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <object placeholders="1" c4Name="[Components] Web GUI" c4Type="ContainerDiagramTitle" c4Description="Component-level view of Web GUI. NOTE: Unclear if the GUI will be part of the API component or not." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;&lt;div style=&quot;text-align: left&quot;&gt;%c4Name%&lt;/div&gt;&lt;/b&gt;&lt;/font&gt;&lt;div style=&quot;text-align: left&quot;&gt;%c4Description%&lt;/div&gt;" id="oPv-wGb2fcCy11gOg40E-1">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;metaEdit=1;allowArrows=0;resizable=1;rotatable=0;connectable=0;recursiveResize=0;expand=0;pointerEvents=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="10" y="800" width="550" height="40" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Web GUI" c4Type="ContainerScopeBoundary" c4Application="Container" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;&lt;div style=&quot;text-align: left&quot;&gt;%c4Name%&lt;/div&gt;&lt;/b&gt;&lt;/font&gt;&lt;div style=&quot;text-align: left&quot;&gt;[%c4Application%]&lt;/div&gt;" id="DW0QpJEit_fmoj6OJXB3-1">
+          <mxCell style="rounded=1;fontSize=11;whiteSpace=wrap;html=1;dashed=1;arcSize=20;fillColor=none;strokeColor=#666666;fontColor=#333333;labelBackgroundColor=none;align=left;verticalAlign=bottom;labelBorderColor=none;spacingTop=0;spacing=10;dashPattern=8 4;metaEdit=1;rotatable=0;perimeter=rectanglePerimeter;noLabel=0;labelPadding=0;allowArrows=0;connectable=0;expand=0;recursiveResize=0;editable=1;pointerEvents=0;absoluteArcSize=1;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="40" y="160" width="760" height="620" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="-gF09XlJVdcGOfKskAlm-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;endArrow=classic;endFill=1;" parent="1" source="DW0QpJEit_fmoj6OJXB3-2" target="DW0QpJEit_fmoj6OJXB3-4" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="380" y="590" />
+              <mxPoint x="380" y="300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-gF09XlJVdcGOfKskAlm-2" value="Expert:&lt;br&gt;Visualize&lt;br&gt;Response" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="-gF09XlJVdcGOfKskAlm-1" vertex="1" connectable="0">
+          <mxGeometry x="0.4682" y="-3" relative="1" as="geometry">
+            <mxPoint x="37" y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-gF09XlJVdcGOfKskAlm-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;endArrow=classic;endFill=1;" parent="1" source="DW0QpJEit_fmoj6OJXB3-2" target="DW0QpJEit_fmoj6OJXB3-5" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="400" y="620" />
+              <mxPoint x="400" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-gF09XlJVdcGOfKskAlm-4" value="Analyst:&lt;br&gt;Visualize&lt;br&gt;Analysis" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="-gF09XlJVdcGOfKskAlm-3" vertex="1" connectable="0">
+          <mxGeometry x="0.1" relative="1" as="geometry">
+            <mxPoint x="30" y="-46" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="Sankey Diagrams" c4Type="Component" c4Technology="Javascript (HighCharts)" c4Description="Displays data as Sankey Diagrams. Can display either Analyses or individual Responses or portions of Responses during the data entry process." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="DW0QpJEit_fmoj6OJXB3-2">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="120" y="560" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="W8E8OfaxwK0xsuPRr2En-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;endArrow=classic;endFill=1;" parent="1" source="DW0QpJEit_fmoj6OJXB3-4" target="W8E8OfaxwK0xsuPRr2En-1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="600" y="200" />
+              <mxPoint x="240" y="200" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="W8E8OfaxwK0xsuPRr2En-3" value="Expert: Use Objects, create new Objects" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="W8E8OfaxwK0xsuPRr2En-2" vertex="1" connectable="0">
+          <mxGeometry x="-0.1227" y="2" relative="1" as="geometry">
+            <mxPoint x="-17" y="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="Response Forms" c4Type="Component" c4Technology="Python (flask-wtf) or JS (React)" c4Description="Displays Responses. Displays input forms for completing a Response. *Authorized*: Admin (can browse all Responses), Expert (browse/submit own Responses)" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="DW0QpJEit_fmoj6OJXB3-4">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="480" y="240" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Analyses" c4Type="Component" c4Technology="Python (flask-wtf) or JS (React)" c4Description="Displays Analysis Library. Displays input forms for generating Analyses by selecting Responses from Response Library. *Authorized*: Admin (browse), Analyst (submit)" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="DW0QpJEit_fmoj6OJXB3-5">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="480" y="400" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Survey" c4Type="Component" c4Technology="Python (flask-wtf) or JS (React)" c4Description="Displays all Surveys. Displays input forms for soliciting Responses by selecting an Expert respondent and an Application from the Registry. *Authorized*: Admin" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="aefv8pqzS7J5Er31trOE-1">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="480" y="560" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="-gF09XlJVdcGOfKskAlm-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jumpStyle=none;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;startArrow=classic;startFill=1;endArrow=classic;endFill=1;" parent="1" source="-gF09XlJVdcGOfKskAlm-5" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="800" y="260" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="960" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-gF09XlJVdcGOfKskAlm-9" value="Fetch data" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="-gF09XlJVdcGOfKskAlm-8" vertex="1" connectable="0">
+          <mxGeometry x="0.0074" relative="1" as="geometry">
+            <mxPoint x="-14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="Survey API" c4Type="Software System" c4Description="" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-gF09XlJVdcGOfKskAlm-5">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#8C8496;fontColor=#ffffff;align=center;arcSize=10;strokeColor=#736782;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="840" y="370" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Roles" c4Type="Component" c4Technology="Python (flask-wtf) or JS (React)" c4Description="Displays user roles. Displays input forms for authorizing users to roles. *Authorized*: Admin" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="jB-M64IDzhQ5ZUc8_iEw-1">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="120" y="400" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Object Registry" c4Type="Component" c4Technology="Python (flask-wtf) or JS (React)" c4Description="Displays registered Response Objects. Allows creation / modification of Response Objects. *Authorized*: Admin, Expert (via Response component)" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="W8E8OfaxwK0xsuPRr2En-1">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="1" vertex="1">
+            <mxGeometry x="120" y="240" width="240" height="120" as="geometry" />
+          </mxCell>
+        </object>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

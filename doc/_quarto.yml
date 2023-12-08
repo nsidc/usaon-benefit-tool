@@ -6,7 +6,7 @@ website:
   title: "US AON Benefit Tool"
   site-url: "https://nsidc.github.io/usaon-benefit-tool"
 
-  repo-url: "https://github.com/nsidc/usaon-benefit-tool"
+  repo-url: &repo-url "https://github.com/nsidc/usaon-benefit-tool"
   repo-actions:
     - "edit"
     - "source"
@@ -20,11 +20,16 @@ website:
   sidebar:
     style: "docked"
     search: true
+    tools:
+      - icon: "github"
+        href: *repo-url
     contents:
       - text: "How to"
         href: "how-to/index.md"
+        contents: "how-to/*.md"
       - text: "Reference"
         href: "reference/index.md"
+        contents: "reference/*.md"
 
       # Separator:
       - text: "---"
