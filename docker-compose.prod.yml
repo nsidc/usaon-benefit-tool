@@ -1,11 +1,11 @@
 version: '3.7'
 
 networks:
-  usaon-vta:
+  usaon-benefit-tool:
 
 x-base: &base
   networks:
-    - "usaon-vta"
+    - "usaon-benefit-tool"
   restart: "always"
   logging:
     options:
@@ -14,18 +14,18 @@ x-base: &base
 
 
 services:
-  usaon-vta-survey:
+  usaon-benefit-tool:
     <<: *base
-    image: "nsidc/usaon-vta-survey:${USAON_VTA_SURVEY_VERSION:?USAON_VTA_SURVEY_VERSION must be set}"
+    image: "nsidc/usaon-benefit-tool:${USAON_BENEFIT_TOOL_VERSION:?USAON_BENEFIT_TOOL_VERSION must be set}"
     environment:
       # Use the proxy container to talk to the DB:
-      - "USAON_VTA_DB_HOST=db"
-      - "USAON_VTA_DB_PORT=5432"
-      - "USAON_VTA_DB_USER=${USAON_VTA_DB_USER:?USAON_VTA_DB_USER must be set}"
-      - "USAON_VTA_DB_PASSWORD=${USAON_VTA_DB_PASSWORD:?USAON_VTA_DB_PASSWORD must be set}"
+      - "USAON_BENEFIT_TOOL_DB_HOST=db"
+      - "USAON_BENEFIT_TOOL_DB_PORT=5432"
+      - "USAON_BENEFIT_TOOL_DB_USER=${USAON_BENEFIT_TOOL_DB_USER:?USAON_BENEFIT_TOOL_DB_USER must be set}"
+      - "USAON_BENEFIT_TOOL_DB_PASSWORD=${USAON_BENEFIT_TOOL_DB_PASSWORD:?USAON_BENEFIT_TOOL_DB_PASSWORD must be set}"
       # Creds for talking to Google:
-      - "USAON_VTA_GOOGLE_CLIENT_ID=${USAON_VTA_GOOGLE_CLIENT_ID:?USAON_VTA_GOOGLE_CLIENT_ID must be set}"
-      - "USAON_VTA_GOOGLE_CLIENT_SECRET=${USAON_VTA_GOOGLE_CLIENT_SECRET:?USAON_VTA_GOOGLE_CLIENT_SECRET must be set}"
+      - "USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID=${USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID:?USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID must be set}"
+      - "USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET=${USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET:?USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET must be set}"
       # Needed for secure session management:
       - "FLASK_SECRET_KEY=${FLASK_SECRET_KEY:?FLASK_SECRET_KEY must be set}"
 
@@ -39,7 +39,7 @@ services:
       - "./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"
     environment:
       # cname
-      - "BACKEND_HOST=${USAON_VTA_DB_HOST:?USAON_VTA_DB_HOST must be set}"
+      - "BACKEND_HOST=${USAON_BENEFIT_TOOL_DB_HOST:?USAON_BENEFIT_TOOL_DB_HOST must be set}"
       # 5432
-      - "BACKEND_PORT=${USAON_VTA_DB_PORT:?USAON_VTA_DB_PORT must be set}"
+      - "BACKEND_PORT=${USAON_BENEFIT_TOOL_DB_PORT:?USAON_BENEFIT_TOOL_DB_PORT must be set}"
       - "FRONTEND_PORT=5432"

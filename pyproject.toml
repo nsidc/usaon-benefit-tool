@@ -37,11 +37,11 @@ ignore = [
 
 [tool.ruff.per-file-ignores]
 # E501: Line too long. Long strings, e.g. URLs, are common in config.
-"usaon_vta_survey/models/tables.py" = ["A003"]
+"usaon_benefit_tool/models/tables.py" = ["A003"]
 "tasks/format.py" = ["A001"]
-"usaon_vta_survey/forms.py" = ["N802"]
-"usaon_vta_survey/routes/__init__.py" = ["F401", "I001"]
-"usaon_vta_survey/__init__.py" = ["E501"]
+"usaon_benefit_tool/forms.py" = ["N802"]
+"usaon_benefit_tool/routes/__init__.py" = ["F401", "I001"]
+"usaon_benefit_tool/__init__.py" = ["E501"]
 
 [tool.ruff.isort]
 known-third-party = ["luigi"]
@@ -58,7 +58,7 @@ commit = false
 tag = false
 
 [[tool.bumpversion.files]]
-filename = "usaon_vta_survey/constants/version.py"
+filename = "usaon_benefit_tool/constants/version.py"
 search = 'VERSION = "{current_version}"'
 replace = 'VERSION = "{new_version}"'
 
@@ -84,5 +84,5 @@ replace = "v{new_version} ({now:%Y-%m-%d})"
 
 [[tool.bumpversion.files]]
 filename = "VERSION.env"
-search = 'export USAON_VTA_SURVEY_VERSION="v{current_version}"'
-replace = 'export USAON_VTA_SURVEY_VERSION="v{new_version}"'
+search = 'export USAON_BENEFIT_TOOL_VERSION="v{current_version}"'
+replace = 'export USAON_BENEFIT_TOOL_VERSION="v{new_version}"'

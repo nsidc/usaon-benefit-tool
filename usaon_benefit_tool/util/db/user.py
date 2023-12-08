@@ -1,5 +1,5 @@
-from usaon_vta_survey import db
-from usaon_vta_survey.models.tables import User
+from usaon_benefit_tool import db
+from usaon_benefit_tool.models.tables import User
 
 
 def ensure_user_exists(google_json: dict) -> User:

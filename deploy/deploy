@@ -6,7 +6,7 @@ set -euo pipefail
 source VERSION.env
 
 # TODO: How to genericize this? These envvars can't go in the Git repository.
-# At minimum, we should rename envvars.sh to usaon-vta-survey.sh.
+# At minimum, we should rename envvars.sh to usaon-benefit-tool.sh.
 source /etc/profile.d/envvars.sh
 
 # Ensure the production config is present

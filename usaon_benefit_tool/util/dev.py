@@ -1,4 +1,4 @@
-from usaon_vta_survey.models.tables import User
+from usaon_benefit_tool.models.tables import User
 
 # This user will be used when login is disabled. It will be inserted if login is
 # disabled at init time.

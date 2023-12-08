@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-from usaon_vta_survey.models.tables import User
+from usaon_benefit_tool.models.tables import User
 
 users_bp = Blueprint('users', __name__, url_prefix='/users')
 

@@ -1,4 +1,4 @@
-name: usaon-vta-survey
+name: usaon-benefit-tool
 channels:
   - conda-forge
   - nodefaults

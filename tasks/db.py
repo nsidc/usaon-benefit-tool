@@ -13,8 +13,8 @@ def init(ctx, load=True):
         )
         return
 
-    from usaon_vta_survey import create_app
-    from usaon_vta_survey.util.db.setup import recreate_tables as recreate_tables_
+    from usaon_benefit_tool import create_app
+    from usaon_benefit_tool.util.db.setup import recreate_tables as recreate_tables_
 
     app = create_app()
 
@@ -38,8 +38,8 @@ def load_reference_data(ctx):
         )
         return
 
-    from usaon_vta_survey import create_app
-    from usaon_vta_survey.util.db.setup import populate_reference_data
+    from usaon_benefit_tool import create_app
+    from usaon_benefit_tool.util.db.setup import populate_reference_data
 
     app = create_app()
 

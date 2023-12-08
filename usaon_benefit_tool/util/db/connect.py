@@ -3,7 +3,7 @@ from functools import cache
 
 from flask import Flask
 
-from usaon_vta_survey.util.envvar import envvar_is_true
+from usaon_benefit_tool.util.envvar import envvar_is_true
 
 
 @cache
@@ -13,10 +13,10 @@ def db_connstr(app: Flask) -> str:
     If the app is not in production mode, use SQLite; otherwise look at envvars for
     connection info.
 
-    TODO: Get all db connection info from _one_ envvar: USAON_VTA_DB_CONNSTR. If not
-    provided, use temp path.
+    TODO: Get all db connection info from _one_ envvar: USAON_BENEFIT_TOOL_DB_CONNSTR.
+    If not provided, use temp path.
     """
-    sqlite_db = envvar_is_true('USAON_VTA_DB_SQLITE')
+    sqlite_db = envvar_is_true('USAON_BENEFIT_TOOL_DB_SQLITE')
 
     if sqlite_db:
         if not (app.config["TESTING"] or app.config["DEBUG"]):
@@ -30,10 +30,10 @@ def db_connstr(app: Flask) -> str:
         )
         return connstr
     else:
-        host = os.environ['USAON_VTA_DB_HOST']
-        port = os.environ['USAON_VTA_DB_PORT']
-        user = os.environ['USAON_VTA_DB_USER']
-        password = os.environ['USAON_VTA_DB_PASSWORD']
+        host = os.environ['USAON_BENEFIT_TOOL_DB_HOST']
+        port = os.environ['USAON_BENEFIT_TOOL_DB_PORT']
+        user = os.environ['USAON_BENEFIT_TOOL_DB_USER']
+        password = os.environ['USAON_BENEFIT_TOOL_DB_PASSWORD']
 
         connstr = f'postgresql://{user}:{password}@{host}:{port}/usaon-vta'
         return connstr

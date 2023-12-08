@@ -2,7 +2,7 @@ from flask import Blueprint, redirect, url_for
 from flask_dance.contrib.google import google
 from flask_login import login_user
 
-from usaon_vta_survey.util.db.user import ensure_user_exists
+from usaon_benefit_tool.util.db.user import ensure_user_exists
 
 login_bp = Blueprint('login', __name__, url_prefix='/login')
 

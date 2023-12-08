@@ -10,9 +10,9 @@ from sqlalchemy import MetaData
 from sqlalchemy import inspect as sqla_inspect
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-from usaon_vta_survey.constants.version import VERSION
-from usaon_vta_survey.util.db.connect import db_connstr
-from usaon_vta_survey.util.envvar import envvar_is_true
+from usaon_benefit_tool.constants.version import VERSION
+from usaon_benefit_tool.util.db.connect import db_connstr
+from usaon_benefit_tool.util.envvar import envvar_is_true
 
 __version__: Final[str] = VERSION
 
@@ -39,9 +39,9 @@ def create_app():
 
     app = Flask(__name__)
     app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'youcanneverguess')
-    app.config['LOGIN_DISABLED'] = envvar_is_true("USAON_VTA_LOGIN_DISABLED")
+    app.config['LOGIN_DISABLED'] = envvar_is_true("USAON_BENEFIT_TOOL_LOGIN_DISABLED")
     app.config['SQLALCHEMY_DATABASE_URI'] = db_connstr(app)
-    if envvar_is_true("USAON_VTA_PROXY"):
+    if envvar_is_true("USAON_BENEFIT_TOOL_PROXY"):
         app.wsgi_app = ProxyFix(app.wsgi_app, x_prefix=1)  # type: ignore
 
     db.init_app(app)
@@ -49,7 +49,7 @@ def create_app():
     login_manager = LoginManager()
     login_manager.init_app(app)
 
-    from usaon_vta_survey.models.tables import User
+    from usaon_benefit_tool.models.tables import User
 
     @login_manager.user_loader
     def load_user(user_id: str) -> User:
@@ -63,28 +63,28 @@ def create_app():
             if time.time() >= token['expires_at']:
                 del s['google_oauth_token']
 
-    from usaon_vta_survey.routes.google import google_bp
-    from usaon_vta_survey.routes.login import login_bp
-    from usaon_vta_survey.routes.logout import logout_bp
-    from usaon_vta_survey.routes.response import response_bp
-    from usaon_vta_survey.routes.response.applications import application_bp
-    from usaon_vta_survey.routes.response.data_products import data_product_bp
-    from usaon_vta_survey.routes.response.observing_systems import observing_system_bp
-    from usaon_vta_survey.routes.response.relationships.application_societal_benefit_area import (
+    from usaon_benefit_tool.routes.google import google_bp
+    from usaon_benefit_tool.routes.login import login_bp
+    from usaon_benefit_tool.routes.logout import logout_bp
+    from usaon_benefit_tool.routes.response import response_bp
+    from usaon_benefit_tool.routes.response.applications import application_bp
+    from usaon_benefit_tool.routes.response.data_products import data_product_bp
+    from usaon_benefit_tool.routes.response.observing_systems import observing_system_bp
+    from usaon_benefit_tool.routes.response.relationships.application_societal_benefit_area import (
         application_societal_benefit_area_bp,
     )
-    from usaon_vta_survey.routes.response.relationships.data_product_application import (
+    from usaon_benefit_tool.routes.response.relationships.data_product_application import (
         data_product_application_bp,
     )
-    from usaon_vta_survey.routes.response.relationships.observing_system_data_product import (
+    from usaon_benefit_tool.routes.response.relationships.observing_system_data_product import (
         observing_system_data_product_bp,
     )
-    from usaon_vta_survey.routes.response.sbas import societal_benefit_area_bp
-    from usaon_vta_survey.routes.root import root_bp
-    from usaon_vta_survey.routes.survey import survey_bp
-    from usaon_vta_survey.routes.surveys import surveys_bp
-    from usaon_vta_survey.routes.user import user_bp
-    from usaon_vta_survey.routes.users import users_bp
+    from usaon_benefit_tool.routes.response.sbas import societal_benefit_area_bp
+    from usaon_benefit_tool.routes.root import root_bp
+    from usaon_benefit_tool.routes.survey import survey_bp
+    from usaon_benefit_tool.routes.surveys import surveys_bp
+    from usaon_benefit_tool.routes.user import user_bp
+    from usaon_benefit_tool.routes.users import users_bp
 
     app.register_blueprint(root_bp)
     app.register_blueprint(surveys_bp)

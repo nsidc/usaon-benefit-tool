@@ -1,8 +1,8 @@
 version: '3.7'
 
 services:
-  usaon-vta-survey:
-    image: "nsidc/usaon-vta-survey:${USAON_VTA_SURVEY_VERSION:-latest}"
+  usaon-benefit-tool:
+    image: "nsidc/usaon-benefit-tool:${USAON_BENEFIT_TOOL_VERSION:-latest}"
     restart: "always"
     # HACK: run the app on the flask dev server with an adhoc cert.
     # TODO: Remove this `command` once we have a more mature solution for
@@ -14,4 +14,4 @@ services:
       # Flask Dance recommends setting this in production:
       #     https://flask-dance.readthedocs.io/en/v0.8.0/quickstarts/google.html#code
       - "OAUTHLIB_RELAX_TOKEN_SCOPE=1"
-      - "USAON_VTA_PROXY"
+      - "USAON_BENEFIT_TOOL_PROXY"

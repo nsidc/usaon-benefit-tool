@@ -1,10 +1,10 @@
 from flask import Blueprint, redirect, render_template, request, url_for
 
-from usaon_vta_survey import db
-from usaon_vta_survey.forms import FORMS_BY_MODEL
-from usaon_vta_survey.models.tables import ResponseDataProduct, Survey
-from usaon_vta_survey.util.authorization import limit_response_editors
-from usaon_vta_survey.util.sankey import data_products_sankey
+from usaon_benefit_tool import db
+from usaon_benefit_tool.forms import FORMS_BY_MODEL
+from usaon_benefit_tool.models.tables import ResponseDataProduct, Survey
+from usaon_benefit_tool.util.authorization import limit_response_editors
+from usaon_benefit_tool.util.sankey import data_products_sankey
 
 data_product_bp = Blueprint(
     'data_product', __name__, url_prefix='/response/<string:survey_id>/data_products'
