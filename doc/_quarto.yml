@@ -23,8 +23,10 @@ website:
     contents:
       - text: "How to"
         href: "how-to/index.md"
+        contents: "how-to/*.md"
       - text: "Reference"
         href: "reference/index.md"
+        contents: "reference/*.md"
 
       # Separator:
       - text: "---"
