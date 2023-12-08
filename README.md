@@ -1,6 +1,5 @@
-<img alt="NSIDC logo" src="https://nsidc.org/themes/custom/nsidc/logo.svg" width="150" />
+# U.S. Arctic Observing Network (AON) Benefit Tool
 
-# U.S. Arctic Observing Network (AON) VTA (Value Tree Analysis) Survey
 <p align="center">
   <a href="https://doi.org/10.5281/zenodo.8403759">
     <img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.8403759.svg" />
@@ -10,10 +9,14 @@
   </a>
 </p>
 
-| :memo: :warning: | This project will soon be renamed to Benefit Tool |
-|------------------|:--------------------------------------------------|
+<p align="center">
+  <img alt="NSIDC logo" src="https://nsidc.org/themes/custom/nsidc/logo.svg" height="150" />
+  <img alt="US AON logo" src="https://usaon.org/themes/custom/usaon_theme/assets/images/usaon_logo.png" height="150" />
+</p>
 
-The VTA Survey enables AON administrators to configure and distribute surveys to
+
+The Benefit Tool enables AON administrators to configure and distribute surveys to
+experts for the purpose of evaluating societal benefit of applications.
 
 
 ## Level of Support
@@ -43,16 +46,6 @@ _TODO_
 ## Troubleshooting
 
 _TODO_
-
-
-## License
-
-See [LICENSE](LICENSE).
-
-
-## Code of Conduct
-
-See [Code of Conduct](CODE_OF_CONDUCT.md).
 
 
 ## Credit
