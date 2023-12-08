@@ -1,21 +1,13 @@
 version: '3.7'
 
-networks:
-  usaon-benefit-tool:
-
-x-base: &base
-  networks:
-    - "usaon-benefit-tool"
-
-
 services:
   usaon-benefit-tool:
-    <<: *base
     image: "nsidc/usaon-benefit-tool:${USAON_BENEFIT_TOOL_VERSION:?USAON_BENEFIT_TOOL_VERSION must be set}"
     environment:
-      # Use the proxy container to talk to the DB:
-      - "USAON_BENEFIT_TOOL_DB_HOST=db"
-      - "USAON_BENEFIT_TOOL_DB_PORT=5432"
+      # Host/port for talking to the DB:
+      - "USAON_BENEFIT_TOOL_DB_HOST=${USAON_BENEFIT_TOOL_DB_HOST:?USAON_BENEFIT_TOOL_DB_HOST must be set}"
+      - "USAON_BENEFIT_TOOL_DB_PORT=${USAON_BENEFIT_TOOL_DB_PORT:?USAON_BENEFIT_TOOL_DB_PORT must be set}"
+      # Creds for talking to the DB:
       - "USAON_BENEFIT_TOOL_DB_USER=${USAON_BENEFIT_TOOL_DB_USER:?USAON_BENEFIT_TOOL_DB_USER must be set}"
       - "USAON_BENEFIT_TOOL_DB_PASSWORD=${USAON_BENEFIT_TOOL_DB_PASSWORD:?USAON_BENEFIT_TOOL_DB_PASSWORD must be set}"
       # Creds for talking to Google:
@@ -23,18 +15,3 @@ services:
       - "USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET=${USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET:?USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET must be set}"
       # Needed for secure session management:
       - "FLASK_SECRET_KEY=${FLASK_SECRET_KEY:?FLASK_SECRET_KEY must be set}"
-
-  # A proxy to the real DB
-  db:
-    <<: *base
-    image: "haproxy:1.8-alpine"
-    ports:
-      - "5432:5432"
-    volumes:
-      - "./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"
-    environment:
-      # cname
-      - "BACKEND_HOST=${USAON_BENEFIT_TOOL_DB_HOST:?USAON_BENEFIT_TOOL_DB_HOST must be set}"
-      # 5432
-      - "BACKEND_PORT=${USAON_BENEFIT_TOOL_DB_PORT:?USAON_BENEFIT_TOOL_DB_PORT must be set}"
-      - "FRONTEND_PORT=5432"
