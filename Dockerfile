@@ -2,9 +2,9 @@ FROM mambaorg/micromamba:1.5.0
 
 # TODO: Figure out a better way to run tasks without requiring container
 # configuration
-RUN touch "/tmp/i_am_the_usaon-vta-survey_container"
+RUN touch "/tmp/i_am_the_usaon-benefit-tool_container"
 
-WORKDIR /usaon-vta-survey
+WORKDIR /usaon-benefit-tool
 
 # Activate the conda environment during build process
 ARG MAMBA_DOCKERFILE_ACTIVATE=1
@@ -23,9 +23,9 @@ COPY ./setup.py .
 COPY ./pyproject.toml .
 COPY ./.mypy.ini .
 COPY ./tasks ./tasks
-COPY ./usaon_vta_survey ./usaon_vta_survey
+COPY ./usaon_benefit_tool ./usaon_benefit_tool
 
-ENV FLASK_APP=usaon_vta_survey
+ENV FLASK_APP=usaon_benefit_tool
 
 
 # Test dependencies
@@ -40,4 +40,4 @@ RUN which flask
 #
 # For gunicorn, the recommended number of workers is (2*CPU)+1. This config
 # assumes dual-core CPU.
-CMD ["gunicorn", "usaon_vta_survey:app", "--workers", "5", "--bind", "0.0.0.0:5000"]
+CMD ["gunicorn", "usaon_benefit_tool:app", "--workers", "5", "--bind", "0.0.0.0:5000"]

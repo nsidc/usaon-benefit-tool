@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template
 
-from usaon_vta_survey import db
-from usaon_vta_survey.models.tables import Response, Survey
-from usaon_vta_survey.util.authorization import limit_response_editors
-from usaon_vta_survey.util.full_sankey import sankey
+from usaon_benefit_tool import db
+from usaon_benefit_tool.models.tables import Response, Survey
+from usaon_benefit_tool.util.authorization import limit_response_editors
+from usaon_benefit_tool.util.full_sankey import sankey
 
 response_bp = Blueprint('response', __name__, url_prefix='/response')
 

@@ -12,7 +12,7 @@ license: "MIT"
 
 version: 1.1.0
 date-released: "2023-11-01"
-url: "https://github.com/nsidc/usaon-vta-survey"
+url: "https://github.com/nsidc/usaon-benefit-tool"
 
 authors:
   - family-names: "Marowitz"

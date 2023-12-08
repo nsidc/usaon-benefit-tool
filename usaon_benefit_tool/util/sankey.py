@@ -1,6 +1,6 @@
 from itertools import chain
 
-from usaon_vta_survey.models.tables import (
+from usaon_benefit_tool.models.tables import (
     Response,
     ResponseApplication,
     ResponseDataProduct,

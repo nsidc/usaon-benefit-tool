@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-from usaon_vta_survey.models.tables import Survey
+from usaon_benefit_tool.models.tables import Survey
 
 surveys_bp = Blueprint('surveys', __name__, url_prefix='/surveys')
 

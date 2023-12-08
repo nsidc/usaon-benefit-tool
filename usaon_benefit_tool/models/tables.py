@@ -20,9 +20,9 @@ from sqlalchemy.schema import Column, ForeignKey, Index, UniqueConstraint
 from sqlalchemy.types import Boolean, DateTime, Enum, Integer, SmallInteger, String
 from typing_extensions import NotRequired, TypedDict
 
-from usaon_vta_survey import db
-from usaon_vta_survey._types import ObservingSystemType
-from usaon_vta_survey.constants.status import STATUSES
+from usaon_benefit_tool import db
+from usaon_benefit_tool._types import ObservingSystemType
+from usaon_benefit_tool.constants.status import STATUSES
 
 # Workaround for missing type stubs for flask-sqlalchemy:
 #     https://github.com/dropbox/sqlalchemy-stubs/issues/76#issuecomment-595839159

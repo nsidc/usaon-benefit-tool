@@ -2,8 +2,8 @@ version: '3.7'
 
 services:
 
-  usaon-vta-survey:
-    image: "nsidc/usaon-vta-survey:dev"
+  usaon-benefit-tool:
+    image: "nsidc/usaon-benefit-tool:dev"
     # Flask development server with live debugger and hot reloading:
     command: "flask run --host 0.0.0.0"
     build: "."
@@ -11,22 +11,22 @@ services:
     # easier, override the micromamba non-root user:
     user: "root"
     volumes:
-      - "./usaon_vta_survey:/usaon-vta-survey/usaon_vta_survey:ro"
-      - "./tasks:/usaon-vta-survey/tasks:ro"
+      - "./usaon_benefit_tool:/usaon-benefit-tool/usaon_benefit_tool:ro"
+      - "./tasks:/usaon-benefit-tool/tasks:ro"
       - "./_db:/db:rw"
     ports:
       - "5000:5000"
     environment:
       # Disable login:
-      - "USAON_VTA_LOGIN_DISABLED=true"
+      - "USAON_BENEFIT_TOOL_LOGIN_DISABLED=true"
       # Use a local file DB instead of a remote one:
-      - "USAON_VTA_DB_SQLITE=true"
+      - "USAON_BENEFIT_TOOL_DB_SQLITE=true"
         # Enable the in-browser debugger: 
       - "FLASK_DEBUG=True"
       # NOTE: This is temporary until issue #144 is resolved
       # Creds for talking to Google:
-      - "USAON_VTA_GOOGLE_CLIENT_ID=${USAON_VTA_GOOGLE_CLIENT_ID:?USAON_VTA_GOOGLE_CLIENT_ID must be set}"
-      - "USAON_VTA_GOOGLE_CLIENT_SECRET=${USAON_VTA_GOOGLE_CLIENT_SECRET:?USAON_VTA_GOOGLE_CLIENT_SECRET must be set}"
+      - "USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID=${USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID:?USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID must be set}"
+      - "USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET=${USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET:?USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET must be set}"
     
 
       # Development DANGER ZONE: Do not use the below settings except for

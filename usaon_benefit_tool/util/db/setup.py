@@ -3,18 +3,18 @@ from loguru import logger
 from sqlalchemy import MetaData
 from sqlalchemy.orm import Session
 
-from usaon_vta_survey import db
-from usaon_vta_survey.constants.rbac import ROLES
-from usaon_vta_survey.constants.sba import IAOA_SBA_FRAMEWORK
-from usaon_vta_survey.constants.status import STATUSES
-from usaon_vta_survey.models.tables import (
+from usaon_benefit_tool import db
+from usaon_benefit_tool.constants.rbac import ROLES
+from usaon_benefit_tool.constants.sba import IAOA_SBA_FRAMEWORK
+from usaon_benefit_tool.constants.status import STATUSES
+from usaon_benefit_tool.models.tables import (
     Role,
     SocietalBenefitArea,
     SocietalBenefitKeyObjective,
     SocietalBenefitSubArea,
     Status,
 )
-from usaon_vta_survey.util.dev import DEV_USER
+from usaon_benefit_tool.util.dev import DEV_USER
 
 
 def recreate_tables() -> None:

@@ -1,16 +1,16 @@
 from flask import Blueprint, flash, render_template, request
 from flask_login import current_user
 
-from usaon_vta_survey import db
-from usaon_vta_survey.forms import FORMS_BY_MODEL
-from usaon_vta_survey.models.tables import User
+from usaon_benefit_tool import db
+from usaon_benefit_tool.forms import FORMS_BY_MODEL
+from usaon_benefit_tool.models.tables import User
 
 # NOTE: This is temporary until issue #144 is resolved
-# if envvar_is_true("USAON_VTA_LOGIN_DISABLED"):
+# if envvar_is_true("USAON_BENEFIT_TOOL_LOGIN_DISABLED"):
 #     # HACK: Always logged in as dev user when login is disabled
 #     import flask_login.utils as flask_login_utils
 #
-#     from usaon_vta_survey.util.dev import DEV_USER
+#     from usaon_benefit_tool.util.dev import DEV_USER
 #
 #     flask_login_utils._get_user = lambda: DEV_USER
 

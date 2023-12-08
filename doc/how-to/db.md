@@ -7,7 +7,7 @@ container to enable it to talk to an external DB through the hostname `db`.
 ## Data model
 
 The data model is managed by SQLAlchemy. The model is at
-`usaon-vta-survey/models/tables.py`
+`usaon_benefit_tool/models/tables.py`
 
 
 ### Changes to the data model
@@ -23,5 +23,5 @@ To do that:
 ./scripts/invoke_in_container.sh db.init
 ```
 
-> :warning: Don't forget to set USAON_VTA_SURVEY_VERSION envvar to match the running
+> :warning: Don't forget to set USAON_BENEFIT_TOOL_VERSION envvar to match the running
 > container (`source VERSION.env`), or a new container will be pulled.

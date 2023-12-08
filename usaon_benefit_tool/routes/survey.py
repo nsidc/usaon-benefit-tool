@@ -1,8 +1,8 @@
 from flask import Blueprint, redirect, render_template, request, url_for
 
-from usaon_vta_survey import db
-from usaon_vta_survey.forms import FORMS_BY_MODEL
-from usaon_vta_survey.models.tables import Survey
+from usaon_benefit_tool import db
+from usaon_benefit_tool.forms import FORMS_BY_MODEL
+from usaon_benefit_tool.models.tables import Survey
 
 survey_bp = Blueprint('survey', __name__, url_prefix='/survey')
 

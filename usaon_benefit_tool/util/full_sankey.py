@@ -1,5 +1,5 @@
-from usaon_vta_survey.models.tables import Response
-from usaon_vta_survey.util.sankey import (
+from usaon_benefit_tool.models.tables import Response
+from usaon_benefit_tool.util.sankey import (
     _applications_sankey,
     _data_products_sankey,
     _societal_benefit_areas_sankey,

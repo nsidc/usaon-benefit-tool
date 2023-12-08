@@ -16,8 +16,8 @@ from wtforms_sqlalchemy.orm import (
     model_form,
 )
 
-from usaon_vta_survey import db
-from usaon_vta_survey.models.tables import (
+from usaon_benefit_tool import db
+from usaon_benefit_tool.models.tables import (
     ResponseApplication,
     ResponseApplicationSocietalBenefitArea,
     ResponseDataProduct,

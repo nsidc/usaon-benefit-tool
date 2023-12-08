@@ -1,10 +1,10 @@
 from flask import Blueprint, redirect, render_template, request, url_for
 
-from usaon_vta_survey import db
-from usaon_vta_survey._types import ObservingSystemType
-from usaon_vta_survey.forms import FORMS_BY_MODEL
-from usaon_vta_survey.models.tables import ResponseObservingSystem, Survey
-from usaon_vta_survey.util.authorization import limit_response_editors
+from usaon_benefit_tool import db
+from usaon_benefit_tool._types import ObservingSystemType
+from usaon_benefit_tool.forms import FORMS_BY_MODEL
+from usaon_benefit_tool.models.tables import ResponseObservingSystem, Survey
+from usaon_benefit_tool.util.authorization import limit_response_editors
 
 observing_system_bp = Blueprint(
     'obs', __name__, url_prefix='/response/<string:survey_id>/observing_systems'
