@@ -6,11 +6,6 @@ networks:
 x-base: &base
   networks:
     - "usaon-benefit-tool"
-  restart: "always"
-  logging:
-    options:
-      max-size: "1m"
-      max-file: "1"
 
 
 services:
