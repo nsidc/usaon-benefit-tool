@@ -8,7 +8,7 @@ services:
     # distributing certs to our pre-production and production environment.
     command: "flask run --cert=adhoc --host 0.0.0.0"
 
-    restart: "always"
+    restart: "unless-stopped"
     logging:
       options:
         max-size: "10m"
