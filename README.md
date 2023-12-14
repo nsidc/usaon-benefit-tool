@@ -30,7 +30,7 @@ nsidc@nsidc.org for more information.
 
 ## Requirements
 
-Docker + docker-compose
+Docker & Docker Compose plugin
 
 
 ## Installation

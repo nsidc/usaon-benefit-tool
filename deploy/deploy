@@ -15,6 +15,6 @@ ln -sf docker-compose.prod.yml docker-compose.override.yml
 # We have limited disk space in our deployment environment, so the app needs to
 # go down, delete its image, download the new image, and start it back up.
 # TODO: Zero-downtime deployments! More compact image!
-docker-compose down
+docker compose down
 docker system prune -af
-docker-compose up -d
+docker compose up -d

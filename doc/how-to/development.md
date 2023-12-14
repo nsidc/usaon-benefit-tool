@@ -29,7 +29,7 @@ export USAON_BENEFIT_TOOL_DB_PASSWORD=...
 Bring up the docker container:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 
