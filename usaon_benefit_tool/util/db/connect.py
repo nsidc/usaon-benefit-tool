@@ -15,6 +15,8 @@ def db_connstr(app: Flask) -> str:
 
     TODO: Get all db connection info from _one_ envvar: USAON_BENEFIT_TOOL_DB_CONNSTR.
     If not provided, use temp path.
+
+    TODO: Rename the postgres database name & sqlite db file -> usaon-benefit-tool
     """
     sqlite_db = envvar_is_true('USAON_BENEFIT_TOOL_DB_SQLITE')
 
