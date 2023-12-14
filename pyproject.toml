@@ -6,21 +6,20 @@ skip-string-normalization = true
 [tool.ruff]
 target-version = "py310"
 select = [
-  "F",
-  "E",
-  "W",
-  "C4",
-  "C90",
-  "I",
-  "N",
-  "D",
-  "UP",
-  "YTT",
-  "B",
-  "A",
-  "C4",
-  "T10",
-  "RUF",
+  "F",    # pyflakes
+  "E",    # pycodestyle errors
+  "W",    # pycodestyle warnings
+  "C4",   # flake8-comprehensions
+  "C90",  # mccabe
+  "I",    # isort
+  "N",    # pep8-naming
+  "D",    # pydostyle
+  "UP",   # pyupgrade
+  "YTT",  # flake8-2020
+  "B",    # flake8-bugbear
+  "A",    # flake8-builtins
+  "T10",  # flake8-debugger
+  "RUF",  # Ruff
 ]
 ignore = [
   # D1: Ignore errors requiring docstrings on everything.
