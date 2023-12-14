@@ -6,8 +6,8 @@
   <h2>{% block title %}Welcome to the US AON Benefit Tool!{% endblock %}</h2>
     <p><strong>Actions:</strong></p>
     <ul>
-      <li>View our <a href="https://usaon.org/apps/benefit-tool/surveys">library of evaluations here.</a></li>
-      <li>Click here to <a href="https://usaon.org/apps/benefit-tool/surveys">edit or update your own evaluation.</a></li>
+      <li>View our <a href="{{ url_for("surveys.view_surveys") }}">library of evaluations here.</a></li>
+      <li>Click here to <a href="{{ url_for("surveys.view_surveys") }}">edit or update your own evaluation.</a></li>
       <li>If you'd like to create a new evaluation please email: <a href="mailto:hazel@iarpccollaborations.org">hazel@iarpccollaborations.org</a> </li>
       <li>Our <a href="https://docs.google.com/document/d/13DLX3A__M60xMgFbQqk2NMAjZzahn5FZcvB3fWSVRck/edit?usp=sharing">data management plan</a> includes information about how any information you add to the tool will be stored and may be shared. Please review the data management plan here.</li>
       <li><a href="https://usaon.org/evaluation-and-planning/benefit-tool">Learn more about our Benefit Tool.</a></li>
