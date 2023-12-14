@@ -5,15 +5,6 @@ from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import User
 
-# NOTE: This is temporary until issue #144 is resolved
-# if envvar_is_true("USAON_BENEFIT_TOOL_LOGIN_DISABLED"):
-#     # HACK: Always logged in as dev user when login is disabled
-#     import flask_login.utils as flask_login_utils
-#
-#     from usaon_benefit_tool.util.dev import DEV_USER
-#
-#     flask_login_utils._get_user = lambda: DEV_USER
-
 
 def _validate_role_change(user: User, form) -> None:
     if form.data['role'] != user.role and current_user.role_id != 'admin':
