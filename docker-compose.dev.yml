@@ -13,7 +13,7 @@ services:
     volumes:
       - "./usaon_benefit_tool:/usaon-benefit-tool/usaon_benefit_tool:ro"
       - "./tasks:/usaon-benefit-tool/tasks:ro"
-      - "./_db:/db:rw"
+      - "./_db/sqlite:/db:rw"
     ports:
       - "5000:5000"
     environment:
