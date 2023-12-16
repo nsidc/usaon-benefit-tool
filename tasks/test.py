@@ -20,8 +20,6 @@ def typecheck(ctx):
     print_and_run(
         f'cd {PROJECT_DIR} &&'
         f' mypy --config-file={PROJECT_DIR}/.mypy.ini {PACKAGE_DIR}',
-        # TODO: Why do we need this?
-        env={'USAON_BENEFIT_TOOL_DB_SQLITE': 'true', 'FLASK_DEBUG': 'true'},
     )
     print('🎉🦆 Type checking passed.')
 
