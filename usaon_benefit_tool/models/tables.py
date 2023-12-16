@@ -10,7 +10,7 @@ warning:
 """
 from datetime import datetime
 from functools import cache
-from typing import Final
+from typing import Final, NotRequired
 
 from flask_login import UserMixin, current_user
 from sqlalchemy import CheckConstraint
@@ -18,7 +18,7 @@ from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey, Index, UniqueConstraint
 from sqlalchemy.types import Boolean, DateTime, Enum, Integer, SmallInteger, String
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import TypedDict
 
 from usaon_benefit_tool import db
 from usaon_benefit_tool._types import ObservingSystemType
