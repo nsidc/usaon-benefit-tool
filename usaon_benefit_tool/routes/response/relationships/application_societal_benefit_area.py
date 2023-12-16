@@ -29,7 +29,7 @@ def _update_super_form(
     """
     if societal_benefit_area_id is None:
         super_form.societal_benefit_area = FormField(
-            FORMS_BY_MODEL[ResponseSocietalBenefitArea]
+            FORMS_BY_MODEL[ResponseSocietalBenefitArea],
         )
 
     if application_id is None:
@@ -61,11 +61,12 @@ def _response_societal_benefit_area(
     """Return a SBA db object (or 404)."""
     if societal_benefit_area_id is not None:
         response_societal_benefit_area = db.get_or_404(
-            ResponseSocietalBenefitArea, societal_benefit_area_id
+            ResponseSocietalBenefitArea,
+            societal_benefit_area_id,
         )
     else:
         response_societal_benefit_area = ResponseSocietalBenefitArea(
-            response_id=response_id
+            response_id=response_id,
         )
 
     return response_societal_benefit_area
@@ -103,7 +104,7 @@ def _response_application_societal_benefit_area(
                 ResponseApplicationSocietalBenefitArea.response_societal_benefit_area_id
                 == societal_benefit_area_id
                 and ResponseApplicationSocietalBenefitArea.response_application_id
-                == application_id
+                == application_id,
             )
             .one_or_none()
         )
@@ -118,7 +119,7 @@ def _response_application_societal_benefit_area(
 
 def _request_args(request: Request) -> tuple[int | None, int | None]:
     societal_benefit_area_id: int | str | None = request.args.get(
-        'societal_benefit_area_id'
+        'societal_benefit_area_id',
     )
     if societal_benefit_area_id is not None:
         societal_benefit_area_id = int(societal_benefit_area_id)
@@ -244,7 +245,8 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
     methods=['DELETE'],
 )
 def delete_response_application_societal_benefit_area_relationship(
-    survey_id: int, response_application_societal_benefit_area_id: int
+    survey_id: int,
+    response_application_societal_benefit_area_id: int,
 ):
     """Delete application/data product relationship."""
     survey = db.get_or_404(Survey, survey_id)

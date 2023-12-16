@@ -25,13 +25,13 @@ def db_connstr(app: Flask) -> str:
     if sqlite_db:
         if not (app.config["TESTING"] or app.config["DEBUG"]):
             raise RuntimeError(
-                f"Production application config detected with SQLite DB. {app.config=}"
+                f"Production application config detected with SQLite DB. {app.config=}",
             )
         db_path = f"/db/{db_name}.db"
         connstr = f"sqlite:///{db_path}"
         app.logger.warning(
             f"Using a local file database for development: {connstr}."
-            " You should never see this logged in production!"
+            " You should never see this logged in production!",
         )
         return connstr
     else:

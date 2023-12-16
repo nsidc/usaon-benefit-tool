@@ -7,7 +7,9 @@ from usaon_benefit_tool.models.tables import ResponseObservingSystem, Survey
 from usaon_benefit_tool.util.authorization import limit_response_editors
 
 observing_system_bp = Blueprint(
-    'obs', __name__, url_prefix='/response/<string:survey_id>/observing_systems'
+    'obs',
+    __name__,
+    url_prefix='/response/<string:survey_id>/observing_systems',
 )
 
 
@@ -51,7 +53,8 @@ def delete_response_observing_system(survey_id: int, response_observing_system_i
     """Delete observing system response object from survey."""
     survey = db.get_or_404(Survey, survey_id)
     response_observing_system = db.get_or_404(
-        ResponseObservingSystem, response_observing_system_id
+        ResponseObservingSystem,
+        response_observing_system_id,
     )
     db.session.delete(response_observing_system)
     db.session.commit()
