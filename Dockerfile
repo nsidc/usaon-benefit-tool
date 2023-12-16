@@ -21,7 +21,6 @@ RUN micromamba clean --all --yes
 # Install source
 COPY ./setup.py .
 COPY ./pyproject.toml .
-COPY ./.mypy.ini .
 COPY ./tasks ./tasks
 COPY ./usaon_benefit_tool ./usaon_benefit_tool
 

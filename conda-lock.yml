@@ -13,8 +13,8 @@
 version: 1
 metadata:
   content_hash:
-    linux-64: 5ef89b9a904bc431292eee6d255d40a5f0cca2d777a7aadc7b68be0c096ae1f5
-    osx-64: 18654a112d741a7eeaf2957b0c01d008e3bf1254ecf1d1b6b4747b6ff86510f4
+    linux-64: 511783e52216d89d955b71b42baa37c44ca48a557feeaf935f2903f32e2b0133
+    osx-64: ce774e96f74e0ea9d8fe9ed97c7685b242720634aa370658e42b3bbf1973ec77
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -1454,38 +1454,36 @@ package:
   category: main
   optional: false
 - name: mypy
-  version: '0.991'
+  version: 1.7.1
   manager: conda
   platform: linux-64
   dependencies:
     libgcc-ng: '>=12'
-    mypy_extensions: '>=0.4.3'
+    mypy_extensions: '>=1.0.0'
     psutil: '>=4.0'
     python: '>=3.11,<3.12.0a0'
     python_abi: 3.11.*
-    tomli: '>=1.1.0'
-    typing_extensions: '>=3.10'
-  url: https://conda.anaconda.org/conda-forge/linux-64/mypy-0.991-py311h2582759_0.conda
+    typing_extensions: '>=4.1.0'
+  url: https://conda.anaconda.org/conda-forge/linux-64/mypy-1.7.1-py311h459d7ec_1.conda
   hash:
-    md5: 2c081ea2792b1f73b57d53b41457039d
-    sha256: e2e0d32fc0ca06c097b17ded2acfa4c4d2371d5fbdb96734fb9194a7860d03dc
+    md5: 0a861b29266afe8c315ecdcb92f9e692
+    sha256: 8c9365ecf8e56666253f987ba83d1dcde141ef3d0f73300a92adf5aa63c8e5bd
   category: main
   optional: false
 - name: mypy
-  version: '0.991'
+  version: 1.7.1
   manager: conda
   platform: osx-64
   dependencies:
-    mypy_extensions: '>=0.4.3'
+    mypy_extensions: '>=1.0.0'
     psutil: '>=4.0'
     python: '>=3.11,<3.12.0a0'
     python_abi: 3.11.*
-    tomli: '>=1.1.0'
-    typing_extensions: '>=3.10'
-  url: https://conda.anaconda.org/conda-forge/osx-64/mypy-0.991-py311h5547dcb_0.tar.bz2
+    typing_extensions: '>=4.1.0'
+  url: https://conda.anaconda.org/conda-forge/osx-64/mypy-1.7.1-py311he705e18_1.conda
   hash:
-    md5: fbead29f537cb1a01313b74f4599b89b
-    sha256: 41d5abd70aebf856a932df2746ff1a55c841b480f70e715cd092af4bfb70bfea
+    md5: 153e0baec2f2d6c0bb6c9692f623ecdb
+    sha256: f9c25d9de38057167a10d4873e8ad7bcb9b9a8b5d1d3195421dac3445fb16b26
   category: main
   optional: false
 - name: mypy_extensions

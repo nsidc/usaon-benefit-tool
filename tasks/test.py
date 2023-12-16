@@ -17,10 +17,7 @@ def typecheck(ctx):
     """Run mypy static type analysis."""
     from usaon_benefit_tool.constants.paths import PACKAGE_DIR
 
-    print_and_run(
-        f'cd {PROJECT_DIR} &&'
-        f' mypy --config-file={PROJECT_DIR}/.mypy.ini {PACKAGE_DIR}',
-    )
+    print_and_run(f'cd {PROJECT_DIR} && mypy {PACKAGE_DIR}')
     print('🎉🦆 Type checking passed.')
 
 

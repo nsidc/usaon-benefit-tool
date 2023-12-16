@@ -12,7 +12,7 @@ dependencies:
   # TODO: For some reason, with later versions, imports within invoke tasks stop working
   - invoke ~=2.0.0
   - pytest ~=7.1
-  - mypy ~=0.942
+  - mypy ~=1.7.1
   - shellcheck ~=0.8.0
   - typing-extensions ~=4.4
   - pre-commit
