@@ -1,26 +1,52 @@
 version: '3.7'
+# TODO: Should SQLite be exposed as an option with compose config? The
+# application supports it, so if someone really wants to work that way they
+# can. Our recommended development default should probably be PostgreSQL for
+# prod-likeness. Set `USAON_BENEFIT_TOOL_DB_SQLITE` to "true" to enable.
+
+
+x-db-image: &db-image "nsidc/usaon-benefit-tool-db:latest"
+x-service-common: &common
+  restart: "unless-stopped"
+  networks: ["usaon-benefit-tool-postgres"]
+  logging:
+    options:
+      max-size: "20m"
+      max-file: "5"
+
 
 services:
 
   usaon-benefit-tool:
+    <<: *common
     image: "nsidc/usaon-benefit-tool:dev"
     # Flask development server with live debugger and hot reloading:
     command: "flask run --host 0.0.0.0"
     build: "."
     # To make volume mounting (especially for new volume mounts like the DB)
     # easier, override the micromamba non-root user:
+    # TODO: remove?
     user: "root"
     volumes:
       - "./usaon_benefit_tool:/usaon-benefit-tool/usaon_benefit_tool:ro"
       - "./tasks:/usaon-benefit-tool/tasks:ro"
-      - "./_db/sqlite:/db:rw"
     ports:
       - "5000:5000"
     environment:
+      ###############################################################
+      # DEV DANGER ZONE: These settings are INSECURE IN PRODUCTION. #
+      ###############################################################
       # Enable the in-browser debugger:
       FLASK_DEBUG: "True"
-      # Use a local file DB instead of a remote one:
-      USAON_BENEFIT_TOOL_DB_SQLITE: "true"
+      # In dev, we don't need to secure our sessions
+      FLASK_SECRET_KEY: "supersecret"
+
+      # Connect to the "db" service in this compose file!
+      USAON_BENEFIT_TOOL_DB_HOST: "db"
+      USAON_BENEFIT_TOOL_DB_PORT: "5432"
+      # Creds for talking to the DB:
+      USAON_BENEFIT_TOOL_DB_USER: &db-user "usaon-benefit-tool"
+      USAON_BENEFIT_TOOL_DB_PASSWORD: &db-pw "DevelopmentONLYPassword"
       # Disable login:
       USAON_BENEFIT_TOOL_LOGIN_DISABLED: "true"
       # NOTE: Uncomment below if you want to test real SSO login behavior!
@@ -28,16 +54,45 @@ services:
       # USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID: "${USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID:?USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID must be set}"
       # USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET: "${USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET:?USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET must be set}"
 
-
-      ##########################################################################
-      # DEV DANGER ZONE: Do NOT use the below settings EXCEPT for development.
-      # These settings are INSECURE IN PRODUCTION.
-      ##########################################################################
-
-      # In dev, we don't need to secure our sessions
-      FLASK_SECRET_KEY: "supersecret"
       # Allow http in dev; TODO: Do we need this? Why? Login is
       # disabled in dev. Maybe as a fallback for actually testing
       # login behavior?
       #     https://flask-dance.readthedocs.io/en/v0.8.0/quickstarts/google.html#code
       # OAUTHLIB_INSECURE_TRANSPORT: "1"
+
+
+  # Normally, the database is managed independently of the app, but in dev, we
+  # want it to be easy to get started!
+  db:
+    <<: *common
+    depends_on:
+      db-volume-prep:
+        condition: "service_completed_successfully"
+    image: *db-image 
+    container_name: "usaon-benefit-tool-db"
+    command: ["postgres", "-c", "log_statement=none"]
+    volumes:
+      - "./_db/postgresql:/data/db:rw"
+    environment:
+      POSTGRES_USER: *db-user
+      POSTGRES_PASSWORD: *db-pw
+
+  db-volume-prep:
+    image: *db-image
+    user: "root"
+    # Ensure database volume directories have the correct permissions before
+    # starting the database
+    entrypoint: ["sh", "-c", 'mkdir -p /data/postgresql && chown -R dbuser:dbuser /data/postgresql']
+    volumes: 
+      - "./_db:/data:rw"
+
+  adminer:
+    <<: *common
+    image: "adminer:4.8.1"
+    container_name: "adminer"
+    ports:
+      - "8080:8080"
+
+
+networks:
+  usaon-benefit-tool-postgres:
