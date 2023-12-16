@@ -17,16 +17,16 @@ services:
     ports:
       - "5000:5000"
     environment:
-      # Disable login:
-      - "USAON_BENEFIT_TOOL_LOGIN_DISABLED=true"
+      # Enable the in-browser debugger:
+      - "FLASK_DEBUG=True"
       # Use a local file DB instead of a remote one:
       - "USAON_BENEFIT_TOOL_DB_SQLITE=true"
-        # Enable the in-browser debugger: 
-      - "FLASK_DEBUG=True"
-      # NOTE: This is temporary until issue #144 is resolved
+      # Disable login:
+      - "USAON_BENEFIT_TOOL_LOGIN_DISABLED=true"
+      # NOTE: Uncomment below if you want to test real SSO login behavior!
       # Creds for talking to Google:
-      - "USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID=${USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID:?USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID must be set}"
-      - "USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET=${USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET:?USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET must be set}"
+      # - "USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID=${USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID:?USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID must be set}"
+      # - "USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET=${USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET:?USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET must be set}"
     
 
       # Development DANGER ZONE: Do not use the below settings except for
