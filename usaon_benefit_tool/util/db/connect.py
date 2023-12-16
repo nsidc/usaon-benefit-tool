@@ -13,8 +13,8 @@ def db_connstr(app: Flask) -> str:
     If the app is not in production mode, use SQLite; otherwise look at envvars for
     connection info.
 
-    If a non-production app config is detected with SQLite db, this function will throw
-    an error to prevent an improper deployment.
+    If a non-dev app config is detected with SQLite db, this function will throw an
+    error to prevent an improper deployment.
 
     TODO: Get all db connection info from _one_ envvar: USAON_BENEFIT_TOOL_DB_CONNSTR.
     If not provided, default to local sqlite?
