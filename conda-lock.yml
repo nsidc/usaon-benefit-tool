@@ -13,8 +13,8 @@
 version: 1
 metadata:
   content_hash:
-    linux-64: 6d6e84b6b621f662df664530e3b5f6b1e75b14a6eae0b6b8ef2842781ef4dcb1
-    osx-64: 146da928c52a0a5928bc6fe296404ed60136a200e4e8839d20a6ccd54ccc725c
+    linux-64: 5ef89b9a904bc431292eee6d255d40a5f0cca2d777a7aadc7b68be0c096ae1f5
+    osx-64: 18654a112d741a7eeaf2957b0c01d008e3bf1254ecf1d1b6b4747b6ff86510f4
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -977,27 +977,27 @@ package:
   category: main
   optional: false
 - name: invoke
-  version: 2.2.0
+  version: 2.0.0
   manager: conda
   platform: linux-64
   dependencies:
     python: '>=3.6'
-  url: https://conda.anaconda.org/conda-forge/noarch/invoke-2.2.0-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/invoke-2.0.0-pyhd8ed1ab_0.conda
   hash:
-    md5: 1754e27eeb29ef3df48247e8ce7fdff3
-    sha256: bcd98cd82a4b004e14f7ceab402b37b8693c479cad947d40468c06c472704b8c
+    md5: c282e4567f7b800a855f7092b3c44a5a
+    sha256: 637e51d8df0159bae9d67f840a24a5fc7973d48fac09418b01e2fb6f3c03224b
   category: main
   optional: false
 - name: invoke
-  version: 2.2.0
+  version: 2.0.0
   manager: conda
   platform: osx-64
   dependencies:
     python: '>=3.6'
-  url: https://conda.anaconda.org/conda-forge/noarch/invoke-2.2.0-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/invoke-2.0.0-pyhd8ed1ab_0.conda
   hash:
-    md5: 1754e27eeb29ef3df48247e8ce7fdff3
-    sha256: bcd98cd82a4b004e14f7ceab402b37b8693c479cad947d40468c06c472704b8c
+    md5: c282e4567f7b800a855f7092b3c44a5a
+    sha256: 637e51d8df0159bae9d67f840a24a5fc7973d48fac09418b01e2fb6f3c03224b
   category: main
   optional: false
 - name: itsdangerous
