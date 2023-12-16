@@ -6,10 +6,10 @@ platforms:
   - linux-64
   - osx-64
 dependencies:
-  - python ~=3.10.6
+  - python ~=3.11.7
 
   # Dev dependencies:
-  - invoke ~=1.7
+  - invoke ~=2.2
   - pytest ~=7.1
   - mypy ~=0.942
   - shellcheck ~=0.8.0
