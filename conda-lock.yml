@@ -13,8 +13,8 @@
 version: 1
 metadata:
   content_hash:
-    linux-64: 511783e52216d89d955b71b42baa37c44ca48a557feeaf935f2903f32e2b0133
-    osx-64: ce774e96f74e0ea9d8fe9ed97c7685b242720634aa370658e42b3bbf1973ec77
+    linux-64: 93ba4460e711668fb74971ac655cf80aa7f5bb1151c121e85e8e909541ce0f68
+    osx-64: 0a254441fa9a6819b495bbdff404d47cd65ddf954712cafdc9ef1002b7f436b1
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -149,6 +149,66 @@ package:
   hash:
     md5: 550da20b2c2e38be9cc44bb819fda5d5
     sha256: c8d72c2af4f57898dfd5e4c62ae67f7fea1490a37c8b6855460a170d61591177
+  category: main
+  optional: false
+- name: boto3
+  version: 1.34.2
+  manager: conda
+  platform: linux-64
+  dependencies:
+    botocore: '>=1.34.2,<1.35.0'
+    jmespath: '>=0.7.1,<2.0.0'
+    python: '>=3.8'
+    s3transfer: '>=0.9.0,<0.10.0'
+  url: https://conda.anaconda.org/conda-forge/noarch/boto3-1.34.2-pyhd8ed1ab_0.conda
+  hash:
+    md5: 6f47ce30284317cb85960c4668cc5bd9
+    sha256: c0444d9d386a1991fadca8b31b9dfc302e5d781b8a2d29faff2c47286eff477c
+  category: main
+  optional: false
+- name: boto3
+  version: 1.34.2
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.8'
+    jmespath: '>=0.7.1,<2.0.0'
+    s3transfer: '>=0.9.0,<0.10.0'
+    botocore: '>=1.34.2,<1.35.0'
+  url: https://conda.anaconda.org/conda-forge/noarch/boto3-1.34.2-pyhd8ed1ab_0.conda
+  hash:
+    md5: 6f47ce30284317cb85960c4668cc5bd9
+    sha256: c0444d9d386a1991fadca8b31b9dfc302e5d781b8a2d29faff2c47286eff477c
+  category: main
+  optional: false
+- name: botocore
+  version: 1.34.2
+  manager: conda
+  platform: linux-64
+  dependencies:
+    jmespath: '>=0.7.1,<2.0.0'
+    python: '>=3.8'
+    python-dateutil: '>=2.1,<3.0.0'
+    urllib3: '>=1.25.4,<1.27'
+  url: https://conda.anaconda.org/conda-forge/noarch/botocore-1.34.2-pyhd8ed1ab_0.conda
+  hash:
+    md5: 90d807074ce872ffb1e20ea0e7c76c10
+    sha256: e404de75c98ee31d06b52c631078df97f77e50ebcb644758c22ec86fcca2d6c4
+  category: main
+  optional: false
+- name: botocore
+  version: 1.34.2
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.8'
+    python-dateutil: '>=2.1,<3.0.0'
+    jmespath: '>=0.7.1,<2.0.0'
+    urllib3: '>=1.25.4,<1.27'
+  url: https://conda.anaconda.org/conda-forge/noarch/botocore-1.34.2-pyhd8ed1ab_0.conda
+  hash:
+    md5: 90d807074ce872ffb1e20ea0e7c76c10
+    sha256: e404de75c98ee31d06b52c631078df97f77e50ebcb644758c22ec86fcca2d6c4
   category: main
   optional: false
 - name: brotli-python
@@ -1050,6 +1110,30 @@ package:
     sha256: b045faba7130ab263db6a8fdc96b1a3de5fcf85c4a607c5f11a49e76851500b5
   category: main
   optional: false
+- name: jmespath
+  version: 1.0.1
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: '>=3.7'
+  url: https://conda.anaconda.org/conda-forge/noarch/jmespath-1.0.1-pyhd8ed1ab_0.tar.bz2
+  hash:
+    md5: 2cfa3e1cf3fb51bb9b17acc5b5e9ea11
+    sha256: 95ac5f9ee95fd4e34dc051746fc86016d3d4f6abefed113e2ede049d59ec2991
+  category: main
+  optional: false
+- name: jmespath
+  version: 1.0.1
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.7'
+  url: https://conda.anaconda.org/conda-forge/noarch/jmespath-1.0.1-pyhd8ed1ab_0.tar.bz2
+  hash:
+    md5: 2cfa3e1cf3fb51bb9b17acc5b5e9ea11
+    sha256: 95ac5f9ee95fd4e34dc051746fc86016d3d4f6abefed113e2ede049d59ec2991
+  category: main
+  optional: false
 - name: keyutils
   version: 1.6.1
   manager: conda
@@ -1063,33 +1147,35 @@ package:
   category: main
   optional: false
 - name: kombu
-  version: 5.3.3
+  version: 5.3.4
   manager: conda
   platform: linux-64
   dependencies:
     amqp: '>=5.1.1,<6.0.0'
+    boto3: '>=1.26.143'
     python: '>=3.11,<3.12.0a0'
     python_abi: 3.11.*
     vine: ''
-  url: https://conda.anaconda.org/conda-forge/linux-64/kombu-5.3.3-py311h38be061_0.conda
+  url: https://conda.anaconda.org/conda-forge/linux-64/kombu-5.3.4-py311h38be061_0.conda
   hash:
-    md5: d5019a3f7b2a962f88290f9b411ea353
-    sha256: da6512224f744dd6454d6a1ab6205acbdcaa435f0649a23918fd866bf96aa8e6
+    md5: f087b47105e900808597549e7eaf4237
+    sha256: 7c49b1464cfe67f79f083eadb578ebe5f5facda153be0fbfa1a24938f30476be
   category: main
   optional: false
 - name: kombu
-  version: 5.3.3
+  version: 5.3.4
   manager: conda
   platform: osx-64
   dependencies:
     amqp: '>=5.1.1,<6.0.0'
+    boto3: '>=1.26.143'
     python: '>=3.11,<3.12.0a0'
     python_abi: 3.11.*
     vine: ''
-  url: https://conda.anaconda.org/conda-forge/osx-64/kombu-5.3.3-py311h6eed73b_0.conda
+  url: https://conda.anaconda.org/conda-forge/osx-64/kombu-5.3.4-py311h6eed73b_0.conda
   hash:
-    md5: 2f824d29ce980044d1d6bacaa31398e8
-    sha256: 5b1cf611e814630768b98b11af09d8a9041d4a0315043a2b9518d670adfbe94b
+    md5: d3dbbb66857aea7968bf38186bbf970c
+    sha256: 249eded4ed2933f29e90e98632a2e50b74d20c0829cf9d302b19fb478c07cdd2
   category: main
   optional: false
 - name: krb5
@@ -2361,6 +2447,32 @@ package:
     sha256: 4bfddbc5716a09bfea1c3345b1eed0ddb36d0e55f357afb60ca3e73c9231cc68
   category: main
   optional: false
+- name: s3transfer
+  version: 0.9.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    botocore: '>=1.33.2,<2.0a.0'
+    python: '>=3.8'
+  url: https://conda.anaconda.org/conda-forge/noarch/s3transfer-0.9.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: 27ad14e5fc6a13f05b90140debc72cd2
+    sha256: c9fc315d830238113160471467259740593966bcf59f17287a0baeaf1f6a76d8
+  category: main
+  optional: false
+- name: s3transfer
+  version: 0.9.0
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.8'
+    botocore: '>=1.33.2,<2.0a.0'
+  url: https://conda.anaconda.org/conda-forge/noarch/s3transfer-0.9.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: 27ad14e5fc6a13f05b90140debc72cd2
+    sha256: c9fc315d830238113160471467259740593966bcf59f17287a0baeaf1f6a76d8
+  category: main
+  optional: false
 - name: setuptools
   version: 68.2.2
   manager: conda
@@ -2636,31 +2748,31 @@ package:
   category: main
   optional: false
 - name: urllib3
-  version: 2.1.0
+  version: 1.26.18
   manager: conda
   platform: linux-64
   dependencies:
     brotli-python: '>=1.0.9'
     pysocks: '>=1.5.6,<2.0,!=1.5.7'
     python: '>=3.7'
-  url: https://conda.anaconda.org/conda-forge/noarch/urllib3-2.1.0-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/urllib3-1.26.18-pyhd8ed1ab_0.conda
   hash:
-    md5: f8ced8ee63830dec7ecc1be048d1470a
-    sha256: eff5029820b4eaeab3a291a39854a6cd8fc8c4216264087f68c2d8d59822c869
+    md5: bf61cfd2a7f212efba378167a07d4a6a
+    sha256: 1cc0bab65a6ad0f5a8bd7657760a4fb4e670d30377f9dab88b792977cb3687e7
   category: main
   optional: false
 - name: urllib3
-  version: 2.1.0
+  version: 1.26.18
   manager: conda
   platform: osx-64
   dependencies:
     python: '>=3.7'
     brotli-python: '>=1.0.9'
     pysocks: '>=1.5.6,<2.0,!=1.5.7'
-  url: https://conda.anaconda.org/conda-forge/noarch/urllib3-2.1.0-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/urllib3-1.26.18-pyhd8ed1ab_0.conda
   hash:
-    md5: f8ced8ee63830dec7ecc1be048d1470a
-    sha256: eff5029820b4eaeab3a291a39854a6cd8fc8c4216264087f68c2d8d59822c869
+    md5: bf61cfd2a7f212efba378167a07d4a6a
+    sha256: 1cc0bab65a6ad0f5a8bd7657760a4fb4e670d30377f9dab88b792977cb3687e7
   category: main
   optional: false
 - name: urlobject

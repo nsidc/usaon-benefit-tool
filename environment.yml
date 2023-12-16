@@ -19,16 +19,11 @@ dependencies:
   - typing-extensions ~=4.4
 
   # Runtime dependencies:
+  - gunicorn ~=21.2
   - flask ~=2.2
   - flask-wtf ~=1.0
   - flask-dance ~=7.0.0
   - flask-login ~=0.6.2
-  - gunicorn ~=21.2
-  
-  - requests 
-  - oauthlib
-  - openssl
-
   - sqlalchemy ~=1.4
   - psycopg2 ~=2.9
   - flask-sqlalchemy ~=3.0
@@ -36,6 +31,8 @@ dependencies:
   - loguru ~=0.6.0
   - werkzeug ~=2.2.3
 
+  # TODO: Are we using adhoc certs in dev? We're using them in prod, but
+  # should figure out a better long-term solution.
   # Optional dependency enables adhoc ssl certs in dev:
   - pyopenssl
 
