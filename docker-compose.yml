@@ -3,6 +3,7 @@ version: '3.7'
 services:
   usaon-benefit-tool:
     image: "nsidc/usaon-benefit-tool:${USAON_BENEFIT_TOOL_VERSION:-latest}"
+    container_name: "usaon-benefit-tool"
     # HACK: run the app on the flask dev server with an adhoc cert.
     # TODO: Remove this `command` once we have a more mature solution for
     # distributing certs to our pre-production and production environment.
@@ -19,5 +20,8 @@ services:
     environment:
       # Flask Dance recommends setting this in production:
       #     https://flask-dance.readthedocs.io/en/v0.8.0/quickstarts/google.html#code
-      - "OAUTHLIB_RELAX_TOKEN_SCOPE=1"
-      - "USAON_BENEFIT_TOOL_PROXY"
+      OAUTHLIB_RELAX_TOKEN_SCOPE: "1"
+      # If this envvar is set on the host, pass it through. If "true", our app
+      # (actually Werkzeug does it for us) looks for `X-FORWARDED-PREFIX`
+      # header to determine the base path for the app.
+      USAON_BENEFIT_TOOL_PROXY:

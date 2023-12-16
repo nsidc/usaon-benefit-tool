@@ -18,22 +18,26 @@ services:
       - "5000:5000"
     environment:
       # Enable the in-browser debugger:
-      - "FLASK_DEBUG=True"
+      FLASK_DEBUG: "True"
       # Use a local file DB instead of a remote one:
-      - "USAON_BENEFIT_TOOL_DB_SQLITE=true"
+      USAON_BENEFIT_TOOL_DB_SQLITE: "true"
       # Disable login:
-      - "USAON_BENEFIT_TOOL_LOGIN_DISABLED=true"
+      USAON_BENEFIT_TOOL_LOGIN_DISABLED: "true"
       # NOTE: Uncomment below if you want to test real SSO login behavior!
       # Creds for talking to Google:
-      # - "USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID=${USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID:?USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID must be set}"
-      # - "USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET=${USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET:?USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET must be set}"
-    
+      # USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID: "${USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID:?USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID must be set}"
+      # USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET: "${USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET:?USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET must be set}"
 
-      # Development DANGER ZONE: Do not use the below settings except for
-      # development. These settings are insecure in production.
+
+      ##########################################################################
+      # DEV DANGER ZONE: Do NOT use the below settings EXCEPT for development.
+      # These settings are INSECURE IN PRODUCTION.
+      ##########################################################################
 
       # In dev, we don't need to secure our sessions
-      - "FLASK_SECRET_KEY=supersecret"
-      # Allow http in dev
+      FLASK_SECRET_KEY: "supersecret"
+      # Allow http in dev; TODO: Do we need this? Why? Login is
+      # disabled in dev. Maybe as a fallback for actually testing
+      # login behavior?
       #     https://flask-dance.readthedocs.io/en/v0.8.0/quickstarts/google.html#code
-      - "OAUTHLIB_INSECURE_TRANSPORT=1"
+      # OAUTHLIB_INSECURE_TRANSPORT: "1"
