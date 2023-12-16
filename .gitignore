@@ -3,6 +3,7 @@ __pycache__/
 
 # Docker ephemera
 docker-compose.override.yml
+compose.override.yml
 .env
 
 

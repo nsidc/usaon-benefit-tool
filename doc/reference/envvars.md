@@ -10,7 +10,7 @@
 ## SSO
 
 * `OAUTHLIB_INSECURE_TRANSPORT=1`  NOTE: Do not set this in production.
-* `OAUTHLIB_RELAX_TOKEN_SCOPE=1` Set in docker-compose YAML.
+* `OAUTHLIB_RELAX_TOKEN_SCOPE=1` Set in Compose YAML.
 * `USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID`: The google credential id. (stored in vault)
 * `USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET`: The google sso credential secret. (stored in vault)
 
