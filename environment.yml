@@ -9,14 +9,14 @@ dependencies:
   - python ~=3.11.7
 
   # Dev dependencies:
+  - pre-commit
+  - bump-my-version ~=0.9.2
   # TODO: For some reason, with later versions, imports within invoke tasks stop working
   - invoke ~=2.0.0
   - pytest ~=7.1
   - mypy ~=1.7.1
   - shellcheck ~=0.8.0
   - typing-extensions ~=4.4
-  - pre-commit
-  - bump-my-version ~=0.9.2
 
   # Runtime dependencies:
   - flask ~=2.2
