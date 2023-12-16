@@ -4,7 +4,7 @@ from .util import in_container
 
 
 @task(aliases=('recreate',))
-def init(ctx, load=True):
+def init(ctx, *, load=True):
     """Drop and recreate all database tables, loading them by default."""
     if not in_container():
         print(

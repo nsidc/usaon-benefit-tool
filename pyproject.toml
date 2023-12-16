@@ -36,17 +36,28 @@ select = [
   "F",    # pyflakes
   "E",    # pycodestyle errors
   "W",    # pycodestyle warnings
-  "C4",   # flake8-comprehensions
   "C90",  # mccabe
   "I",    # isort
   "N",    # pep8-naming
   "D",    # pydostyle
   "UP",   # pyupgrade
   "YTT",  # flake8-2020
+  "FBT",  # flake8-boolean-trap
   "B",    # flake8-bugbear
   "A",    # flake8-builtins
+  "COM",  # flake8-commas
+  "C4",   # flake8-comprehensions
+  "DTZ",  # flake8-datetimez
   "T10",  # flake8-debugger
+  # "EM",   # flake8-errmsg
+  "INP",  # flake8-no-pep420
+  "PIE",  # flake8-pie
+  "ARG",  # flake8-unused-arguments
+  "PTH",  # flake8-use-pathlib
+  "PL",   # PyLint
+  "FURB", # refurb
   "RUF",  # Ruff
+
 ]
 ignore = [
   # D1: Ignore errors requiring docstrings on everything.
@@ -65,9 +76,10 @@ ignore = [
 # E501: Line too long. Long strings, e.g. URLs, are common in config.
 "usaon_benefit_tool/models/tables.py" = ["A003"]
 "tasks/format.py" = ["A001"]
+"tasks/*" = ["ARG"]
 "usaon_benefit_tool/forms.py" = ["N802"]
 "usaon_benefit_tool/routes/__init__.py" = ["F401", "I001"]
-"usaon_benefit_tool/__init__.py" = ["E501"]
+"usaon_benefit_tool/__init__.py" = ["E501", "PLR0915"]
 
 [tool.ruff.isort]
 known-third-party = ["luigi"]
