@@ -6,6 +6,8 @@ from flask import Flask, session
 from flask_bootstrap import Bootstrap5
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from markdown import Markdown
+from markupsafe import Markup
 from sqlalchemy import MetaData
 from sqlalchemy import inspect as sqla_inspect
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -112,6 +114,14 @@ def create_app():
     app.register_blueprint(data_product_application_bp)
     app.register_blueprint(application_societal_benefit_area_bp)
 
-    app.jinja_env.globals.update(sqla_inspect=sqla_inspect, __version__=__version__)
+    app.jinja_env.globals.update(
+        __version__=__version__,
+        sqla_inspect=sqla_inspect,
+    )
+
+    md = Markdown(extensions=['fenced_code'])
+    app.jinja_env.filters.update(
+        markdown=lambda txt: Markup(md.convert(txt)),
+    )
 
     return app
