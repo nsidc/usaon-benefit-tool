@@ -67,7 +67,7 @@ select = [
   "ARG",  # flake8-unused-arguments
   "PTH",  # flake8-use-pathlib
   "PL",   # PyLint
-  "FURB", # refurb
+  # "FURB", # refurb
   "RUF",  # Ruff
 
 ]
