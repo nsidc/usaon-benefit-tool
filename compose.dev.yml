@@ -1,4 +1,3 @@
-version: '3.7'
 # TODO: Should SQLite be exposed as an option with compose config? The
 # application supports it, so if someone really wants to work that way they
 # can. Our recommended development default should probably be PostgreSQL for

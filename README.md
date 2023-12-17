@@ -45,7 +45,9 @@ _TODO_
 
 ## Troubleshooting
 
-_TODO_
+* Docker Compose complains that the `version` key is missing from YAML.
+  * Upgrade to the latest version of Docker Compose. We are using the Compose
+    Specification, in which `version` is optional.
 
 
 ## Credit
