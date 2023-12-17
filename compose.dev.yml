@@ -21,7 +21,9 @@ services:
     <<: *common
     image: "nsidc/usaon-benefit-tool:dev"
     # Flask development server with live debugger and hot reloading:
-    command: "flask run --cert=adhoc --host 0.0.0.0"
+    # NOTE: --cert=adhoc enables HTTPS in dev, but it's a pain in the butt to
+    # add a browser extension every time the app hot reloads.
+    command: "flask run --host 0.0.0.0"
     build: "."
     # To make volume mounting (especially for new volume mounts like the DB)
     # easier, override the micromamba non-root user:
