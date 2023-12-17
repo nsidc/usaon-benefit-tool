@@ -9,6 +9,10 @@ footer {
   width: 100%;
   padding: 20px;
 }
+.footer-items {
+  display: flex;
+  justify-content: space-between;
+}
 
 nav ul {
   list-style-type: none;
