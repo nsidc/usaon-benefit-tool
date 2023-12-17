@@ -36,8 +36,8 @@ def _societal_benefit_areas_sankey(response: Response):
             [
                 _application_societal_benefit_area_sankey_links(application)
                 for application in response.applications
-            ]
-        )
+            ],
+        ),
     )
     return data
 
@@ -49,8 +49,8 @@ def _applications_sankey(response: Response) -> list[tuple[str, str, int]]:
             [
                 _data_product_application_sankey_links(data_product)
                 for data_product in response.data_products
-            ]
-        )
+            ],
+        ),
     )
     return data
 
@@ -62,8 +62,8 @@ def _data_products_sankey(response: Response) -> list[tuple[str, str, int]]:
             [
                 _observing_system_data_product_sankey_links(observing_system)
                 for observing_system in response.observing_systems
-            ]
-        )
+            ],
+        ),
     )
     return data
 

@@ -6,5 +6,5 @@ def limit_response_editors() -> None:
         raise RuntimeError("Please login")
     if current_user.role_id not in ['admin', 'respondent']:
         raise RuntimeError(
-            "You must be a respondent or admin to respond to this survey."
+            "You must be a respondent or admin to respond to this survey.",
         )

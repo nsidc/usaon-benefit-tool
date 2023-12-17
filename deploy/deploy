@@ -10,11 +10,11 @@ source VERSION.env
 source /etc/profile.d/envvars.sh
 
 # Ensure the production config is present
-ln -sf docker-compose.prod.yml docker-compose.override.yml
+ln -sf compose.prod.yml compose.override.yml
 
 # We have limited disk space in our deployment environment, so the app needs to
 # go down, delete its image, download the new image, and start it back up.
 # TODO: Zero-downtime deployments! More compact image!
-docker-compose down
+docker compose down
 docker system prune -af
-docker-compose up -d
+docker compose up -d

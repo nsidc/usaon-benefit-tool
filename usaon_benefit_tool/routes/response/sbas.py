@@ -11,7 +11,9 @@ from usaon_benefit_tool.util.authorization import limit_response_editors
 from usaon_benefit_tool.util.sankey import societal_benefit_areas_sankey
 
 societal_benefit_area_bp = Blueprint(
-    'sba', __name__, url_prefix='/response/<string:survey_id>/societal_benefit_areas'
+    'sba',
+    __name__,
+    url_prefix='/response/<string:survey_id>/societal_benefit_areas',
 )
 
 
@@ -23,7 +25,7 @@ def view_response_sbas(survey_id: str):
     survey = db.get_or_404(Survey, survey_id)
     # show the list of available SBAs
     response_societal_benefit_area = ResponseSocietalBenefitArea(
-        response_id=survey.response_id
+        response_id=survey.response_id,
     )
 
     if request.method == 'POST':
@@ -50,13 +52,15 @@ def view_response_sbas(survey_id: str):
 
 
 @societal_benefit_area_bp.route(
-    '/<int:response_societal_benefit_area_id>', methods=['DELETE']
+    '/<int:response_societal_benefit_area_id>',
+    methods=['DELETE'],
 )
 def delete_response_sba(survey_id: int, response_societal_benefit_area_id: int):
     """Delete societal benefit area response object from survey."""
     survey = db.get_or_404(Survey, survey_id)
     response_sba = db.get_or_404(
-        ResponseSocietalBenefitArea, response_societal_benefit_area_id
+        ResponseSocietalBenefitArea,
+        response_societal_benefit_area_id,
     )
     db.session.delete(response_sba)
     db.session.commit()

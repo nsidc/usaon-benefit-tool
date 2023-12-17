@@ -4,12 +4,12 @@ from .util import in_container
 
 
 @task(aliases=('recreate',))
-def init(ctx, load=True):
+def init(ctx, *, load=True):
     """Drop and recreate all database tables, loading them by default."""
     if not in_container():
         print(
             'Please run from the container context using'
-            ' `scripts/invoke_in_container.sh`'
+            ' `scripts/invoke_in_container.sh`',
         )
         return
 
@@ -34,7 +34,7 @@ def load_reference_data(ctx):
     if not in_container():
         print(
             'Please run from the container context using'
-            ' `scripts/invoke_in_container.sh`'
+            ' `scripts/invoke_in_container.sh`',
         )
         return
 

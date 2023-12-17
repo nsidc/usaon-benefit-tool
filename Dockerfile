@@ -11,17 +11,15 @@ ARG MAMBA_DOCKERFILE_ACTIVATE=1
 
 COPY ./conda-lock.yml .
 
+# NOTE: `-p` is important to install to the "base" env
 RUN micromamba install -y \
-    # NOTE: -p is important to install to the "base" env
     -p /opt/conda \
-    -f conda-lock.yml
-RUN micromamba clean --all --yes
+    -f conda-lock.yml \
+  && micromamba clean --all --yes
 
 
 # Install source
-COPY ./setup.py .
 COPY ./pyproject.toml .
-COPY ./.mypy.ini .
 COPY ./tasks ./tasks
 COPY ./usaon_benefit_tool ./usaon_benefit_tool
 
@@ -29,8 +27,8 @@ ENV FLASK_APP=usaon_benefit_tool
 
 
 # Test dependencies
-RUN python -c "import flask"
-RUN which flask
+RUN which flask \
+ && python -c "import flask"
 
 # Start a flask server
 #

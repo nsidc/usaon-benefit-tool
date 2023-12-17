@@ -56,7 +56,7 @@ def init_statuses(session: Session) -> None:
                 id=status,
             )
             for status in STATUSES
-        ]
+        ],
     )
 
     session.commit()
@@ -69,7 +69,7 @@ def init_roles(session: Session) -> None:
                 id=role,
             )
             for role in ROLES
-        ]
+        ],
     )
 
     session.commit()
@@ -93,7 +93,7 @@ def init_societal_benefit_areas(session: Session) -> None:
                 id=sba_name,
             )
             for sba_name in IAOA_SBA_FRAMEWORK.keys()
-        ]
+        ],
     )
 
     # Flush guarantees that these records will be present in the transaction before we
@@ -109,7 +109,7 @@ def init_societal_benefit_areas(session: Session) -> None:
                     societal_benefit_area_id=sba_name,
                 )
                 for sub_area_name in sba.keys()
-            ]
+            ],
         )
         session.flush()
 
@@ -122,7 +122,7 @@ def init_societal_benefit_areas(session: Session) -> None:
                         societal_benefit_subarea_id=sub_area_name,
                     )
                     for key_objective_name in sub_area
-                ]
+                ],
             )
 
     session.commit()

@@ -10,7 +10,7 @@ warning:
 """
 from datetime import datetime
 from functools import cache
-from typing import Final
+from typing import Final, NotRequired
 
 from flask_login import UserMixin, current_user
 from sqlalchemy import CheckConstraint
@@ -18,7 +18,7 @@ from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey, Index, UniqueConstraint
 from sqlalchemy.types import Boolean, DateTime, Enum, Integer, SmallInteger, String
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import TypedDict
 
 from usaon_benefit_tool import db
 from usaon_benefit_tool._types import ObservingSystemType
@@ -57,7 +57,7 @@ class IORelationshipMixin:
         if io == {}:
             raise RuntimeError(
                 'Please only use IORelationshipMixin on a model with'
-                ' input_relationships or output_relationships'
+                ' input_relationships or output_relationships',
             )
 
         return io
@@ -356,7 +356,8 @@ class ResponseApplication(BaseModel, IORelationshipMixin, ResponseObjectFieldMix
     performance_rating = Column(
         Integer,
         CheckConstraint(
-            'performance_rating>0 and performance_rating<101', name='0-100'
+            'performance_rating>0 and performance_rating<101',
+            name='0-100',
         ),
         nullable=False,
     )
@@ -458,14 +459,16 @@ class ResponseObservingSystemDataProduct(BaseModel):
     criticality_rating = Column(
         SmallInteger,
         CheckConstraint(
-            'criticality_rating>=0 and criticality_rating<=100', name='c0-100'
+            'criticality_rating>=0 and criticality_rating<=100',
+            name='c0-100',
         ),
         nullable=False,
     )
     performance_rating = Column(
         SmallInteger,
         CheckConstraint(
-            'performance_rating>=0 and performance_rating<=100', name='0-100'
+            'performance_rating>=0 and performance_rating<=100',
+            name='0-100',
         ),
         nullable=False,
     )
@@ -513,14 +516,16 @@ class ResponseDataProductApplication(BaseModel):
     criticality_rating = Column(
         SmallInteger,
         CheckConstraint(
-            'criticality_rating>=0 and criticality_rating<=100', name='c0-100'
+            'criticality_rating>=0 and criticality_rating<=100',
+            name='c0-100',
         ),
         nullable=False,
     )
     performance_rating = Column(
         SmallInteger,
         CheckConstraint(
-            'performance_rating>=0 and performance_rating<=100', name='0-100'
+            'performance_rating>=0 and performance_rating<=100',
+            name='0-100',
         ),
         nullable=False,
     )
@@ -541,7 +546,8 @@ class ResponseApplicationSocietalBenefitArea(BaseModel):
     __tablename__ = 'response_application_societal_benefit_area'
     __table_args__ = (
         UniqueConstraint(
-            'response_application_id', 'response_societal_benefit_area_id'
+            'response_application_id',
+            'response_societal_benefit_area_id',
         ),
         Index(
             'idx_{__tablename__}',
@@ -569,7 +575,8 @@ class ResponseApplicationSocietalBenefitArea(BaseModel):
     performance_rating = Column(
         SmallInteger,
         CheckConstraint(
-            'performance_rating>=0 and performance_rating<=100', name='0-100'
+            'performance_rating>=0 and performance_rating<=100',
+            name='0-100',
         ),
         nullable=False,
     )

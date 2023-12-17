@@ -74,7 +74,8 @@ def _response_observing_system(
     """Return an observing system db object (or 404)."""
     if observing_system_id is not None:
         response_observing_system = db.get_or_404(
-            ResponseObservingSystem, observing_system_id
+            ResponseObservingSystem,
+            observing_system_id,
         )
     else:
         response_observing_system = ResponseObservingSystem(response_id=response_id)
@@ -100,7 +101,7 @@ def _response_observing_system_data_product(
                 ResponseObservingSystemDataProduct.response_data_product_id
                 == data_product_id
                 and ResponseObservingSystemDataProduct.response_observing_system_id
-                == observing_system_id
+                == observing_system_id,
             )
             .one_or_none()
         )
@@ -218,7 +219,7 @@ def view_response_observing_system_data_product_relationships(survey_id: str):
             db.session.commit()
 
         return redirect(
-            url_for('data_product.view_response_data_products', survey_id=survey.id)
+            url_for('data_product.view_response_data_products', survey_id=survey.id),
         )
 
     form = ObservingSystemDataProductForm(obj=form_obj)
@@ -239,12 +240,14 @@ def view_response_observing_system_data_product_relationships(survey_id: str):
     methods=['DELETE'],
 )
 def delete_response_observing_system_data_product_relationship(
-    survey_id: int, response_observing_system_data_product_id: int
+    survey_id: int,
+    response_observing_system_data_product_id: int,
 ):
     """Delete data product/observing system relationship."""
     survey = db.get_or_404(Survey, survey_id)
     response_observing_system_data_product = db.get_or_404(
-        ResponseObservingSystemDataProduct, response_observing_system_data_product_id
+        ResponseObservingSystemDataProduct,
+        response_observing_system_data_product_id,
     )
     db.session.delete(response_observing_system_data_product)
     db.session.commit()

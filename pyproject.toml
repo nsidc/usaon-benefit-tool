@@ -1,26 +1,75 @@
+[project]
+name = "usaon_benefit_tool"
+description = "Gather data for US AON's Value Tree Analysis (Benefit Tool) process"
+version = "1.1.0"
+url = "git@github.com:nsidc/usaon-benefit-tool.git"
+authors = [
+  {name = "National Snow and Ice Data Center", email = "nsidc@nsidc.org"},
+]
+packages = ["usaon_benefit_tool"]
+include_package_data = true
+
+
 [tool.black]
-target-version = ['py310']
+target-version = ["py311"]
 skip-string-normalization = true
 
 
+[tool.mypy]
+python_version = "3.11"
+incremental = true
+warn_unused_configs = true
+warn_unreachable = true
+# disallow_untyped_defs = true
+# disallow_incomplete_defs = true
+# struct = true
+
+[[tool.mypy.overrides]]
+module = [
+  "sqlalchemy.*",
+  "flask_bootstrap.*",
+  "flask_wtf.*",
+  "flask_dance.*",
+  "flask_login.*",
+  "wtforms.*",
+  "wtforms_sqlalchemy.*",
+]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "usaon_benefit_tool.*"
+# disallow_untyped_defs = true
+# disallow_incomlete_defs = true
+
+
 [tool.ruff]
-target-version = "py310"
+target-version = "py311"
 select = [
-  "F",
-  "E",
-  "W",
-  "C4",
-  "C90",
-  "I",
-  "N",
-  "D",
-  "UP",
-  "YTT",
-  "B",
-  "A",
-  "C4",
-  "T10",
-  "RUF",
+  "F",    # pyflakes
+  "E",    # pycodestyle errors
+  "W",    # pycodestyle warnings
+  "C90",  # mccabe
+  "I",    # isort
+  "N",    # pep8-naming
+  "D",    # pydostyle
+  "UP",   # pyupgrade
+  "YTT",  # flake8-2020
+  "FBT",  # flake8-boolean-trap
+  "B",    # flake8-bugbear
+  "A",    # flake8-builtins
+  "COM",  # flake8-commas
+  "C4",   # flake8-comprehensions
+  "DTZ",  # flake8-datetimez
+  "T10",  # flake8-debugger
+  # "EM",   # flake8-errmsg
+  "INP",  # flake8-no-pep420
+  "PIE",  # flake8-pie
+  "ARG",  # flake8-unused-arguments
+  "PTH",  # flake8-use-pathlib
+  "PL",   # PyLint
+  # "FURB", # refurb
+  "RUF",  # Ruff
+
 ]
 ignore = [
   # D1: Ignore errors requiring docstrings on everything.
@@ -39,9 +88,10 @@ ignore = [
 # E501: Line too long. Long strings, e.g. URLs, are common in config.
 "usaon_benefit_tool/models/tables.py" = ["A003"]
 "tasks/format.py" = ["A001"]
+"tasks/*" = ["ARG"]
 "usaon_benefit_tool/forms.py" = ["N802"]
 "usaon_benefit_tool/routes/__init__.py" = ["F401", "I001"]
-"usaon_benefit_tool/__init__.py" = ["E501"]
+"usaon_benefit_tool/__init__.py" = ["E501", "PLR0915"]
 
 [tool.ruff.isort]
 known-third-party = ["luigi"]
@@ -63,9 +113,9 @@ search = 'VERSION = "{current_version}"'
 replace = 'VERSION = "{new_version}"'
 
 [[tool.bumpversion.files]]
-filename = "setup.py"
-search = 'version="{current_version}"'
-replace = 'version="{new_version}"'
+filename = "pyproject.toml"
+search = '^version = "{current_version}"$'
+replace = 'version = "{new_version}"'
 
 [[tool.bumpversion.files]]
 filename = "CITATION.cff"

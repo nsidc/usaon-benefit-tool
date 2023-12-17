@@ -7,7 +7,9 @@ from usaon_benefit_tool.util.authorization import limit_response_editors
 from usaon_benefit_tool.util.sankey import applications_sankey
 
 application_bp = Blueprint(
-    'application', __name__, url_prefix='/response/<int:survey_id>/applications'
+    'application',
+    __name__,
+    url_prefix='/response/<int:survey_id>/applications',
 )
 
 
@@ -28,7 +30,7 @@ def view_response_applications(survey_id: int):
             db.session.commit()
 
         return redirect(
-            url_for('application.view_response_applications', survey_id=survey.id)
+            url_for('application.view_response_applications', survey_id=survey.id),
         )
 
     form = Form(obj=response_application)

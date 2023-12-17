@@ -27,8 +27,8 @@ db = SQLAlchemy(
             'ck': 'ck_%(table_name)s_%(constraint_name)s',
             'fk': 'fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s',
             'pk': 'pk_%(table_name)s',
-        }
-    )
+        },
+    ),
 )
 
 
@@ -54,6 +54,15 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id: str) -> User:
         return User.query.get(user_id)
+
+    # Handle standalone dev deployment without need for auth secrets
+    # HACK: Always logged in as dev user when login is disabled
+    if app.config["LOGIN_DISABLED"]:
+        import flask_login.utils as flask_login_utils
+
+        from usaon_benefit_tool.util.dev import DEV_USER
+
+        flask_login_utils._get_user = lambda: DEV_USER
 
     @app.before_request
     def before_request():

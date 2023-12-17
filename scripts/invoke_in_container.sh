@@ -5,7 +5,7 @@ args="$@"
 
 # TODO: Do we need this?  --user="${UID}" \
 #       Or this for wrapping the command?   bash --login -c \
-docker-compose run --rm \
+docker compose run --rm \
     usaon-benefit-tool \
     invoke $args
 

@@ -6,7 +6,7 @@
 ### Symlink dev config
 
 ```bash
-ln -s docker-compose.dev.yml docker-compose.override.yml
+ln -s compose.dev.yml compose.override.yml
 ```
 
 
@@ -21,20 +21,22 @@ export USAON_BENEFIT_TOOL_DB_USER=...
 export USAON_BENEFIT_TOOL_DB_PASSWORD=...
 ```
 
-Note: these can be put in a `.env` file so that all variables are assigned. This file is part of `.gitignore` so that no secrets are committed to github. 
+> :memo: these can be put in a `.env` file so that all variables are assigned. This file
+> is part of `.gitignore` so that no secrets are committed to github. 
 
 ### Start the service
 
 Bring up the docker container:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 
 ### Initialize the database
 
-NOTE: In dev this will initialize the SQLite DB. In all other environments we deploy the db using the [usaon-vta-db project](https://github.com/nsidc/usaon-vta-db).
+> :memo: In dev this will initialize the SQLite DB. In all other environments we deploy
+> the db using the [usaon-vta-db project](https://github.com/nsidc/usaon-vta-db).
 
 Run `./scripts/invoke_in_container.sh db.init`
 

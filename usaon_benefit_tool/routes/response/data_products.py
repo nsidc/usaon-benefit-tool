@@ -7,7 +7,9 @@ from usaon_benefit_tool.util.authorization import limit_response_editors
 from usaon_benefit_tool.util.sankey import data_products_sankey
 
 data_product_bp = Blueprint(
-    'data_product', __name__, url_prefix='/response/<string:survey_id>/data_products'
+    'data_product',
+    __name__,
+    url_prefix='/response/<string:survey_id>/data_products',
 )
 
 
@@ -28,7 +30,7 @@ def view_response_data_products(survey_id: str):
             db.session.commit()
 
         return redirect(
-            url_for('data_product.view_response_data_products', survey_id=survey.id)
+            url_for('data_product.view_response_data_products', survey_id=survey.id),
         )
 
     form = Form(obj=response_data_product)
