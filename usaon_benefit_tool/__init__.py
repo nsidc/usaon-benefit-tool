@@ -41,8 +41,12 @@ def create_app():
 
     app = Flask(__name__)
     app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'youcanneverguess')
-    app.config['LOGIN_DISABLED'] = envvar_is_true("USAON_BENEFIT_TOOL_LOGIN_DISABLED")
     app.config['SQLALCHEMY_DATABASE_URI'] = db_connstr(app)
+    app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = 'cosmo'
+
+    # DEV ONLY: Disable login
+    app.config['LOGIN_DISABLED'] = envvar_is_true("USAON_BENEFIT_TOOL_LOGIN_DISABLED")
+
     if envvar_is_true("USAON_BENEFIT_TOOL_PROXY"):
         app.wsgi_app = ProxyFix(app.wsgi_app, x_prefix=1)  # type: ignore
 
