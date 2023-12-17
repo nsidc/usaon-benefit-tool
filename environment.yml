@@ -18,6 +18,10 @@ dependencies:
   - shellcheck ~=0.8.0
   - typing-extensions ~=4.4
 
+  ## Type definitions
+  - types-markdown ~=3.5
+
+
   # Runtime dependencies:
   - gunicorn ~=21.2
   - flask ~=2.2
@@ -27,6 +31,7 @@ dependencies:
   - sqlalchemy ~=1.4
   - psycopg2 ~=2.9
   - flask-sqlalchemy ~=3.0
+  - markdown ~=3.5
 
   - loguru ~=0.6.0
   - werkzeug ~=2.2.3

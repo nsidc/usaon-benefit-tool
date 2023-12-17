@@ -13,8 +13,8 @@
 version: 1
 metadata:
   content_hash:
-    linux-64: 93ba4460e711668fb74971ac655cf80aa7f5bb1151c121e85e8e909541ce0f68
-    osx-64: 0a254441fa9a6819b495bbdff404d47cd65ddf954712cafdc9ef1002b7f436b1
+    linux-64: da02cee698358ec4d07c6663e6427fd72ef3794f5250d7f4978ba4f3fb088089
+    osx-64: 65d913253221c325f89322698fb4cbd0ba554d3252ea24fe93a40924eb65270d
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -1462,6 +1462,32 @@ package:
     sha256: f74d200ffa50c455fbe631ca6564fe5b80c64ab314ec832528cfcdfad2a119d7
   category: main
   optional: false
+- name: markdown
+  version: 3.5.1
+  manager: conda
+  platform: linux-64
+  dependencies:
+    importlib-metadata: '>=4.4'
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/markdown-3.5.1-pyhd8ed1ab_0.conda
+  hash:
+    md5: 323495027ffa625701129acebf861412
+    sha256: 35e8990504cf8dc7e2bb63efd855fb0a0d5c0d77bf79403235e757c24a83ec1d
+  category: main
+  optional: false
+- name: markdown
+  version: 3.5.1
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.6'
+    importlib-metadata: '>=4.4'
+  url: https://conda.anaconda.org/conda-forge/noarch/markdown-3.5.1-pyhd8ed1ab_0.conda
+  hash:
+    md5: 323495027ffa625701129acebf861412
+    sha256: 35e8990504cf8dc7e2bb63efd855fb0a0d5c0d77bf79403235e757c24a83ec1d
+  category: main
+  optional: false
 - name: markdown-it-py
   version: 3.0.0
   manager: conda
@@ -2644,6 +2670,30 @@ package:
   hash:
     md5: 074d0ce7a6261ab8b497c3518796ef3e
     sha256: 53cc436ab92d38683df1320e4468a8b978428e800195bf1c8c2460e90b0bc117
+  category: main
+  optional: false
+- name: types-markdown
+  version: 3.5.0.3
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/types-markdown-3.5.0.3-pyhd8ed1ab_0.conda
+  hash:
+    md5: 9a78be2f67528371edc1bf3f908530b8
+    sha256: a64b305419e2f0d537c42aa9c30285e31e41b852904e85d25243f9bc9a4c6d2d
+  category: main
+  optional: false
+- name: types-markdown
+  version: 3.5.0.3
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.6'
+  url: https://conda.anaconda.org/conda-forge/noarch/types-markdown-3.5.0.3-pyhd8ed1ab_0.conda
+  hash:
+    md5: 9a78be2f67528371edc1bf3f908530b8
+    sha256: a64b305419e2f0d537c42aa9c30285e31e41b852904e85d25243f9bc9a4c6d2d
   category: main
   optional: false
 - name: typing-extensions
