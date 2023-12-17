@@ -21,17 +21,20 @@
   </nav>
   {{ render_messages() }}
   <section class="content">
-    <header>
-      {% block header %}{% endblock %}
-    </header>
-    
+    <div class="container">
 
-    {% if not current_user.is_authenticated %}
-      <h3>Please login to use this application.</h3>
-    {% else %}
-      {% block content %}{% endblock %}
-    {% endif %}
+      <header>
+        {% block header %}{% endblock %}
+      </header>
+      
 
+      {% if not current_user.is_authenticated %}
+        <h3>Please login to use this application.</h3>
+      {% else %}
+        {% block content %}{% endblock %}
+      {% endif %}
+
+    </div>
   </section>
 
   <footer>
