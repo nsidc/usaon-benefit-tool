@@ -19,7 +19,6 @@ RUN micromamba install -y \
 
 
 # Install source
-COPY ./setup.py .
 COPY ./pyproject.toml .
 COPY ./tasks ./tasks
 COPY ./usaon_benefit_tool ./usaon_benefit_tool
