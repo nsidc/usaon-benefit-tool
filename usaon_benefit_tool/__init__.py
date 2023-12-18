@@ -78,8 +78,7 @@ def create_app():
             if time.time() >= token['expires_at']:
                 del s['google_oauth_token']
 
-    from usaon_benefit_tool.routes.google import google_bp
-    from usaon_benefit_tool.routes.login import login_bp
+    from usaon_benefit_tool.routes.login import google_bp, login_bp
     from usaon_benefit_tool.routes.logout import logout_bp
     from usaon_benefit_tool.routes.response import response_bp
     from usaon_benefit_tool.routes.response.applications import application_bp
