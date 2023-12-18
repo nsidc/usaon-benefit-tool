@@ -3,18 +3,33 @@
 # environment. It needs to be genericized!
 set -euo pipefail
 
-source VERSION.env
+ENVIRONMENT="${1}"
+
+if [ "${ENVIRONMENT}" = "integration" ]; then
+    VERSION_FILE="VERSION.latest.env"
+else
+    VERSION_FILE="VERSION.env"
+fi
+
+echo
+echo "Deploying versions:"
+cat "${VERSION_FILE}"
+echo
+
+source "${VERSION_FILE}"
 
 # TODO: How to genericize this? These envvars can't go in the Git repository.
 # At minimum, we should rename envvars.sh to usaon-benefit-tool.sh.
 source /etc/profile.d/envvars.sh
 
 # Ensure the production config is present
-ln -sf compose.prod.yml compose.override.yml
+ln --symbolic --force \
+    compose.prod.yml \
+    compose.override.yml
 
 # We have limited disk space in our deployment environment, so the app needs to
 # go down, delete its image, download the new image, and start it back up.
 # TODO: Zero-downtime deployments! More compact image!
 docker compose down
-docker system prune -af
-docker compose up -d
+docker system prune --all --force
+docker compose up --detach
