@@ -24,7 +24,7 @@ def login():
 
 
 @oauth_authorized.connect_via(google_bp)
-def google_logged_in(blueprint):
+def google_logged_in(blueprint, token):  # noqa: ARG001
     # TODO: Flash a message?
     account_data = blueprint.session.get("/oauth2/v2/userinfo")
 
