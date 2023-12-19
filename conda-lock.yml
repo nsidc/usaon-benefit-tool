@@ -13,8 +13,8 @@
 version: 1
 metadata:
   content_hash:
-    linux-64: 35163f8d1b2599c68d14435aef490a404405793e10a4f8aadc29597bcac70b4a
-    osx-64: 5738f83950f7b60711ec303fc8298a3b052abc9c1a5623d120fbd8156dd94b49
+    linux-64: 3c85e729777cea39a5d837f199656760051edb8561c51b36f39a2e8b4e7df2b9
+    osx-64: 4d575856ffd08afa420bcb0c0ef5f829441f3f12c72f16da8726ed981a167698
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -1302,6 +1302,21 @@ package:
     sha256: fd2185d501bf34cb4c121f2f5ade9157ac75e1644a9da81355c4c8f9c1b82d4d
   category: main
   optional: false
+- name: pydantic
+  version: 1.10.13
+  manager: conda
+  platform: linux-64
+  dependencies:
+    libgcc-ng: '>=12'
+    python: '>=3.11,<3.12.0a0'
+    python_abi: 3.11.*
+    typing-extensions: '>=4.2.0'
+  url: https://conda.anaconda.org/conda-forge/linux-64/pydantic-1.10.13-py311h459d7ec_1.conda
+  hash:
+    md5: 8a92f40420211897a35841861e7e8348
+    sha256: f2d3a838fc90699c5dcd537aff10c78b33bd755232d0b21b26247cbf185cced7
+  category: main
+  optional: false
 - name: pydantic-core
   version: 2.14.5
   manager: conda
@@ -1407,19 +1422,18 @@ package:
     sha256: 0cfd5146a91d3974f4abfc2a45de890371d510a77238fe553e036ec8c031dc5b
   category: main
   optional: false
-- name: pydantic
-  version: 2.5.2
+- name: pydantic-settings
+  version: 2.1.0
   manager: conda
   platform: linux-64
   dependencies:
-    annotated-types: '>=0.4.0'
-    pydantic-core: 2.14.5
-    python: '>=3.7'
-    typing-extensions: '>=4.6.1'
-  url: https://conda.anaconda.org/conda-forge/noarch/pydantic-2.5.2-pyhd8ed1ab_0.conda
+    pydantic: '>=2.3.0'
+    python: '>=3.8'
+    python-dotenv: '>=0.21.0'
+  url: https://conda.anaconda.org/conda-forge/noarch/pydantic-settings-2.1.0-pyhd8ed1ab_1.conda
   hash:
-    md5: 3f908ebfccbfd09946961862d26bb9af
-    sha256: e3baa6424af931d8d7c5a0554b24d85faf3471df8036181d598065beed3096de
+    md5: 2a63052c1180846d4a6aaa9df7e113a3
+    sha256: 2c80df34463dabec383b37dc19da48f84a1ea97f3d828d6d0dd220110da5f4e1
   category: main
   optional: false
 - name: pyopenssl
@@ -1477,6 +1491,23 @@ package:
     sha256: c0444d9d386a1991fadca8b31b9dfc302e5d781b8a2d29faff2c47286eff477c
   category: main
   optional: false
+- name: bump-my-version
+  version: 0.9.3
+  manager: conda
+  platform: linux-64
+  dependencies:
+    click: ''
+    pydantic: <2.0.0
+    python: '>=3.8'
+    rich: ''
+    rich-click: ''
+    tomlkit: ''
+  url: https://conda.anaconda.org/conda-forge/noarch/bump-my-version-0.9.3-pyhd8ed1ab_0.conda
+  hash:
+    md5: 24f0c263af3783651f77b021a6ad97a8
+    sha256: b5530371b54677cb72d93ae091052327b2c809a6066d85366af4f3f0728888eb
+  category: main
+  optional: false
 - name: pre-commit
   version: 3.6.0
   manager: conda
@@ -1494,20 +1525,6 @@ package:
     sha256: 7d1f4b4a2eb4946b5808769642c5f643788c3a9e090f1c02a6c63f8794fb3d54
   category: main
   optional: false
-- name: pydantic-settings
-  version: 2.1.0
-  manager: conda
-  platform: linux-64
-  dependencies:
-    pydantic: '>=2.3.0'
-    python: '>=3.8'
-    python-dotenv: '>=0.21.0'
-  url: https://conda.anaconda.org/conda-forge/noarch/pydantic-settings-2.1.0-pyhd8ed1ab_1.conda
-  hash:
-    md5: 2a63052c1180846d4a6aaa9df7e113a3
-    sha256: 2c80df34463dabec383b37dc19da48f84a1ea97f3d828d6d0dd220110da5f4e1
-  category: main
-  optional: false
 - name: requests-oauthlib
   version: 1.3.1
   manager: conda
@@ -1520,24 +1537,6 @@ package:
   hash:
     md5: 61b279f051eef9c89d58f4d813e75e04
     sha256: 889e3c1b84467b64046776db95dc4c5ea4dad5afaa5ec18ad811bd95c63286b0
-  category: main
-  optional: false
-- name: bump-my-version
-  version: 0.12.0
-  manager: conda
-  platform: linux-64
-  dependencies:
-    click: ''
-    pydantic: ''
-    pydantic-settings: ''
-    python: '>=3.8'
-    rich: ''
-    rich-click: ''
-    tomlkit: ''
-  url: https://conda.anaconda.org/conda-forge/noarch/bump-my-version-0.12.0-pyhd8ed1ab_0.conda
-  hash:
-    md5: 0b2dda6ff988e8f54e29dc923b939b9a
-    sha256: 07675c8b52a9eaaa9731d1b42fdc84aa5e8b0cb165a4e2f61d20622cf96f7759
   category: main
   optional: false
 - name: kombu
@@ -2852,6 +2851,20 @@ package:
     sha256: fd2185d501bf34cb4c121f2f5ade9157ac75e1644a9da81355c4c8f9c1b82d4d
   category: main
   optional: false
+- name: pydantic
+  version: 1.10.13
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.11,<3.12.0a0'
+    python_abi: 3.11.*
+    typing-extensions: '>=4.2.0'
+  url: https://conda.anaconda.org/conda-forge/osx-64/pydantic-1.10.13-py311he705e18_1.conda
+  hash:
+    md5: ca0cd7b41964ce9a7b80290ea85e22e9
+    sha256: c55ab5f7d182421a5c11f70afc32425fa192f1e40de5c301f685b25bdc3391a8
+  category: main
+  optional: false
 - name: pydantic-core
   version: 2.14.5
   manager: conda
@@ -2955,19 +2968,18 @@ package:
     sha256: 0cfd5146a91d3974f4abfc2a45de890371d510a77238fe553e036ec8c031dc5b
   category: main
   optional: false
-- name: pydantic
-  version: 2.5.2
+- name: pydantic-settings
+  version: 2.1.0
   manager: conda
   platform: osx-64
   dependencies:
-    python: '>=3.7'
-    annotated-types: '>=0.4.0'
-    typing-extensions: '>=4.6.1'
-    pydantic-core: 2.14.5
-  url: https://conda.anaconda.org/conda-forge/noarch/pydantic-2.5.2-pyhd8ed1ab_0.conda
+    python: '>=3.8'
+    python-dotenv: '>=0.21.0'
+    pydantic: '>=2.3.0'
+  url: https://conda.anaconda.org/conda-forge/noarch/pydantic-settings-2.1.0-pyhd8ed1ab_1.conda
   hash:
-    md5: 3f908ebfccbfd09946961862d26bb9af
-    sha256: e3baa6424af931d8d7c5a0554b24d85faf3471df8036181d598065beed3096de
+    md5: 2a63052c1180846d4a6aaa9df7e113a3
+    sha256: 2c80df34463dabec383b37dc19da48f84a1ea97f3d828d6d0dd220110da5f4e1
   category: main
   optional: false
 - name: pyopenssl
@@ -3025,6 +3037,23 @@ package:
     sha256: c0444d9d386a1991fadca8b31b9dfc302e5d781b8a2d29faff2c47286eff477c
   category: main
   optional: false
+- name: bump-my-version
+  version: 0.9.3
+  manager: conda
+  platform: osx-64
+  dependencies:
+    click: ''
+    rich: ''
+    tomlkit: ''
+    rich-click: ''
+    python: '>=3.8'
+    pydantic: <2.0.0
+  url: https://conda.anaconda.org/conda-forge/noarch/bump-my-version-0.9.3-pyhd8ed1ab_0.conda
+  hash:
+    md5: 24f0c263af3783651f77b021a6ad97a8
+    sha256: b5530371b54677cb72d93ae091052327b2c809a6066d85366af4f3f0728888eb
+  category: main
+  optional: false
 - name: pre-commit
   version: 3.6.0
   manager: conda
@@ -3042,20 +3071,6 @@ package:
     sha256: 7d1f4b4a2eb4946b5808769642c5f643788c3a9e090f1c02a6c63f8794fb3d54
   category: main
   optional: false
-- name: pydantic-settings
-  version: 2.1.0
-  manager: conda
-  platform: osx-64
-  dependencies:
-    python: '>=3.8'
-    python-dotenv: '>=0.21.0'
-    pydantic: '>=2.3.0'
-  url: https://conda.anaconda.org/conda-forge/noarch/pydantic-settings-2.1.0-pyhd8ed1ab_1.conda
-  hash:
-    md5: 2a63052c1180846d4a6aaa9df7e113a3
-    sha256: 2c80df34463dabec383b37dc19da48f84a1ea97f3d828d6d0dd220110da5f4e1
-  category: main
-  optional: false
 - name: requests-oauthlib
   version: 1.3.1
   manager: conda
@@ -3068,24 +3083,6 @@ package:
   hash:
     md5: 61b279f051eef9c89d58f4d813e75e04
     sha256: 889e3c1b84467b64046776db95dc4c5ea4dad5afaa5ec18ad811bd95c63286b0
-  category: main
-  optional: false
-- name: bump-my-version
-  version: 0.12.0
-  manager: conda
-  platform: osx-64
-  dependencies:
-    click: ''
-    pydantic: ''
-    rich: ''
-    tomlkit: ''
-    rich-click: ''
-    pydantic-settings: ''
-    python: '>=3.8'
-  url: https://conda.anaconda.org/conda-forge/noarch/bump-my-version-0.12.0-pyhd8ed1ab_0.conda
-  hash:
-    md5: 0b2dda6ff988e8f54e29dc923b939b9a
-    sha256: 07675c8b52a9eaaa9731d1b42fdc84aa5e8b0cb165a4e2f61d20622cf96f7759
   category: main
   optional: false
 - name: kombu
