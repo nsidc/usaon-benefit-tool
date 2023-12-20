@@ -2,12 +2,10 @@
 {% from 'bootstrap5/form.html' import render_form %}
 {% from 'bootstrap5/utils.html' import render_icon %}
 {% from 'macros/javascript_remove.j2' import add_javascript__remove %}
-{% from 'macros/javascript_highcharts.j2' import add_javascript__highcharts %}
+{% from 'macros/javascript_highcharts.j2' import display_sankey %}
 
 
 {% block content %}
-  {% include 'includes/highcharts.html' %}
-
   {{super()}}
 
   <div class="two-columns">
@@ -85,14 +83,8 @@
       {% endif %}
     </div>
 
-    {% if sankey_series == [] %}
-      <div>Please input at least one relationship to display diagram</div>
-    {% else %}
-      <figure class="highcharts-figure">
-        <div id="highcharts-container" />
-      </figure>
-      {{ add_javascript__highcharts(sankey_series) }}
-    {% endif %}
+    {{ display_sankey(sankey_series) }}
   </div>
+
   {{ add_javascript__remove() }}
 {% endblock %}

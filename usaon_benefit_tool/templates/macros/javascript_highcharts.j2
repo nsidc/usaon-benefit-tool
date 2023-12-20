@@ -16,8 +16,25 @@
       },
       series: [{
         keys: ['from', 'to', 'weight'],
-        data: {{sankey_series | safe}},
+        data: {{ sankey_series | safe }},
       }]
     });
   </script>
+{% endmacro %}
+
+
+{% macro display_sankey(sankey_series) -%}
+  {% include 'includes/highcharts.html' %}
+  <h4>Diagram</h4>
+
+  {% if sankey_series == [] %}
+    <div class="alert alert-info">
+      Please input at least one relationship to display diagram
+    </div>
+  {% else %}
+    <figure class="highcharts-figure">
+      <div id="highcharts-container" />
+    </figure>
+    {{ add_javascript__highcharts(sankey_series) }}
+  {% endif %}
 {% endmacro %}
