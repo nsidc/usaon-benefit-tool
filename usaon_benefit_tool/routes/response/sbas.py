@@ -1,4 +1,5 @@
 from flask import Blueprint, redirect, render_template, request, url_for
+from flask_login import login_required
 
 from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
@@ -18,6 +19,7 @@ societal_benefit_area_bp = Blueprint(
 
 
 @societal_benefit_area_bp.route('', methods=['GET', 'POST'])
+@login_required
 def view_response_sbas(survey_id: str):
     """View and add to observing systems associated with a response."""
     sbas = SocietalBenefitArea.query.all()
@@ -55,6 +57,7 @@ def view_response_sbas(survey_id: str):
     '/<int:response_societal_benefit_area_id>',
     methods=['DELETE'],
 )
+@login_required
 def delete_response_sba(survey_id: int, response_societal_benefit_area_id: int):
     """Delete societal benefit area response object from survey."""
     survey = db.get_or_404(Survey, survey_id)

@@ -1,3 +1,11 @@
+#login-banner {
+  /* background-color: var(--bs-warning); */
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* Footer stuff */
 body {
   min-height: 100vh;
   display: flex;
@@ -14,6 +22,8 @@ footer {
   justify-content: space-between;
 }
 
+
+/* Nav stuff */
 nav ul {
   list-style-type: none;
   padding: 0px;
@@ -25,6 +35,8 @@ nav ul li {
   padding-right: 15px;
 }
 
+
+/* Content stuff */
 .content {
   padding-top: 20px;
 }

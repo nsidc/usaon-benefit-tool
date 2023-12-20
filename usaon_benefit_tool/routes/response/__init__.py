@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template
+from flask_login import login_required
 
 from usaon_benefit_tool import db
 from usaon_benefit_tool.models.tables import Response, Survey
@@ -9,6 +10,7 @@ response_bp = Blueprint('response', __name__, url_prefix='/response')
 
 
 @response_bp.route('/<string:survey_id>', methods=['GET'])
+@login_required
 def view_response(survey_id: str):
     """View or create response to a survey."""
     # Anyone should be able to view a survey
