@@ -1,7 +1,7 @@
 [project]
 name = "usaon_benefit_tool"
 description = "Gather data for US AON's Value Tree Analysis (Benefit Tool) process"
-version = "1.2.0"
+version = "1.3.0"
 url = "git@github.com:nsidc/usaon-benefit-tool.git"
 authors = [
   {name = "National Snow and Ice Data Center", email = "nsidc@nsidc.org"},
@@ -103,13 +103,13 @@ max-complexity = 8
 inline-quotes = "double"
 
 [tool.bumpversion]
-current_version = "1.2.0"
+current_version = "1.3.0"
 commit = false
 tag = false
 
 [[tool.bumpversion.files]]
 filename = "usaon_benefit_tool/constants/version.py"
-search = 'VERSION = "{current_version}"'
+search = '^VERSION = "{current_version}"'
 replace = 'VERSION = "{new_version}"'
 
 [[tool.bumpversion.files]]
@@ -119,20 +119,20 @@ replace = 'version = "{new_version}"'
 
 [[tool.bumpversion.files]]
 filename = "CITATION.cff"
-search = 'version: {current_version}'
+search = '^version: {current_version}'
 replace = 'version: {new_version}'
 
 [[tool.bumpversion.files]]
 filename = "CITATION.cff"
-search = 'date-released: "\d{{4}}-\d{{2}}-\d{{2}}"'
+search = '^date-released: "\d{{4}}-\d{{2}}-\d{{2}}"'
 replace = 'date-released: "{now:%Y-%m-%d}"'
 
 [[tool.bumpversion.files]]
 filename = "CHANGELOG.md"
-search = "NEXT_VERSION"
-replace = "v{new_version} ({now:%Y-%m-%d})"
+search = "^## NEXT_VERSION"
+replace = "## v{new_version} ({now:%Y-%m-%d})"
 
 [[tool.bumpversion.files]]
 filename = "VERSION.env"
-search = 'export USAON_BENEFIT_TOOL_VERSION="v{current_version}"'
+search = '^export USAON_BENEFIT_TOOL_VERSION="v{current_version}"'
 replace = 'export USAON_BENEFIT_TOOL_VERSION="v{new_version}"'

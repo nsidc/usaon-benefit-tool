@@ -1,4 +1,4 @@
-## NEXT_VERSION
+## v1.3.0 (2023-12-19)
 
 ### Survey page user experience enhancements
 
