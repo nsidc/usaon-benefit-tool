@@ -4,6 +4,7 @@ from flask_login import login_required
 from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import Survey
+from usaon_benefit_tool.util.full_sankey import sankey
 
 survey_bp = Blueprint('survey', __name__, url_prefix='/survey')
 
@@ -35,4 +36,8 @@ def view_survey(survey_id: str):
     # Fetch survey by id
     survey = db.get_or_404(Survey, survey_id)
 
-    return render_template('survey.html', survey=survey)
+    return render_template(
+        'survey.html',
+        survey=survey,
+        sankey_series=sankey(survey.response) if survey.response else [],
+    )

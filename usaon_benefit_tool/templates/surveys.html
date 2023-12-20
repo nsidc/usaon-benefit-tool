@@ -6,10 +6,17 @@
   <h2>{% block title %}Surveys{% endblock %}</h1>
 
   {% if current_user.role_id=='admin' %}
-    <a href="{{url_for('survey.new_survey')}}">New survey</a>
+    <a href="{{url_for('survey.new_survey')}}"
+       class="btn btn-success"
+       role="button"
+    />
+      {{ render_icon("plus-circle-fill") }} New survey
+    </a>
   {% endif %}
+
   <br />
   <br />
+
   <table class='table'>
 
     <thead>
@@ -20,7 +27,6 @@
         <th>Created On</th>
         <th>Created by</th>
         <th>Response last updated</th>
-        <th>Description</th>
         <th>Status</th>
         <th>Private</th>
         <th>Actions</th>
@@ -36,7 +42,6 @@
         <td>{{survey.created_timestamp}}</td>
         <td>{{survey.created_by.email}}</td>
         <td>{{survey.response.updated_timestamp}}</td>
-        <td>{{survey.description}}</td>
         <td>{{survey.status.id}}</td>
         <td>{{survey.private}}</td>
         <td>

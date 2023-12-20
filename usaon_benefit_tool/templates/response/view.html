@@ -1,22 +1,14 @@
 {% extends 'response/base.html' %}
-{% from 'macros/javascript_highcharts.j2' import add_javascript__highcharts %}
+{% from 'macros/javascript_highcharts.j2' import display_sankey %}
 
 
 {% block content %}
-  {% include 'includes/highcharts.html' %}
 
   {{super()}}
 
   <p>Created: {{response.created_timestamp}}</p>
   <p>Last updated: {{response.updated_timestamp}}</p>
 
-  {% if sankey_series == [] %}
-    <div>Please input at least one relationship to display diagram</div>
-  {% else %}
-    <figure class="highcharts-figure">
-      <div id="highcharts-container" />
-    </figure>
-    {{ add_javascript__highcharts(sankey_series) }}
-  {% endif %}
+  {{ display_sankey(sankey_series) }}
 
 {% endblock %}
