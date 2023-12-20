@@ -6,10 +6,17 @@
   <h2>{% block title %}Surveys{% endblock %}</h1>
 
   {% if current_user.role_id=='admin' %}
-    <a href="{{url_for('survey.new_survey')}}">New survey</a>
+    <a href="{{url_for('survey.new_survey')}}"
+       class="btn btn-success"
+       role="button"
+    />
+      {{ render_icon("plus-circle-fill") }} New survey
+    </a>
   {% endif %}
+
   <br />
   <br />
+
   <table class='table'>
 
     <thead>
