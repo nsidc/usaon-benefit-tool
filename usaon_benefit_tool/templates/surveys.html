@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'macros/badges/private.j2' import private_badge %}
 
 
 {% block content %}
@@ -21,28 +22,45 @@
 
     <thead>
       <tr>
+        {% if current_user.role_id=='admin' %}
         <th>#</th>
         <th>Response Id</th>
+        {% endif %}
+
         <th>Title</th>
-        <th>Created On</th>
+
+        {% if current_user.role_id=='admin' %}
+        <th>Created at</th>
         <th>Created by</th>
         <th>Response last updated</th>
+        {% endif %}
+
         <th>Status</th>
-        <th>Private</th>
+
+        <!-- no header for final "badges" and "actions" columns -->
+        <th></th>
+        <th></th>
       </tr>
     </thead>
 
     <tbody>
     {% for survey in surveys %}
       <tr>
+        {% if current_user.role_id=='admin' %}
         <td>{{survey.id}}</td>
         <td>{{survey.response.id}}</td>
-        <td>{{survey.title}}</td>
+        {% endif %}
+
+        <td><strong>{{survey.title}}</strong></td>
+
+        {% if current_user.role_id=='admin' %}
         <td>{{survey.created_timestamp}}</td>
         <td>{{survey.created_by.email}}</td>
         <td>{{survey.response.updated_timestamp}}</td>
+        {% endif %}
+
         <td>{{survey.status.id}}</td>
-        <td>{{survey.private}}</td>
+        <td>{{private_badge(survey.private)}}</td>
         <td>
           <a href="{{url_for('survey.view_survey', survey_id=survey.id)}}"
              class="btn btn-primary text-nowrap"
