@@ -6,8 +6,8 @@
 
   {{super()}}
 
-  <p>Created: {{response.created_timestamp}}</p>
-  <p>Last updated: {{response.updated_timestamp}}</p>
+  <p>Created: {{response.created_timestamp | dateformat}}</p>
+  <p>Last updated: {{response.updated_timestamp | dateformat}}</p>
 
   {{ display_sankey(sankey_series) }}
 

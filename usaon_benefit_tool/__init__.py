@@ -18,7 +18,6 @@ from usaon_benefit_tool.util.envvar import envvar_is_true
 
 __version__: Final[str] = VERSION
 
-
 # TODO: Figure out where to put this. model.py?
 # https://flask.palletsprojects.com/en/2.3.x/patterns/appfactories/#factories-extensions
 db = SQLAlchemy(
@@ -133,6 +132,7 @@ def create_app():
     md = Markdown(extensions=['fenced_code'])
     app.jinja_env.filters.update(
         markdown=lambda txt: Markup(md.convert(txt)),
+        dateformat=lambda date: date.strftime("%Y-%m-%d %H:%M%Z"),
     )
 
     return app

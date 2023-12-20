@@ -10,7 +10,4 @@ surveys_bp = Blueprint('surveys', __name__, url_prefix='/surveys')
 @login_required
 def view_surveys():
     surveys = Survey.query.order_by(Survey.created_timestamp).all()
-    return render_template(
-        'surveys.html',
-        surveys=surveys,
-    )
+    return render_template('surveys.html', surveys=surveys)
