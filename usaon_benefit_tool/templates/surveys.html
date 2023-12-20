@@ -29,12 +29,11 @@
         <th>Response last updated</th>
         <th>Status</th>
         <th>Private</th>
-        <th>Actions</th>
       </tr>
     </thead>
 
-  {% for survey in surveys %}
     <tbody>
+    {% for survey in surveys %}
       <tr>
         <td>{{survey.id}}</td>
         <td>{{survey.response.id}}</td>
@@ -45,11 +44,16 @@
         <td>{{survey.status.id}}</td>
         <td>{{survey.private}}</td>
         <td>
-          <a href="{{url_for('survey.view_survey', survey_id=survey.id)}}">{{render_icon('eye-fill')}}</a>
+          <a href="{{url_for('survey.view_survey', survey_id=survey.id)}}"
+             class="btn btn-primary text-nowrap"
+             role="button"
+          />
+            {{render_icon('pencil')}} Edit
+          </a>
         </td>
       </tr>
+    {% endfor %}
     </tbody>
-  {% endfor %}
 
   </table>
 
