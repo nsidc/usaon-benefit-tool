@@ -1,5 +1,12 @@
 ## NEXT_VERSION
 
+### Survey page user experience enhancements
+
+* Style informational text as Bootstrap "Alerts"
+* Improve UI of survey & surveys pages
+* Add sankey diagram display to survey page
+
+
 ### Login user experience enhancements 
 
 * Display banner when not logged in.
