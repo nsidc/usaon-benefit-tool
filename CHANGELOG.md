@@ -1,3 +1,15 @@
+## NEXT_VERSION
+
+### Login user experience enhancements 
+
+* Display banner when not logged in.
+* New login page with button to let user know we're using Google SSO.
+	We can add more provider here later.
+* When accessing restricted routes, redirect to login page.
+		* After a successful login, users will be redirected to the restricted
+			route they tried to access earlier.
+
+
 ## v1.2.0 (2023-12-18)
 
 ### Bug fixes
