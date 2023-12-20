@@ -30,9 +30,9 @@
         <th>Title</th>
 
         {% if current_user.role_id=='admin' %}
-        <th>Created at</th>
         <th>Created by</th>
-        <th>Response last updated</th>
+        <th>Created time</th>
+        <th>Updated time</th>
         {% endif %}
 
         <th>Status</th>
@@ -54,8 +54,8 @@
         <td><strong>{{survey.title}}</strong></td>
 
         {% if current_user.role_id=='admin' %}
-        <td>{{survey.created_timestamp}}</td>
         <td>{{survey.created_by.email}}</td>
+        <td>{{survey.created_timestamp}}</td>
         <td>{{survey.response.updated_timestamp}}</td>
         {% endif %}
 
