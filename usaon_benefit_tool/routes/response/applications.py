@@ -1,4 +1,5 @@
 from flask import Blueprint, redirect, render_template, request, url_for
+from flask_login import login_required
 
 from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
@@ -14,6 +15,7 @@ application_bp = Blueprint(
 
 
 @application_bp.route('', methods=['GET', 'POST'])
+@login_required
 def view_response_applications(survey_id: int):
     """View and add to applications associated with a response."""
     Form = FORMS_BY_MODEL[ResponseApplication]
@@ -45,6 +47,7 @@ def view_response_applications(survey_id: int):
 
 
 @application_bp.route('/<int:response_application_id>', methods=['DELETE'])
+@login_required
 def delete_response_application(survey_id: int, response_application_id: int):
     """Delete application response object from survey."""
     survey = db.get_or_404(Survey, survey_id)

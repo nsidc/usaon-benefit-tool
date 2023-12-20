@@ -44,6 +44,11 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = db_connstr(app)
     app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = 'cosmo'
 
+    # Set flask-login to pass redirection URL by session. This is needed because the
+    # default is to pass it in the request args (i.e. URL query string); this does not
+    # survive the Google OAuth dance by flask-dance.
+    app.config['USE_SESSION_FOR_NEXT'] = True
+
     # DEV ONLY: Disable login
     app.config['LOGIN_DISABLED'] = envvar_is_true("USAON_BENEFIT_TOOL_LOGIN_DISABLED")
 
@@ -51,8 +56,11 @@ def create_app():
         app.wsgi_app = ProxyFix(app.wsgi_app, x_prefix=1)  # type: ignore
 
     db.init_app(app)
+
     Bootstrap5(app)
+
     login_manager = LoginManager()
+    login_manager.login_view = "login.login"
     login_manager.init_app(app)
 
     from usaon_benefit_tool.models.tables import User

@@ -1,4 +1,5 @@
 from flask import Blueprint, redirect, render_template, request, url_for
+from flask_login import login_required
 
 from usaon_benefit_tool import db
 from usaon_benefit_tool._types import ObservingSystemType
@@ -14,6 +15,7 @@ observing_system_bp = Blueprint(
 
 
 @observing_system_bp.route('', methods=['GET', 'POST'])
+@login_required
 def view_response_observing_systems(survey_id: str):
     """View and add to observing systems associated with a response."""
     Form = FORMS_BY_MODEL[ResponseObservingSystem]
@@ -49,6 +51,7 @@ def view_response_observing_systems(survey_id: str):
 
 
 @observing_system_bp.route('/<int:response_observing_system_id>', methods=['DELETE'])
+@login_required
 def delete_response_observing_system(survey_id: int, response_observing_system_id: int):
     """Delete observing system response object from survey."""
     survey = db.get_or_404(Survey, survey_id)

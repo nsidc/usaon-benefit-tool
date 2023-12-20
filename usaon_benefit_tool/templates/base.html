@@ -9,6 +9,7 @@
 </head>
 
 <body>
+
   <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
     <div class="container">
       <a class="navbar-brand" href={{ url_for('root.root')}}>US AON Benefit Tool</a>
@@ -19,23 +20,29 @@
       </div>
     </div>
   </nav>
-  {{ render_messages() }}
+
+
+  {% if not current_user.is_authenticated %}
+    <div id="login-banner" class="alert alert-warning">
+      Please <a href={{ url_for('login.login') }}>log in</a> to use this application.
+    </div>
+  {% endif %}
+
+  {{ render_messages(container=False, dismissible=True, dismiss_animate=True) }}
+
+
   <section class="content">
     <div class="container">
 
       <header>
         {% block header %}{% endblock %}
       </header>
-      
 
-      {% if not current_user.is_authenticated %}
-        <h3>Please login to use this application.</h3>
-      {% else %}
-        {% block content %}{% endblock %}
-      {% endif %}
+      {% block content %}{% endblock %}
 
     </div>
   </section>
+
 
   <footer>
     <hr />
@@ -44,5 +51,9 @@
       <p>Version: v{{ __version__ }}</p>
     </div>
   </footer>
-  
+
+  {% block scripts %}
+    {{ bootstrap.load_js() }}
+  {% endblock %}
+
 </body>
