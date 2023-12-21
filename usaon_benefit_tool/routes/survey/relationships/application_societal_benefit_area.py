@@ -229,7 +229,7 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
 
     form = ApplicationSocietalBenefitAreaForm(obj=form_obj)
     return render_template(
-        'response/relationships/application_societal_benefit_area.html',
+        'survey/relationships/application_societal_benefit_area.html',
         form=form,
         survey=survey,
         societal_benefit_area=response_societal_benefit_area,

@@ -87,22 +87,21 @@ def create_app():
 
     from usaon_benefit_tool.routes.login import google_bp, login_bp
     from usaon_benefit_tool.routes.logout import logout_bp
-    from usaon_benefit_tool.routes.response import response_bp
-    from usaon_benefit_tool.routes.response.applications import application_bp
-    from usaon_benefit_tool.routes.response.data_products import data_product_bp
-    from usaon_benefit_tool.routes.response.observing_systems import observing_system_bp
-    from usaon_benefit_tool.routes.response.relationships.application_societal_benefit_area import (
+    from usaon_benefit_tool.routes.root import root_bp
+    from usaon_benefit_tool.routes.survey import response_bp, survey_bp
+    from usaon_benefit_tool.routes.survey.applications import application_bp
+    from usaon_benefit_tool.routes.survey.data_products import data_product_bp
+    from usaon_benefit_tool.routes.survey.observing_systems import observing_system_bp
+    from usaon_benefit_tool.routes.survey.relationships.application_societal_benefit_area import (
         application_societal_benefit_area_bp,
     )
-    from usaon_benefit_tool.routes.response.relationships.data_product_application import (
+    from usaon_benefit_tool.routes.survey.relationships.data_product_application import (
         data_product_application_bp,
     )
-    from usaon_benefit_tool.routes.response.relationships.observing_system_data_product import (
+    from usaon_benefit_tool.routes.survey.relationships.observing_system_data_product import (
         observing_system_data_product_bp,
     )
-    from usaon_benefit_tool.routes.response.sbas import societal_benefit_area_bp
-    from usaon_benefit_tool.routes.root import root_bp
-    from usaon_benefit_tool.routes.survey import survey_bp
+    from usaon_benefit_tool.routes.survey.sbas import societal_benefit_area_bp
     from usaon_benefit_tool.routes.surveys import surveys_bp
     from usaon_benefit_tool.routes.user import user_bp
     from usaon_benefit_tool.routes.users import users_bp

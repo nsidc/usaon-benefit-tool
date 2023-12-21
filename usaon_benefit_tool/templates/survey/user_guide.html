@@ -1,0 +1,10 @@
+{% extends 'survey/base.html' %}
+
+
+{% block content %}
+
+  {{super()}}
+
+  {% filter markdown %}{% include "user_guide.md" %}{% endfilter %}
+
+{% endblock %}

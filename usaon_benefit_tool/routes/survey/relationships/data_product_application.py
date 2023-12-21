@@ -218,7 +218,7 @@ def view_response_data_product_application_relationships(survey_id: str):
 
     form = ResponseDataProductApplicationForm(obj=form_obj)
     return render_template(
-        'response/relationships/data_product_application.html',
+        'survey/relationships/data_product_application.html',
         form=form,
         survey=survey,
         data_product=response_data_product,
