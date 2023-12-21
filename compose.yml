@@ -1,12 +1,12 @@
 secrets:
   tls-cert-file:
-    file: "${TLS_CERT_FILE:?err}"
+    file: "${TLS_CERT_FILE:?TLS_CERT_FILE must be set}"
     # TODO: Re-enable `external` (i.e. require pre-existence) when compose
     # supports this. When `external: true`, I get:
     #     unsupported external secret ...
     # external: true
   tls-key-file:
-    file: "${TLS_KEY_FILE:?err}"
+    file: "${TLS_KEY_FILE:?TLS_KEY_FILE must be set}"
       # external: true
 
 
@@ -26,6 +26,8 @@ services:
       # (actually, Werkzeug does it for us) looks for `X-FORWARDED-PREFIX`
       # header to determine the base path for the app.
       USAON_BENEFIT_TOOL_PROXY:
+      # Number of Gunicorn workers to spin up
+      NUM_WORKERS:
     secrets:
       - source: "tls-cert-file"
         target: "site.crt"
