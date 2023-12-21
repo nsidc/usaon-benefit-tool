@@ -1,18 +1,50 @@
 {% macro nav_buttons(current_user) -%}
   {% from "bootstrap5/nav.html" import render_nav_item %}
 
-  {{ render_nav_item("root.root", "Home")}}
-  {{ render_nav_item("surveys.view_surveys", "Surveys")}}
-  {% if current_user.is_authenticated %}
-    {{ render_nav_item("user.user", "Profile", user_id=current_user.id)}}
+  {{ render_nav_item("root.root", "Home", _use_li=True)}}
+  {{ render_nav_item("surveys.view_surveys", "Surveys", _use_li=True)}}
+{%- endmacro -%}
 
-    {% if current_user.role_id=="admin" %}
-      {{ render_nav_item("users.view_users", "Users")}}
-      {{ render_nav_item("logout.logout", "Log out")}}
-    {% else %}
-      {{ render_nav_item("logout.logout", "Log out")}}
-    {% endif %}
+
+{% macro user_buttons(current_user) -%}
+  {% from "bootstrap5/nav.html" import render_nav_item %}
+
+  {% if current_user.role_id=="admin" %}
+    <li class="nav-item dropdown">
+      <a href="#"
+         class="nav-link dropdown-toggle"
+         data-bs-toggle="dropdown"
+         role="button"
+         aria-haspopup="true"
+         aria-expanded="false"
+      >Admin</a>
+      <div class="dropdown-menu">
+        <a href="{{url_for("users.view_users")}}"
+           class="dropdown-item"
+        >Users</a>
+      </div>
+    </li>
+  {% endif %}
+
+  {% if current_user.is_authenticated %}
+    <li class="nav-item dropdown">
+      <a href="#"
+         class="nav-link dropdown-toggle"
+         data-bs-toggle="dropdown"
+         role="button"
+         aria-haspopup="true"
+         aria-expanded="false"
+      >My user</a>
+      <div class="dropdown-menu">
+        <a href="{{url_for("user.user", user_id=current_user.id)}}"
+           class="dropdown-item"
+        >Profile</a>
+        <a href="{{url_for("logout.logout")}}"
+           class="dropdown-item"
+        >Log out</a>
+      </div>
+    </li>
   {% else %}
-    {{ render_nav_item("login.login", "Log in")}}
+    {{ render_nav_item("login.login", "Log in", _use_li=True)}}
   {% endif %}
 {%- endmacro -%}
