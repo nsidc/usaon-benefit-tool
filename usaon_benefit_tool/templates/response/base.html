@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
+{% from 'macros/help_icon.j2' import help_icon %}
 
 
 {% block content %}
 
-  <h2>{% block title %}Response to: {{survey.title}}{% endblock %}</h1>
-  <p>Survey #{{survey.id}}</p>
+  <h2>
+    {% block title %}Response to: {{survey.title}}{% endblock %}
+    {{ help_icon(
+        "Survey #"~survey.id~"<br/>Created: "~response.created_timestamp | dateformat~"<br/>Last updated: "~response.updated_timestamp | dateformat,
+        html="true",
+    )}}
+  </h2>
+
 
   <nav>
     <ul>
