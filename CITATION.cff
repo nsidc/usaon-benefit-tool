@@ -10,8 +10,8 @@ type: "software"
 #    https://github.com/zenodo/zenodo/issues/2515
 license: "MIT"
 
-version: 1.3.0
-date-released: "2023-12-19"
+version: 1.4.0
+date-released: "2023-12-20"
 url: "https://github.com/nsidc/usaon-benefit-tool"
 
 authors:

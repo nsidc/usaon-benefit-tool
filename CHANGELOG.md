@@ -1,4 +1,4 @@
-## NEXT_VERSION
+## v1.4.0 (2023-12-20)
 
 * More consistent datetime display format
 * Remove table borders
