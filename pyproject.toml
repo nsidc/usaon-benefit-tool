@@ -1,7 +1,7 @@
 [project]
 name = "usaon_benefit_tool"
 description = "Gather data for US AON's Value Tree Analysis (Benefit Tool) process"
-version = "1.4.0"
+version = "1.4.1"
 url = "git@github.com:nsidc/usaon-benefit-tool.git"
 authors = [
   {name = "National Snow and Ice Data Center", email = "nsidc@nsidc.org"},
@@ -103,7 +103,7 @@ max-complexity = 8
 inline-quotes = "double"
 
 [tool.bumpversion]
-current_version = "1.4.0"
+current_version = "1.4.1"
 commit = false
 tag = false
 

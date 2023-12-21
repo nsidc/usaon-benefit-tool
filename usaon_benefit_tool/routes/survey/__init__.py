@@ -4,7 +4,6 @@ from flask_login import login_required
 from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import Response, Survey
-from usaon_benefit_tool.util.authorization import limit_response_editors
 from usaon_benefit_tool.util.full_sankey import sankey
 
 # TODO: we don't need both of these concepts.
@@ -19,7 +18,6 @@ def view_response(survey_id: str):
     # Anyone should be able to view a survey
     # Only admins or respondents should be able to create a response.
     survey = db.get_or_404(Survey, survey_id)
-    limit_response_editors()
 
     return render_template(
         'survey/user_guide.html',
