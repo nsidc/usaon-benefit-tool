@@ -24,7 +24,6 @@
       <tr>
         {% if current_user.role_id=='admin' %}
         <th>#</th>
-        <th>Response Id</th>
         {% endif %}
 
         <th>Title</th>
@@ -48,7 +47,6 @@
       <tr>
         {% if current_user.role_id=='admin' %}
         <td>{{survey.id}}</td>
-        <td>{{survey.response.id}}</td>
         {% endif %}
 
         <td><strong>{{survey.title}}</strong></td>
