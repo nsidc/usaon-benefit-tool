@@ -1,4 +1,4 @@
-{% from 'macros/nav_buttons.j2' import nav_buttons %}
+{% from 'macros/nav_buttons.j2' import nav_buttons, user_buttons %}
 {% from 'bootstrap5/utils.html' import render_messages %}
 
 <!doctype html>
@@ -14,8 +14,11 @@
     <div class="container">
       <a class="navbar-brand" href={{ url_for('root.root')}}>US AON Benefit Tool</a>
       <div id="navbarResponsive" class="collapse navbar-collapse">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav me-auto">
           {{ nav_buttons(current_user) }}
+        </ul>
+        <ul class="navbar-nav">
+          {{ user_buttons(current_user) }}
         </ul>
       </div>
     </div>

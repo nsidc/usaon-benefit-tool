@@ -3,6 +3,11 @@
 
   {{ render_nav_item("root.root", "Home", _use_li=True)}}
   {{ render_nav_item("surveys.view_surveys", "Surveys", _use_li=True)}}
+{%- endmacro -%}
+
+
+{% macro user_buttons(current_user) -%}
+  {% from "bootstrap5/nav.html" import render_nav_item %}
 
   {% if current_user.role_id=="admin" %}
     <li class="nav-item dropdown">
