@@ -2,8 +2,6 @@
 # application supports it, so if someone really wants to work that way they
 # can. Our recommended development default should probably be PostgreSQL for
 # prod-likeness. Set `USAON_BENEFIT_TOOL_DB_SQLITE` to "true" to enable.
-
-
 x-db-image: &db-image "nsidc/usaon-benefit-tool-db:latest"
 x-service-common: &common
   restart: "unless-stopped"
@@ -12,6 +10,9 @@ x-service-common: &common
     options:
       max-size: "20m"
       max-file: "5"
+
+
+secrets: !reset {}
 
 
 services:
@@ -60,6 +61,7 @@ services:
       # login behavior?
       #     https://flask-dance.readthedocs.io/en/v0.8.0/quickstarts/google.html#code
       # OAUTHLIB_INSECURE_TRANSPORT: "1"
+    secrets: !reset []
 
 
   # Normally, the database is managed independently of the app, but in dev, we

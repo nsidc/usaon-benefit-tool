@@ -21,6 +21,7 @@ RUN micromamba install -y \
 # Install source
 COPY ./pyproject.toml .
 COPY ./tasks ./tasks
+COPY ./scripts ./scripts
 COPY ./usaon_benefit_tool ./usaon_benefit_tool
 
 ENV FLASK_APP=usaon_benefit_tool
@@ -38,4 +39,5 @@ RUN which flask \
 #
 # For gunicorn, the recommended number of workers is (2*CPU)+1. This config
 # assumes dual-core CPU.
-CMD ["gunicorn", "usaon_benefit_tool:app", "--workers", "5", "--bind", "0.0.0.0:5000"]
+ENV NUM_WORKERS=5
+CMD ["./scripts/gunicorn.sh"]
