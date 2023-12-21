@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% from 'macros/help_icon.j2' import help_icon %}
+{% from 'macros/nav_pills.j2' import render_nav_pill_item %}
 
 
 {% block content %}
@@ -13,46 +14,41 @@
   </h2>
 
 
-  <nav>
-    <ul>
+  <ul class="nav nav-pills">
 
-      <li>
-        <a href="{{url_for('response.view_response', survey_id=survey.id)}}">
-          Response home (full sankey)
-        </a>
-      </li>
+    {{ render_nav_pill_item('response.view_response', 'User guide', survey_id=survey.id) }}
 
-      <li>
-        <a href="{{url_for('obs.view_response_observing_systems', survey_id=survey.id)}}">
-          Add/edit observing systems ({{survey.response.observing_systems | length}})
-        </a>
-      </li>
+    {{ render_nav_pill_item(
+      'obs.view_response_observing_systems',
+      'Observing systems',
+      survey_id=survey.id,
+      _badge=survey.response.observing_systems | length | string,
+    ) }}
+    {{ render_nav_pill_item(
+      'data_product.view_response_data_products',
+      'Data products',
+      survey_id=survey.id,
+      _badge=survey.response.data_products | length | string,
+    ) }}
+    {{ render_nav_pill_item(
+      'application.view_response_applications',
+      'Applications',
+      survey_id=survey.id,
+      _badge=survey.response.applications | length | string,
+    ) }}
+    {{ render_nav_pill_item(
+      'sba.view_response_sbas',
+      'Societal Benefit Areas',
+      survey_id=survey.id,
+      _badge=survey.response.societal_benefit_areas | length | string,
+    ) }}
 
-      <li>
-        <a href="{{url_for('data_product.view_response_data_products', survey_id=survey.id)}}">
-          Add/edit data products ({{survey.response.data_products | length}})
-        </a>
-      </li>
+    {{ render_nav_pill_item(
+      'survey.view_survey',
+      'Survey info',
+      survey_id=survey.id,
+    ) }}
 
-      <li>
-        <a href="{{url_for('application.view_response_applications', survey_id=survey.id)}}">
-          Add/edit applications ({{survey.response.applications | length}})
-        </a>
-      </li>
-
-      <li>
-        <a href="{{url_for('sba.view_response_sbas', survey_id=survey.id)}}">
-          Add/edit Societal Benefit Areas ({{survey.response.societal_benefit_areas | length}})
-        </a>
-      </li>
-
-      <li>
-        <a href="{{url_for('survey.view_survey', survey_id=survey.id)}}">
-          View survey info
-        </a>
-      </li>
-
-    </ul>
-  </nav>
+  </ul>
 
 {% endblock %}
