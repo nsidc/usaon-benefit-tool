@@ -1,0 +1,13 @@
+{% from 'bootstrap5/utils.html' import render_icon %}
+
+{% macro private_badge(is_private) -%}
+  {% if is_private %}
+    <span class="badge rounded-pill bg-light">
+      {{ render_icon("lock") }} Private
+    </span>
+  {% else %}
+    <span class="badge rounded-pill bg-light">
+      {{ render_icon("eye") }} Public 
+    </span>
+  {% endif %}
+{%- endmacro -%}

@@ -6,7 +6,7 @@
 
   <h2>{% block title %}Survey #{{survey.id}}: {{survey.title}}{% endblock %}</h2>
 
-  <p><i>Created: {{survey.created_timestamp}}</i></p>
+  <p><i>Created: {{survey.created_timestamp | dateformat}}</i></p>
 
 
   <h3>Description</h3>

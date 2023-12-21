@@ -1,3 +1,17 @@
+## NEXT_VERSION
+
+* More consistent datetime display format
+
+
+### Surveys & response page user experience enhancements
+
+* More consistent button style
+* Make some columns admin-only
+* Re-order columns for readability
+* Remove table borders
+* Improve link text
+
+
 ## v1.3.0 (2023-12-19)
 
 ### Survey page user experience enhancements

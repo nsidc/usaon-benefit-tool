@@ -4,7 +4,8 @@
 {% block content %}
 
   <h2>{% block title %}Response to: {{survey.title}}{% endblock %}</h1>
-  <p>Survey ID: {{survey.id}}</p>
+  <p>Survey #{{survey.id}}</p>
+
   <nav>
     <ul>
 
@@ -16,25 +17,25 @@
 
       <li>
         <a href="{{url_for('obs.view_response_observing_systems', survey_id=survey.id)}}">
-          Observing systems ({{survey.response.observing_systems | length}})
+          Add/edit observing systems ({{survey.response.observing_systems | length}})
         </a>
       </li>
 
       <li>
         <a href="{{url_for('data_product.view_response_data_products', survey_id=survey.id)}}">
-          Data products ({{survey.response.data_products | length}})
+          Add/edit data products ({{survey.response.data_products | length}})
         </a>
       </li>
 
       <li>
         <a href="{{url_for('application.view_response_applications', survey_id=survey.id)}}">
-          Applications ({{survey.response.applications | length}})
+          Add/edit applications ({{survey.response.applications | length}})
         </a>
       </li>
 
       <li>
         <a href="{{url_for('sba.view_response_sbas', survey_id=survey.id)}}">
-          Societal Benefit Areas ({{survey.response.societal_benefit_areas | length}})
+          Add/edit Societal Benefit Areas ({{survey.response.societal_benefit_areas | length}})
         </a>
       </li>
 
