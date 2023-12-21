@@ -1,16 +1,21 @@
 ## NEXT_VERSION
 
 * More consistent datetime display format
-
-
-### Surveys & response page user experience enhancements
-
-* Hide some noisy info under a tooltip
-* More consistent button style
-* Make some columns admin-only
-* Re-order columns for readability
 * Remove table borders
-* Improve link text
+* Improve some user interface element label text
+
+
+### Survey pages user experience enhancements
+
+* **Remove the confusing concept of "response" from the UI**
+* Overhaul navigation of survey data entry
+* Add markdown `user_guide.md` template for accessible editing
+* Minor UI adjustments:
+    * Hide some noisy survey info under a tooltip
+    * More consistent button style
+* Survey listing:
+    * Make some columns admin-only
+    * Re-order columns for readability
 
 
 ## v1.3.0 (2023-12-19)
