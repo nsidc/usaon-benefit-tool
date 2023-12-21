@@ -2,7 +2,5 @@
 
 
 {% block content %}
-  {% filter markdown %}
-    {% include "home.md" %}
-  {% endfilter %}
+  {% filter markdown %}{% include "home.md" %}{% endfilter %}
 {% endblock %}

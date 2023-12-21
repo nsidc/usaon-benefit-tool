@@ -1,11 +1,10 @@
 {% extends 'response/base.html' %}
-{% from 'macros/javascript_highcharts.j2' import display_sankey %}
 
 
 {% block content %}
 
   {{super()}}
 
-  {{ display_sankey(sankey_series) }}
+  {% filter markdown %}{% include "user_guide.md" %}{% endfilter %}
 
 {% endblock %}
