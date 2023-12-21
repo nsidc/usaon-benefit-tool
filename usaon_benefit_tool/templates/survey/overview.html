@@ -1,0 +1,14 @@
+{% extends 'survey/base.html' %}
+{% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'macros/javascript_highcharts.j2' import display_sankey %}
+
+{% block content %}
+  {{super()}}
+
+  <h3>Description</h3>
+  <p>{{survey.description}}</p>
+
+
+  {{ display_sankey(sankey_series) }}
+
+{% endblock %}

@@ -224,7 +224,7 @@ def view_response_observing_system_data_product_relationships(survey_id: str):
 
     form = ObservingSystemDataProductForm(obj=form_obj)
     return render_template(
-        'response/relationships/observing_system_data_product.html',
+        'survey/relationships/observing_system_data_product.html',
         form=form,
         survey=survey,
         observing_system=response_observing_system,

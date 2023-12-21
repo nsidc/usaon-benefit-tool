@@ -6,15 +6,21 @@
 {% block content %}
 
   <h2>
-    {% block title %}Response to: {{survey.title}}{% endblock %}
+    {% block title %}Survey #{{survey.id}}: {{survey.title}}{% endblock %}
     {{ help_icon(
-        "Survey #"~survey.id~"<br/>Created: "~response.created_timestamp | dateformat~"<br/>Last updated: "~response.updated_timestamp | dateformat,
+        "Created: "~survey.response.created_timestamp | dateformat~"<br/>Last updated: "~survey.response.updated_timestamp | dateformat,
         html="true",
     )}}
   </h2>
 
 
   <ul class="nav nav-pills">
+
+    {{ render_nav_pill_item(
+      'survey.view_survey',
+      'Overview',
+      survey_id=survey.id,
+    ) }}
 
     {{ render_nav_pill_item(
       'response.view_response',
@@ -49,12 +55,6 @@
       survey_id=survey.id,
       _icon='pencil',
       _badge=survey.response.societal_benefit_areas | length | string,
-    ) }}
-
-    {{ render_nav_pill_item(
-      'survey.view_survey',
-      'Survey info',
-      survey_id=survey.id,
     ) }}
 
   </ul>

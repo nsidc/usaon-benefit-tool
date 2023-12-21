@@ -43,7 +43,7 @@ def view_response_sbas(survey_id: str):
 
     form = Form(obj=response_societal_benefit_area)
     return render_template(
-        'response/sbas.html',
+        'survey/sbas.html',
         form=form,
         survey=survey,
         sbas=sbas,
