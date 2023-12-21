@@ -16,30 +16,38 @@
 
   <ul class="nav nav-pills">
 
-    {{ render_nav_pill_item('response.view_response', 'User guide', survey_id=survey.id) }}
+    {{ render_nav_pill_item(
+      'response.view_response',
+      'User guide',
+      survey_id=survey.id,
+    ) }}
 
     {{ render_nav_pill_item(
       'obs.view_response_observing_systems',
       'Observing systems',
       survey_id=survey.id,
+      _icon='pencil',
       _badge=survey.response.observing_systems | length | string,
     ) }}
     {{ render_nav_pill_item(
       'data_product.view_response_data_products',
       'Data products',
       survey_id=survey.id,
+      _icon='pencil',
       _badge=survey.response.data_products | length | string,
     ) }}
     {{ render_nav_pill_item(
       'application.view_response_applications',
       'Applications',
       survey_id=survey.id,
+      _icon='pencil',
       _badge=survey.response.applications | length | string,
     ) }}
     {{ render_nav_pill_item(
       'sba.view_response_sbas',
       'Societal Benefit Areas',
       survey_id=survey.id,
+      _icon='pencil',
       _badge=survey.response.societal_benefit_areas | length | string,
     ) }}
 
