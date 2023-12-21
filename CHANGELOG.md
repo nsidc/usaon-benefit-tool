@@ -5,6 +5,7 @@
 
 ### Surveys & response page user experience enhancements
 
+* Hide some noisy info under a tooltip
 * More consistent button style
 * Make some columns admin-only
 * Re-order columns for readability
