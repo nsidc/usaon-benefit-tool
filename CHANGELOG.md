@@ -1,3 +1,8 @@
+## v1.4.1 (2023-12-20)
+
+* Bugfix: Fix permission error when analysts view user guide
+
+
 ## v1.4.0 (2023-12-20)
 
 * More consistent datetime display format
