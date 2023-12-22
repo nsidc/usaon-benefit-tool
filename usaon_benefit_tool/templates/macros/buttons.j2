@@ -1,0 +1,39 @@
+{% from 'bootstrap5/utils.html' import render_icon %}
+
+{% macro delete_button(endpoint, text) -%}
+  {# CRITICAL: The "remove()" JS function must be available. #}
+  {% set text = text | default('Delete') %}
+
+  <a href="#"
+     class="btn btn-danger text-nowrap"
+     role="button"
+     onclick="remove('{{url_for(endpoint, **kwargs)}}')"
+  >
+    {{render_icon('trash3-fill')}} {{text}}
+  </a>
+{%- endmacro -%}
+
+
+{% macro create_button(endpoint, text) -%}
+  {% set text = text | default('New') %}
+
+  <a href="{{url_for(endpoint, **kwargs)}}"
+     class="btn btn-success text-nowrap"
+     role="button"
+  />
+    {{ render_icon("plus-circle-fill") }} {{text}}
+  </a>
+{%- endmacro -%}
+
+
+
+{% macro edit_button(endpoint, text) -%}
+  {% set text = text | default('Edit') %}
+
+  <a href="{{url_for(endpoint, **kwargs)}}"
+     class="btn btn-primary text-nowrap"
+     role="button"
+  />
+    {{ render_icon("pencil") }} {{text}}
+  </a>
+{%- endmacro -%}

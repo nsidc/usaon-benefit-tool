@@ -1,8 +1,8 @@
 {% extends 'survey/base.html' %}
 {% from 'bootstrap5/form.html' import render_form %}
 {% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'macros/buttons.j2' import delete_button, create_button %}
 {% from 'macros/javascript_highcharts.j2' import display_sankey %}
-{% from 'macros/javascript_remove.j2' import add_javascript__remove %}
 
 {% block content %}
   {{super()}}
@@ -25,13 +25,12 @@
         {% for data_product in response.data_products %}
           <tr>
             <td>{{data_product.short_name}}
-            <a href="#" onclick="remove('{{url_for(
+              {{delete_button(
                 'data_product.delete_response_data_product',
+                'Delete object',
                 survey_id=survey.id,
                 response_data_product_id=data_product.id,
-                        )}}'
-                        )">{{render_icon('file-minus-fill', color='danger')}}
-            </a>
+              )}}
             </td>
             <td>
               {% if not data_product.input_relationships %}
@@ -59,23 +58,20 @@
               </ul>
             </td>
             <td>
-              <a href="{{url_for(
-                       'observing_system_data_product.view_response_observing_system_data_product_relationships',
-                       survey_id=survey.id,
-                       data_product_id=data_product.id,
-                       )}}">
-                {{render_icon('plus-circle-fill')}}
-              </a>
+              {{create_button(
+                 'observing_system_data_product.view_response_observing_system_data_product_relationships',
+                'New relationship',
+                 survey_id=survey.id,
+                 data_product_id=data_product.id,
+              )}}
               {% for input_relationship in data_product.input_relationships %}
                 <li>
-                <a href="#" onclick="remove('{{url_for(
+                  {{delete_button(
                     'observing_system_data_product.delete_response_observing_system_data_product_relationship',
+                    'Delete relationship',
                     survey_id=survey.id,
                     response_observing_system_data_product_id=input_relationship.id,
-                            )}}'
-                            )">{{render_icon('file-minus-fill', color='danger')}}
-
-                </a>
+                  )}}
                 </li>
               {% endfor %}
             </td>
@@ -94,6 +90,5 @@
       {{render_form(form, button_map={'submit_button': 'primary'}) }}
     </form>
   {% endif %}
-  {{ add_javascript__remove() }}
 
 {% endblock %}

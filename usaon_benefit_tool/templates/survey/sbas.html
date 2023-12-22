@@ -1,7 +1,7 @@
 {% extends 'survey/base.html' %}
 {% from 'bootstrap5/form.html' import render_form %}
 {% from 'bootstrap5/utils.html' import render_icon %}
-{% from 'macros/javascript_remove.j2' import add_javascript__remove %}
+{% from 'macros/buttons.j2' import delete_button, create_button %}
 {% from 'macros/javascript_highcharts.j2' import display_sankey %}
 
 
@@ -24,13 +24,12 @@
         {% for societal_benefit_area in response.societal_benefit_areas %}
           <tr>
             <td>{{societal_benefit_area.societal_benefit_area_id}}
-            <a href="#" onclick="remove('{{url_for(
+              {{delete_button(
                 'sba.delete_response_sba',
+                'Delete object',
                 survey_id=survey.id,
                 response_societal_benefit_area_id=societal_benefit_area.id,
-                        )}}'
-                        )">{{render_icon('file-minus-fill', color='danger')}}
-            </a>
+              )}}
             </td>
             <td>
               {% if not societal_benefit_area.input_relationships %}
@@ -52,21 +51,20 @@
               </ul>
             </td>
             <td>
-              <a href="{{url_for(
+              {{create_button(
                 'application_societal_benefit_area.view_response_application_societal_benefit_area_relationships',
+                'New relationship',
                 survey_id=survey.id,
                 societal_benefit_area_id=societal_benefit_area.id,
-              )}}">
-                {{render_icon('plus-circle-fill')}}
-              </a>
+              )}}
               {% for input_relationship in societal_benefit_area.input_relationships %}
                 <li>
-                <a href="#" onclick="remove('{{url_for(
+                  {{delete_button(
                     'application_societal_benefit_area.delete_response_application_societal_benefit_area_relationship',
+                    'Delete relationship',
                     survey_id=survey.id,
-                    response_application_societal_benefit_area_id=input_relationship.id)}}'
-                    )">{{render_icon('file-minus-fill', color='danger')}}
-                </a>
+                    response_application_societal_benefit_area_id=input_relationship.id,
+                  )}}
                 </li>
               {% endfor %}
             </td>
@@ -86,5 +84,4 @@
     {{ display_sankey(sankey_series) }}
   </div>
 
-  {{ add_javascript__remove() }}
 {% endblock %}

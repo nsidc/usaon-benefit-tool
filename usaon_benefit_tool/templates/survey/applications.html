@@ -1,8 +1,8 @@
 {% extends 'survey/base.html' %}
 {% from 'bootstrap5/form.html' import render_form %}
 {% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'macros/buttons.j2' import delete_button, create_button %}
 {% from 'macros/javascript_highcharts.j2' import display_sankey %}
-{% from 'macros/javascript_remove.j2' import add_javascript__remove %}
 
 {% block content %}
   {{super()}}
@@ -25,13 +25,12 @@
         {% for application in response.applications %}
           <tr>
             <td>{{application.short_name}}
-            <a href="#" onclick="remove('{{url_for(
+              {{delete_button(
                 'application.delete_response_application',
+                'Delete object',
                 survey_id=survey.id,
                 response_application_id=application.id,
-                        )}}'
-                        )">{{render_icon('file-minus-fill', color='danger')}}
-            </a>
+              )}}
             </td>
             <td>
               {% if not application.input_relationships %}
@@ -60,20 +59,20 @@
               </ul>
             </td>
             <td>
-              <a href="{{url_for(
+              {{create_button(
                 'data_product_application.view_response_data_product_application_relationships',
+                'New relationship',
                 survey_id=survey.id,
                 application_id=application.id,
-              )}}">{{render_icon('plus-circle-fill')}}
-              </a>
+              )}}
               {% for input_relationship in application.input_relationships %}
                 <li>
-                <a href="#" onclick="remove('{{url_for(
+                  {{delete_button(
                     'data_product_application.delete_response_data_product_application_relationships',
+                    'Delete relationship',
                     survey_id=survey.id,
                     response_data_product_application_id=input_relationship.id,
-                            )}}'
-                            )">{{render_icon('file-minus-fill', color='danger')}}
+                  )}}
                 </a>
                 </li>
               {% endfor %}
@@ -95,6 +94,4 @@
     </form>
   {% endif %}
    
-  {{ add_javascript__remove() }}
-
 {% endblock %}
