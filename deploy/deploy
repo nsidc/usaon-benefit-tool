@@ -27,7 +27,6 @@ ln --symbolic --force \
     compose.prod.yml \
     compose.override.yml
 
-docker compose down
 docker compose up --pull "always" --detach
 
 # Cleanup after; for a brief period, two copies of the image may be present.
