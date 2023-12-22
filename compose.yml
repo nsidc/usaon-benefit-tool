@@ -1,13 +1,11 @@
 secrets:
+  # HACK: the /dev/null default is because a value must be provided no matter
+  # what, but I don't want these envvars to be mandatory by default. Shouldn't
+  # need envvars to e.g. `docker compose exec` or `docker compose run`!
   tls-cert-file:
-    file: "${TLS_CERT_FILE:?TLS_CERT_FILE must be set}"
-    # TODO: Re-enable `external` (i.e. require pre-existence) when compose
-    # supports this. When `external: true`, I get:
-    #     unsupported external secret ...
-    # external: true
+    file: "${TLS_CERT_FILE:-/dev/null}"
   tls-key-file:
-    file: "${TLS_KEY_FILE:?TLS_KEY_FILE must be set}"
-      # external: true
+    file: "${TLS_KEY_FILE:-/dev/null}"
 
 
 services:

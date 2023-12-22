@@ -1,3 +1,10 @@
+secrets:
+  tls-cert-file:
+    file: "${TLS_CERT_FILE:?TLS_CERT_FILE must be set}"
+  tls-key-file:
+    file: "${TLS_KEY_FILE:?TLS_KEY_FILE must be set}"
+
+
 services:
   usaon-benefit-tool:
     image: "nsidc/usaon-benefit-tool:${USAON_BENEFIT_TOOL_VERSION:?USAON_BENEFIT_TOOL_VERSION must be set}"
