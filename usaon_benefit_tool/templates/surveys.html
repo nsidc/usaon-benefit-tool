@@ -1,18 +1,14 @@
 {% extends 'base.html' %}
 {% from 'bootstrap5/utils.html' import render_icon %}
 {% from 'macros/badges/private.j2' import private_badge %}
+{% from 'macros/buttons.j2' import create_button, edit_button %}
 
 
 {% block content %}
   <h2>{% block title %}Projects{% endblock %}</h1>
 
   {% if current_user.role_id=='admin' %}
-    <a href="{{url_for('survey.new_survey')}}"
-       class="btn btn-success"
-       role="button"
-    />
-      {{ render_icon("plus-circle-fill") }} New survey
-    </a>
+    {{ create_button('survey.new_survey') }}
   {% endif %}
 
   <br />
@@ -60,12 +56,7 @@
         <td>{{survey.status.id}}</td>
         <td>{{private_badge(survey.private)}}</td>
         <td>
-          <a href="{{url_for('survey.view_survey', survey_id=survey.id)}}"
-             class="btn btn-primary text-nowrap"
-             role="button"
-          />
-            {{render_icon('pencil')}} Edit
-          </a>
+          {{ edit_button('survey.view_survey', survey_id=survey.id) }}
         </td>
       </tr>
     {% endfor %}

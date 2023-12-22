@@ -1,7 +1,7 @@
 {% extends 'survey/base.html' %}
 {% from 'bootstrap5/form.html' import render_form %}
 {% from 'bootstrap5/utils.html' import render_icon %}
-{% from 'macros/javascript_remove.j2' import add_javascript__remove %}
+{% from 'macros/buttons.j2' import delete_button %}
 
 
 {% block content %}
@@ -17,13 +17,12 @@
     {% for observing_system in response.observing_systems %}
       <tr>
         <td>{{observing_system.short_name}}
-        <a href="#" onclick="remove('{{url_for(
+          {{delete_button(
             'obs.delete_response_observing_system',
+            'Delete object',
             survey_id=survey.id,
             response_observing_system_id=observing_system.id,
-                    )}}'
-                    )">{{render_icon('file-minus-fill', color='danger')}}
-        </a>
+          )}}
         </td>
       </tr>
     {% endfor %}
@@ -37,5 +36,4 @@
 
     </form>
   {% endif %}
-  {{ add_javascript__remove() }}
 {% endblock %}
