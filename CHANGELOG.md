@@ -1,3 +1,8 @@
+## v1.6.1 (2023-12-22)
+
+* Spelling fixes
+
+
 ## v1.6.0 (2023-12-21)
 
 * Standardize all create/edit/delete buttons
