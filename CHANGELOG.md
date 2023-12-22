@@ -1,3 +1,10 @@
+## NEXT_VERSION
+
+* Refer to "Surveys" as "Projects" in the user interface
+    * This is a temporary change for user testing, see #228 for long-term
+      decision-making
+
+
 ## v1.5.0 (2023-12-21)
 
 * Adopt a suitable webserver for production: Gunicorn
