@@ -4,7 +4,7 @@
 
 
 {% block content %}
-  <h2>{% block title %}Surveys{% endblock %}</h1>
+  <h2>{% block title %}Projects{% endblock %}</h1>
 
   {% if current_user.role_id=='admin' %}
     <a href="{{url_for('survey.new_survey')}}"
