@@ -9,3 +9,9 @@ compose.override.yml
 
 # App-specific
 /_db/
+
+
+# Things create by GitHub Codespaces that can be confusing for contributors
+# TODO: Think harder about this?
+/oryx-build-commands.txt
+/venv/
