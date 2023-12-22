@@ -251,7 +251,7 @@ def delete_response_observing_system_data_product_relationship(
     )
     db.session.delete(response_observing_system_data_product)
     db.session.commit()
-    # TODO: figure out why this isnt working
+    # TODO: figure out why this isn't working
     # flash('You have deleted this relationship')
 
     return redirect(

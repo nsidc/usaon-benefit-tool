@@ -75,7 +75,7 @@ IAOA_SBA_FRAMEWORK: IaoaSbaFramework = {
             ' and ecosystem function',
             'Improve the understanding and function of habitats in the Arctic',
             'Improve understanding of the value proposition of ecosystem'
-            ' sevices in the Arctic',
+            ' services in the Arctic',
             'Maintain ecosystem quality, diversity, and extent to ensure the'
             ' delivery of ecosystem functions and services',
         ],
@@ -85,7 +85,7 @@ IAOA_SBA_FRAMEWORK: IaoaSbaFramework = {
             'Enhance resilience to changes in Arctic climate and ecosystems'
             ' that affect access to food',
             'Ensure continued access to and viability of hunting, fishing,'
-            ' and gathering activ ities in the Arctic',
+            ' and gathering active ities in the Arctic',
             'Improve stewardship of fisheries and animal stocks in an'
             ' environmentally sustainable manner',
             'Improve understanding of land use on sustainable stewardship'
@@ -164,7 +164,7 @@ IAOA_SBA_FRAMEWORK: IaoaSbaFramework = {
         ],
         'Public Health': [
             'Ensure access to health care and health promotion services',
-            'Improves acces to clean water and sanitation infastructure',
+            'Improves access to clean water and sanitation infastructure',
             'Improve early warning systems for impending public health emergencies',
             'Improve synthesis of health- and environmental health-related'
             ' knowledge across Arctic cultures',
@@ -312,7 +312,7 @@ IAOA_SBA_FRAMEWORK: IaoaSbaFramework = {
             ' for Arctic resources',
             'Improve understanding of socioeconomic systems that impact the Arctic',
             'Improve understanding of the cryospheric and environmental'
-            ' processess in the Arctic on socioeconomic systems',
+            ' processes in the Arctic on socioeconomic systems',
         ],
     },
     'Terrestrial and Freshwater Ecosystems and Processes': {

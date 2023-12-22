@@ -56,9 +56,8 @@ services:
       # USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID: "${USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID:?USAON_BENEFIT_TOOL_GOOGLE_CLIENT_ID must be set}"
       # USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET: "${USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET:?USAON_BENEFIT_TOOL_GOOGLE_CLIENT_SECRET must be set}"
 
-      # Allow http in dev; TODO: Do we need this? Why? Login is
-      # disabled in dev. Maybe as a fallback for actually testing
-      # login behavior?
+      # Allow http when doing OAuth in dev; useful if testing login behavior!
+      # Alternately, pass `--cert=adhoc` to the flask dev server :)
       #     https://flask-dance.readthedocs.io/en/v0.8.0/quickstarts/google.html#code
       # OAUTHLIB_INSECURE_TRANSPORT: "1"
     secrets: !reset []
@@ -71,7 +70,7 @@ services:
     depends_on:
       db-volume-prep:
         condition: "service_completed_successfully"
-    image: *db-image 
+    image: *db-image
     container_name: "usaon-benefit-tool-db"
     command: ["postgres", "-c", "log_statement=none"]
     volumes:
@@ -86,7 +85,7 @@ services:
     # Ensure database volume directories have the correct permissions before
     # starting the database
     entrypoint: ["sh", "-c", 'mkdir -p /data/postgresql && chown -R dbuser:dbuser /data/postgresql']
-    volumes: 
+    volumes:
       - "./_db:/data:rw"
 
   adminer:
