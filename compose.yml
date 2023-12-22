@@ -1,22 +1,21 @@
+secrets:
+  tls-cert-file:
+    file: "${TLS_CERT_FILE:?TLS_CERT_FILE must be set}"
+    # TODO: Re-enable `external` (i.e. require pre-existence) when compose
+    # supports this. When `external: true`, I get:
+    #     unsupported external secret ...
+    # external: true
+  tls-key-file:
+    file: "${TLS_KEY_FILE:?TLS_KEY_FILE must be set}"
+      # external: true
+
+
 services:
-
-
   usaon-benefit-tool:
     image: "nsidc/usaon-benefit-tool:${USAON_BENEFIT_TOOL_VERSION:-latest}"
     container_name: "usaon-benefit-tool"
-    # HACK: run the app on the flask dev server with an adhoc cert.
-    # TODO: Remove this `command` once we have a more mature solution for
-    # distributing certs to our pre-production and production environment.
-    # Look in to using compose secrets:
-    #   https://docs.docker.com/engine/swarm/secrets/#configure-the-nginx-container
-    command: "flask run --cert=adhoc --host 0.0.0.0"
 
-    restart: "unless-stopped"
-    logging:
-      options:
-        max-size: "20m"
-        max-file: "5"
-
+    # Resources
     ports:
       - "443:5000"
     environment:
@@ -27,3 +26,17 @@ services:
       # (actually, Werkzeug does it for us) looks for `X-FORWARDED-PREFIX`
       # header to determine the base path for the app.
       USAON_BENEFIT_TOOL_PROXY:
+      # Number of Gunicorn workers to spin up
+      NUM_WORKERS:
+    secrets:
+      - source: "tls-cert-file"
+        target: "site.crt"
+      - source: "tls-key-file"
+        target: "site.key"
+
+    # Policies
+    restart: "unless-stopped"
+    logging:
+      options:
+        max-size: "20m"
+        max-file: "5"
