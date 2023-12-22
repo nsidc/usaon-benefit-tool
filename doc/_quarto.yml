@@ -25,14 +25,16 @@ website:
       - icon: "github"
         href: *repo-url
     contents:
-      # For tutorials: 🤗 or 🥰 or ❤️ or ✨?
-      # For discussions: 💭 or 💬?
+      - text: "✨ Tutorials"
+        href: "tutorial/index.md"
+        contents: "tutorial/**/*.md"
       - text: "⁉️ How to"
         href: "how-to/index.md"
         contents: "how-to/**/*.md"
       - text: "📚 Reference"
         href: "reference/index.md"
         contents: "reference/**/*.md"
+      # For discussions: 💭 or 💬?
 
       # Separator:
       - text: "---"
