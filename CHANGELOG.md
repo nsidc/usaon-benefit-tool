@@ -1,3 +1,8 @@
+## NEXT_VERSION
+
+* Adopt a suitable webserver for production: Gunicorn
+
+
 ## v1.4.1 (2023-12-20)
 
 * Bugfix: Fix permission error when analysts view user guide
