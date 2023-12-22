@@ -20,21 +20,24 @@ website:
   sidebar:
     style: "docked"
     search: true
+    collapse-level: 2
     tools:
       - icon: "github"
         href: *repo-url
     contents:
-      - text: "How to"
+      # For tutorials: 🤗 or 🥰 or ❤️ or ✨?
+      # For discussions: 💭 or 💬?
+      - text: "⁉️ How to"
         href: "how-to/index.md"
-        contents: "how-to/*.md"
-      - text: "Reference"
+        contents: "how-to/**/*.md"
+      - text: "📚 Reference"
         href: "reference/index.md"
-        contents: "reference/*.md"
+        contents: "reference/**/*.md"
 
       # Separator:
       - text: "---"
 
-      - text: "Notes"
+      - text: "🗒️ Notes"
         href: "notes/index.md"
 
 
