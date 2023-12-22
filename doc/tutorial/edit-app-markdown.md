@@ -2,14 +2,28 @@
 title: "Contributing Markdown"
 ---
 
-Markdown exists two places for this app:
+In this tutorial, we will:
+
+* Launch the GitHub.dev browser-based editor
+* Create a branch
+* Edit file(s)
+* Make commit(s)
+* Open a Pull Request (PR)
+
+All without leaving the browser. This includes a rich editing experience with real-time
+Markdown previews!
+
+
+## Where are the Markdown files?
+
+Markdown exists in two places for this app:
 
 1. In the documentation: This documetation is separate from the Benefit Tool
    application, mainly for use by developers and project managers.
    * Lives in
      [the `doc/` directory](https://github.com/nsidc/usaon-benefit-tool/tree/main/doc).
    * Rendered by Quarto, so
-     [supports some additional features on top of Markdown](https://quarto.org/docs/authoring/markdown-basics.html)
+     [supports some additional features on top of Markdown](https://quarto.org/docs/authoring/markdown-basics.html).
    * Deployed by ReadTheDocs, which includes Pull Request previews! This is the most
      user-friendly experience.
 2. Built in to the app: This application is for use by the Benefit Tool's end-users
@@ -17,7 +31,8 @@ Markdown exists two places for this app:
    * Lives in the
    [Jinja templates directory (`usaon_benefit_tool/templates/`)](https://github.com/nsidc/usaon-benefit-tool/tree/main/usaon_benefit_tool/templates).
    * Rendered by Python Markdown library.
-     Follows the [standard syntax](https://www.markdownguide.org/basic-syntax/).
+     Follows the
+     [standard Markdown syntax](https://www.markdownguide.org/basic-syntax/).
    * Must be released with a new version of the Benefit Tool and deployed by NSIDC
      dev/ops.
 
