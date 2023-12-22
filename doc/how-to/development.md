@@ -22,7 +22,7 @@ export USAON_BENEFIT_TOOL_DB_PASSWORD=...
 ```
 
 > :memo: these can be put in a `.env` file so that all variables are assigned. This file
-> is part of `.gitignore` so that no secrets are committed to github. 
+> is part of `.gitignore` so that no secrets are committed to github.
 
 ### Start the service
 

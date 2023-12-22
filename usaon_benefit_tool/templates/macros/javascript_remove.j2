@@ -7,7 +7,7 @@
                     location.assign(response.url)
               } else {
                     console.error(`Something unexpected happened with query: DELETE ${response.url}: ${response.body}`)
-              } 
+              }
           })
           .catch(error => console.error(error));
         }

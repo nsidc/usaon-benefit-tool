@@ -45,7 +45,7 @@
 * Add sankey diagram display to survey page
 
 
-### Login user experience enhancements 
+### Login user experience enhancements
 
 * Display banner when not logged in.
 * New login page with button to let user know we're using Google SSO.
@@ -129,13 +129,13 @@
 
 ## v0.4.0 (2023-09-13)
 
-* Stop using current_user and use true value for created_by on surveys page 
+* Stop using current_user and use true value for created_by on surveys page
 * Display version on webapp
-* Combine common response object database fields 
-* Show respondents on survey page 
+* Combine common response object database fields
+* Show respondents on survey page
 * Install bootstrap and update UI
-* Update response link to be clickable 
-* Implement X-forwarded-proxy 
+* Update response link to be clickable
+* Implement X-forwarded-proxy
 
 
 ## v0.3.0 (2023-08-17)
@@ -153,7 +153,7 @@
 
 * Create user list view
 * Allow role changes by admin
-* Add analyst and respondent roles 
+* Add analyst and respondent roles
 * Redirect to homepage after login
 * Alter views based on roles
 

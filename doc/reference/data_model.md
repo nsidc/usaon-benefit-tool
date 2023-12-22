@@ -5,7 +5,7 @@ erDiagram
 survey {
     uuid id PK
     int response_id FK
-    str title 
+    str title
     str created_by FK
     datetime created_timestamp
     str notes "nullable"
@@ -80,7 +80,7 @@ response_observing_system_data_product {
 response_data_product {
     int id PK
     int response_id FK
-    
+
     str name
     int satisfaction_rating "0-100"
 }
