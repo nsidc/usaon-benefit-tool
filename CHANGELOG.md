@@ -1,4 +1,4 @@
-## NEXT_VERSION
+## v1.5.0 (2023-12-21)
 
 * Adopt a suitable webserver for production: Gunicorn
 
