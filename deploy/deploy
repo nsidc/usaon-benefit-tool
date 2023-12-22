@@ -27,9 +27,8 @@ ln --symbolic --force \
     compose.prod.yml \
     compose.override.yml
 
-# We have limited disk space in our deployment environment, so the app needs to
-# go down, delete its image, download the new image, and start it back up.
-# TODO: Zero-downtime deployments! More compact image!
 docker compose down
+docker compose up --pull "always" --detach
+
+# Cleanup after; for a brief period, two copies of the image may be present.
 docker system prune --all --force
-docker compose up --detach
