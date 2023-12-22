@@ -18,7 +18,7 @@ Markdown previews!
 
 Markdown exists in two places for this app:
 
-1. In the documentation: This documetation is separate from the Benefit Tool
+1. In the documentation: This documentation is separate from the Benefit Tool
    application, mainly for use by developers and project managers.
    * Lives in
      [the `doc/` directory](https://github.com/nsidc/usaon-benefit-tool/tree/main/doc).
@@ -183,7 +183,7 @@ Double-check the "base" branch is set correctly. Usually, you want it to be `mai
 in my case I created my branch from another branch called
 `hazelshapiro-docs-addtutorial`.
 
-Enter a meaningfull Pull Request title, for example "Add new tutorial about contributing
+Enter a meaningful Pull Request title, for example "Add new tutorial about contributing
 documentation with GitHub.dev".
 
 Enter a useful description, for example discussing why you made the decisions you made

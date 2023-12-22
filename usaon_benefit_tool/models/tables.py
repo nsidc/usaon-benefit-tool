@@ -64,7 +64,7 @@ class IORelationshipMixin:
 
 
 class ResponseObjectFieldMixin:
-    """Provide shared fields between all relationship objects to reduce repition."""
+    """Provide shared fields between all relationship objects to reduce repetition."""
 
     short_name = Column(String(256), nullable=False)
     full_name = Column(String(256), nullable=True)
