@@ -1,5 +1,6 @@
 ## NEXT_VERSION
 
+* Standardize all create/edit/delete buttons
 * Refer to "Surveys" as "Projects" in the user interface
     * This is a temporary change for user testing, see #228 for long-term
       decision-making
