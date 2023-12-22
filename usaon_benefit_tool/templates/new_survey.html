@@ -3,7 +3,7 @@
 
 {% block content %}
 
-  <h2>{% block title %}New Survey{% endblock %}</h1>
+  <h2>{% block title %}New Project{% endblock %}</h1>
 
   <form method="POST">
 		{{form.csrf_token}}
@@ -26,7 +26,7 @@
 			</ul>
 		{% endif %}
 
-    <input type="submit" value="Create new survey" />
+    <input type="submit" value="Create new project" />
 
   </form>
 
