@@ -39,10 +39,10 @@ See [our environment variable reference][envvars-doc] for more.
 These files are passed in to the container as
 [secrets](https://docs.docker.com/compose/use-secrets/).
 
-> [!NOTE]
->
-> If they expire and need to be regenerated, the application may need to be restarted to
-> pick up the change.
+:::{.callout-note}
+If they expire and need to be regenerated, the application may need to be restarted to
+pick up the change.
+:::
 
 
 ## Single Sign On (SSO)

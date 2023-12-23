@@ -52,15 +52,16 @@ Our development Compose file does not require any of
 test with Google SSO or with a remote database, you may want to uncomment some lines in
 `compose.dev.yml`.
 
-> [!NOTE]
->
-> Envvar values can be persisted in a `.env` file so they are passed to containers
-> automatically by Docker Compose. This file is part of `.gitignore` so that no secrets
-> are committed to github.
+:::{.callout-note}
+Envvar values can be persisted in a `.env` file so they are passed to containers
+automatically by Docker Compose. This file is part of `.gitignore` so that no secrets
+are committed to github.
+:::
 
-> [!WARNING]
-> **Never put secret** (or non-constant!) **environment variables in Compose YAML,
-> because that makes it easy to accidentally expose those to the internet.**
+:::{.callout-warning}
+**Never put secret** (or non-constant!) **environment variables in Compose YAML,
+because that makes it easy to accidentally expose those to the internet.**
+:::
 
 
 ### Start the service
@@ -80,20 +81,20 @@ docker compose logs -f
 
 ### Initialize the database
 
-> [!NOTE]
->
-> In dev this will initialize a PostgreSQL DB that is preserved in the `_db/` directory.
-> In NSIDC deployment environments we deploy the db on a separate host using the
-> [usaon-benefit-tool-db project](https://github.com/nsidc/usaon-benefit-tool-db).
+:::{.callout-note}
+In dev this will initialize a PostgreSQL DB that is preserved in the `_db/` directory.
+In NSIDC deployment environments we deploy the db on a separate host using the
+[usaon-benefit-tool-db project](https://github.com/nsidc/usaon-benefit-tool-db).
+:::
 
 Run `./scripts/invoke_in_container.sh db.init`
 
 This can also be used to drop and recreate all the tables, for example, after a model
 change.
 
-> [!WARNING]
->
-> This results in all the data in the database being deleted and starting fresh.
+:::{.callout-warning}
+This results in all the data in the database being deleted and starting fresh.
+:::
 
 
 ## How to develop

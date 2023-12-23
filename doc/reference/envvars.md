@@ -31,9 +31,9 @@ title: "Environment variables"
 
 ### Development only
 
-> [!IMPORTANT]
->
-> **Do not set in production.**
+:::{.callout-important}
+**Do not set in production.**
+:::
 
 * `OAUTHLIB_INSECURE_TRANSPORT=1`: Enable SSO when developing without HTTPS.
 

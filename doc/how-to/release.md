@@ -36,10 +36,10 @@ After the release is created, GitHub Actions will start building the container i
 Once GitHub Actions is done, you can deploy the app with the deploy script
 (`deploy/deploy`).
 
-> [!NOTE]
->
-> At NSIDC, this deployment should be done with _Garrison_ after automations have
-> successfully completed.
+:::{.callout-note}
+At NSIDC, this deployment should be done with _Garrison_ after automations have
+successfully completed.
+:::
 
 
 ### Automations
