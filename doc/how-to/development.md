@@ -1,28 +1,67 @@
-# Development
+---
+title: "Development"
+---
 
-## How to run the application for development
+## Quickstart
+
+Install [Docker](https://docs.docker.com/engine/install/) and
+[Docker Compose](https://docs.docker.com/compose/install/).
+
+```bash
+ln -s compose.dev.yml compose.override.yml
+docker compose up -d
+
+# IMPORTANT: First time only. Initializing DB starts fresh, deleting all entered data:
+./scripts/invoke_in_container.sh db.init
+```
+
+This will provide a hot-reloading dev server. Use `docker compose logs -f` to watch the
+logs.
 
 
-### Symlink dev config
+## The details
+
+It's easiest to work with and support Docker Compose here. Many other workflows are
+great options, but they are not in scope for this documentation.
+
+
+### Install Docker Compose
+
+Install [Docker](https://docs.docker.com/engine/install/) and
+[Docker Compose](https://docs.docker.com/compose/install/).
+
+Docker Desktop provides both of these. There are alternatives, like Podman, but they are
+not in scope for this documentation.
+
+
+### Symlink dev Compose config
+
+Create a symbolic link to the dev Compose config with a magical name.
+`compose.override.yml`, if present is merged on top of `compose.yml`. This gives us a
+dev server instead of a production server, and other conveniences.
 
 ```bash
 ln -s compose.dev.yml compose.override.yml
 ```
 
 
-### Define environment variables
+### Environment variables
 
-Define the environment variables as specified in [envvars.md](/reference/envvars.md):
+Our development Compose file does not require any of
+[our application's environment variables](/references/envvars.md), but if you want to
+test with Google SSO or with a remote database, you may want to uncomment some lines in
+`compose.dev.yml`.
 
-```bash
-export USAON_BENEFIT_TOOL_DB_HOST=...
-export USAON_BENEFIT_TOOL_DB_PORT=...
-export USAON_BENEFIT_TOOL_DB_USER=...
-export USAON_BENEFIT_TOOL_DB_PASSWORD=...
-```
+> [!NOTE]
+>
+> Envvar values can be persisted in a `.env` file so they are passed to containers
+> automatically by Docker Compose. This file is part of `.gitignore` so that no secrets
+> are committed to github.
 
-> :memo: these can be put in a `.env` file so that all variables are assigned. This file
-> is part of `.gitignore` so that no secrets are committed to github.
+> [!WARNING]
+> **Never put secret** (or non-constant!) **environment variables in Compose YAML,
+> because that makes it easy to accidentally expose those to the internet.**
+
 
 ### Start the service
 
@@ -32,17 +71,29 @@ Bring up the docker container:
 docker compose up -d
 ```
 
+You can follow the logs with:
+
+```bash
+docker compose logs -f
+```
+
 
 ### Initialize the database
 
-> :memo: In dev this will initialize the SQLite DB. In all other environments we deploy
-> the db using the [usaon-vta-db project](https://github.com/nsidc/usaon-vta-db).
+> [!NOTE]
+>
+> In dev this will initialize a PostgreSQL DB that is preserved in the `_db/` directory.
+> In NSIDC deployment environments we deploy the db on a separate host using the
+> [usaon-benefit-tool-db project](https://github.com/nsidc/usaon-benefit-tool-db).
 
 Run `./scripts/invoke_in_container.sh db.init`
 
-This can also be used to drop and recreate all the tables.
+This can also be used to drop and recreate all the tables, for example, after a model
+change.
 
-> :warning: This results in all the data in the database being deleted.
+> [!WARNING]
+>
+> This results in all the data in the database being deleted and starting fresh.
 
 
 ## How to develop
@@ -84,63 +135,9 @@ pre-commit run --all-files
 ```
 
 
-## How to release
+### Third-party services
 
-### CHANGELOG
-
-Author a new changelog section titled `NEXT_VERSION`. The `bumpversion` step will
-replace this magic string with a correct version identification.
-
-
-### Bump the version
-
-We're currently pre-1.0, so all bumps should look like:
-
-```bash
-bumpversion minor
-```
-
-Post-1.0, it's OK to bump other version parts.
-
-
-### Release
-
-After everything is merged, create a release in the GitHub UI.
-
-Releases that are `<1.0` or labeled `alpha`, `beta`, or `rc` must be marked as
-pre-releases.
-
-After the release is created, GitHub Actions will start building the container images.
-Once GitHub Actions is done, you can deploy the app (`deploy/deploy`).
-
-At NSIDC, this release should be done with Garrison.
-
-
-## Third-party services
-
-### Google SSO
-
-A Google OAuth application is required for login to work. Our app requires a client ID
-and client secret to communicate with the Google OAuth application.
-
-
-### Initial setup
-
-_TODO_
-
-
-### Redirect URIs
-
-> :warning: This configuration needs to be updated for every unique deployment URL of
-> this app.
-
-Our app's deployed URIs also must be registered with Google as ["Authorized redirect
-URIs"](https://console.cloud.google.com/apis/credentials) (from the link, click on your
-app under the "OAuth 2.0 Client IDs" section). The following URIs should be provided for
-local development:
-
-* `http://localhost:5000/google_oauth/google/authorized`
-* `http://127.0.0.1:5000/google_oauth/google/authorized`
-
-Add more URIs (substituting the protocol, hostname, and port number, and nothing else)
-for each separate deployment.
+See
+[our documentation on third-party services](/references/third-party-service-dependencies.md)
+for more, but the way they are currently set up should allow for development on
+`localhost`.
