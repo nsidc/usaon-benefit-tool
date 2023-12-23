@@ -1,4 +1,4 @@
-FROM mambaorg/micromamba:1.5.0
+FROM mambaorg/micromamba:1.5.6
 
 # TODO: Figure out a better way to run tasks without requiring container
 # configuration
