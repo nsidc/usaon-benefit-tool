@@ -12,7 +12,6 @@ from flask_dance.consumer import oauth_authorized
 from flask_dance.contrib.google import make_google_blueprint
 from flask_login import current_user, login_user
 
-from usaon_benefit_tool.constants import repo
 from usaon_benefit_tool.util.db.user import ensure_user_exists
 
 login_bp = Blueprint('login', __name__, url_prefix='/login')
@@ -43,4 +42,4 @@ def google_logged_in(blueprint, token):  # noqa: ARG001
     if next_url:
         return redirect(next_url)
 
-    return redirect(url_for('root.root'), url=repo.REPO_URL)
+    return redirect(url_for('root.root'))
