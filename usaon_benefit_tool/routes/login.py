@@ -42,4 +42,4 @@ def google_logged_in(blueprint, token):  # noqa: ARG001
     if next_url:
         return redirect(next_url)
 
-    return redirect(url_for('root.root'))
+    return redirect(url_for('root.root'),url=repo.REPO_URL)

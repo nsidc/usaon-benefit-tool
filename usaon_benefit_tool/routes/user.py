@@ -1,5 +1,6 @@
 from flask import Blueprint, flash, render_template, request
 from flask_login import current_user, login_required
+from usaon_benefit_tool.constants import repo
 
 from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
@@ -32,4 +33,4 @@ def user(user_id: str):
 
             return render_template('profile.html', form=form, user=user)
     form = Form(obj=user)
-    return render_template('profile.html', form=form, user=user)
+    return render_template('profile.html', form=form, user=user, url=repo.REPO_URL)
