@@ -1,8 +1,8 @@
 from flask import Blueprint, flash, render_template, request
 from flask_login import current_user, login_required
-from usaon_benefit_tool.constants import repo
 
 from usaon_benefit_tool import db
+from usaon_benefit_tool.constants import repo
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import User
 

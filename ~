@@ -11,7 +11,6 @@ from flask import (
 from flask_dance.consumer import oauth_authorized
 from flask_dance.contrib.google import make_google_blueprint
 from flask_login import current_user, login_user
-
 from usaon_benefit_tool.constants import repo
 from usaon_benefit_tool.util.db.user import ensure_user_exists
 

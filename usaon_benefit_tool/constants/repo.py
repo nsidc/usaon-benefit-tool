@@ -1,1 +1,1 @@
-REPO_URL="https://github.com/nsidc/usaon-benefit-tool/"
+REPO_URL = "https://github.com/nsidc/usaon-benefit-tool/"
