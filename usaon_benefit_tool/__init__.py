@@ -12,6 +12,7 @@ from sqlalchemy import MetaData
 from sqlalchemy import inspect as sqla_inspect
 from werkzeug.middleware.proxy_fix import ProxyFix
 
+from usaon_benefit_tool.constants import repo
 from usaon_benefit_tool.constants.version import VERSION
 from usaon_benefit_tool.util.db.connect import db_connstr
 from usaon_benefit_tool.util.envvar import envvar_is_true
@@ -126,6 +127,7 @@ def create_app():
     app.jinja_env.globals.update(
         __version__=__version__,
         sqla_inspect=sqla_inspect,
+        repo_url=repo.REPO_URL,
     )
 
     md = Markdown(extensions=['fenced_code'])

@@ -1,6 +1,7 @@
 {% from 'bootstrap5/utils.html' import render_messages %}
 {% from 'macros/nav_buttons.j2' import nav_buttons, user_buttons %}
 {% from 'macros/javascript_remove.j2' import add_javascript__remove %}
+{% from 'bootstrap5/utils.html' import render_icon %}
 
 <!doctype html>
 <head>
@@ -13,7 +14,7 @@
 
   <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
     <div class="container">
-      <a class="navbar-brand" href={{ url_for('root.root')}}>US AON Benefit Tool</a>
+      <a class="navbar-brand" href={{ url_for('root.root')}}>US AON Benefit Tool  </a>
       <div id="navbarResponsive" class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto">
           {{ nav_buttons(current_user) }}
@@ -53,6 +54,9 @@
     <div class="footer-items">
       <p>&copy; USAON &amp; NSIDC</p>
       <p>Version: v{{ __version__ }}</p>
+      <a href="{{repo_url}}">
+        {{ render_icon('github' )}}
+      </a>
     </div>
   </footer>
 
