@@ -48,7 +48,7 @@ ln -s compose.dev.yml compose.override.yml
 ### Environment variables
 
 Our development Compose file does not require any of
-[our application's environment variables](/references/envvars.md), but if you want to
+[our application's environment variables](/reference/envvars.md), but if you want to
 test with Google SSO or with a remote database, you may want to uncomment some lines in
 `compose.dev.yml`.
 
@@ -142,6 +142,6 @@ pre-commit run --all-files
 ### Third-party services
 
 See
-[our documentation on third-party services](/references/third-party-service-dependencies.md)
+[our documentation on third-party services](/reference/third-party-service-dependencies.md)
 for more, but the way they are currently set up should allow for development on
 `localhost`.
