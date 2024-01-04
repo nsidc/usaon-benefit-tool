@@ -1,6 +1,6 @@
 ---
 title: "Rename Surveys to something else"
-date: "TBD"
+date: "2024-01-04"
 ---
 
 User feedback during testing in Oct-Dec 2023: using the word "survey" to describe how respondents input data or analysts view data was confusing.
