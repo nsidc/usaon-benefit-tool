@@ -6,6 +6,8 @@ listing:
   fields:
     - "title"
     - "date"
+    - "author"
+    - "status"
   sort:
     - "date desc"
 ---
