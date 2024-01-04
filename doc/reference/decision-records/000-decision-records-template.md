@@ -2,7 +2,7 @@
 title: "Use a standard format for decision records"
 date: "2024-01-04"
 author: "Hazel Shapiro"
-status: "Proposed"
+status: "Accepted"
 ---
 
 ## Context
