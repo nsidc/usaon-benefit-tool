@@ -7,8 +7,8 @@ status: "Proposed"
 
 ## Context
 
-In beginning this decision record, having a common format for each entry would be helpful. @hazelshapiro 
-did some research and proposed Nygard's format. 
+In beginning this decision record, having a common format for each entry would be helpful. @hazelshapiro
+did some research and proposed Nygard's format.
 
 
 ## Decision
