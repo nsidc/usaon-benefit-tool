@@ -11,11 +11,12 @@ website:
     - "edit"
     - "source"
     - "issue"
-
+  repo-subdir: "doc"   
 
   page-footer:
     right: "This page is built with [Quarto](https://quarto.org/)."
     left: "&copy;"
+
 
   sidebar:
     style: "docked"
