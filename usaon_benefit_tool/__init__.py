@@ -128,6 +128,8 @@ def create_app():
         __version__=__version__,
         sqla_inspect=sqla_inspect,
         repo_url=repo.REPO_URL,
+        doc_url=repo.DOC_URL,
+        discuss_url=repo.DISCUSS_URL
     )
 
     md = Markdown(extensions=['fenced_code'])

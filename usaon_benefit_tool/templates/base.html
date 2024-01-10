@@ -52,11 +52,23 @@
   <footer>
     <hr />
     <div class="footer-items">
-      <p>&copy; USAON &amp; NSIDC</p>
+      <p>&copy; USAON &amp; NSIDC 2022</p>
       <p>Version: v{{ __version__ }}</p>
+      <div class="d-flex">
       <a href="{{repo_url}}">
         {{ render_icon('github' )}}
       </a>
+      &nbsp;
+      &nbsp;
+      <a href="{{doc_url}}">
+        {{ render_icon('filetype-doc' )}}
+      </a>
+      &nbsp;
+      &nbsp;
+      <a href="{{discuss_url}}">
+        {{ render_icon('chat-right-quote' )}}
+      </a>
+     </div> 
     </div>
   </footer>
 
