@@ -130,6 +130,7 @@ def create_app():
         repo_url=repo.REPO_URL,
         doc_url=repo.DOC_URL,
         discuss_url=repo.DISCUSS_URL,
+        current_year=repo.CURRENT_YEAR,
     )
 
     md = Markdown(extensions=['fenced_code'])
