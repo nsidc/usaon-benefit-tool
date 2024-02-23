@@ -1,11 +1,21 @@
-{% macro add_javascript__highcharts(sankey_series) -%}
+{% macro add_javascript__highcharts(sankey_series,stitle) -%}
+
   <script>
+
+    Highcharts.getOptions().exporting.buttons.contextButton.symbol = 'download';
+
+    Highcharts.setOptions({
+      lang: {
+        contextButtonTitle: 'Print and download options'
+      }
+    });
+
     Highcharts.chart('highcharts-container', {
       chart: {
         type: 'sankey',
       },
       title: {
-        text: 'U.S. AON Benefit Tool Diagram',
+        text: "{{ stitle }}",
         style: {fontSize: '20px'},
       },
       accessibility: {
@@ -17,13 +27,19 @@
       series: [{
         keys: ['from', 'to', 'weight'],
         data: {{ sankey_series | safe }},
+        dataLabels: {
+          enabled:true,
+          style: {
+            fontSize:'17px'
+          }
+        }
       }]
     });
   </script>
 {% endmacro %}
 
 
-{% macro display_sankey(sankey_series) -%}
+{% macro display_sankey(sankey_series,stitle) -%}
   {% include 'includes/highcharts.html' %}
   <h4>Diagram</h4>
 
@@ -35,6 +51,6 @@
     <figure class="highcharts-figure">
       <div id="highcharts-container" />
     </figure>
-    {{ add_javascript__highcharts(sankey_series) }}
+    {{ add_javascript__highcharts(sankey_series,stitle) }}
   {% endif %}
 {% endmacro %}
