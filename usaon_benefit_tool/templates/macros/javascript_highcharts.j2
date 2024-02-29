@@ -1,29 +1,36 @@
-{% macro add_javascript__highcharts(sankey_series) -%}
+{% macro add_javascript__highcharts(sankey_series, survey_title) -%}
+
   <script>
+    Highcharts.setOptions({
+      lang: {
+        contextButtonTitle: 'Print and download options',
+      }
+    });
+
     Highcharts.chart('highcharts-container', {
       chart: {
         type: 'sankey',
       },
       title: {
-        text: 'U.S. AON Benefit Tool Diagram',
+        text: "{{ survey_title }}",
         style: {fontSize: '20px'},
       },
       accessibility: {
         description: 'Sankey plot for U.S. AON Benefit Tool',
         point: {
-          valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.'
-        }
+          valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.',
+        },
       },
       series: [{
         keys: ['from', 'to', 'weight'],
         data: {{ sankey_series | safe }},
-      }]
+      }],
     });
   </script>
 {% endmacro %}
 
 
-{% macro display_sankey(sankey_series) -%}
+{% macro display_sankey(sankey_series, survey_title) -%}
   {% include 'includes/highcharts.html' %}
   <h4>Diagram</h4>
 
@@ -35,6 +42,6 @@
     <figure class="highcharts-figure">
       <div id="highcharts-container" />
     </figure>
-    {{ add_javascript__highcharts(sankey_series) }}
+    {{ add_javascript__highcharts(sankey_series, survey_title) }}
   {% endif %}
 {% endmacro %}
