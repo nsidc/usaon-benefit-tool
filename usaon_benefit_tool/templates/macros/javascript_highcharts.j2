@@ -1,12 +1,9 @@
 {% macro add_javascript__highcharts(sankey_series,stitle) -%}
 
   <script>
-
-    Highcharts.getOptions().exporting.buttons.contextButton.symbol = 'download';
-
     Highcharts.setOptions({
       lang: {
-        contextButtonTitle: 'Print and download options'
+        contextButtonTitle: 'Print and download options',
       }
     });
 
@@ -21,19 +18,13 @@
       accessibility: {
         description: 'Sankey plot for U.S. AON Benefit Tool',
         point: {
-          valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.'
-        }
+          valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.',
+        },
       },
       series: [{
         keys: ['from', 'to', 'weight'],
         data: {{ sankey_series | safe }},
-        dataLabels: {
-          enabled:true,
-          style: {
-            fontSize:'17px'
-          }
-        }
-      }]
+      }],
     });
   </script>
 {% endmacro %}
