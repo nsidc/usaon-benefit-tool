@@ -145,3 +145,14 @@ See
 [our documentation on third-party services](/reference/third-party-service-dependencies.md)
 for more, but the way they are currently set up should allow for development on
 `localhost`.
+
+
+### Coding concerns
+
+#### Adding a new route
+
+* Create the new route function in a module under `/routes/`
+* Should the route be restricted to only logged-in users? If so, decorate with
+  `@login_required`.
+* If you need to create a new module and blueprint, don't forget to register the
+  blueprint in `/__init__.py`
