@@ -1,10 +1,9 @@
 # Glossary
 
-* `Survey`: A solicitation for input from a `Respondent`.
-* `Response`: A completed or in progress response to a survey. A survey has exactly one response.
-* `Library`: The collection of all `responses`.
-* `Registry`: The collection of available `survey objects` for use in `responses`.
-* `Analysis`: The process of converting many survey responses to a Sankey diagram by an
+* `Assessment`: A solicitation for input from a `respondent.`
+* `Library`: The collection of all `assessements`.
+* `Registry`: The collection of available `objects` for use in `responses`.
+* `Analysis`: The process of viewing or analyzing 'assessments' (Sankey diagrams and underlying data) by an
   `Analyst` interacting with the `Library`. Surveys are searched by title, `tags`, and/or other survey object fields.
 
 > :memo: We think it would be really cool for surveys to be "composed", e.g. a respondent
@@ -16,62 +15,69 @@
 
 ## Response Object Registry
 
-A list of available `response objects`. Drives consistency in naming across `surveys` to
+A list of available `response objects`. Drives consistency in naming across `assessments` to
 support `analysis` and also to ease data entry for `Respondents`, over time.
 
-`Respondents` may add new `applications`, `data products`, and `observing systems` to the `registry`.
+`Respondents` may add new `objects` to the `registry`.
 
-There is a generic `Registered Survey Object` structure that applies to Applications,
-Data Product, and Observing Systems. There is a separate structure to register
-`Societal Benefit Area objects`.
+There is a generic `Registered Object` structure that applies to Applications,
+Data Product, and Observing Systems. 
+`Application` - an instantiation of an `object` in a particular `assessment` where that 
+object connects directly to the `societal benefit areas`. This could also be referred to 
+as the focal point for an `assessment`. 
+There are a few additional fields that apply to `end product` `objects`, and that influence
+the way those `objects` are displayed. These `end products` are also referred to as `applications`.
+
+There is a separate structure to register `Societal Benefit Area objects`.
 
 Ongoing efforts are being made to align this data structure with best practices and partner organization
 structures (e.g. Polar Observing Assets working group, Arctic Data Center, Federated
 Search crew) with the goal to be able to import or sync items in the registry
 from an external source.
 
+> :memo: To simplify the database construction, we are pursuing a tiered development process.
+> A simplified version of the `object` fields are described below with steps for increasing
+> the complexity and utility of the `objects` and `object library`.
 
-### Fields
+### Version 1 Fields
 
-* `Object Type`: Type of Object - `Observing System`, `Data Product`, or `Application`.
-   (_Multiplicity: 1..1; Format: Pick from Observing System, Data Product, or Application_)
-* `Short Name`: Short name/description of the object, which would be displayed in the analysis to save space.
-   Preferably in the format [Organization acronym] [name], e.g. USGS stream gauge network.
+* `Object Type`: Type of Object - `Observing System`, `Intermediate Product`, `End Product`.
+   (_Multiplicity: 1..1; Format: Pick from list_)
+
+  _NOTE_ This is the field currently under debate. What is the correct level of detail to be able to
+  interpret the information and build diagrams, while still creating a streamlined and intuitive process?
+  Working definitions below.
+
+  * `End product` - a service, product, or outcome that directly supports societal benefit. It often informs
+     non-experts or experts in other domains.
+  * `Intermediate product` - An intermediate product, like a dataset, is a product, service, process, or outcome
+     derived from direct observations, models, or other types of knowledge synthesis. It has the potential to be
+     used by a variety of users but is generally not as accessible to non-experts
+  * `Observing system` - A system or human in the environment or at a distance (e.g. remote sensing) that senses
+     environmental conditions and records them for use by others, including through oral transmission.
+  
+* `Acronym/Short Name`: Acronym or a short name of the object, which would be displayed in the sankey diagram to save space.
    (_Multiplicity: 1..1; Format: Text_)
 * `Full Name`: Full name of the object. In the case where the full name is brief, this may be the same as the `short name`.
-   Preferably in the format [Organization acronym] [name], e.g. USGS Groundwater and Streamflow Information Program.
    (_Multiplicity: 1..1; Format: Text_)
-* `Organization`: The entity/entities responsible for the operation of the observing system, data product, or application.
-   Preferably in the format [Full name] [acronym], e.g. National Snow and Ice Data Center (NSIDC).
-   (_Multiplicity: 1..n; Format: Text/List_)
-   * _NOTE_: future enhancement would be to use [Type-ahead standard names](https://ror.readme.io/docs/create-ror-powered-typeaheads)
-* `Funder`: The entity responsible for funding the observing system, data product, or application. Preferably
-   in the format [Full name] [acronym], e.g. National Snow and Ice Data Center (NSIDC). (_Multiplicity: 1..n; Format: Text/List_)
-   * _NOTE_: future enhancement would be to use [Type-ahead standard names](https://ror.readme.io/docs/create-ror-powered-typeaheads)
-* `Country/Countries`: The countries contributing to running or funding an object.
-   (_Multiplicity: 1..n; Format: Pick from [ISO 3166](https://www.iso.org/iso-3166-country-codes.html) or similar_)
-* `Website`: The URL to access the referenced object directly (_Multiplicity: 0..1; Format: URL_)
+* `Website (about)`: The URL to access more information about the referenced object (_Multiplicity: 0..1; Format: URL_)
+* `Website (data access)`: The URL to access data directly (_Multiplicity: 0..1; Format: URL_)
 * `Description`: Short summary of the object, including geographic or thematic scope. (_Multiplicity: 1..1; Format: Text_)
-* `Contact Name`: The name of a point of contact for the object, e.g. a data manager or program coordinator. (_Multiplicity: 0..1; Format: Text_)
-* `Contact Title`: The title of a point of contact for the object. (_Multiplicity: 0..1; Format: Text_)
-* `Contact Email`: The email address for a point of contact for the object. (_Multiplicity: 0..1; Format: Email_)
-* `Tags`: Please add three or more tags to indicate thematic- or geographic- information about this object to
-  aid in analysis and discovery. (_Multiplicity: 0..n; Format: Text_)
-   * This is a user-defined field that admins can and will edit. It creates additional
-     flexibility in the analysis, for example allowing for a regionally- or
-     thematically-focused `analysis`.
-   * For the early phase of this tool, the description above encourages users to include
-     multiple tags, but the software does not require it.
-* `Version`: Match the version identification system used by the observing system, data product, or application managers.
-   This field allows the `analyses` to reflect change over time.
-   (_Multiplicity: 0..n; Format: Text_)
+* `Contact Information`: An email address, web form link, or phone number for people to contact if the have questions about the object.
+   (_Multiplicity: 0..1; Format: Text_)
 * `Persistent Identifier`: A standard way to refer back to the object's source, usually a DOI
    (_Multiplicity: 0..n; Format: Text_)
-* `Real`: A boolean indicating that an object is real (not hypothetical). Maybe could be called `hypothetical`
-  instead?
-   (_Multiplicity: 1..1; Format: Boolean_)
 
-`Application` objects also include:
+
+ _NOTE_ In most parts of the diagram, an `object`'s node color is defined by it's performance as an input
+ to various outputs. For example, the color of an observing system is calculated as a weighted average
+ of its performance score relative to the `intermediate products` it supports. In the instance of an
+ `end product` which links directly to `societal benefit areas`, this logic does not apply because 
+ `end products` are often serving `societal benefit areas` outside of their main mission or scope. Instead, 
+ their node color is displayed based on an `performance rating` that connects to specific 
+ `performance criteria`. See details below. 
+
+`End product` objects also include:
 * `Application Performance Criteria`: Text description of what the ideal performance of this data
   product looks like.
    (_Multiplicity: 1..1; Format: Text_)
@@ -82,18 +88,58 @@ from an external source.
    performance rating?
 * `Gaps`: If the rating is less than "ideal" what improvements are needed.
 
+### Version 2 Fields - Links to organizations, agencies, and countries
+
+  _NOTE_ This simply adds a few more fields to manage but not a significant amount of complexity.
+  It will improve search and filter features for `analysts`.
+  
+* `Organization`: The entity/entities responsible for the operation of the observing system, data product, or application.
+   Preferably in the format [Full name] [acronym], e.g. National Snow and Ice Data Center (NSIDC).
+   (_Multiplicity: 1..n; Format: Text/List_)
+   * _NOTE_: future enhancement would be to use [Type-ahead standard names](https://ror.readme.io/docs/create-ror-powered-typeaheads)
+* `Funder`: The entity/entities responsible for funding the observing system, data product, or application. Preferably
+   in the format [Full name] [acronym], e.g. National Snow and Ice Data Center (NSIDC). (_Multiplicity: 1..n; Format: Text/List_)
+   * _NOTE_: future enhancement would be to use [Type-ahead standard names](https://ror.readme.io/docs/create-ror-powered-typeaheads)
+* `Country/Countries`: The countries contributing to running or funding an object.
+   (_Multiplicity: 1..n; Format: Pick from [ISO 3166](https://www.iso.org/iso-3166-country-codes.html) or similar_)
+
+### Version 3 Fields - Tags
+
+  _NOTE_ This simply adds tags, which will increase the complexity of data management and display functions.
+  If implemented successfully, it will significantly improve search and filter features for `analysts`.
+
+* `Tags`: Please add three or more tags to indicate thematic- or geographic- information about this object to
+  aid in analysis and discovery. (_Multiplicity: 0..n; Format: Text_)
+   * This is a user-defined field that admins can and will edit. It creates additional
+     flexibility in the analysis, for example allowing for a regionally- or
+     thematically-focused `analysis`.
+   * For the early phase of this tool, the description above encourages users to include
+     multiple tags, but the software does not require it.
+   * These could also be split into pre-defined regional and topical fields
+   * Could include more detail about `object type`
+
+
+
+### Version 4 fields - Desired state assessments and versioned objects 
+  
   _NOTE_ We intend to do `current state` and `desired state` `analyses`. In a `desired state`
   `analysis`, the `real` field allows us to `desired state` (hypothetical) objects. For instance,
   the USGS stream gauge network if funding increased and there were X number of additional gauges.
   This allows us to trace the impact of changes on the entire network. Related to the survey `type`.
-
+  
+* `Real`: A boolean indicating that an object is real (not hypothetical). Maybe could be called `hypothetical`
+  instead?
+   (_Multiplicity: 1..1; Format: Boolean_)
+* `Version`: Match the version identification system used by the observing system, data product, or
+   application managers. This field allows the `analyses` to reflect change over time.
+   (_Multiplicity: 0..n; Format: Text_)
 
 ## Rated Instance of an Object
 
-The rating answers two questions - how important is a particular `Observing System`,
-`Data Product`, or `Application` and how well does it perform. It is reflected in the
-`analysis` by the thickness and color of the link connecting two `survey objects`. For
-instance: Imagine a satellite (`observing system`) that is very important to a sea ice
+The rating answers two questions - how important is a particular input `object` to it's 
+related output `object`? And how well does it perform in supporting that output? It is 
+reflected in the `analysis` by the thickness and color of the link connecting two `survey objects`. 
+For instance: Imagine a satellite (`observing system`) that is very important to a sea ice
 `data product` but performs poorly because of persistent Arctic cloud cover and high
 latency (`gaps`. Those would be linked by a thick (high `criticality`) red (low
 `performance`) line.
@@ -101,9 +147,9 @@ latency (`gaps`. Those would be linked by a thick (high `criticality`) red (low
 
 ```mermaid
 flowchart LR
-    A[Observing Systems]--> |supports| B[Data Products]
+    A[Observing Systems]--> |supports| B[Intermediate Products]
     A --> |self| A
-    B --> |supports| C(Applications)
+    B --> |supports| C(End Products)
     B --> B
     C --> C
     C --> |supports| D[Societal Benefit Areas]
@@ -133,7 +179,7 @@ pertain to rated instances, _not_ `registry` definitions.
 
 The `node color` of an `observing system` or a `data product` is defined in this
 document: https://docs.google.com/presentation/d/1RmEGcPkC3_9o3qeAndv0QvAcdZwFIHC-/edit#slide=id.g1e651286dde_0_54
-The `node color` of an `application` is rated separately based on the application performance
+The `node color` of an `end product` is rated separately based on the application performance
 compared to the `application performance criteria`.
 
 While only a  small number of respondents will provide responses on `Observing Systems` through
@@ -196,7 +242,7 @@ without any related `application`. Additionally, a group of up to ~20 `responden
 
 ## Responses
 
-* `Respondents`: `Experts` who can contribute to `response`.
+* `Respondents`: `Experts` who can contribute to `assessments`.
 * `Tags`: Arbitrary strings for grouping surveys. For example: `river-watch`.
 * `Version`: Surveys can be re-issued, with changes, as a new version. E.g. a new survey
   is created as version "1" (version may be represented to user as creation date).
@@ -297,8 +343,7 @@ Fields/relationships:
 
 A group of `respondents` who provide `responses` to `surveys` focused on SBA ratings. A cohort
 will generally be solicited to complete many `Societal Benefit surveys`, focusing on a
-small number of `SBAs`, to provide a view of the societal benefits of many
-`applications`.
+small number of `SBAs`, to provide a view of the societal benefits of many `applications`.
 
 Fields/relationships:
 
