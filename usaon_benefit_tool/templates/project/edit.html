@@ -1,0 +1,15 @@
+{% extends 'project/base.html' %}
+{% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'macros/javascript_highcharts.j2' import display_sankey %}
+
+{% block content %}
+  {{super()}}
+
+  <h3>Description</h3>
+  <p>{{project.description}}</p>
+
+
+  I am the edit interface.
+  {{ display_sankey(sankey_series, project_title=project.title)}}
+
+{% endblock %}

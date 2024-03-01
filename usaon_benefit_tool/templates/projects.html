@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'macros/badges/private.j2' import private_badge %}
+{% from 'macros/forms/new_project.j2' import new_project_form %}
+{% from 'macros/buttons.j2' import edit_button %}
+
+
+{% block content %}
+  <h2>{% block title %}Projects{% endblock %}</h1>
+
+  {% if current_user.role_id=='admin' %}
+    <button
+      data-bs-toggle="modal"
+      data-bs-target="#new-project-modal"
+      class="btn btn-success text-nowrap">
+      {{ render_icon("plus-circle-fill") }} New
+    </button>
+
+    <div
+      id="new-project-modal"
+      class="modal modal-blur fade"
+      style="display: none"
+      aria-hidden="false"
+      tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          {{ new_project_form(form) }}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <br />
+  <br />
+
+  <table class='table'>
+
+    <thead>
+      <tr>
+        {% if current_user.role_id=='admin' %}
+        <th>#</th>
+        {% endif %}
+
+        <th>Title</th>
+
+        {% if current_user.role_id=='admin' %}
+        <th>Created by</th>
+        <th>Created time</th>
+        <th>Updated time</th>
+        {% endif %}
+
+        <th>Status</th>
+
+        <!-- no header for final "badges" and "actions" columns -->
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+    {% for project in projects %}
+      <tr>
+        {% if current_user.role_id=='admin' %}
+        <td>{{project.id}}</td>
+        {% endif %}
+
+        <td><strong>{{project.title}}</strong></td>
+
+        {% if current_user.role_id=='admin' %}
+        <td>{{project.created_by.email}}</td>
+        <td>{{project.created_timestamp | dateformat}}</td>
+        <td>{{project.response.updated_timestamp | dateformat}}</td>
+        {% endif %}
+
+        <td>{{project.status.id}}</td>
+        <td>{{private_badge(project.private)}}</td>
+        <td>
+          {{ edit_button('project.edit_project', project_id=project.id) }}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+
+  </table>
+
+{% endblock %}

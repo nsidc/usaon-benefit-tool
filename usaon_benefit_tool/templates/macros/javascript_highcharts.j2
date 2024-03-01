@@ -1,4 +1,4 @@
-{% macro add_javascript__highcharts(sankey_series, survey_title) -%}
+{% macro add_javascript__highcharts(sankey_series, project_title) -%}
 
   <script>
     Highcharts.setOptions({
@@ -12,7 +12,7 @@
         type: 'sankey',
       },
       title: {
-        text: "{{ survey_title }}",
+        text: "{{ project_title }}",
         style: {fontSize: '20px'},
       },
       accessibility: {
@@ -30,7 +30,7 @@
 {% endmacro %}
 
 
-{% macro display_sankey(sankey_series, survey_title) -%}
+{% macro display_sankey(sankey_series, project_title) -%}
   {% include 'includes/highcharts.html' %}
   <h4>Diagram</h4>
 
@@ -42,6 +42,6 @@
     <figure class="highcharts-figure">
       <div id="highcharts-container" />
     </figure>
-    {{ add_javascript__highcharts(sankey_series, survey_title) }}
+    {{ add_javascript__highcharts(sankey_series, project_title) }}
   {% endif %}
 {% endmacro %}

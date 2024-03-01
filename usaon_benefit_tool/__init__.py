@@ -88,6 +88,8 @@ def create_app():
 
     from usaon_benefit_tool.routes.login import google_bp, login_bp
     from usaon_benefit_tool.routes.logout import logout_bp
+    from usaon_benefit_tool.routes.project import project_bp
+    from usaon_benefit_tool.routes.projects import projects_bp
     from usaon_benefit_tool.routes.root import root_bp
     from usaon_benefit_tool.routes.survey import response_bp, survey_bp
     from usaon_benefit_tool.routes.survey.applications import application_bp
@@ -103,18 +105,21 @@ def create_app():
         observing_system_data_product_bp,
     )
     from usaon_benefit_tool.routes.survey.sbas import societal_benefit_area_bp
-    from usaon_benefit_tool.routes.surveys import surveys_bp
     from usaon_benefit_tool.routes.user import user_bp
     from usaon_benefit_tool.routes.users import users_bp
 
     app.register_blueprint(root_bp)
-    app.register_blueprint(surveys_bp)
-    app.register_blueprint(survey_bp)
+
     app.register_blueprint(user_bp)
     app.register_blueprint(users_bp)
     app.register_blueprint(login_bp)
     app.register_blueprint(logout_bp)
     app.register_blueprint(google_bp, url_prefix="/google_oauth")
+
+    app.register_blueprint(survey_bp)
+    app.register_blueprint(projects_bp)
+    app.register_blueprint(project_bp)
+
     app.register_blueprint(response_bp)
     app.register_blueprint(observing_system_bp)
     app.register_blueprint(societal_benefit_area_bp)
