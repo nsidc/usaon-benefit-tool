@@ -350,6 +350,12 @@ class ResponseApplication(BaseModel, IORelationshipMixin, ResponseObjectFieldMix
         nullable=False,
     )
 
+    # Non-application objects are colored in the diagram based on the weighted average
+    # of their output links. Application objects aren't colored by that criteria because
+    # it wouldn't be fair to judge poor performance in the disaster preparedness SBA for
+    # an app that's not designed for that purpose. Instead, the color of the application
+    # is based on the below performance rating field, and that rating is based on the
+    # stated mission in the performance criteria field.
     performance_criteria = Column(
         String(256),
     )
