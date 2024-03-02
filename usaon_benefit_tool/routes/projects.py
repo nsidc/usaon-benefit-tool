@@ -45,30 +45,3 @@ def add_project():
     db.session.commit()
 
     return redirect(url_for('project.view_project', project_id=survey.id))
-
-
-# @survey_bp.route('/new', methods=['GET', 'POST'])
-# @login_required
-# def new_survey():
-#     Form = FORMS_BY_MODEL[Survey]
-#     survey = Survey()
-#
-#     if request.method == 'POST':
-#         form = Form(request.form, obj=survey)
-#
-#         if form.validate():
-#             # Insert to DB
-#             # TODO: We don't need a response concept!
-#             form.populate_obj(survey)
-#
-#             response = Response()
-#             survey.response = response
-#
-#             db.session.add(survey)
-#             db.session.add(response)
-#             db.session.commit()
-#
-#             return redirect(url_for('survey.view_survey', project_id=survey.id))
-#
-#     form = Form(obj=survey)
-#     return render_template('new_survey.html', form=form)

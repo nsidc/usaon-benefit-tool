@@ -1,36 +1,103 @@
-{% macro add_javascript__highcharts(sankey_series, project_title) -%}
+{% macro add_javascript__highcharts(sankey_series, project) -%}
+  <div>
+		<div
+			id="edit-element-modal"
+			class="modal modal-blur fade"
+			style="display: none"
+			aria-hidden="false"
+			tabindex="-1"
+			hx-trigger="modalOpened"
+			hx-target="find .modal-dialog"
+		>
+
+			<div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+				<div class="modal-content"></div>
+			</div>
+		</div>
+  </div>
 
   <script>
-    Highcharts.setOptions({
-      lang: {
-        contextButtonTitle: 'Print and download options',
-      }
+		// TODO: const or var for compatibility?
+    const camelToSnakeCase = str => str.replace(/[A-Z]/g, (letter, index) => {
+      return index == 0 ? letter.toLowerCase() : '_'+ letter.toLowerCase();
     });
+		const pointClickHandler = function(event) {
+			const point = this;
+			const selector = "#edit-element-modal";
+			const el = document.querySelector(selector);
 
-    Highcharts.chart('highcharts-container', {
-      chart: {
-        type: 'sankey',
-      },
-      title: {
-        text: "{{ project_title }}",
-        style: {fontSize: '20px'},
-      },
-      accessibility: {
-        description: 'Sankey plot for U.S. AON Benefit Tool',
-        point: {
-          valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.',
+      // Determine the target URL and set the hx-get parameter // accordingly.
+      // We're using vendored Flask-JSGlue to do this from JS.
+      // TODO: Less magic string processing
+      const isNode = "type" in point;
+      let routeTarget, idArgName, idArgValue;
+      if (isNode) {
+        const routeSlug = camelToSnakeCase(point.type).replace(/^response_/, "");
+        routeTarget = "project." + routeSlug + ".view_project_" + routeSlug;
+        idArgName = "project_" + routeSlug + "_id";
+        idArgValue = point.id.split("_")[1];
+      } else {
+        routeTarget = "Help!";
+        idArgName = "Help!";
+        idArgValue = "Help!";
+      }
+      const targetUrl = Flask.url_for(
+        routeTarget,
+        {
+          project_id: {{ project.id }},
+          [idArgName]: idArgValue,
         },
-      },
-      series: [{
-        keys: ['from', 'to', 'weight'],
-        data: {{ sankey_series | safe }},
-      }],
-    });
+      );
+			el.setAttribute("hx-get", targetUrl);
+      // Make HTMX aware of the change we just made
+      htmx.process(el);
+
+      // debugger;
+			const modal = new bootstrap.Modal(el, {});
+			modal.show();
+			htmx.trigger(selector, "modalOpened");
+		}
+
+		Highcharts.setOptions({
+			lang: {
+				contextButtonTitle: 'Print and download options',
+			}
+		});
+
+		Highcharts.chart('highcharts-container', {
+			chart: {
+				type: 'sankey',
+			},
+			plotOptions: {
+				sankey: {
+					point: {
+						events: {
+							click: pointClickHandler,
+						},
+					},
+				},
+			},
+			title: {
+				text: "{{ project_title }}",
+				style: {fontSize: '20px'},
+			},
+			accessibility: {
+				description: 'Sankey plot for U.S. AON Benefit Tool',
+				point: {
+					valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.',
+				},
+			},
+			series: [{
+				keys: ['from', 'to', 'weight'],
+				data: {{ sankey_series.data | safe }},
+				nodes: {{ sankey_series.nodes | safe }},
+			}],
+		});
   </script>
 {% endmacro %}
 
 
-{% macro display_sankey(sankey_series, project_title) -%}
+{% macro display_sankey(sankey_series, project) -%}
   {% include 'includes/highcharts.html' %}
   <h4>Diagram</h4>
 
@@ -42,6 +109,6 @@
     <figure class="highcharts-figure">
       <div id="highcharts-container" />
     </figure>
-    {{ add_javascript__highcharts(sankey_series, project_title) }}
+    {{ add_javascript__highcharts(sankey_series=sankey_series, project=project) }}
   {% endif %}
 {% endmacro %}

@@ -29,6 +29,9 @@ from usaon_benefit_tool.constants.status import STATUSES
 BaseModel: DeclarativeMeta = db.Model
 
 
+# TODO: This below supports linking objects to their relationships with generic names, but we
+# also need to link relationships to objects with generic names (source/target). That's
+# currently implemented in a WET way below.
 class IORelationship(TypedDict):
     input: NotRequired[BaseModel]
     output: NotRequired[BaseModel]
@@ -356,9 +359,7 @@ class ResponseApplication(BaseModel, IORelationshipMixin, ResponseObjectFieldMix
     # an app that's not designed for that purpose. Instead, the color of the application
     # is based on the below performance rating field, and that rating is based on the
     # stated mission in the performance criteria field.
-    performance_criteria = Column(
-        String(256),
-    )
+    performance_criteria = Column(String(256))
     performance_rating = Column(
         Integer,
         CheckConstraint(
@@ -485,10 +486,12 @@ class ResponseObservingSystemDataProduct(BaseModel):
         'ResponseObservingSystem',
         back_populates='output_relationships',
     )
+    source = observing_system
     data_product = relationship(
         'ResponseDataProduct',
         back_populates='input_relationships',
     )
+    target = data_product
 
 
 class ResponseDataProductApplication(BaseModel):
@@ -542,10 +545,12 @@ class ResponseDataProductApplication(BaseModel):
         'ResponseDataProduct',
         back_populates='output_relationships',
     )
+    source = data_product
     application = relationship(
         'ResponseApplication',
         back_populates='input_relationships',
     )
+    target = application
 
 
 class ResponseApplicationSocietalBenefitArea(BaseModel):
@@ -591,10 +596,12 @@ class ResponseApplicationSocietalBenefitArea(BaseModel):
         'ResponseApplication',
         back_populates='output_relationships',
     )
+    source = application
     societal_benefit_area = relationship(
         'ResponseSocietalBenefitArea',
         back_populates='input_relationships',
     )
+    target = societal_benefit_area
 
 
 # Reference tables

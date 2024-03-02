@@ -64,7 +64,9 @@
         <td>{{project.id}}</td>
         {% endif %}
 
-        <td><strong>{{project.title}}</strong></td>
+        <td><strong><a href="{{ url_for("project.view_project", project_id=project.id) }}">
+          {{project.title}}
+        </a></strong></td>
 
         {% if current_user.role_id=='admin' %}
         <td>{{project.created_by.email}}</td>
