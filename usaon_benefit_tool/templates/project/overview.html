@@ -11,7 +11,7 @@
 
   <div>
     <button
-      hx-get="{{ url_for("project.data_products.add", project_id=project.id) }}"
+      hx-get="{{ url_for("project.data_products.form", project_id=project.id) }}"
       hx-target="#edit-element-modal-hx-target"
       hx-trigger="click"
       data-bs-toggle="modal"
@@ -25,7 +25,6 @@
   {{ display_sankey(sankey_series, project=project)}}
 
   <div>
-    {# TODO: Better ID; not just for edit. #}
     {# NOTE: This div has HTMX configuration because it can be used by
         Highcharts callbacks to open a modal for viewing or editing a Highcharts
         node/link. Highcharts will call `htmx.trigger("#this-div-id",
@@ -37,6 +36,7 @@
         one big Jinja template for a unified diagram editing interface that
         must display at least 4 different kinds of forms.
     #}
+    {# TODO: Better ID; not just for edit. #}
     <div
       id="edit-element-modal"
       class="modal modal-blur fade"

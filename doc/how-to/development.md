@@ -162,20 +162,25 @@ for more, but the way they are currently set up should allow for development on
 
 #### REST API design
 
-* Use `resources/add` route to serve a form to add a new resource to collection
-  "resources".
+* Use `.../form` endpoints for HTMX to get user interface elements.
     * This is valuable for using HTMX to help with separation of user interface
       concerns; e.g. instead of designing a page with multiple forms, design form
       endpoints and HTMX elements on the page which use those endpoints to display the
       returned forms in a modal.
-    * That form will `POST` to `resources` to actually request the resource to be
-      created.
-* Simple resources that only display as forms should return a form from the basic `GET`
-  request to a resource endpoint, e.g. `GET resource/1`.
-    * TODO: Instead of `add` as mentioned in the bullet above, perhaps we should
-      standardize the form-serving endpoints as `GET resources/form`, `GET
-      resource/1/form`?
-* Tip: Use separate route functions for separate verbs/methods! Otherwise there can be
+    * Use `GET resources/form` route to serve a form to add a new resource to collection
+      "resources".
+        * That form will `POST resources` to request the resource to be created.
+    * Use `GET resource/<id>/form` route to serve a form to edit a "resource".
+        * That form will `PUT resource/<id>` to request the resource to be updated.
+* Use consistent HTTP response codes:
+    * `200`: Successfully returned page or successfully updated resource
+    * `201`: Create resource
+    * `202`: Successfully deleted resource
+    * ...
+* Avoid redirections after operations, e.g. after a delete, don't `302`. Instead,
+  `202` and pass an `HX-Redirect` header to inform HTMX, if used on the client side,
+  what to do.
+* Use separate route functions for separate verbs/methods! Otherwise there can be
   excessive conditional logic inside route functions.
 
 

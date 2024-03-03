@@ -21,7 +21,7 @@
       let routeTarget, idArgName, idArgValue;
       if (isNode) {
         const routeSlug = camelToSnakeCase(point.type).replace(/^response_/, "");
-        routeTarget = "project." + routeSlug + ".get";
+        routeTarget = "project." + routeSlug + ".form";
         idArgName = "project_" + routeSlug + "_id";
         idArgValue = point.id.split("_")[1];
       } else {

@@ -19,12 +19,11 @@ Form = FORMS_BY_MODEL[ResponseDataProduct]
 @project_data_products_bp.route('', methods=['GET'])
 @login_required
 def get(project_id: str):
-    """View and add to data products associated with a response."""
+    """Return a page for managing data products associated with a response."""
     project = db.get_or_404(Survey, project_id)
     response_data_product = ResponseDataProduct(response_id=project.response_id)
 
     form = Form(obj=response_data_product)
-    # breakpoint()
     return render_template(
         'project/data_products.html',
         form=form,
@@ -38,6 +37,7 @@ def get(project_id: str):
 @project_data_products_bp.route('', methods=['POST'])
 @login_required
 def post(project_id: str):
+    """Add a new data product to the project's collection."""
     limit_response_editors()
     # FIXME: We don't need this query once we get rid of the "response" concept
     project = db.get_or_404(Survey, project_id)
@@ -60,16 +60,17 @@ def post(project_id: str):
     )
 
 
-@project_data_products_bp.route('/add', methods=['GET'])
+@project_data_products_bp.route('/form', methods=['GET'])
 @login_required
-def add(project_id: str):
-    """Show a form to input a data product to add to the project's collection."""
+def form(project_id: str):
+    """Return a form to input a data product to add to the project's collection."""
+    # FIXME: Can we get rid of this query? Just use project_id?
     project = db.get_or_404(Survey, project_id)
     project_data_product = ResponseDataProduct(response=project.response)
     form = Form(obj=project_data_product)
 
     return render_template(
         'project/_data_product.html',
-        project_id=project.id,
         form=form,
+        project_id=project_id,
     )
