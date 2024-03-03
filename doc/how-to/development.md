@@ -88,6 +88,8 @@ docker compose logs -f
 In dev this will initialize a PostgreSQL DB that is preserved in the `_db/` directory.
 In NSIDC deployment environments we deploy the db on a separate host using the
 [usaon-benefit-tool-db project](https://github.com/nsidc/usaon-benefit-tool-db).
+
+**The dev credentials are specified in `compose.dev.yml`.**
 :::
 
 Run `./scripts/invoke_in_container.sh db.init`
@@ -156,3 +158,49 @@ for more, but the way they are currently set up should allow for development on
   `@login_required`.
 * If you need to create a new module and blueprint, don't forget to register the
   blueprint in `/__init__.py`
+
+
+#### REST API design
+
+* Use `resources/add` route to serve a form to add a new resource to collection
+  "resources".
+    * This is valuable for using HTMX to help with separation of user interface
+      concerns; e.g. instead of designing a page with multiple forms, design form
+      endpoints and HTMX elements on the page which use those endpoints to display the
+      returned forms in a modal.
+    * That form will `POST` to `resources` to actually request the resource to be
+      created.
+* Simple resources that only display as forms should return a form from the basic `GET`
+  request to a resource endpoint, e.g. `GET resource/1`.
+    * TODO: Instead of `add` as mentioned in the bullet above, perhaps we should
+      standardize the form-serving endpoints as `GET resources/form`, `GET
+      resource/1/form`?
+* Tip: Use separate route functions for separate verbs/methods! Otherwise there can be
+  excessive conditional logic inside route functions.
+
+
+#### Flask route design and naming
+
+Most importantly, **keep it simple**! Constructing route strings can be confusing
+otherwise.
+
+* Use HTTP verbs to name basic endpoint functions (`get`, `post`, `delete`, etc.).
+  Resist the temptation to write descriptive route function names. Instead of
+  `view_project_data_products`, stick with `get`. Then the resultant route identifier
+  might be `project.data_products.get` instead of
+  `project.data_products.view_project_data_products`.
+    * Form-serving routes are an exception; see the "REST API design" section above.
+* Use nested routes. This pushes the responsibility for route registry down the route
+  hierarchy instead of requiring every blueprint to be registered in `__init__.py`.
+
+
+
+### Debugging
+
+#### HTMX routes
+
+When you put a `breakpoint()` in a route that returns a partial to HTMX and try to test
+in the browser, HTMX will swallow the debugger response, treating it like a failure.
+
+You can directly visit the route in question with your browser to bypass this and access
+the Flask debugger!
