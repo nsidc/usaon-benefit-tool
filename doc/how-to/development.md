@@ -199,6 +199,14 @@ otherwise.
   hierarchy instead of requiring every blueprint to be registered in `__init__.py`.
 
 
+#### Flask template design and naming
+
+##### Macros
+
+* Macros live in `templates/macros/`
+* Macros that output HTML should be prefixed with `render_`. The codebase is currently
+  not in compliance with this.
+
 
 ### Debugging
 
