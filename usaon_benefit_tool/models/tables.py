@@ -656,3 +656,11 @@ class SocietalBenefitKeyObjective(BaseModel):
         'SocietalBenefitSubArea',
         back_populates='societal_benefit_key_objectives',
     )
+
+
+ResponseNode = (
+    ResponseObservingSystem
+    | ResponseDataProduct
+    | ResponseApplication
+    | ResponseSocietalBenefitArea
+)

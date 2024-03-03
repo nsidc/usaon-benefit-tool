@@ -1,15 +1,17 @@
 {% from 'bootstrap5/form.html' import render_form %}
 
 <div class="modal-content">
-	<div class="modal-header">
-		<h5 class="modal-title">Add data product</h5>
-		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
-	</div>
+  <div class="modal-header">
+    <h5 class="modal-title">Add data product</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+  </div>
 
-	<div class="modal-body">
-		Something.
-		<form action="{{ url_for("...") }}" method="POST">
-			{{render_form(form, button_map={'submit_button': 'primary'}) }}
-		</form>
-	</div>
+  <div class="modal-body">
+    <form hx-target="unset" hx-post="{{ url_for(
+      "project.data_products.post",
+      project_id=project_id,
+    ) }}">
+      {{render_form(form, button_map={'submit_button': 'primary'}) }}
+    </form>
+  </div>
 </div>

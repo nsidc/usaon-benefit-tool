@@ -1,21 +1,4 @@
 {% macro add_javascript__highcharts(sankey_series, project) -%}
-  <div>
-		<div
-			id="edit-element-modal"
-			class="modal modal-blur fade"
-			style="display: none"
-			aria-hidden="false"
-			tabindex="-1"
-			hx-trigger="modalOpened"
-			hx-target="find .modal-dialog"
-		>
-
-			<div class="modal-dialog modal-xl modal-dialog-centered" role="document">
-				<div class="modal-content"></div>
-			</div>
-		</div>
-  </div>
-
   <script>
 		// TODO: const or var for compatibility?
     const camelToSnakeCase = str => str.replace(/[A-Z]/g, (letter, index) => {
@@ -33,7 +16,7 @@
       let routeTarget, idArgName, idArgValue;
       if (isNode) {
         const routeSlug = camelToSnakeCase(point.type).replace(/^response_/, "");
-        routeTarget = "project." + routeSlug + ".view_project_" + routeSlug;
+        routeTarget = "project." + routeSlug + ".get";
         idArgName = "project_" + routeSlug + "_id";
         idArgValue = point.id.split("_")[1];
       } else {

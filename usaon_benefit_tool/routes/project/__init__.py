@@ -5,7 +5,7 @@ from usaon_benefit_tool import db
 from usaon_benefit_tool.models.tables import Survey
 from usaon_benefit_tool.routes.project.data_product import project_data_product_bp
 from usaon_benefit_tool.routes.project.data_products import project_data_products_bp
-from usaon_benefit_tool.util.full_sankey import sankey
+from usaon_benefit_tool.util.sankey import sankey
 
 project_bp = Blueprint('project', __name__, url_prefix='/project/<string:project_id>')
 project_bp.register_blueprint(project_data_product_bp)

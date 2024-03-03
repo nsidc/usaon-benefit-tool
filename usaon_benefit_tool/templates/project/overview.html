@@ -1,6 +1,7 @@
 {% extends 'project/base.html' %}
 {% from 'bootstrap5/utils.html' import render_icon %}
 {% from 'macros/javascript_highcharts.j2' import display_sankey %}
+{% from 'macros/buttons.j2' import create_button %}
 
 {% block content %}
   {{super()}}
@@ -8,7 +9,50 @@
   <h3>Description</h3>
   <p>{{project.description}}</p>
 
+  <div>
+    <button
+      hx-get="{{ url_for("project.data_products.add", project_id=project.id) }}"
+      hx-target="#edit-element-modal-hx-target"
+      hx-trigger="click"
+      data-bs-toggle="modal"
+      data-bs-target="#edit-element-modal"
+      class="btn btn-success text-nowrap">
+      {{ render_icon("plus-circle-fill") }} New data product
+    </button>
+    {# TODO: etc... #}
+  </div>
 
   {{ display_sankey(sankey_series, project=project)}}
+
+  <div>
+    {# TODO: Better ID; not just for edit. #}
+    {# NOTE: This div has HTMX configuration because it can be used by
+        Highcharts callbacks to open a modal for viewing or editing a Highcharts
+        node/link. Highcharts will call `htmx.trigger("#this-div-id",
+        "modalOpened")` after setting the `hx-get` attribute on this div with
+        the correct URL to fetch the needed form. This is a bit complex, but it
+        helps simplify the UI by promoting separation of concerns (a new endpoint
+        is created to take responsibility to display the form, and HTMX is
+        responsible for fetching and submitting right form). This helps prevent
+        one big Jinja template for a unified diagram editing interface that
+        must display at least 4 different kinds of forms.
+    #}
+    <div
+      id="edit-element-modal"
+      class="modal modal-blur fade"
+      style="display: none"
+      aria-hidden="false"
+      tabindex="-1"
+      hx-trigger="modalOpened"
+      hx-target="#edit-element-modal-hx-target"
+    >
+      <div id="edit-element-modal-hx-target"
+        class="modal-dialog modal-xl modal-dialog-centered"
+        role="document"
+      >
+        <div class="modal-content">Please wait...</div>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}

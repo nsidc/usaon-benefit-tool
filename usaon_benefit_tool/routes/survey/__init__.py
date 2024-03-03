@@ -4,7 +4,7 @@ from flask_login import login_required
 from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import Response, Survey
-from usaon_benefit_tool.util.full_sankey import sankey
+from usaon_benefit_tool.util.sankey import sankey
 
 # TODO: we don't need both of these concepts.
 response_bp = Blueprint('response', __name__, url_prefix='/response')

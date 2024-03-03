@@ -1,7 +1,7 @@
-{% extends 'survey/base.html' %}
+{% extends 'project/base.html' %}
 {% from 'bootstrap5/form.html' import render_form %}
 {% from 'bootstrap5/utils.html' import render_icon %}
-{% from 'macros/buttons.j2' import delete_button, create_button %}
+{% from 'macros/buttons.j2' import delete_button_htmx, create_button %}
 {% from 'macros/javascript_highcharts.j2' import display_sankey %}
 
 {% block content %}
@@ -25,23 +25,24 @@
         {% for data_product in response.data_products %}
           <tr>
             <td>{{data_product.short_name}}
-              {{delete_button(
-                'data_product.delete_response_data_product',
+              {{delete_button_htmx(
+                'project.data_product.delete',
                 'Delete object',
-                survey_id=survey.id,
-                response_data_product_id=data_product.id,
+                project_id=project.id,
+                project_data_product_id=data_product.id,
               )}}
             </td>
             <td>
               {% if not data_product.input_relationships %}
                 None
                 <br />
+              {% else %}
+                <ul>
+                  {% for input_relationship in data_product.input_relationships %}
+                    <li>{{input_relationship.source.short_name}}</li>
+                  {% endfor %}
+                </ul>
               {% endif %}
-              <ul>
-                {% for input_relationship in data_product.input_relationships %}
-                  <li>{{input_relationship.observing_system.short_name}}</li>
-                {% endfor %}
-              </ul>
             </td>
             <td>
               <ul>
@@ -58,10 +59,12 @@
               </ul>
             </td>
             <td>
+              TODO!
+              {#
               {{create_button(
                  'observing_system_data_product.view_response_observing_system_data_product_relationships',
                 'New relationship',
-                 survey_id=survey.id,
+                 project_id=project.id,
                  data_product_id=data_product.id,
               )}}
               {% for input_relationship in data_product.input_relationships %}
@@ -69,22 +72,23 @@
                   {{delete_button(
                     'observing_system_data_product.delete_response_observing_system_data_product_relationship',
                     'Delete relationship',
-                    survey_id=survey.id,
+                    project_id=project.id,
                     response_observing_system_data_product_id=input_relationship.id,
                   )}}
                 </li>
               {% endfor %}
+              #}
             </td>
           </tr>
         {% endfor %}
       </table>
     </div>
 
-    {{ display_sankey(sankey_series) }}
+    {{ display_sankey(sankey_series, project=project) }}
   </div>
 
 
-  {% if not current_user.role_id not in ['admin', 'respondent'] %}
+  {% if current_user.role_id in ['admin', 'respondent'] %}
     <h3>Add data product</h3>
     <form method="POST">
       {{render_form(form, button_map={'submit_button': 'primary'}) }}

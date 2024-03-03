@@ -93,19 +93,20 @@ def create_app():
     from usaon_benefit_tool.routes.project import project_bp
     from usaon_benefit_tool.routes.projects import projects_bp
     from usaon_benefit_tool.routes.root import root_bp
-    from usaon_benefit_tool.routes.survey import response_bp, survey_bp
-    from usaon_benefit_tool.routes.survey.applications import application_bp
-    from usaon_benefit_tool.routes.survey.observing_systems import observing_system_bp
-    from usaon_benefit_tool.routes.survey.relationships.application_societal_benefit_area import (
-        application_societal_benefit_area_bp,
-    )
-    from usaon_benefit_tool.routes.survey.relationships.data_product_application import (
-        data_product_application_bp,
-    )
-    from usaon_benefit_tool.routes.survey.relationships.observing_system_data_product import (
-        observing_system_data_product_bp,
-    )
-    from usaon_benefit_tool.routes.survey.sbas import societal_benefit_area_bp
+
+    # from usaon_benefit_tool.routes.survey import response_bp, survey_bp
+    # from usaon_benefit_tool.routes.survey.applications import application_bp
+    # from usaon_benefit_tool.routes.survey.observing_systems import observing_system_bp
+    # from usaon_benefit_tool.routes.survey.relationships.application_societal_benefit_area import (
+    #     application_societal_benefit_area_bp,
+    # )
+    # from usaon_benefit_tool.routes.survey.relationships.data_product_application import (
+    #     data_product_application_bp,
+    # )
+    # from usaon_benefit_tool.routes.survey.relationships.observing_system_data_product import (
+    #     observing_system_data_product_bp,
+    # )
+    # from usaon_benefit_tool.routes.survey.sbas import societal_benefit_area_bp
     from usaon_benefit_tool.routes.user import user_bp
     from usaon_benefit_tool.routes.users import users_bp
 
@@ -117,18 +118,18 @@ def create_app():
     app.register_blueprint(logout_bp)
     app.register_blueprint(google_bp, url_prefix="/google_oauth")
 
-    app.register_blueprint(survey_bp)  # TODO:Remove
+    # app.register_blueprint(survey_bp)  # TODO:Remove
     app.register_blueprint(projects_bp)
     app.register_blueprint(project_bp)
 
     # Old:
-    app.register_blueprint(response_bp)
-    app.register_blueprint(observing_system_bp)
-    app.register_blueprint(societal_benefit_area_bp)
-    app.register_blueprint(application_bp)
-    app.register_blueprint(observing_system_data_product_bp)
-    app.register_blueprint(data_product_application_bp)
-    app.register_blueprint(application_societal_benefit_area_bp)
+    # app.register_blueprint(response_bp)
+    # app.register_blueprint(observing_system_bp)
+    # app.register_blueprint(societal_benefit_area_bp)
+    # app.register_blueprint(application_bp)
+    # app.register_blueprint(observing_system_data_product_bp)
+    # app.register_blueprint(data_product_application_bp)
+    # app.register_blueprint(application_societal_benefit_area_bp)
 
     # TODO: Consider context processors instead?
     # https://flask.palletsprojects.com/en/2.3.x/templating/#context-processors
