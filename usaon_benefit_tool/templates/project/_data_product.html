@@ -1,4 +1,5 @@
 {% from 'bootstrap5/form.html' import render_form %}
+{% from 'macros/buttons.j2' import delete_button_htmx %}
 
 {# Construct POST or PUT request depending on whether a data product id was passed #}
 {% set edit = project_data_product_id is not undefined %}
@@ -14,6 +15,14 @@
       {{ "Edit" if edit else "Add" }} data product
       {% if edit %}: {{form.short_name.data}}{% endif %}
     </h5>
+    {% if edit %}
+      {{delete_button_htmx(
+        'project.data_product.delete',
+        'Delete',
+        project_id=project_id,
+        project_data_product_id=project_data_product_id,
+      )}}
+    {% endif %}
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
   </div>
 
