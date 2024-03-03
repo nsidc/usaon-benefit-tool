@@ -216,4 +216,5 @@ When you put a `breakpoint()` in a route that returns a partial to HTMX and try 
 in the browser, HTMX will swallow the debugger response, treating it like a failure.
 
 You can directly visit the route in question with your browser to bypass this and access
-the Flask debugger!
+the Flask debugger! However, the HTMX Javascript won't load, so you can't really use
+this to debug forms.
