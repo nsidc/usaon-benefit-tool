@@ -190,7 +190,7 @@ Most importantly, **keep it simple**! Constructing route strings can be confusin
 otherwise.
 
 * Use HTTP verbs to name basic endpoint functions (`get`, `post`, `delete`, etc.).
-  Resist the temptation to write descriptive route function names. Instead of
+  Resist the honorable temptation to write descriptive route function names. Instead of
   `view_project_data_products`, stick with `get`. Then the resultant route identifier
   might be `project.data_products.get` instead of
   `project.data_products.view_project_data_products`.
