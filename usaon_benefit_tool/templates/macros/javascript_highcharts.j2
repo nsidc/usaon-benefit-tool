@@ -1,13 +1,18 @@
 {% macro add_javascript__highcharts(sankey_series, project) -%}
   <script>
-		// TODO: const or var for compatibility?
+    // TODO: const or var for compatibility?
     const camelToSnakeCase = str => str.replace(/[A-Z]/g, (letter, index) => {
       return index == 0 ? letter.toLowerCase() : '_'+ letter.toLowerCase();
     });
-		const pointClickHandler = function(event) {
-			const point = this;
-			const selector = "#edit-element-modal";
-			const el = document.querySelector(selector);
+    const pointClickHandler = function(event) {
+      const point = this;
+      if ([point.id, point.from].includes("{{ constants.DUMMY_NODE_ID }}")) {
+        console.debug("Ignoring click on dummy node/link");
+        return;
+      }
+
+      const selector = "#edit-element-modal";
+      const el = document.querySelector(selector);
 
       // Determine the target URL and set the hx-get parameter // accordingly.
       // We're using vendored Flask-JSGlue to do this from JS.
@@ -31,51 +36,76 @@
           [idArgName]: idArgValue,
         },
       );
-			el.setAttribute("hx-get", targetUrl);
+      el.setAttribute("hx-get", targetUrl);
       // Make HTMX aware of the change we just made
       htmx.process(el);
 
-      // debugger;
-			const modal = new bootstrap.Modal(el, {});
-			modal.show();
-			htmx.trigger(selector, "modalOpened");
-		}
+      const modal = new bootstrap.Modal(el, {});
+      modal.show();
+      htmx.trigger(selector, "modalOpened");
+    }
 
-		Highcharts.setOptions({
-			lang: {
-				contextButtonTitle: 'Print and download options',
-			}
-		});
+    Highcharts.setOptions({
+      lang: {
+        contextButtonTitle: 'Print and download options',
+      }
+    });
 
-		Highcharts.chart('highcharts-container', {
-			chart: {
-				type: 'sankey',
-			},
-			plotOptions: {
-				sankey: {
-					point: {
-						events: {
-							click: pointClickHandler,
-						},
-					},
-				},
-			},
-			title: {
-				text: "{{ project_title }}",
-				style: {fontSize: '20px'},
-			},
-			accessibility: {
-				description: 'Sankey plot for U.S. AON Benefit Tool',
-				point: {
-					valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.',
-				},
-			},
-			series: [{
-				keys: ['from', 'to', 'weight'],
-				data: {{ sankey_series.data | safe }},
-				nodes: {{ sankey_series.nodes | safe }},
-			}],
-		});
+    Highcharts.chart('highcharts-container', {
+      chart: {
+        type: 'sankey',
+      },
+      plotOptions: {
+        sankey: {
+          point: {
+            events: {
+              click: pointClickHandler,
+            },
+          },
+        },
+      },
+      title: {
+        text: "{{ project_title }}",
+        style: {fontSize: '20px'},
+      },
+      accessibility: {
+        description: 'Sankey plot for U.S. AON Benefit Tool',
+        point: {
+          valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.',
+        },
+      },
+      tooltip: {
+        headerFormat: null,
+        nodeFormatter: function() {
+          const point = this;
+          if (point.id === "{{ constants.DUMMY_NODE_ID }}") {
+            // FIXME: This method of hiding a tooltip works for `formatter`, but not `nodeFormatter`.
+            // return false;
+            return point.name
+          }
+          const tooltipName = "<b>" + point.name + "</b>: ";
+          if (point.linksTo[0].from === "{{ constants.DUMMY_NODE_ID }}") {
+            return tooltipName + "Click me to add link(s)!";
+          }
+
+          return tooltipName + point.sum;
+        },
+        pointFormatter: function() {
+          const point = this;
+          if (point.from === "{{ constants.DUMMY_NODE_ID }}") {
+            // FIXME: This method of hiding a tooltip works for `formatter`, but not `pointFormatter`.
+            // return false;
+            return point.fromNode.name;
+          }
+          return "<b>" + point.fromNode.name + "</b> → <b>" + point.toNode.name + "</b>: " + point.weight;
+        },
+      },
+      series: [{
+        keys: ['from', 'to', 'weight'],
+        data: {{ sankey_series.data | safe }},
+        nodes: {{ sankey_series.nodes | safe }},
+      }],
+    });
   </script>
 {% endmacro %}
 

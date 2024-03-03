@@ -13,6 +13,7 @@ from sqlalchemy import inspect as sqla_inspect
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from usaon_benefit_tool.constants import repo
+from usaon_benefit_tool.constants.sankey import DUMMY_NODE_ID
 from usaon_benefit_tool.constants.version import VERSION
 from usaon_benefit_tool.util.db.connect import db_connstr
 from usaon_benefit_tool.util.envvar import envvar_is_true
@@ -140,6 +141,9 @@ def create_app():
         doc_url=repo.DOC_URL,
         discuss_url=repo.DISCUSS_URL,
         current_year=repo.CURRENT_YEAR,
+        constants={
+            "DUMMY_NODE_ID": DUMMY_NODE_ID,
+        },
     )
 
     md = Markdown(extensions=['fenced_code'])
