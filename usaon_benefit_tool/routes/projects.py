@@ -29,9 +29,9 @@ def add_project():
     form = FORMS_BY_MODEL[Survey](request.form, obj=survey)
 
     if not form.validate():
-        # TODO: Return an error code and let HTMX handle it?
-        breakpoint()
-        ...
+        # FIXME: Handle this case! Return an error code and let HTMX handle it?
+        # breakpoint()
+        raise RuntimeError("FIXME")
 
     # Insert to DB
     survey = Survey()
