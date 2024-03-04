@@ -29,9 +29,9 @@ from usaon_benefit_tool.constants.status import STATUSES
 BaseModel: DeclarativeMeta = db.Model
 
 
-# TODO: This below supports linking objects to their relationships with generic names, but we
-# also need to link relationships to objects with generic names (source/target). That's
-# currently implemented in a WET way below.
+# TODO: This below supports linking objects to their relationships with generic names,
+# but we also need to link relationships to objects with generic names (source/target).
+# That's currently implemented in a WET way below.
 class IORelationship(TypedDict):
     input: NotRequired[BaseModel]
     output: NotRequired[BaseModel]

@@ -46,7 +46,7 @@ def get_routes(app):
 
 
 class JSGlue:
-    def __init__(self, app=None, **kwargs):
+    def __init__(self, app=None):
         self.app = app
         if app is not None:
             self.init_app(app)
