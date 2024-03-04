@@ -9,7 +9,7 @@ from flask_login import login_required
 
 from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
-from usaon_benefit_tool.models.tables import Response, Survey
+from usaon_benefit_tool.models.tables import Survey
 
 projects_bp = Blueprint('projects', __name__, url_prefix='/projects')
 
@@ -37,11 +37,7 @@ def add_project():
     survey = Survey()
     form.populate_obj(survey)
 
-    response = Response()
-    survey.response = response
-
     db.session.add(survey)
-    db.session.add(response)
     db.session.commit()
 
     return redirect(url_for('project.view_project', project_id=survey.id))

@@ -3,21 +3,21 @@ from flask_login import login_required
 
 from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
-from usaon_benefit_tool.models.tables import ResponseDataProduct
+from usaon_benefit_tool.models.tables import SurveyDataProduct
 
 project_data_product_bp = Blueprint(
     'data_product',
     __name__,
     url_prefix='/data_product',
 )
-Form = FORMS_BY_MODEL[ResponseDataProduct]
+Form = FORMS_BY_MODEL[SurveyDataProduct]
 
 
 @project_data_product_bp.route('/<int:project_data_product_id>/form', methods=['GET'])
 @login_required
 def form(project_id: int, project_data_product_id: int):
     """View project data product object."""
-    project_data_product = db.get_or_404(ResponseDataProduct, project_data_product_id)
+    project_data_product = db.get_or_404(SurveyDataProduct, project_data_product_id)
     form = Form(obj=project_data_product)
 
     return render_template(
@@ -32,7 +32,7 @@ def form(project_id: int, project_data_product_id: int):
 @login_required
 def put(project_id: int, project_data_product_id: int):
     project_data_product = db.get_or_404(
-        ResponseDataProduct,
+        SurveyDataProduct,
         project_data_product_id,
     )
     form = Form(request.form, obj=project_data_product)
@@ -60,7 +60,7 @@ def put(project_id: int, project_data_product_id: int):
 @login_required
 def delete(project_id: int, project_data_product_id: int):
     """Delete data product project object from project."""
-    project_data_product = db.get_or_404(ResponseDataProduct, project_data_product_id)
+    project_data_product = db.get_or_404(SurveyDataProduct, project_data_product_id)
     db.session.delete(project_data_product)
     db.session.commit()
 

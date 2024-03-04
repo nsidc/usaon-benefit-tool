@@ -66,7 +66,7 @@ class IORelationshipMixin:
         return io
 
 
-class ResponseObjectFieldMixin:
+class SurveyObjectFieldMixin:
     """Provide shared fields between all relationship objects to reduce repetition."""
 
     short_name = Column(String(256), nullable=False)
@@ -121,11 +121,9 @@ class User(BaseModel, UserMixin):
         String,
         nullable=True,
     )
+
     role = relationship('Role')
-    responses = relationship(
-        'Response',
-        back_populates='created_by',
-    )
+    # TODO: Rename "created_surveys"? Add "filled_surveys"?
     surveys = relationship(
         'Survey',
         back_populates='created_by',
@@ -138,12 +136,6 @@ class Survey(BaseModel):
         Integer,
         primary_key=True,
         autoincrement=True,
-    )
-
-    response_id = Column(
-        Integer,
-        ForeignKey('response.id'),
-        nullable=True,
     )
 
     title = Column(
@@ -170,6 +162,11 @@ class Survey(BaseModel):
         nullable=False,
         default=datetime.now,
     )
+    updated_timestamp = Column(
+        DateTime,
+        nullable=False,
+        default=datetime.now,
+    )
 
     description = Column(
         String(512),
@@ -182,78 +179,41 @@ class Survey(BaseModel):
         default=False,
     )
 
-    response = relationship(
-        'Response',
-        back_populates='survey',
-    )
     created_by = relationship(
         'User',
         back_populates='surveys',
     )
     status = relationship('Status')
 
-
-class Response(BaseModel):
-    __tablename__ = 'response'
-    id = Column(
-        Integer,
-        primary_key=True,
-        autoincrement=True,
-    )
-    created_by_id = Column(
-        Integer,
-        ForeignKey('user.id'),
-        default=(lambda: current_user.id),
-        nullable=False,
-    )
-    created_timestamp = Column(
-        DateTime,
-        nullable=False,
-        default=datetime.now,
-    )
-    updated_timestamp = Column(
-        DateTime,
-        nullable=False,
-        default=datetime.now,
-    )
-
-    survey = relationship(
-        'Survey',
-        back_populates='response',
-    )
-    created_by = relationship(
-        'User',
-        back_populates='responses',
-    )
     observing_systems = relationship(
-        'ResponseObservingSystem',
-        back_populates='response',
+        'SurveyObservingSystem',
+        back_populates='survey',
     )
     data_products = relationship(
-        'ResponseDataProduct',
-        back_populates='response',
+        'SurveyDataProduct',
+        back_populates='survey',
     )
     applications = relationship(
-        'ResponseApplication',
-        back_populates='response',
+        'SurveyApplication',
+        back_populates='survey',
     )
     societal_benefit_areas = relationship(
-        'ResponseSocietalBenefitArea',
-        back_populates='response',
+        'SurveySocietalBenefitArea',
+        back_populates='survey',
     )
 
 
-class ResponseObservingSystem(BaseModel, IORelationshipMixin, ResponseObjectFieldMixin):
-    __tablename__ = 'response_observing_system'
-    __table_args__ = (UniqueConstraint('short_name', 'response_id'),)
+class SurveyObservingSystem(BaseModel, IORelationshipMixin, SurveyObjectFieldMixin):
+    __tablename__ = 'survey_observing_system'
+    __table_args__ = (UniqueConstraint('short_name', 'survey_id'),)
     id = Column(
         Integer,
         primary_key=True,
         autoincrement=True,
     )
-    response_id = Column(
+    survey_id = Column(
         Integer,
-        ForeignKey('response.id'),
+        ForeignKey('survey.id'),
         nullable=False,
     )
 
@@ -267,26 +227,26 @@ class ResponseObservingSystem(BaseModel, IORelationshipMixin, ResponseObjectFiel
         'polymorphic_on': type,
     }
 
-    response = relationship(
-        'Response',
+    survey = relationship(
+        'Survey',
         back_populates='observing_systems',
     )
     output_relationships = relationship(
-        'ResponseObservingSystemDataProduct',
+        'SurveyObservingSystemDataProduct',
         back_populates='observing_system',
         cascade="all, delete",
     )
 
 
-class ResponseObservingSystemObservational(BaseModel):
-    __tablename__ = 'response_observing_system_observational'
+class SurveyObservingSystemObservational(BaseModel):
+    __tablename__ = 'survey_observing_system_observational'
     __mapper_args__: Final[dict] = {
         'polymorphic_identity': ObservingSystemType.observational,
     }
 
-    response_observing_system_id = Column(
+    survey_observing_system_id = Column(
         Integer,
-        ForeignKey('response_observing_system.id'),
+        ForeignKey('survey_observing_system.id'),
         primary_key=True,
     )
 
@@ -294,62 +254,62 @@ class ResponseObservingSystemObservational(BaseModel):
     sensor = Column(String(256), nullable=False)
 
 
-class ResponseObservingSystemResearch(BaseModel):
-    __tablename__ = 'response_observing_system_research'
+class SurveyObservingSystemResearch(BaseModel):
+    __tablename__ = 'survey_observing_system_research'
     __mapper_args__: Final[dict] = {
         'polymorphic_identity': ObservingSystemType.research,
     }
 
-    response_observing_system_id = Column(
+    survey_observing_system_id = Column(
         Integer,
-        ForeignKey('response_observing_system.id'),
+        ForeignKey('survey_observing_system.id'),
         primary_key=True,
     )
 
     intermediate_product = Column(String(256), nullable=False)
 
 
-class ResponseDataProduct(BaseModel, IORelationshipMixin, ResponseObjectFieldMixin):
-    __tablename__ = 'response_data_product'
-    __table_args__ = (UniqueConstraint('short_name', 'response_id'),)
+class SurveyDataProduct(BaseModel, IORelationshipMixin, SurveyObjectFieldMixin):
+    __tablename__ = 'survey_data_product'
+    __table_args__ = (UniqueConstraint('short_name', 'survey_id'),)
     id = Column(
         Integer,
         primary_key=True,
         autoincrement=True,
     )
-    response_id = Column(
+    survey_id = Column(
         Integer,
-        ForeignKey('response.id'),
+        ForeignKey('survey.id'),
         nullable=False,
     )
 
-    response = relationship(
-        'Response',
+    survey = relationship(
+        'Survey',
         back_populates='data_products',
     )
     input_relationships = relationship(
-        'ResponseObservingSystemDataProduct',
+        'SurveyObservingSystemDataProduct',
         back_populates='data_product',
         cascade="all, delete",
     )
     output_relationships = relationship(
-        'ResponseDataProductApplication',
+        'SurveyDataProductApplication',
         back_populates='data_product',
         cascade="all, delete",
     )
 
 
-class ResponseApplication(BaseModel, IORelationshipMixin, ResponseObjectFieldMixin):
-    __tablename__ = 'response_application'
-    __table_args__ = (UniqueConstraint('short_name', 'response_id'),)
+class SurveyApplication(BaseModel, IORelationshipMixin, SurveyObjectFieldMixin):
+    __tablename__ = 'survey_application'
+    __table_args__ = (UniqueConstraint('short_name', 'survey_id'),)
     id = Column(
         Integer,
         primary_key=True,
         autoincrement=True,
     )
-    response_id = Column(
+    survey_id = Column(
         Integer,
-        ForeignKey('response.id'),
+        ForeignKey('survey.id'),
         nullable=False,
     )
 
@@ -369,33 +329,33 @@ class ResponseApplication(BaseModel, IORelationshipMixin, ResponseObjectFieldMix
         nullable=False,
     )
 
-    response = relationship(
-        'Response',
+    survey = relationship(
+        'Survey',
         back_populates='applications',
     )
     input_relationships = relationship(
-        'ResponseDataProductApplication',
+        'SurveyDataProductApplication',
         back_populates='application',
         cascade="all, delete",
     )
     output_relationships = relationship(
-        'ResponseApplicationSocietalBenefitArea',
+        'SurveyApplicationSocietalBenefitArea',
         back_populates='application',
         cascade="all, delete",
     )
 
 
-class ResponseSocietalBenefitArea(BaseModel, IORelationshipMixin):
-    __tablename__ = 'response_societal_benefit_area'
-    __table_args__ = (UniqueConstraint('societal_benefit_area_id', 'response_id'),)
+class SurveySocietalBenefitArea(BaseModel, IORelationshipMixin):
+    __tablename__ = 'survey_societal_benefit_area'
+    __table_args__ = (UniqueConstraint('societal_benefit_area_id', 'survey_id'),)
     id = Column(
         Integer,
         primary_key=True,
         autoincrement=True,
     )
-    response_id = Column(
+    survey_id = Column(
         Integer,
-        ForeignKey('response.id'),
+        ForeignKey('survey.id'),
         nullable=False,
     )
 
@@ -405,13 +365,13 @@ class ResponseSocietalBenefitArea(BaseModel, IORelationshipMixin):
         nullable=False,
     )
 
-    response = relationship(
-        'Response',
+    survey = relationship(
+        'Survey',
         back_populates='societal_benefit_areas',
     )
     societal_benefit_area = relationship('SocietalBenefitArea')
     input_relationships = relationship(
-        'ResponseApplicationSocietalBenefitArea',
+        'SurveyApplicationSocietalBenefitArea',
         back_populates='societal_benefit_area',
         cascade="all, delete",
     )
@@ -436,14 +396,14 @@ class Role(BaseModel):
     )
 
 
-class ResponseObservingSystemDataProduct(BaseModel):
-    __tablename__ = 'response_observing_system_data_product'
+class SurveyObservingSystemDataProduct(BaseModel):
+    __tablename__ = 'survey_observing_system_data_product'
     __table_args__ = (
-        UniqueConstraint('response_observing_system_id', 'response_data_product_id'),
+        UniqueConstraint('survey_observing_system_id', 'survey_data_product_id'),
         Index(
             f'idx_{__tablename__}',
-            'response_observing_system_id',
-            'response_data_product_id',
+            'survey_observing_system_id',
+            'survey_data_product_id',
             unique=True,
         ),
     )
@@ -452,14 +412,14 @@ class ResponseObservingSystemDataProduct(BaseModel):
         autoincrement=True,
         primary_key=True,
     )
-    response_observing_system_id = Column(
+    survey_observing_system_id = Column(
         Integer,
-        ForeignKey('response_observing_system.id'),
+        ForeignKey('survey_observing_system.id'),
         index=True,
     )
-    response_data_product_id = Column(
+    survey_data_product_id = Column(
         Integer,
-        ForeignKey('response_data_product.id'),
+        ForeignKey('survey_data_product.id'),
         index=True,
     )
 
@@ -483,25 +443,31 @@ class ResponseObservingSystemDataProduct(BaseModel):
     needed_improvements = Column(String(512), nullable=True)
 
     observing_system = relationship(
-        'ResponseObservingSystem',
+        'SurveyObservingSystem',
         back_populates='output_relationships',
     )
-    source = observing_system
     data_product = relationship(
-        'ResponseDataProduct',
+        'SurveyDataProduct',
         back_populates='input_relationships',
     )
-    target = data_product
+
+    @property
+    def source(self):
+        return self.observing_system
+
+    @property
+    def target(self):
+        return self.data_product
 
 
-class ResponseDataProductApplication(BaseModel):
-    __tablename__ = 'response_data_product_application'
+class SurveyDataProductApplication(BaseModel):
+    __tablename__ = 'survey_data_product_application'
     __table_args__ = (
-        UniqueConstraint('response_data_product_id', 'response_application_id'),
+        UniqueConstraint('survey_data_product_id', 'survey_application_id'),
         Index(
             f'idx_{__tablename__}',
-            'response_data_product_id',
-            'response_application_id',
+            'survey_data_product_id',
+            'survey_application_id',
             unique=True,
         ),
     )
@@ -511,14 +477,14 @@ class ResponseDataProductApplication(BaseModel):
         primary_key=True,
     )
 
-    response_data_product_id = Column(
+    survey_data_product_id = Column(
         Integer,
-        ForeignKey('response_data_product.id'),
+        ForeignKey('survey_data_product.id'),
         index=True,
     )
-    response_application_id = Column(
+    survey_application_id = Column(
         Integer,
-        ForeignKey('response_application.id'),
+        ForeignKey('survey_application.id'),
         index=True,
     )
 
@@ -542,28 +508,34 @@ class ResponseDataProductApplication(BaseModel):
     needed_improvements = Column(String(512), nullable=True)
 
     data_product = relationship(
-        'ResponseDataProduct',
+        'SurveyDataProduct',
         back_populates='output_relationships',
     )
-    source = data_product
     application = relationship(
-        'ResponseApplication',
+        'SurveyApplication',
         back_populates='input_relationships',
     )
-    target = application
+
+    @property
+    def source(self):
+        return self.data_product
+
+    @property
+    def target(self):
+        return self.application
 
 
-class ResponseApplicationSocietalBenefitArea(BaseModel):
-    __tablename__ = 'response_application_societal_benefit_area'
+class SurveyApplicationSocietalBenefitArea(BaseModel):
+    __tablename__ = 'survey_application_societal_benefit_area'
     __table_args__ = (
         UniqueConstraint(
-            'response_application_id',
-            'response_societal_benefit_area_id',
+            'survey_application_id',
+            'survey_societal_benefit_area_id',
         ),
         Index(
             'idx_{__tablename__}',
-            'response_application_id',
-            'response_societal_benefit_area_id',
+            'survey_application_id',
+            'survey_societal_benefit_area_id',
             unique=True,
         ),
     )
@@ -572,14 +544,14 @@ class ResponseApplicationSocietalBenefitArea(BaseModel):
         autoincrement=True,
         primary_key=True,
     )
-    response_application_id = Column(
+    survey_application_id = Column(
         Integer,
-        ForeignKey('response_application.id'),
+        ForeignKey('survey_application.id'),
         index=True,
     )
-    response_societal_benefit_area_id = Column(
+    survey_societal_benefit_area_id = Column(
         Integer,
-        ForeignKey('response_societal_benefit_area.id'),
+        ForeignKey('survey_societal_benefit_area.id'),
         index=True,
     )
 
@@ -593,15 +565,21 @@ class ResponseApplicationSocietalBenefitArea(BaseModel):
     )
 
     application = relationship(
-        'ResponseApplication',
+        'SurveyApplication',
         back_populates='output_relationships',
     )
-    source = application
     societal_benefit_area = relationship(
-        'ResponseSocietalBenefitArea',
+        'SurveySocietalBenefitArea',
         back_populates='input_relationships',
     )
-    target = societal_benefit_area
+
+    @property
+    def source(self):
+        return self.application
+
+    @property
+    def target(self):
+        return self.societal_benefit_area
 
 
 # Reference tables
@@ -658,9 +636,9 @@ class SocietalBenefitKeyObjective(BaseModel):
     )
 
 
-ResponseNode = (
-    ResponseObservingSystem
-    | ResponseDataProduct
-    | ResponseApplication
-    | ResponseSocietalBenefitArea
+SurveyNode = (
+    SurveyObservingSystem
+    | SurveyDataProduct
+    | SurveyApplication
+    | SurveySocietalBenefitArea
 )

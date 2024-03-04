@@ -13,20 +13,19 @@ from usaon_benefit_tool.constants.rbac import ROLES
 from usaon_benefit_tool.constants.sba import IAOA_SBA_FRAMEWORK
 from usaon_benefit_tool.constants.status import STATUSES
 from usaon_benefit_tool.models.tables import (
-    Response,
-    ResponseApplication,
-    ResponseApplicationSocietalBenefitArea,
-    ResponseDataProduct,
-    ResponseDataProductApplication,
-    ResponseObservingSystem,
-    ResponseObservingSystemDataProduct,
-    ResponseSocietalBenefitArea,
     Role,
     SocietalBenefitArea,
     SocietalBenefitKeyObjective,
     SocietalBenefitSubArea,
     Status,
     Survey,
+    SurveyApplication,
+    SurveyApplicationSocietalBenefitArea,
+    SurveyDataProduct,
+    SurveyDataProductApplication,
+    SurveyObservingSystem,
+    SurveyObservingSystemDataProduct,
+    SurveySocietalBenefitArea,
 )
 from usaon_benefit_tool.util.dev import DEV_USER
 
@@ -157,8 +156,6 @@ def _init_test_project(session: Session) -> None:
             "Created by running the relevant invoke task from the project source code."
         ),
     )
-    response = Response()
-    survey.response = response
 
     common_obj_fields = {
         "organization": "-",
@@ -173,47 +170,47 @@ def _init_test_project(session: Session) -> None:
         "version": "-",
     }
 
-    observing_system = ResponseObservingSystem(
+    observing_system = SurveyObservingSystem(
         **common_obj_fields,
         short_name="Test observing system",
         full_name="This is a test object",
         type=ObservingSystemType.other,
-        response=response,
+        survey=survey,
     )
 
-    data_product = ResponseDataProduct(
+    data_product = SurveyDataProduct(
         **common_obj_fields,
         short_name="Test data product",
         full_name="This is a test object",
-        response=response,
+        survey=survey,
     )
-    observing_system_data_product = ResponseObservingSystemDataProduct(
+    observing_system_data_product = SurveyObservingSystemDataProduct(
         performance_rating=50,
         criticality_rating=10,
         observing_system=observing_system,
         data_product=data_product,
     )
 
-    application = ResponseApplication(
+    application = SurveyApplication(
         **common_obj_fields,
         short_name="Test application",
         full_name="This is a test object",
         performance_criteria="",
         performance_rating=90,
-        response=response,
+        survey=survey,
     )
-    data_product_application = ResponseDataProductApplication(
+    data_product_application = SurveyDataProductApplication(
         performance_rating=75,
         criticality_rating=20,
         data_product=data_product,
         application=application,
     )
 
-    sba = ResponseSocietalBenefitArea(
+    sba = SurveySocietalBenefitArea(
         societal_benefit_area_id=next(iter(IAOA_SBA_FRAMEWORK.keys())),
-        response=response,
+        survey=survey,
     )
-    application_sba = ResponseApplicationSocietalBenefitArea(
+    application_sba = SurveyApplicationSocietalBenefitArea(
         performance_rating=25,
         application=application,
         societal_benefit_area=sba,
@@ -222,7 +219,6 @@ def _init_test_project(session: Session) -> None:
     session.add_all(
         [
             survey,
-            response,
             observing_system,
             data_product,
             observing_system_data_product,

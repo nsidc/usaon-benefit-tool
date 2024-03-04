@@ -12,31 +12,32 @@ project_bp.register_blueprint(project_data_product_bp)
 project_bp.register_blueprint(project_data_products_bp)
 
 
-@project_bp.route('', methods=['GET'])
+@project_bp.route('/user_guide', methods=['GET'])
 @login_required
 def view_project(project_id: str):
-    """Display the project user guide."""
-    project = db.get_or_404(Survey, project_id)
+    """Display the project user guide.
 
+    TODO: Rename to "user_guide".
+    """
+    project = db.get_or_404(Survey, project_id)
     return render_template(
         'project/user_guide.html',
         project=project,
-        response=project.response,
-        sankey_series=sankey(project.response),
     )
 
 
-@project_bp.route('/overview')
+@project_bp.route('')
 @login_required
 def view_project_overview(project_id: str):
-    """Display the project overview."""
-    project = db.get_or_404(Survey, project_id)
-    sankey_series = sankey(project.response) if project.response else []
+    """Display the project overview.
 
+    TODO: Rename to "get".
+    """
+    project = db.get_or_404(Survey, project_id)
     return render_template(
         'project/overview.html',
         project=project,
-        sankey_series=sankey_series,
+        sankey_series=sankey(project),
     )
 
 
@@ -48,10 +49,8 @@ def edit_project(project_id: str):
     TODO: Only permit respondents
     """
     project = db.get_or_404(Survey, project_id)
-    sankey_series = sankey(project.response) if project.response else []
-
     return render_template(
         'project/edit.html',
         project=project,
-        sankey_series=sankey_series,
+        sankey_series=sankey(project),
     )

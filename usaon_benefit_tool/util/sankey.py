@@ -2,7 +2,7 @@ from itertools import chain
 from typing import NotRequired, TypedDict
 
 from usaon_benefit_tool.constants.sankey import DUMMY_NODE_ID
-from usaon_benefit_tool.models.tables import Response, ResponseNode
+from usaon_benefit_tool.models.tables import Survey, SurveyNode
 
 # NOTE: Can't use class syntax because of hard keyword conflict "from"
 HighchartsSankeySeriesLink = TypedDict(
@@ -35,21 +35,21 @@ class HighchartsSankeySeries(TypedDict):
 
 
 # TODO: Can we do better than `object` here? Mypy doesn't correctly infer `str | int`
-def sankey(response: Response) -> HighchartsSankeySeries:
+def sankey(survey: Survey) -> HighchartsSankeySeries:
     """Provide Sankey data structure, formatted for Highcharts."""
-    series = _sankey(response)
+    series = _sankey(survey)
     return series
 
 
 def sankey_subset(
-    response: Response,
-    include_related_to_type: type[ResponseNode],
+    survey: Survey,
+    include_related_to_type: type[SurveyNode],
 ) -> HighchartsSankeySeries:
     """Provide subset of Sankey data structure.
 
     Include only nodes related to `include_related_to_type`.
     """
-    series = _sankey(response)
+    series = _sankey(survey)
     # FIXME: Using `cls.__name__` could be much better. Replace with an Enum for node
     # type.
     node_ids_matching_object_type = [
@@ -74,13 +74,13 @@ def sankey_subset(
     }
 
 
-def _sankey(response: Response) -> HighchartsSankeySeries:
+def _sankey(survey: Survey) -> HighchartsSankeySeries:
     """Extract Sankey-relevant data from Response and format for Highcharts."""
     nodes = [
-        *response.observing_systems,
-        *response.data_products,
-        *response.applications,
-        *response.societal_benefit_areas,
+        *survey.observing_systems,
+        *survey.data_products,
+        *survey.applications,
+        *survey.societal_benefit_areas,
     ]
     nodes_simplified: list[HighchartsSankeySeriesNode] = [
         {
@@ -130,7 +130,7 @@ def _sankey(response: Response) -> HighchartsSankeySeries:
     return series
 
 
-def _node_id(node: ResponseNode) -> str:
+def _node_id(node: SurveyNode) -> str:
     """Generate a unique node id.
 
     The IDs of the node elements need to be made unique by adding the "type" (class

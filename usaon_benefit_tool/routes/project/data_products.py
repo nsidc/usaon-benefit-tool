@@ -3,7 +3,7 @@ from flask_login import login_required
 
 from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
-from usaon_benefit_tool.models.tables import ResponseDataProduct, Survey
+from usaon_benefit_tool.models.tables import Survey, SurveyDataProduct
 from usaon_benefit_tool.util.authorization import limit_response_editors
 from usaon_benefit_tool.util.sankey import sankey_subset
 
@@ -12,25 +12,23 @@ project_data_products_bp = Blueprint(
     __name__,
     url_prefix='/data_products',
 )
-Form = FORMS_BY_MODEL[ResponseDataProduct]
+Form = FORMS_BY_MODEL[SurveyDataProduct]
 
 
-# FIXME: Rename "response" things
 @project_data_products_bp.route('', methods=['GET'])
 @login_required
 def get(project_id: str):
-    """Return a page for managing data products associated with a response."""
+    """Return a page for managing data products associated with a project."""
     project = db.get_or_404(Survey, project_id)
-    response_data_product = ResponseDataProduct(response_id=project.response_id)
+    project_data_product = SurveyDataProduct(survey_id=project.id)
 
-    form = Form(obj=response_data_product)
+    form = Form(obj=project_data_product)
     return render_template(
         'project/data_products.html',
         form=form,
         project=project,
-        response=project.response,
-        data_products=project.response.data_products,
-        sankey_series=sankey_subset(project.response, ResponseDataProduct),
+        data_products=project.data_products,
+        sankey_series=sankey_subset(project, SurveyDataProduct),
     )
 
 
@@ -39,14 +37,12 @@ def get(project_id: str):
 def post(project_id: str):
     """Add a new data product to the project's collection."""
     limit_response_editors()
-    # FIXME: We don't need this query once we get rid of the "response" concept
-    project = db.get_or_404(Survey, project_id)
-    response_data_product = ResponseDataProduct(response_id=project.response_id)
-    form = Form(request.form, obj=response_data_product)
+    project_data_product = SurveyDataProduct(survey_id=project_id)
+    form = Form(request.form, obj=project_data_product)
 
     if form.validate():
-        form.populate_obj(response_data_product)
-        db.session.add(response_data_product)
+        form.populate_obj(project_data_product)
+        db.session.add(project_data_product)
         db.session.commit()
 
     return Response(
@@ -64,9 +60,7 @@ def post(project_id: str):
 @login_required
 def form(project_id: str):
     """Return a form to input a data product to add to the project's collection."""
-    # FIXME: Can we get rid of this query? Just use project_id?
-    project = db.get_or_404(Survey, project_id)
-    project_data_product = ResponseDataProduct(response=project.response)
+    project_data_product = SurveyDataProduct(survey_id=project_id)
     form = Form(obj=project_data_product)
 
     return render_template(

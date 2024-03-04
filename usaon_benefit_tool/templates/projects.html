@@ -71,7 +71,7 @@
         {% if current_user.role_id=='admin' %}
         <td>{{project.created_by.email}}</td>
         <td>{{project.created_timestamp | dateformat}}</td>
-        <td>{{project.response.updated_timestamp | dateformat}}</td>
+        <td>{{project.updated_timestamp | dateformat}}</td>
         {% endif %}
 
         <td>{{project.status.id}}</td>

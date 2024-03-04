@@ -22,7 +22,7 @@
           <th>Criticality Rating</th>
           <th>Edit Relationships</th>
         </tr>
-        {% for data_product in response.data_products %}
+        {% for data_product in project.data_products %}
           <tr>
             <td>{{data_product.short_name}}
               {{delete_button_htmx(

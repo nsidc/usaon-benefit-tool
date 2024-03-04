@@ -4,8 +4,16 @@ from .util import in_container
 
 
 @task(aliases=('recreate',))
-def init(ctx, *, reference_data=True, test_data=False):
-    """Drop and recreate all database tables, loading them by default."""
+def init(ctx, *, reference_data=True):
+    """Drop and recreate all database tables, loading them by default.
+
+    TODO: Enable loading test data. Currently doesn't work with error `Instance
+    is not bound to a Session`. Works fine when directly running load_test_data.
+
+    ```python
+    def init(ctx, *, reference_data=True, test_data=False):
+    ```
+    """
     if not in_container():
         print(
             'Please run from the container context using'
@@ -26,8 +34,8 @@ def init(ctx, *, reference_data=True, test_data=False):
         if reference_data:
             load_reference_data(ctx)
 
-        if test_data:
-            load_test_data(ctx)
+        # if test_data:
+        #     load_test_data(ctx)
 
 
 @task()

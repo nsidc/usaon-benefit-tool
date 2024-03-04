@@ -8,7 +8,7 @@
   <h2>
     {% block title %}Project #{{project.id}}: {{project.title}}{% endblock %}
     {{ help_icon(
-        "Created: "~project.response.created_timestamp | dateformat~"<br/>Last updated: "~project.response.updated_timestamp | dateformat,
+        "Created: " ~ project.created_timestamp | dateformat ~ "<br/>Last updated: " ~ project.updated_timestamp | dateformat,
         html="true",
     )}}
   </h2>
