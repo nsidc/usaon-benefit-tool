@@ -1,5 +1,5 @@
 from itertools import chain
-from typing import TypedDict
+from typing import NotRequired, TypedDict
 
 from usaon_benefit_tool.constants.sankey import DUMMY_NODE_ID
 from usaon_benefit_tool.models.tables import Response, ResponseNode
@@ -11,7 +11,7 @@ HighchartsSankeySeriesLink = TypedDict(
         "from": str,
         "to": str,
         "weight": int,
-        "color": str | None,
+        "color": NotRequired[str],
     },
 )
 
@@ -21,6 +21,7 @@ class HighchartsSankeySeriesNode(TypedDict):
     id: str
     name: str
     type: str
+    color: NotRequired[str]
 
 
 class HighchartsSankeySeries(TypedDict):
@@ -81,7 +82,7 @@ def _sankey(response: Response) -> HighchartsSankeySeries:
         *response.applications,
         *response.societal_benefit_areas,
     ]
-    nodes_simplified = [
+    nodes_simplified: list[HighchartsSankeySeriesNode] = [
         {
             "id": _node_id(n),
             # TODO: Need a more consistent way to access the short name
@@ -111,7 +112,7 @@ def _sankey(response: Response) -> HighchartsSankeySeries:
             ),
         ),
     )
-    links_simplified = [
+    links_simplified: list[HighchartsSankeySeriesLink] = [
         {
             "from": _node_id(link.source),
             "to": _node_id(link.target),
