@@ -74,12 +74,13 @@ class SurveyObjectFieldMixin:
     organization = Column(String(256), nullable=False)
     funder = Column(String(256), nullable=False)
     funding_country = Column(String(256), nullable=False)
+    # do we want another website field?
     website = Column(String(256), nullable=True)
     description = Column(String(512), nullable=True)
-    contact_name = Column(String(256), nullable=False)
-    contact_title = Column(String(256), nullable=True)
-    contact_email = Column(String(256), nullable=False)
+    contact_information = Column(String(256), nullable=False)
+    persistent_identifier = Column(String(256), nullable=True)
     tags = Column(String, nullable=False)
+    real = Column(Boolean, nullable=False)
     version = Column(String(64), nullable=True)
 
 
@@ -440,7 +441,7 @@ class SurveyObservingSystemDataProduct(BaseModel):
         nullable=False,
     )
     rationale = Column(String(512), nullable=True)
-    needed_improvements = Column(String(512), nullable=True)
+    gaps = Column(String(512), nullable=True)
 
     observing_system = relationship(
         'SurveyObservingSystem',
