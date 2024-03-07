@@ -4,10 +4,10 @@ from wtforms import FormField
 from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import (
-    ResponseApplication,
-    ResponseApplicationSocietalBenefitArea,
-    ResponseSocietalBenefitArea,
     Survey,
+    SurveyApplication,
+    SurveyApplicationSocietalBenefitArea,
+    SurveySocietalBenefitArea,
 )
 from usaon_benefit_tool.util.authorization import limit_response_editors
 from usaon_benefit_tool.util.superform import SuperForm
@@ -29,15 +29,15 @@ def _update_super_form(
     """
     if societal_benefit_area_id is None:
         super_form.societal_benefit_area = FormField(
-            FORMS_BY_MODEL[ResponseSocietalBenefitArea],
+            FORMS_BY_MODEL[SurveySocietalBenefitArea],
         )
 
     if application_id is None:
-        super_form.application = FormField(FORMS_BY_MODEL[ResponseApplication])
+        super_form.application = FormField(FORMS_BY_MODEL[SurveyApplication])
 
 
 def _update_relationship(
-    relationship: ResponseSocietalBenefitArea,
+    relationship: SurveySocietalBenefitArea,
     *,
     societal_benefit_area_id: int | None,
     application_id: int | None,
@@ -57,15 +57,15 @@ def _response_societal_benefit_area(
     *,
     societal_benefit_area_id: int | None,
     response_id: int,
-) -> ResponseSocietalBenefitArea:
+) -> SurveySocietalBenefitArea:
     """Return a SBA db object (or 404)."""
     if societal_benefit_area_id is not None:
         response_societal_benefit_area = db.get_or_404(
-            ResponseSocietalBenefitArea,
+            SurveySocietalBenefitArea,
             societal_benefit_area_id,
         )
     else:
-        response_societal_benefit_area = ResponseSocietalBenefitArea(
+        response_societal_benefit_area = SurveySocietalBenefitArea(
             response_id=response_id,
         )
 
@@ -76,12 +76,12 @@ def _response_application(
     *,
     application_id: int | None,
     response_id: int,
-) -> ResponseApplication:
+) -> SurveyApplication:
     """Return an application db object (or 404)."""
     if application_id is not None:
-        response_application = db.get_or_404(ResponseApplication, application_id)
+        response_application = db.get_or_404(SurveyApplication, application_id)
     else:
-        response_application = ResponseApplication(response_id=response_id)
+        response_application = SurveyApplication(response_id=response_id)
 
     return response_application
 
@@ -90,7 +90,7 @@ def _response_application_societal_benefit_area(
     *,
     societal_benefit_area_id: int | None,
     application_id: int | None,
-) -> ResponseApplicationSocietalBenefitArea:
+) -> SurveyApplicationSocietalBenefitArea:
     """Return a relationship db object.
 
     Returned object may be transient or persistent depending on whether a match exists
@@ -99,11 +99,11 @@ def _response_application_societal_benefit_area(
     if societal_benefit_area_id and application_id:
         # If not found, will be `None`
         response_application_societal_benefit_area = (
-            db.session.query(ResponseApplicationSocietalBenefitArea)
+            db.session.query(SurveyApplicationSocietalBenefitArea)
             .filter(
-                ResponseApplicationSocietalBenefitArea.response_societal_benefit_area_id
+                SurveyApplicationSocietalBenefitArea.response_societal_benefit_area_id
                 == societal_benefit_area_id
-                and ResponseApplicationSocietalBenefitArea.response_application_id
+                and SurveyApplicationSocietalBenefitArea.response_application_id
                 == application_id,
             )
             .one_or_none()
@@ -114,7 +114,7 @@ def _response_application_societal_benefit_area(
     if response_application_societal_benefit_area is not None:
         return response_application_societal_benefit_area
     else:
-        return ResponseApplicationSocietalBenefitArea()
+        return SurveyApplicationSocietalBenefitArea()
 
 
 def _request_args(request: Request) -> tuple[int | None, int | None]:
@@ -157,7 +157,7 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
         NOTE: Additional class attributes are added dynamically below.
         """
 
-        relationship = FormField(FORMS_BY_MODEL[ResponseApplicationSocietalBenefitArea])
+        relationship = FormField(FORMS_BY_MODEL[SurveyApplicationSocietalBenefitArea])
 
     response_application_societal_benefit_area = (
         _response_application_societal_benefit_area(
@@ -189,9 +189,9 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
 
     form_obj: dict[
         str,
-        ResponseSocietalBenefitArea
-        | ResponseApplication
-        | ResponseApplicationSocietalBenefitArea,
+        SurveySocietalBenefitArea
+        | SurveyApplication
+        | SurveyApplicationSocietalBenefitArea,
     ] = {
         'societal_benefit_area': response_societal_benefit_area,
         'application': response_application,
@@ -211,7 +211,7 @@ def view_response_application_societal_benefit_area_relationships(survey_id: str
                     db.session.add(obj)
 
                     # Update the relationship object with the ids of any new entities
-                    if type(obj) is not ResponseApplicationSocietalBenefitArea:
+                    if type(obj) is not SurveyApplicationSocietalBenefitArea:
                         # Get the db object's new ID
                         db.session.flush()
                         db.session.refresh(obj)
@@ -251,7 +251,7 @@ def delete_response_application_societal_benefit_area_relationship(
     """Delete application/data product relationship."""
     survey = db.get_or_404(Survey, survey_id)
     response_application_societal_benefit_area = db.get_or_404(
-        ResponseApplicationSocietalBenefitArea,
+        SurveyApplicationSocietalBenefitArea,
         response_application_societal_benefit_area_id,
     )
     db.session.delete(response_application_societal_benefit_area)

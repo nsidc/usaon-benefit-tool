@@ -13,9 +13,11 @@ from sqlalchemy import inspect as sqla_inspect
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from usaon_benefit_tool.constants import repo
+from usaon_benefit_tool.constants.sankey import DUMMY_NODE_ID
 from usaon_benefit_tool.constants.version import VERSION
 from usaon_benefit_tool.util.db.connect import db_connstr
 from usaon_benefit_tool.util.envvar import envvar_is_true
+from usaon_benefit_tool.util.flask_jsglue import JSGlue
 
 __version__: Final[str] = VERSION
 
@@ -58,6 +60,7 @@ def create_app():
     db.init_app(app)
 
     Bootstrap5(app)
+    JSGlue(app)
 
     login_manager = LoginManager()
     login_manager.login_view = "login.login"
@@ -88,42 +91,46 @@ def create_app():
 
     from usaon_benefit_tool.routes.login import google_bp, login_bp
     from usaon_benefit_tool.routes.logout import logout_bp
+    from usaon_benefit_tool.routes.project import project_bp
+    from usaon_benefit_tool.routes.projects import projects_bp
     from usaon_benefit_tool.routes.root import root_bp
-    from usaon_benefit_tool.routes.survey import response_bp, survey_bp
-    from usaon_benefit_tool.routes.survey.applications import application_bp
-    from usaon_benefit_tool.routes.survey.data_products import data_product_bp
-    from usaon_benefit_tool.routes.survey.observing_systems import observing_system_bp
-    from usaon_benefit_tool.routes.survey.relationships.application_societal_benefit_area import (
-        application_societal_benefit_area_bp,
-    )
-    from usaon_benefit_tool.routes.survey.relationships.data_product_application import (
-        data_product_application_bp,
-    )
-    from usaon_benefit_tool.routes.survey.relationships.observing_system_data_product import (
-        observing_system_data_product_bp,
-    )
-    from usaon_benefit_tool.routes.survey.sbas import societal_benefit_area_bp
-    from usaon_benefit_tool.routes.surveys import surveys_bp
+
+    # from usaon_benefit_tool.routes.survey.applications import application_bp
+    # from usaon_benefit_tool.routes.survey.observing_systems import observing_system_bp
+    # from usaon_benefit_tool.routes.survey.relationships.application_societal_benefit_area import (
+    #     application_societal_benefit_area_bp,
+    # )
+    # from usaon_benefit_tool.routes.survey.relationships.data_product_application import (
+    #     data_product_application_bp,
+    # )
+    # from usaon_benefit_tool.routes.survey.relationships.observing_system_data_product import (
+    #     observing_system_data_product_bp,
+    # )
+    # from usaon_benefit_tool.routes.survey.sbas import societal_benefit_area_bp
     from usaon_benefit_tool.routes.user import user_bp
     from usaon_benefit_tool.routes.users import users_bp
 
     app.register_blueprint(root_bp)
-    app.register_blueprint(surveys_bp)
-    app.register_blueprint(survey_bp)
+
     app.register_blueprint(user_bp)
     app.register_blueprint(users_bp)
     app.register_blueprint(login_bp)
     app.register_blueprint(logout_bp)
     app.register_blueprint(google_bp, url_prefix="/google_oauth")
-    app.register_blueprint(response_bp)
-    app.register_blueprint(observing_system_bp)
-    app.register_blueprint(societal_benefit_area_bp)
-    app.register_blueprint(application_bp)
-    app.register_blueprint(data_product_bp)
-    app.register_blueprint(observing_system_data_product_bp)
-    app.register_blueprint(data_product_application_bp)
-    app.register_blueprint(application_societal_benefit_area_bp)
 
+    app.register_blueprint(projects_bp)
+    app.register_blueprint(project_bp)
+
+    # Old:
+    # app.register_blueprint(observing_system_bp)
+    # app.register_blueprint(societal_benefit_area_bp)
+    # app.register_blueprint(application_bp)
+    # app.register_blueprint(observing_system_data_product_bp)
+    # app.register_blueprint(data_product_application_bp)
+    # app.register_blueprint(application_societal_benefit_area_bp)
+
+    # TODO: Consider context processors instead?
+    # https://flask.palletsprojects.com/en/2.3.x/templating/#context-processors
     app.jinja_env.globals.update(
         __version__=__version__,
         sqla_inspect=sqla_inspect,
@@ -131,6 +138,9 @@ def create_app():
         doc_url=repo.DOC_URL,
         discuss_url=repo.DISCUSS_URL,
         current_year=repo.CURRENT_YEAR,
+        constants={
+            "DUMMY_NODE_ID": DUMMY_NODE_ID,
+        },
     )
 
     md = Markdown(extensions=['fenced_code'])

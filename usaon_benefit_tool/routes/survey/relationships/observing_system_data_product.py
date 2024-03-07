@@ -4,10 +4,10 @@ from wtforms import FormField
 from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import (
-    ResponseDataProduct,
-    ResponseObservingSystem,
-    ResponseObservingSystemDataProduct,
     Survey,
+    SurveyDataProduct,
+    SurveyObservingSystem,
+    SurveyObservingSystemDataProduct,
 )
 from usaon_benefit_tool.util.authorization import limit_response_editors
 from usaon_benefit_tool.util.superform import SuperForm
@@ -28,14 +28,14 @@ def _update_super_form(
     TODO: Better function name.
     """
     if observing_system_id is None:
-        super_form.observing_system = FormField(FORMS_BY_MODEL[ResponseObservingSystem])
+        super_form.observing_system = FormField(FORMS_BY_MODEL[SurveyObservingSystem])
 
     if data_product_id is None:
-        super_form.data_product = FormField(FORMS_BY_MODEL[ResponseDataProduct])
+        super_form.data_product = FormField(FORMS_BY_MODEL[SurveyDataProduct])
 
 
 def _update_relationship(
-    relationship: ResponseObservingSystemDataProduct,
+    relationship: SurveyObservingSystemDataProduct,
     *,
     observing_system_id: int | None,
     data_product_id: int | None,
@@ -56,12 +56,12 @@ def _response_data_product(
     *,
     data_product_id: int | None,
     response_id: int,
-) -> ResponseDataProduct:
+) -> SurveyDataProduct:
     """Return a data product db object (or 404)."""
     if data_product_id is not None:
-        response_data_product = db.get_or_404(ResponseDataProduct, data_product_id)
+        response_data_product = db.get_or_404(SurveyDataProduct, data_product_id)
     else:
-        response_data_product = ResponseDataProduct(response_id=response_id)
+        response_data_product = SurveyDataProduct(response_id=response_id)
 
     return response_data_product
 
@@ -70,15 +70,15 @@ def _response_observing_system(
     *,
     observing_system_id: int | None,
     response_id: int,
-) -> ResponseObservingSystem:
+) -> SurveyObservingSystem:
     """Return an observing system db object (or 404)."""
     if observing_system_id is not None:
         response_observing_system = db.get_or_404(
-            ResponseObservingSystem,
+            SurveyObservingSystem,
             observing_system_id,
         )
     else:
-        response_observing_system = ResponseObservingSystem(response_id=response_id)
+        response_observing_system = SurveyObservingSystem(response_id=response_id)
 
     return response_observing_system
 
@@ -87,7 +87,7 @@ def _response_observing_system_data_product(
     *,
     observing_system_id: int | None,
     data_product_id: int | None,
-) -> ResponseObservingSystemDataProduct:
+) -> SurveyObservingSystemDataProduct:
     """Return a relationship db object.
 
     Returned object may be transient or persistent depending on whether a match exists
@@ -96,11 +96,11 @@ def _response_observing_system_data_product(
     if data_product_id and observing_system_id:
         # If not found, will be `None`
         response_observing_system_data_product = (
-            db.session.query(ResponseObservingSystemDataProduct)
+            db.session.query(SurveyObservingSystemDataProduct)
             .filter(
-                ResponseObservingSystemDataProduct.response_data_product_id
+                SurveyObservingSystemDataProduct.response_data_product_id
                 == data_product_id
-                and ResponseObservingSystemDataProduct.response_observing_system_id
+                and SurveyObservingSystemDataProduct.response_observing_system_id
                 == observing_system_id,
             )
             .one_or_none()
@@ -111,7 +111,7 @@ def _response_observing_system_data_product(
     if response_observing_system_data_product is not None:
         return response_observing_system_data_product
     else:
-        return ResponseObservingSystemDataProduct()
+        return SurveyObservingSystemDataProduct()
 
 
 def _request_args(request: Request) -> tuple[int | None, int | None]:
@@ -152,7 +152,7 @@ def view_response_observing_system_data_product_relationships(survey_id: str):
         NOTE: Additional class attributes are added dynamically below.
         """
 
-        relationship = FormField(FORMS_BY_MODEL[ResponseObservingSystemDataProduct])
+        relationship = FormField(FORMS_BY_MODEL[SurveyObservingSystemDataProduct])
 
     response_observing_system_data_product = _response_observing_system_data_product(
         data_product_id=data_product_id,
@@ -182,9 +182,7 @@ def view_response_observing_system_data_product_relationships(survey_id: str):
 
     form_obj: dict[
         str,
-        ResponseObservingSystem
-        | ResponseDataProduct
-        | ResponseObservingSystemDataProduct,
+        SurveyObservingSystem | SurveyDataProduct | SurveyObservingSystemDataProduct,
     ] = {
         'observing_system': response_observing_system,
         'data_product': response_data_product,
@@ -204,7 +202,7 @@ def view_response_observing_system_data_product_relationships(survey_id: str):
                     db.session.add(obj)
 
                     # Update the relationship object with the ids of any new entities
-                    if type(obj) is not ResponseObservingSystemDataProduct:
+                    if type(obj) is not SurveyObservingSystemDataProduct:
                         # Get the db object's new ID
                         db.session.flush()
                         db.session.refresh(obj)
@@ -246,7 +244,7 @@ def delete_response_observing_system_data_product_relationship(
     """Delete data product/observing system relationship."""
     survey = db.get_or_404(Survey, survey_id)
     response_observing_system_data_product = db.get_or_404(
-        ResponseObservingSystemDataProduct,
+        SurveyObservingSystemDataProduct,
         response_observing_system_data_product_id,
     )
     db.session.delete(response_observing_system_data_product)

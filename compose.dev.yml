@@ -38,7 +38,7 @@ services:
       ###############################################################
       # DEV DANGER ZONE: These settings are INSECURE IN PRODUCTION. #
       ###############################################################
-      # Enable the in-browser debugger:
+      # Enable the in-browser debugger and hot reloading:
       FLASK_DEBUG: "True"
       # In dev, we don't need to secure our sessions
       FLASK_SECRET_KEY: "supersecret"

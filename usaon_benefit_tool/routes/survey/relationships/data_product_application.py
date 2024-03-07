@@ -4,10 +4,10 @@ from wtforms import FormField
 from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import (
-    ResponseApplication,
-    ResponseDataProduct,
-    ResponseDataProductApplication,
     Survey,
+    SurveyApplication,
+    SurveyDataProduct,
+    SurveyDataProductApplication,
 )
 from usaon_benefit_tool.util.authorization import limit_response_editors
 from usaon_benefit_tool.util.superform import SuperForm
@@ -28,14 +28,14 @@ def _update_super_form(
     TODO: Better function name.
     """
     if data_product_id is None:
-        super_form.data_product = FormField(FORMS_BY_MODEL[ResponseDataProduct])
+        super_form.data_product = FormField(FORMS_BY_MODEL[SurveyDataProduct])
 
     if application_id is None:
-        super_form.application = FormField(FORMS_BY_MODEL[ResponseApplication])
+        super_form.application = FormField(FORMS_BY_MODEL[SurveyApplication])
 
 
 def _update_relationship(
-    relationship: ResponseDataProductApplication,
+    relationship: SurveyDataProductApplication,
     *,
     data_product_id: int | None,
     application_id: int | None,
@@ -55,12 +55,12 @@ def _response_data_product(
     *,
     data_product_id: int | None,
     response_id: int,
-) -> ResponseDataProduct:
+) -> SurveyDataProduct:
     """Return a data product db object (or 404)."""
     if data_product_id is not None:
-        response_data_product = db.get_or_404(ResponseDataProduct, data_product_id)
+        response_data_product = db.get_or_404(SurveyDataProduct, data_product_id)
     else:
-        response_data_product = ResponseDataProduct(response_id=response_id)
+        response_data_product = SurveyDataProduct(response_id=response_id)
 
     return response_data_product
 
@@ -69,12 +69,12 @@ def _response_application(
     *,
     application_id: int | None,
     response_id: int,
-) -> ResponseApplication:
+) -> SurveyApplication:
     """Return an application db object (or 404)."""
     if application_id is not None:
-        response_application = db.get_or_404(ResponseApplication, application_id)
+        response_application = db.get_or_404(SurveyApplication, application_id)
     else:
-        response_application = ResponseApplication(response_id=response_id)
+        response_application = SurveyApplication(response_id=response_id)
 
     return response_application
 
@@ -83,7 +83,7 @@ def _response_data_product_application(
     *,
     data_product_id: int | None,
     application_id: int | None,
-) -> ResponseDataProductApplication:
+) -> SurveyDataProductApplication:
     """Return a relationship db object.
 
     Returned object may be transient or persistent depending on whether a match exists
@@ -91,11 +91,10 @@ def _response_data_product_application(
     """
     if data_product_id and application_id:
         response_data_product_application = (
-            db.session.query(ResponseDataProductApplication)
+            db.session.query(SurveyDataProductApplication)
             .filter(
-                ResponseDataProductApplication.response_data_product_id
-                == data_product_id
-                and ResponseDataProductApplication.response_application_id
+                SurveyDataProductApplication.response_data_product_id == data_product_id
+                and SurveyDataProductApplication.response_application_id
                 == application_id,
             )
             .one_or_none()
@@ -106,7 +105,7 @@ def _response_data_product_application(
     if response_data_product_application is not None:
         return response_data_product_application
     else:
-        return ResponseDataProductApplication()
+        return SurveyDataProductApplication()
 
 
 def _request_args(request: Request) -> tuple[int | None, int | None]:
@@ -148,7 +147,7 @@ def view_response_data_product_application_relationships(survey_id: str):
         NOTE: Additional class attributes are added dynamically below.
         """
 
-        relationship = FormField(FORMS_BY_MODEL[ResponseDataProductApplication])
+        relationship = FormField(FORMS_BY_MODEL[SurveyDataProductApplication])
 
     response_data_product_application = _response_data_product_application(
         data_product_id=data_product_id,
@@ -178,7 +177,7 @@ def view_response_data_product_application_relationships(survey_id: str):
 
     form_obj: dict[
         str,
-        ResponseDataProduct | ResponseApplication | ResponseDataProductApplication,
+        SurveyDataProduct | SurveyApplication | SurveyDataProductApplication,
     ] = {
         'data_product': response_data_product,
         'application': response_application,
@@ -198,7 +197,7 @@ def view_response_data_product_application_relationships(survey_id: str):
                     db.session.add(obj)
 
                     # Update the relationship object with the ids of any new entities
-                    if type(obj) is not ResponseDataProductApplication:
+                    if type(obj) is not SurveyDataProductApplication:
                         # Get the db object's new ID
                         db.session.flush()
                         db.session.refresh(obj)
@@ -240,7 +239,7 @@ def delete_response_data_product_application_relationships(
     """Delete application/data product relationship."""
     survey = db.get_or_404(Survey, survey_id)
     response_data_product_application = db.get_or_404(
-        ResponseDataProductApplication,
+        SurveyDataProductApplication,
         response_data_product_application_id,
     )
     db.session.delete(response_data_product_application)

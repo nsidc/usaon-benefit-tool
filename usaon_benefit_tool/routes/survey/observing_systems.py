@@ -4,7 +4,7 @@ from flask_login import login_required
 from usaon_benefit_tool import db
 from usaon_benefit_tool._types import ObservingSystemType
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
-from usaon_benefit_tool.models.tables import ResponseObservingSystem, Survey
+from usaon_benefit_tool.models.tables import Survey, SurveyObservingSystem
 from usaon_benefit_tool.util.authorization import limit_response_editors
 
 observing_system_bp = Blueprint(
@@ -18,9 +18,9 @@ observing_system_bp = Blueprint(
 @login_required
 def view_response_observing_systems(survey_id: str):
     """View and add to observing systems associated with a response."""
-    Form = FORMS_BY_MODEL[ResponseObservingSystem]
+    Form = FORMS_BY_MODEL[SurveyObservingSystem]
     survey = db.get_or_404(Survey, survey_id)
-    response_observing_system = ResponseObservingSystem(
+    response_observing_system = SurveyObservingSystem(
         response_id=survey.response_id,
         type=ObservingSystemType.other,
     )
@@ -56,7 +56,7 @@ def delete_response_observing_system(survey_id: int, response_observing_system_i
     """Delete observing system response object from survey."""
     survey = db.get_or_404(Survey, survey_id)
     response_observing_system = db.get_or_404(
-        ResponseObservingSystem,
+        SurveyObservingSystem,
         response_observing_system_id,
     )
     db.session.delete(response_observing_system)

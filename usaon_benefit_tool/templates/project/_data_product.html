@@ -1,0 +1,37 @@
+{% from 'bootstrap5/form.html' import render_form %}
+{% from 'macros/buttons.j2' import delete_button_htmx %}
+
+{# Construct POST or PUT request depending on whether a data product id was passed #}
+{% set edit = project_data_product_id is not undefined %}
+{% set
+  htmxQueryAttr = 'hx-put=' ~ url_for("project.data_product.put", project_id=project_id, project_data_product_id=project_data_product_id)
+  if edit else 'hx-post=' ~ url_for("project.data_products.post", project_id=project_id)
+%}
+{% set endpoint = "project.data_product.edit" if edit else "project.data_products.post" %}
+
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title">
+      {{ "Edit" if edit else "Add" }} data product
+      {% if edit %}: {{form.short_name.data}}{% endif %}
+    </h5>
+    {% if edit %}
+      {{delete_button_htmx(
+        'project.data_product.delete',
+        'Delete',
+        project_id=project_id,
+        project_data_product_id=project_data_product_id,
+      )}}
+    {% endif %}
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+  </div>
+
+  <div class="modal-body">
+    <form
+      hx-target="unset"
+      {{ htmxQueryAttr }}
+    >
+      {{render_form(form, button_map={'submit_button': 'primary'}) }}
+    </form>
+  </div>
+</div>

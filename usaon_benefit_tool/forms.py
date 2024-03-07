@@ -18,14 +18,14 @@ from wtforms_sqlalchemy.orm import (
 
 from usaon_benefit_tool import db
 from usaon_benefit_tool.models.tables import (
-    ResponseApplication,
-    ResponseApplicationSocietalBenefitArea,
-    ResponseDataProduct,
-    ResponseDataProductApplication,
-    ResponseObservingSystem,
-    ResponseObservingSystemDataProduct,
-    ResponseSocietalBenefitArea,
     Survey,
+    SurveyApplication,
+    SurveyApplicationSocietalBenefitArea,
+    SurveyDataProduct,
+    SurveyDataProductApplication,
+    SurveyObservingSystem,
+    SurveyObservingSystemDataProduct,
+    SurveySocietalBenefitArea,
     User,
 )
 
@@ -86,26 +86,26 @@ FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
     Survey: model_form(Survey, only=['title', 'description']),
     # Response entities ("nodes" from Sankey diagram perspective)
     # TODO: Restrict "rating" values to correct range
-    ResponseObservingSystem: model_form(
-        ResponseObservingSystem,
+    SurveyObservingSystem: model_form(
+        SurveyObservingSystem,
         only=common_response_object_fields,
     ),
-    ResponseDataProduct: model_form(
-        ResponseDataProduct,
+    SurveyDataProduct: model_form(
+        SurveyDataProduct,
         only=common_response_object_fields,
     ),
-    ResponseApplication: model_form(
-        ResponseApplication,
+    SurveyApplication: model_form(
+        SurveyApplication,
         only=app_response_object_fields,
     ),
-    ResponseSocietalBenefitArea: model_form(
-        ResponseSocietalBenefitArea,
+    SurveySocietalBenefitArea: model_form(
+        SurveySocietalBenefitArea,
         only=['societal_benefit_area'],
         field_args={'societal_benefit_area': {'get_label': 'id'}},
     ),
     # Response relationships ("edges" from Sankey diagram perspective)
-    ResponseObservingSystemDataProduct: model_form(
-        ResponseObservingSystemDataProduct,
+    SurveyObservingSystemDataProduct: model_form(
+        SurveyObservingSystemDataProduct,
         only=[
             'criticality_rating',
             'performance_rating',
@@ -113,8 +113,8 @@ FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
             'needed_improvements',
         ],
     ),
-    ResponseDataProductApplication: model_form(
-        ResponseDataProductApplication,
+    SurveyDataProductApplication: model_form(
+        SurveyDataProductApplication,
         only=[
             'criticality_rating',
             'performance_rating',
@@ -122,8 +122,8 @@ FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
             'needed_improvements',
         ],
     ),
-    ResponseApplicationSocietalBenefitArea: model_form(
-        ResponseApplicationSocietalBenefitArea,
+    SurveyApplicationSocietalBenefitArea: model_form(
+        SurveyApplicationSocietalBenefitArea,
         only=['performance_rating'],
     ),
 }

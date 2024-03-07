@@ -1,102 +1,188 @@
 from itertools import chain
+from typing import NotRequired, TypedDict
 
-from usaon_benefit_tool.models.tables import (
-    Response,
-    ResponseApplication,
-    ResponseDataProduct,
-    ResponseObservingSystem,
+from usaon_benefit_tool.constants.sankey import DUMMY_NODE_ID
+from usaon_benefit_tool.models.tables import Survey, SurveyNode
+
+# NOTE: Can't use class syntax because of hard keyword conflict "from"
+HighchartsSankeySeriesLink = TypedDict(
+    'HighchartsSankeySeriesLink',
+    {
+        "from": str,
+        "to": str,
+        "weight": int,
+        "color": NotRequired[str],
+    },
 )
 
 
+# TODO: Use dataclasses instead
+class HighchartsSankeySeriesNode(TypedDict):
+    id: str
+    name: str
+    type: str
+    color: NotRequired[str]
+
+
+class HighchartsSankeySeries(TypedDict):
+    """Highcharts Sankey series data.
+
+    Based on https://api.highcharts.com/highcharts/series.sankey.data
+    """
+
+    data: list[HighchartsSankeySeriesLink]
+    nodes: list[HighchartsSankeySeriesNode]
+
+
 # TODO: Can we do better than `object` here? Mypy doesn't correctly infer `str | int`
-def applications_sankey(response: Response) -> list[list[object]]:
-    """Provide Sankey data structure of applications, formatted for Highcharts."""
-    # Convert tuples to lists for passing to Javascript-land:
-    data = [list(e) for e in _applications_sankey(response)]
-    return data
+def sankey(survey: Survey) -> HighchartsSankeySeries:
+    """Provide Sankey data structure, formatted for Highcharts."""
+    series = _sankey(survey)
+    return series
 
 
-def data_products_sankey(response: Response) -> list[list[object]]:
-    """Provide Sankey data structure of applications, formatted for Highcharts."""
-    # Convert tuples to lists for passing to Javascript-land:
-    data = [list(e) for e in _data_products_sankey(response)]
-    return data
+def sankey_subset(
+    survey: Survey,
+    include_related_to_type: type[SurveyNode],
+) -> HighchartsSankeySeries:
+    """Provide subset of Sankey data structure.
+
+    Include only nodes related to `include_related_to_type`.
+    """
+    series = _sankey(survey)
+    # FIXME: Using `cls.__name__` could be much better. Replace with an Enum for node
+    # type.
+    node_ids_matching_object_type = [
+        n["id"]
+        for n in series["nodes"]
+        if n["type"] == include_related_to_type.__name__
+    ]
+
+    # For now, select only the outputs. That was the previous behavior, but do we like
+    # it?
+    filtered_links = [
+        link for link in series["data"] if link["from"] in node_ids_matching_object_type
+    ]
+
+    filtered_node_ids = _node_ids_in_links(filtered_links)
+    filtered_nodes = [
+        node for node in series["nodes"] if node["id"] in filtered_node_ids
+    ]
+    return {
+        "data": filtered_links,
+        "nodes": filtered_nodes,
+    }
 
 
-def societal_benefit_areas_sankey(response: Response) -> list[list[object]]:
-    """Provide Sankey data structure of applications, formatted for Highcharts."""
-    # Convert tuples to lists for passing to Javascript-land:
-    data = [list(e) for e in _societal_benefit_areas_sankey(response)]
-    return data
+def _sankey(survey: Survey) -> HighchartsSankeySeries:
+    """Extract Sankey-relevant data from Response and format for Highcharts."""
+    nodes = [
+        *survey.observing_systems,
+        *survey.data_products,
+        *survey.applications,
+        *survey.societal_benefit_areas,
+    ]
+    nodes_simplified: list[HighchartsSankeySeriesNode] = [
+        {
+            "id": _node_id(n),
+            # TODO: Need a more consistent way to access the short name
+            "name": (
+                n.short_name if hasattr(n, "short_name") else n.societal_benefit_area.id
+            ),
+            "type": n.__class__.__name__,
+        }
+        for n in nodes
+    ]
 
-
-def _societal_benefit_areas_sankey(response: Response):
-    data = list(
-        chain.from_iterable(
-            [
-                _application_societal_benefit_area_sankey_links(application)
-                for application in response.applications
-            ],
+    links = list(
+        set(
+            chain.from_iterable(
+                [
+                    *[
+                        node.output_relationships
+                        for node in nodes
+                        if hasattr(node, "output_relationships")
+                    ],
+                    *[
+                        node.input_relationships
+                        for node in nodes
+                        if hasattr(node, "input_relationships")
+                    ],
+                ],
+            ),
         ),
     )
-    return data
+    links_simplified: list[HighchartsSankeySeriesLink] = [
+        {
+            "from": _node_id(link.source),
+            "to": _node_id(link.target),
+            "weight": link.performance_rating,
+        }
+        for link in links
+    ]
 
-
-def _applications_sankey(response: Response) -> list[tuple[str, str, int]]:
-    """Provide a sankey data structure of applications, formatted for type checker."""
-    data = list(
-        chain.from_iterable(
-            [
-                _data_product_application_sankey_links(data_product)
-                for data_product in response.data_products
-            ],
-        ),
+    series = _handle_unlinked_sankey_nodes(
+        {
+            "data": links_simplified,
+            "nodes": nodes_simplified,
+        },
     )
-    return data
+    return series
 
 
-def _data_products_sankey(response: Response) -> list[tuple[str, str, int]]:
-    """Provide a sankey data structure of applications, formatted for type checker."""
-    data = list(
-        chain.from_iterable(
-            [
-                _observing_system_data_product_sankey_links(observing_system)
-                for observing_system in response.observing_systems
-            ],
-        ),
-    )
-    return data
+def _node_id(node: SurveyNode) -> str:
+    """Generate a unique node id.
+
+    The IDs of the node elements need to be made unique by adding the "type" (class
+    name) as a prefix.
+    """
+    return f"{node.__class__.__name__}_{node.id}"
 
 
-def _data_product_application_sankey_links(
-    data_product: ResponseDataProduct,
-) -> list[tuple[str, str, int]]:
-    data = [
-        (data_product.short_name, r.application.short_name, r.performance_rating)
-        for r in data_product.output_relationships
+def _handle_unlinked_sankey_nodes(
+    series: HighchartsSankeySeries,
+) -> HighchartsSankeySeries:
+    """Add a dummy link for every unlinked node.
+
+    Highcharts doesn't show unlinked nodes, so we need to make a link to a fake node
+    to display them. We set the weight to 10 for usability.
+
+    NOTE: Tooltips are hidden in the javascript.
+
+    See Also
+    --------
+        https://stackoverflow.com/questions/73033817/highcharts-sankey-node-without-links
+    """
+    orphan_nodes = [
+        n for n in series["nodes"] if n["id"] not in _node_ids_in_links(series["data"])
     ]
-    return data
+    if not orphan_nodes:
+        return series
 
-
-def _observing_system_data_product_sankey_links(
-    observing_system: ResponseObservingSystem,
-) -> list[tuple[str, str, int]]:
-    data = [
-        (observing_system.short_name, r.data_product.short_name, r.performance_rating)
-        for r in observing_system.output_relationships
+    dummy_links: list[HighchartsSankeySeriesLink] = [
+        {
+            "from": DUMMY_NODE_ID,
+            "to": n["id"],
+            "weight": 10,
+            "color": "transparent",
+        }
+        for n in orphan_nodes
     ]
-    return data
+    dummy_node: HighchartsSankeySeriesNode = {
+        "id": DUMMY_NODE_ID,
+        "name": "WARNING: Please ensure all nodes have links!",
+        "type": DUMMY_NODE_ID,
+        "color": "transparent",
+    }
+    return {
+        "data": dummy_links + series["data"],
+        "nodes": [dummy_node] + series["nodes"],
+    }
 
 
-def _application_societal_benefit_area_sankey_links(
-    application: ResponseApplication,
-) -> list[tuple[str, str, int]]:
-    data = [
-        (
-            application.short_name,
-            r.societal_benefit_area.societal_benefit_area_id,
-            r.performance_rating,
-        )
-        for r in application.output_relationships
-    ]
-    return data
+def _node_ids_in_links(links: list[HighchartsSankeySeriesLink]) -> set[str]:
+    """Get the unique node IDs present in `series["data"]`."""
+    node_id_tuples = [(link["from"], link["to"]) for link in links]
+    node_ids = set(chain.from_iterable(node_id_tuples))
+
+    return node_ids

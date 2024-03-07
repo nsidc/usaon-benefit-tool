@@ -4,9 +4,9 @@ from flask_login import login_required
 from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import (
-    ResponseSocietalBenefitArea,
     SocietalBenefitArea,
     Survey,
+    SurveySocietalBenefitArea,
 )
 from usaon_benefit_tool.util.authorization import limit_response_editors
 from usaon_benefit_tool.util.sankey import societal_benefit_areas_sankey
@@ -23,10 +23,10 @@ societal_benefit_area_bp = Blueprint(
 def view_response_sbas(survey_id: str):
     """View and add to observing systems associated with a response."""
     sbas = SocietalBenefitArea.query.all()
-    Form = FORMS_BY_MODEL[ResponseSocietalBenefitArea]
+    Form = FORMS_BY_MODEL[SurveySocietalBenefitArea]
     survey = db.get_or_404(Survey, survey_id)
     # show the list of available SBAs
-    response_societal_benefit_area = ResponseSocietalBenefitArea(
+    response_societal_benefit_area = SurveySocietalBenefitArea(
         response_id=survey.response_id,
     )
 
@@ -62,7 +62,7 @@ def delete_response_sba(survey_id: int, response_societal_benefit_area_id: int):
     """Delete societal benefit area response object from survey."""
     survey = db.get_or_404(Survey, survey_id)
     response_sba = db.get_or_404(
-        ResponseSocietalBenefitArea,
+        SurveySocietalBenefitArea,
         response_societal_benefit_area_id,
     )
     db.session.delete(response_sba)

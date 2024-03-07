@@ -8,6 +8,18 @@
   <title>{% block title %}{% endblock %} - US AON Benefit Tool</title>
   {{ bootstrap.load_css() }}
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  {# TODO:
+      Can the version of HTMX we include be managed as a dependency like
+      bootstrap?
+  #}
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+  {{ JSGlue.include() }}
+  {# TODO:
+      The best practice is to load bootstrap right before </body>, but then the
+      features we need (e.g. `element.modal()`) aren't available at the time we try
+      to use them. How to work around this?
+  #}
+  {{ bootstrap.load_js() }}
 </head>
 
 <body>
@@ -73,7 +85,6 @@
   </footer>
 
   {% block scripts %}
-    {{ bootstrap.load_js() }}
     {{ add_javascript__remove() }}
 
     <!-- init tooltips (https://getbootstrap.com/docs/5.0/components/tooltips/) -->
