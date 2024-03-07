@@ -90,10 +90,10 @@ def create_app():
                 del s['google_oauth_token']
 
     # TODO: Extract function register_blueprints
+    from usaon_benefit_tool.routes.assessment import assessment_bp
+    from usaon_benefit_tool.routes.assessments import assessments_bp
     from usaon_benefit_tool.routes.login import google_bp, login_bp
     from usaon_benefit_tool.routes.logout import logout_bp
-    from usaon_benefit_tool.routes.project import project_bp
-    from usaon_benefit_tool.routes.projects import projects_bp
     from usaon_benefit_tool.routes.root import root_bp
     from usaon_benefit_tool.routes.user import user_bp
     from usaon_benefit_tool.routes.users import users_bp
@@ -106,8 +106,8 @@ def create_app():
     app.register_blueprint(logout_bp)
     app.register_blueprint(google_bp, url_prefix="/google_oauth")
 
-    app.register_blueprint(projects_bp)
-    app.register_blueprint(project_bp)
+    app.register_blueprint(assessments_bp)
+    app.register_blueprint(assessment_bp)
 
     # TODO: Consider context processors instead?
     # https://flask.palletsprojects.com/en/2.3.x/templating/#context-processors

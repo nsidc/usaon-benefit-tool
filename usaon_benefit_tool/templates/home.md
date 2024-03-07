@@ -4,8 +4,8 @@
 
 ### Actions
 
-* [View our library of projects]({{ url_for("projects.view_projects") }}).
-* [Edit or update your own project]({{ url_for("projects.view_projects") }}).
+* [View our library of assessments]({{ url_for("assessments.view_assessments") }}).
+* [Edit or update your own assessment]({{ url_for("assessments.view_assessments") }}).
 * If you'd like to create a new evaluation please email: [hazel@iarpccollaborations.org](mailto:hazel@iarpccollaborations.org)
 * Our [data management plan](https://docs.google.com/document/d/13DLX3A__M60xMgFbQqk2NMAjZzahn5FZcvB3fWSVRck/edit?usp=sharing)
   includes information about how any information you add to the tool will be stored and may be shared.
