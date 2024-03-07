@@ -1,4 +1,4 @@
-{% extends 'project/base.html' %}
+{% extends 'assesment/base.html' %}
 {% from 'bootstrap5/form.html' import render_form %}
 {% from 'bootstrap5/utils.html' import render_icon %}
 {% from 'macros/buttons.j2' import delete_button_htmx, create_button %}
@@ -22,14 +22,14 @@
           <th>Criticality Rating</th>
           <th>Edit Relationships</th>
         </tr>
-        {% for data_product in project.data_products %}
+        {% for data_product in assesment.data_products %}
           <tr>
             <td>{{data_product.short_name}}
               {{delete_button_htmx(
-                'project.data_product.delete',
+                'assesment.data_product.delete',
                 'Delete object',
-                project_id=project.id,
-                project_data_product_id=data_product.id,
+                assesment_id=assesment.id,
+                assesment_data_product_id=data_product.id,
               )}}
             </td>
             <td>
@@ -64,7 +64,7 @@
               {{create_button(
                  'observing_system_data_product.view_response_observing_system_data_product_relationships',
                 'New relationship',
-                 project_id=project.id,
+                 assesment_id=assesment.id,
                  data_product_id=data_product.id,
               )}}
               {% for input_relationship in data_product.input_relationships %}
@@ -72,7 +72,7 @@
                   {{delete_button(
                     'observing_system_data_product.delete_response_observing_system_data_product_relationship',
                     'Delete relationship',
-                    project_id=project.id,
+                    assesment_id=assesment.id,
                     response_observing_system_data_product_id=input_relationship.id,
                   )}}
                 </li>
@@ -84,7 +84,7 @@
       </table>
     </div>
 
-    {{ display_sankey(sankey_series, project=project) }}
+    {{ display_sankey(sankey_series, assesment=assesment) }}
   </div>
 
 
