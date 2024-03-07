@@ -3,54 +3,54 @@ from flask_login import login_required
 
 from usaon_benefit_tool import db
 from usaon_benefit_tool.models.tables import Survey
-from usaon_benefit_tool.routes.project.data_product import project_data_product_bp
-from usaon_benefit_tool.routes.project.data_products import project_data_products_bp
+from usaon_benefit_tool.routes.assessment.data_product import project_data_product_bp
+from usaon_benefit_tool.routes.assessment.data_products import project_data_products_bp
 from usaon_benefit_tool.util.sankey import sankey
 
-project_bp = Blueprint('project', __name__, url_prefix='/project/<string:project_id>')
-project_bp.register_blueprint(project_data_product_bp)
-project_bp.register_blueprint(project_data_products_bp)
+assessment_bp = Blueprint('assessment', __name__, url_prefix='/assessment/<string:assessment_id>')
+assessment_bp.register_blueprint(project_data_product_bp)
+assessment_bp.register_blueprint(project_data_products_bp)
 
 
-@project_bp.route('/user_guide', methods=['GET'])
+@assessment_bp.route('/user_guide', methods=['GET'])
 @login_required
-def view_project(project_id: str):
-    """Display the project user guide.
+def view_assessment(assessment_id: str):
+    """Display the assessment user guide.
 
     TODO: Rename to "user_guide".
     """
-    project = db.get_or_404(Survey, project_id)
+    assessment = db.get_or_404(Survey, assessment_id)
     return render_template(
-        'project/user_guide.html',
-        project=project,
+        'assessment/user_guide.html',
+        assessment=assessment,
     )
 
 
-@project_bp.route('')
+@assessment_bp.route('')
 @login_required
-def view_project_overview(project_id: str):
-    """Display the project overview.
+def view_assessment_overview(assessment_id: str):
+    """Display the assessment overview.
 
     TODO: Rename to "get".
     """
-    project = db.get_or_404(Survey, project_id)
+    assessment = db.get_or_404(Survey, assessment_id)
     return render_template(
-        'project/overview.html',
-        project=project,
-        sankey_series=sankey(project),
+        'assessment/overview.html',
+        assessment=assessment,
+        sankey_series=sankey(assessment),
     )
 
 
-@project_bp.route('/edit')
+@assessment_bp.route('/edit')
 @login_required
-def edit_project(project_id: str):
-    """Display an interface for editing a project.
+def edit_assessment(assessment_id: str):
+    """Display an interface for editing a assessment.
 
     TODO: Only permit respondents
     """
-    project = db.get_or_404(Survey, project_id)
+    assessment = db.get_or_404(Survey, assessment_id)
     return render_template(
-        'project/edit.html',
-        project=project,
-        sankey_series=sankey(project),
+        'assessment/edit.html',
+        assessment=assessment,
+        sankey_series=sankey(assessment),
     )

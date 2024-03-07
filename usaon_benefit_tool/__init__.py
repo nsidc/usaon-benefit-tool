@@ -91,8 +91,8 @@ def create_app():
 
     from usaon_benefit_tool.routes.login import google_bp, login_bp
     from usaon_benefit_tool.routes.logout import logout_bp
-    from usaon_benefit_tool.routes.project import project_bp
-    from usaon_benefit_tool.routes.projects import projects_bp
+    from usaon_benefit_tool.routes.assessment import assessment_bp
+    from usaon_benefit_tool.routes.assessments import assessments_bp
     from usaon_benefit_tool.routes.root import root_bp
 
     # from usaon_benefit_tool.routes.survey.applications import application_bp
