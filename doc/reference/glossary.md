@@ -21,10 +21,10 @@ support `analysis` and also to ease data entry for `Respondents`, over time.
 `Respondents` may add new `objects` to the `registry`.
 
 There is a generic `Registered Object` structure that applies to Applications,
-Data Product, and Observing Systems. 
-`Application` - an instantiation of an `object` in a particular `assessment` where that 
-object connects directly to the `societal benefit areas`. This could also be referred to 
-as the focal point for an `assessment`. 
+Data Product, and Observing Systems.
+`Application` - an instantiation of an `object` in a particular `assessment` where that
+object connects directly to the `societal benefit areas`. This could also be referred to
+as the focal point for an `assessment`.
 There are a few additional fields that apply to `end product` `objects`, and that influence
 the way those `objects` are displayed. These `end products` are also referred to as `applications`.
 
@@ -55,7 +55,7 @@ from an external source.
      used by a variety of users but is generally not as accessible to non-experts
   * `Observing system` - A system or human in the environment or at a distance (e.g. remote sensing) that senses
      environmental conditions and records them for use by others, including through oral transmission.
-  
+
 * `Acronym/Short Name`: Acronym or a short name of the object, which would be displayed in the sankey diagram to save space.
    (_Multiplicity: 1..1; Format: Text_)
 * `Full Name`: Full name of the object. In the case where the full name is brief, this may be the same as the `short name`.
@@ -72,10 +72,10 @@ from an external source.
  _NOTE_ In most parts of the diagram, an `object`'s node color is defined by it's performance as an input
  to various outputs. For example, the color of an observing system is calculated as a weighted average
  of its performance score relative to the `intermediate products` it supports. In the instance of an
- `end product` which links directly to `societal benefit areas`, this logic does not apply because 
- `end products` are often serving `societal benefit areas` outside of their main mission or scope. Instead, 
- their node color is displayed based on an `performance rating` that connects to specific 
- `performance criteria`. See details below. 
+ `end product` which links directly to `societal benefit areas`, this logic does not apply because
+ `end products` are often serving `societal benefit areas` outside of their main mission or scope. Instead,
+ their node color is displayed based on an `performance rating` that connects to specific
+ `performance criteria`. See details below.
 
 `End product` objects also include:
 * `Application Performance Criteria`: Text description of what the ideal performance of this data
@@ -92,7 +92,7 @@ from an external source.
 
   _NOTE_ This simply adds a few more fields to manage but not a significant amount of complexity.
   It will improve search and filter features for `analysts`.
-  
+
 * `Organization`: The entity/entities responsible for the operation of the observing system, data product, or application.
    Preferably in the format [Full name] [acronym], e.g. National Snow and Ice Data Center (NSIDC).
    (_Multiplicity: 1..n; Format: Text/List_)
@@ -120,13 +120,13 @@ from an external source.
 
 
 
-### Version 4 fields - Desired state assessments and versioned objects 
-  
+### Version 4 fields - Desired state assessments and versioned objects
+
   _NOTE_ We intend to do `current state` and `desired state` `analyses`. In a `desired state`
   `analysis`, the `real` field allows us to `desired state` (hypothetical) objects. For instance,
   the USGS stream gauge network if funding increased and there were X number of additional gauges.
   This allows us to trace the impact of changes on the entire network. Related to the survey `type`.
-  
+
 * `Real`: A boolean indicating that an object is real (not hypothetical). Maybe could be called `hypothetical`
   instead?
    (_Multiplicity: 1..1; Format: Boolean_)
@@ -136,9 +136,9 @@ from an external source.
 
 ## Rated Instance of an Object
 
-The rating answers two questions - how important is a particular input `object` to it's 
-related output `object`? And how well does it perform in supporting that output? It is 
-reflected in the `analysis` by the thickness and color of the link connecting two `survey objects`. 
+The rating answers two questions - how important is a particular input `object` to it's
+related output `object`? And how well does it perform in supporting that output? It is
+reflected in the `analysis` by the thickness and color of the link connecting two `survey objects`.
 For instance: Imagine a satellite (`observing system`) that is very important to a sea ice
 `data product` but performs poorly because of persistent Arctic cloud cover and high
 latency (`gaps`. Those would be linked by a thick (high `criticality`) red (low
