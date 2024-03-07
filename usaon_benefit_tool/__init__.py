@@ -118,8 +118,8 @@ def create_app():
     app.register_blueprint(logout_bp)
     app.register_blueprint(google_bp, url_prefix="/google_oauth")
 
-    app.register_blueprint(projects_bp)
-    app.register_blueprint(project_bp)
+    app.register_blueprint(assessments_bp)
+    app.register_blueprint(assessment_bp)
 
     # Old:
     # app.register_blueprint(observing_system_bp)

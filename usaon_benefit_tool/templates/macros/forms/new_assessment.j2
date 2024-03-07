@@ -1,7 +1,7 @@
-{% macro new_project_form(form) -%}
-  <h2>New Project</h2>
+{% macro new_assesment_form(form) -%}
+  <h2>New Assesment</h2>
 
-  <form action={{ url_for("projects.add_project") }} method="POST">
+  <form action={{ url_for("assesments.add_assesment") }} method="POST">
     {{form.csrf_token}}
 
     {{form.title.label}} {{form.title(rows=4, cols=100)}}
@@ -24,7 +24,7 @@
       </ul>
     {% endif %}
 
-    <input type="submit" value="Create new project" />
+    <input type="submit" value="Create new assesment" />
 
   </form>
 {%- endmacro -%}

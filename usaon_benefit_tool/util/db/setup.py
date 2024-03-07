@@ -71,7 +71,7 @@ def populate_reference_data() -> None:
 
 def populate_test_data() -> None:
     """Load the operational tables with example data."""
-    _init_test_project(db.session)
+    _init_test_assessment(db.session)
 
     logger.info('Test data loaded.')
 
@@ -149,7 +149,7 @@ def _init_societal_benefit_areas(session: Session) -> None:
     session.commit()
 
 
-def _init_test_project(session: Session) -> None:
+def _init_test_assessment(session: Session) -> None:
     survey = Survey(
         title="[TEST] This is testing data!",
         description=(

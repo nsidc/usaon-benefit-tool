@@ -6,7 +6,7 @@
 {% block content %}
 
   <h2>
-    {% block title %}Project #{{survey.id}}: {{survey.title}}{% endblock %}
+    {% block title %}Assessnent #{{survey.id}}: {{survey.title}}{% endblock %}
     {{ help_icon(
         "Created: "~survey.response.created_timestamp | dateformat~"<br/>Last updated: "~survey.response.updated_timestamp | dateformat,
         html="true",
