@@ -2,7 +2,7 @@ from flask import Blueprint, render_template
 from flask_login import login_required
 
 from usaon_benefit_tool import db
-from usaon_benefit_tool.models.tables import Survey
+from usaon_benefit_tool.models.tables import Assessment
 from usaon_benefit_tool.routes.project.data_product import project_data_product_bp
 from usaon_benefit_tool.routes.project.data_products import project_data_products_bp
 from usaon_benefit_tool.util.sankey import sankey
@@ -19,7 +19,7 @@ def view_project(project_id: str):
 
     TODO: Rename to "user_guide".
     """
-    project = db.get_or_404(Survey, project_id)
+    project = db.get_or_404(Assessment, project_id)
     return render_template(
         'project/user_guide.html',
         project=project,
@@ -33,7 +33,7 @@ def view_project_overview(project_id: str):
 
     TODO: Rename to "get".
     """
-    project = db.get_or_404(Survey, project_id)
+    project = db.get_or_404(Assessment, project_id)
     return render_template(
         'project/overview.html',
         project=project,
@@ -48,7 +48,7 @@ def edit_project(project_id: str):
 
     TODO: Only permit respondents
     """
-    project = db.get_or_404(Survey, project_id)
+    project = db.get_or_404(Assessment, project_id)
     return render_template(
         'project/edit.html',
         project=project,

@@ -3,7 +3,7 @@ from flask_login import login_required
 
 from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
-from usaon_benefit_tool.models.tables import Survey, SurveyDataProduct
+from usaon_benefit_tool.models.tables import Assessment, AssessmentDataProduct
 from usaon_benefit_tool.util.authorization import limit_response_editors
 from usaon_benefit_tool.util.sankey import sankey_subset
 
@@ -12,15 +12,15 @@ project_data_products_bp = Blueprint(
     __name__,
     url_prefix='/data_products',
 )
-Form = FORMS_BY_MODEL[SurveyDataProduct]
+Form = FORMS_BY_MODEL[AssessmentDataProduct]
 
 
 @project_data_products_bp.route('', methods=['GET'])
 @login_required
 def get(project_id: str):
     """Return a page for managing data products associated with a project."""
-    project = db.get_or_404(Survey, project_id)
-    project_data_product = SurveyDataProduct(survey_id=project.id)
+    project = db.get_or_404(Assessment, project_id)
+    project_data_product = AssessmentDataProduct(survey_id=project.id)
 
     form = Form(obj=project_data_product)
     return render_template(
@@ -28,7 +28,7 @@ def get(project_id: str):
         form=form,
         project=project,
         data_products=project.data_products,
-        sankey_series=sankey_subset(project, SurveyDataProduct),
+        sankey_series=sankey_subset(project, AssessmentDataProduct),
     )
 
 
@@ -37,7 +37,7 @@ def get(project_id: str):
 def post(project_id: str):
     """Add a new data product to the project's collection."""
     limit_response_editors()
-    project_data_product = SurveyDataProduct(survey_id=project_id)
+    project_data_product = AssessmentDataProduct(survey_id=project_id)
     form = Form(request.form, obj=project_data_product)
 
     if form.validate():
@@ -60,7 +60,7 @@ def post(project_id: str):
 @login_required
 def form(project_id: str):
     """Return a form to input a data product to add to the project's collection."""
-    project_data_product = SurveyDataProduct(survey_id=project_id)
+    project_data_product = AssessmentDataProduct(survey_id=project_id)
     form = Form(obj=project_data_product)
 
     return render_template(
