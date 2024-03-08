@@ -1,30 +1,22 @@
+## NOTES:
+- we started imagining a model with the different node types unified within one main table
+- relationships are now `links` also in a unified table
+- starting to think more about `node` table as a library of node objects (data products, applications, etc)
+- TODO: how do we handle societal benefit areas, other node types are more uniform. Should we represent each of the 12 major SBAs as nodes in the node library with special fields that link those nodes to sba sub areas (or another way).
+- NOTE: some needed tables were deleted to make this process easier visually in mermaid (should we add them back?)
+- NOTE: Survey became Assessment
 ```mermaid
 erDiagram
 
 %% Dynamic operational data:
-survey {
+assessment {
     uuid id PK
-    int response_id FK
+    %% seq version PK
+
     str title
-    str created_by FK
-    datetime created_timestamp
-    str notes "nullable"
-}
+    str description
 
-user {
-    string id PK "user identifier"
-    string role FK
-    string orcid "nullable"
-    string biography
-    string affiliation "?"
-}
-
-response {
-    uuid id PK
-    seq version PK
-
-    string expert_user_id FK
-    string application_object_id FK
+    string assignee FK
 
     array tags
 
@@ -34,102 +26,45 @@ response {
 }
 
 
-response_observing_system {
-    int response_id FK
-    string id PK
-    string object_id FK
+assessment_node {
+    int id PK "SK"
+    int assessment_id FK
+    int node_id FK
 
+}
+
+link {
+    int source_assessment_node_id PK "FK"
+    int target_assessment_node_id PK "FK"
+
+    %% TODO identify which rating
+    int rating
+}
+
+%% AKA node library
+node {
+    int id PK
+    
     enum type
-    string url
-    string author_name
-    string author_email
-    string funding_country
-    string funding_agency
-    string references_citations
-    string notes "nullable"
+    str short_name
+    str full_name
+    str organization
+    str funder
+    str funding_country
+    str website
+    str description
+    str contact_information
+    str persistent_identifier
+    str tags
+    boolean hypothetical
+    str version
+
 }
 
-%% This name is confusing, but "observational" _is_ a type of observing system
-response_observing_system_observational {
-    int response_id PK
-    string response_observing_system_id FK
-
-    string platform
-    string sensor
-}
-
-response_observing_system_research {
-    int response_id PK
-    string response_observing_system_id FK
-
-
-    string intermediate_product
-}
-
-response_observing_system_data_product {
-    int response_id PK
-    string observing_system_id PK
-    string data_product_id PK
-
-    int observing_system_contribution_to_data_product_rating "0-100"
-    int satisfaction_rating "0-100"
-    string rationale "nullable"
-    string needed_improvements "nullable"
-}
-
-response_data_product {
-    int id PK
-    int response_id FK
-
-    str name
-    int satisfaction_rating "0-100"
-}
-
-response_data_product_application {
-    string response_data_product_id FK
-    string response_application_id PK
-
-    int data_product_contribution_to_application_rating "0-100"
-    int satisfaction_rating "0-100"
-    string rationale "nullable"
-    string needed_improvements "nullable"
-}
-
-response_application {
-    int id PK
-
-    int response_id FK
-    string name
-}
-
-response_application_societal_benefit_area {
-    int response_application_id FK
-    string response_societal_benefit_area_id FK
-
-    int application_contribution_to_sociateal_benefit_area_rating "0-100"
-}
-
-
-response_object {
-    string id PK "name"
-    string type FK
-    TODO TODO "more fields?"
-}
-
-
-analysis {
-    string id PK "name"
-    string analyst_user_id FK
-    string description
-}
-analysis_response {
-    string analysis_id PK
-    string response_id PK
-}
 
 
 %% Static reference data:
-response_object_type {
+node_type {
     string id PK "name"
 }
 societal_benefit_area {
@@ -143,52 +78,21 @@ societal_benefit_key_objective {
     string id PK "name"
     string societal_benefit_subarea_id FK
 }
-role {
-    string id PK "name"
-}
-
 
 
 %% Relationships
-survey }|--|| user: ""
-user }|--|| role: ""
 
-response }|--o{ survey: ""
-response }o--|| user: ""
-response }o--|| response_object: ""
+assessment_node ||--|{ link: "points from"
+assessment_node ||--|{ link: "points to"
 
-response ||--o{ response_observing_system: ""
-response ||--o{ response_data_product: ""
-response ||--o{ response_application: ""
-response ||--o{ response_application_societal_benefit_area: ""
+node ||--|{ assessment_node: ""
+assessment ||--|{ assessment_node: ""
 
-response_observing_system }|--|| response_object: ""
-response_observing_system ||--o| response_observing_system_observational: ""
-response_observing_system ||--o| response_observing_system_research: ""
+node }o--|| node_type: ""
 
-response_data_product }|--|| response_object: ""
 
-response_application }|--|| response_object: ""
 
 
 societal_benefit_area ||--|{ societal_benefit_subarea: ""
 societal_benefit_subarea ||--|{ societal_benefit_key_objective: ""
-
-response_application_societal_benefit_area ||--|| societal_benefit_area: ""
-
-response_object }|--|| response_object_type: ""
-
-analysis }|--|| user: ""
-
-%% Associative relationships (i.e. relationships with data)
-response_observing_system ||--|{ response_observing_system_data_product: ""
-response_data_product ||--|{ response_observing_system_data_product: ""
-
-response_data_product ||--|{ response_data_product_application: ""
-response_application ||--|{ response_data_product_application: ""
-
-response_application ||--|{ response_application_societal_benefit_area: ""
-
-response }|--o{ analysis_response: ""
-analysis }|--o{ analysis_response: ""
 ```
