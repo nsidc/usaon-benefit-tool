@@ -1,12 +1,17 @@
-## NOTES:
-- we started imagining a model with the different node types unified within one main table
-- relationships are now `links` also in a unified table
-- starting to think more about `node` table as a library of node objects (data products, applications, etc)
-- TODO: how do we handle societal benefit areas, other node types are more uniform. Should we represent each of the 12 major SBAs as nodes in the node library with special fields that link those nodes to sba sub areas (or another way).
-- NOTE: some needed tables were deleted to make this process easier visually in mermaid (should we add them back?)
-- NOTE: Survey became Assessment
 ```mermaid
 erDiagram
+
+user {	
+    string id PK "user identifier"	
+    string role FK	
+    string orcid "nullable"	
+    string biography	
+    string affiliation "?"	
+}
+
+role {	
+    string id PK "name"	
+}
 
 %% Dynamic operational data:
 assessment {
@@ -46,21 +51,38 @@ node {
     int id PK
     
     enum type
+
+    str description
+    %% not implemented in the app
+    %% str tags
+    str version
+
+    string created_by FK
+    datetime created
+    datetime updated
+
+}
+
+node_other{
+    int node_id PK "FK"
+    %% str societal_benefit_area_id FK "UK"
+
+    enum type
     str short_name
     str full_name
     str organization
     str funder
     str funding_country
     str website
-    str description
     str contact_information
     str persistent_identifier
-    str tags
     boolean hypothetical
-    str version
-
 }
 
+node_societal_benefit_area {
+    int node_id PK "FK"
+    str societal_benefit_area_id FK "UK"
+}
 
 
 %% Static reference data:
@@ -82,15 +104,23 @@ societal_benefit_key_objective {
 
 %% Relationships
 
+assessment }|--|| user: ""	
+user }|--|| role: ""
+node }|--|| user: ""	
+
+
 assessment_node ||--|{ link: "points from"
 assessment_node ||--|{ link: "points to"
 
 node ||--|{ assessment_node: ""
 assessment ||--|{ assessment_node: ""
 
+node ||--o| node_societal_benefit_area: ""
+node_societal_benefit_area |o--|| societal_benefit_area: ""
+
+
 node }o--|| node_type: ""
-
-
+node ||--|| node_other: ""
 
 
 societal_benefit_area ||--|{ societal_benefit_subarea: ""
