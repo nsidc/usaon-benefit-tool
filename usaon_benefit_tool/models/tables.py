@@ -332,12 +332,3 @@ class SocietalBenefitKeyObjective(BaseModel):
         'SocietalBenefitSubArea',
         back_populates='societal_benefit_key_objectives',
     )
-
-
-# NOTE: not sure if we need this
-AssessmentNode = (
-    AssessmentObservingSystem
-    | AssessmentDataProduct
-    | AssessmentApplication
-    | AssessmentSocietalBenefitArea
-)
