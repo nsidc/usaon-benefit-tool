@@ -13,19 +13,19 @@ from usaon_benefit_tool.constants.rbac import ROLES
 from usaon_benefit_tool.constants.sba import IAOA_SBA_FRAMEWORK
 from usaon_benefit_tool.constants.status import STATUSES
 from usaon_benefit_tool.models.tables import (
+    Assessment,
+    AssessmentApplication,
+    AssessmentApplicationSocietalBenefitArea,
+    AssessmentDataProduct,
+    AssessmentDataProductApplication,
+    AssessmentObservingSystem,
+    AssessmentObservingSystemDataProduct,
+    AssessmentSocietalBenefitArea,
     Role,
     SocietalBenefitArea,
     SocietalBenefitKeyObjective,
     SocietalBenefitSubArea,
     Status,
-    Survey,
-    SurveyApplication,
-    SurveyApplicationSocietalBenefitArea,
-    SurveyDataProduct,
-    SurveyDataProductApplication,
-    SurveyObservingSystem,
-    SurveyObservingSystemDataProduct,
-    SurveySocietalBenefitArea,
 )
 from usaon_benefit_tool.util.dev import DEV_USER
 
@@ -150,7 +150,7 @@ def _init_societal_benefit_areas(session: Session) -> None:
 
 
 def _init_test_assessment(session: Session) -> None:
-    survey = Survey(
+    assessment = Assessment(
         title="[TEST] This is testing data!",
         description=(
             "Created by running the relevant invoke task from the project source code."
@@ -170,47 +170,47 @@ def _init_test_assessment(session: Session) -> None:
         "version": "-",
     }
 
-    observing_system = SurveyObservingSystem(
+    observing_system = AssessmentObservingSystem(
         **common_obj_fields,
         short_name="Test observing system",
         full_name="This is a test object",
         type=ObservingSystemType.other,
-        survey=survey,
+        assessment=assessment,
     )
 
-    data_product = SurveyDataProduct(
+    data_product = AssessmentDataProduct(
         **common_obj_fields,
         short_name="Test data product",
         full_name="This is a test object",
-        survey=survey,
+        assessment=assessment,
     )
-    observing_system_data_product = SurveyObservingSystemDataProduct(
+    observing_system_data_product = AssessmentObservingSystemDataProduct(
         performance_rating=50,
         criticality_rating=10,
         observing_system=observing_system,
         data_product=data_product,
     )
 
-    application = SurveyApplication(
+    application = AssessmentApplication(
         **common_obj_fields,
         short_name="Test application",
         full_name="This is a test object",
         performance_criteria="",
         performance_rating=90,
-        survey=survey,
+        assessment=assessment,
     )
-    data_product_application = SurveyDataProductApplication(
+    data_product_application = AssessmentDataProductApplication(
         performance_rating=75,
         criticality_rating=20,
         data_product=data_product,
         application=application,
     )
 
-    sba = SurveySocietalBenefitArea(
+    sba = AssessmentSocietalBenefitArea(
         societal_benefit_area_id=next(iter(IAOA_SBA_FRAMEWORK.keys())),
-        survey=survey,
+        assessment=assessment,
     )
-    application_sba = SurveyApplicationSocietalBenefitArea(
+    application_sba = AssessmentApplicationSocietalBenefitArea(
         performance_rating=25,
         application=application,
         societal_benefit_area=sba,
@@ -218,7 +218,7 @@ def _init_test_assessment(session: Session) -> None:
 
     session.add_all(
         [
-            survey,
+            assessment,
             observing_system,
             data_product,
             observing_system_data_product,

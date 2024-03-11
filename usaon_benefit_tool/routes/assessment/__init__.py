@@ -2,12 +2,18 @@ from flask import Blueprint, render_template
 from flask_login import login_required
 
 from usaon_benefit_tool import db
-from usaon_benefit_tool.models.tables import Survey
+from usaon_benefit_tool.models.tables import Assessment
 from usaon_benefit_tool.routes.assessment.data_product import assessment_data_product_bp
-from usaon_benefit_tool.routes.assessment.data_products import assessment_data_products_bp
+from usaon_benefit_tool.routes.assessment.data_products import (
+    assessment_data_products_bp,
+)
 from usaon_benefit_tool.util.sankey import sankey
 
-assessment_bp = Blueprint('assessment', __name__, url_prefix='/assessment/<string:assessment_id>')
+assessment_bp = Blueprint(
+    'assessment',
+    __name__,
+    url_prefix='/assessment/<string:assessment_id>',
+)
 assessment_bp.register_blueprint(assessment_data_product_bp)
 assessment_bp.register_blueprint(assessment_data_products_bp)
 
@@ -19,7 +25,7 @@ def view_assessment(assessment_id: str):
 
     TODO: Rename to "user_guide".
     """
-    assessment = db.get_or_404(Survey, assessment_id)
+    assessment = db.get_or_404(Assessment, assessment_id)
     return render_template(
         'assessment/user_guide.html',
         assessment=assessment,
@@ -33,7 +39,7 @@ def view_assessment_overview(assessment_id: str):
 
     TODO: Rename to "get".
     """
-    assessment = db.get_or_404(Survey, assessment_id)
+    assessment = db.get_or_404(Assessment, assessment_id)
     return render_template(
         'assessment/overview.html',
         assessment=assessment,
@@ -48,7 +54,7 @@ def edit_assessment(assessment_id: str):
 
     TODO: Only permit respondents
     """
-    assessment = db.get_or_404(Survey, assessment_id)
+    assessment = db.get_or_404(Assessment, assessment_id)
     return render_template(
         'assessment/edit.html',
         assessment=assessment,
