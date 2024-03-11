@@ -10,18 +10,16 @@ warning:
 """
 from datetime import datetime
 from functools import cache
-from typing import Final, NotRequired
+from typing import NotRequired
 
 from flask_login import UserMixin, current_user
-from sqlalchemy import CheckConstraint
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import relationship
-from sqlalchemy.schema import Column, ForeignKey, Index, UniqueConstraint
-from sqlalchemy.types import Boolean, DateTime, Enum, Integer, SmallInteger, String
+from sqlalchemy.schema import Column, ForeignKey, UniqueConstraint
+from sqlalchemy.types import Boolean, DateTime, Enum, Integer, String
 from typing_extensions import TypedDict
 
 from usaon_benefit_tool import db
-from usaon_benefit_tool._types import ObservingSystemType
 from usaon_benefit_tool.constants.status import STATUSES
 
 # Workaround for missing type stubs for flask-sqlalchemy:
@@ -35,6 +33,7 @@ BaseModel: DeclarativeMeta = db.Model
 class IORelationship(TypedDict):
     input: NotRequired[BaseModel]
     output: NotRequired[BaseModel]
+
 
 # TODO: IOLinkMixin?
 class IORelationshipMixin:
@@ -188,6 +187,7 @@ class Assessment(BaseModel):
         back_populates='assessment',
     )
 
+
 class Node(BaseModel, IORelationshipMixin, AssessmentObjectFieldMixin):
     __tablename__ = 'node'
     id = Column(
@@ -255,10 +255,12 @@ class Status(BaseModel):
     id = Column(
         String,
         primary_key=True,
+    )
     type = Column(
         Enum(),
         nullable=False,
-    )    
+    )
+
 
 class Role(BaseModel):
     __tablename__ = 'role'
@@ -268,7 +270,8 @@ class Role(BaseModel):
         nullable=False,
     )
 
-class Node_Type(BaseModel):
+
+class NodeType(BaseModel):
     __tablename__ = 'role'
     id = Column(
         String,
@@ -338,4 +341,3 @@ AssessmentNode = (
     | AssessmentApplication
     | AssessmentSocietalBenefitArea
 )
-    )
