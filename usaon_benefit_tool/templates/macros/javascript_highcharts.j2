@@ -1,4 +1,4 @@
-{% macro add_javascript__highcharts(sankey_series, assesment) -%}
+{% macro add_javascript__highcharts(sankey_series, assessment) -%}
   <script>
     // TODO: const or var for compatibility?
     const camelToSnakeCase = str => str.replace(/[A-Z]/g, (letter, index) => {
@@ -22,8 +22,8 @@
       if (isNode) {
         // FIXME: Brittle!
         const routeSlug = camelToSnakeCase(point.type).replace(/^survey_/, "");
-        routeTarget = "assesment." + routeSlug + ".form";
-        idArgName = "assesment_" + routeSlug + "_id";
+        routeTarget = "assessment." + routeSlug + ".form";
+        idArgName = "assessment_" + routeSlug + "_id";
         idArgValue = point.id.split("_")[1];
       } else {
         // It's a link, TODO
@@ -34,7 +34,7 @@
       const targetUrl = Flask.url_for(
         routeTarget,
         {
-          assesment_id: {{ assesment.id }},
+          assessment_id: {{ assessment.id }},
           [idArgName]: idArgValue,
         },
       );
@@ -112,7 +112,7 @@
 {% endmacro %}
 
 
-{% macro display_sankey(sankey_series, assesment) -%}
+{% macro display_sankey(sankey_series, assessment) -%}
   {% include 'includes/highcharts.html' %}
   <h4>Diagram</h4>
 
@@ -124,6 +124,6 @@
     <figure class="highcharts-figure">
       <div id="highcharts-container" />
     </figure>
-    {{ add_javascript__highcharts(sankey_series=sankey_series, assesment=assesment) }}
+    {{ add_javascript__highcharts(sankey_series=sankey_series, assessment=assessment) }}
   {% endif %}
 {% endmacro %}

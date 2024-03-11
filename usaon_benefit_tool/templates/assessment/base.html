@@ -6,9 +6,9 @@
 {% block content %}
 
   <h2>
-    {% block title %}Assesment #{{assesment.id}}: {{assesment.title}}{% endblock %}
+    {% block title %}Assessment #{{assessment.id}}: {{assessment.title}}{% endblock %}
     {{ help_icon(
-        "Created: " ~ assesment.created_timestamp | dateformat ~ "<br/>Last updated: " ~ assesment.updated_timestamp | dateformat,
+        "Created: " ~ assessment.created_timestamp | dateformat ~ "<br/>Last updated: " ~ assessment.updated_timestamp | dateformat,
         html="true",
     )}}
   </h2>
@@ -17,51 +17,51 @@
   <ul class="nav nav-pills">
 
     {{ render_nav_pill_item(
-      'assesment.view_assesment',
+      'assessment.view_assessment',
       'User guide',
-      assesment_id=assesment.id,
+      assessment_id=assessment.id,
     ) }}
 
     {{ render_nav_pill_item(
-      'assesment.view_assesment_overview',
+      'assessment.view_assessment_overview',
       'Overview',
-      assesment_id=assesment.id,
+      assessment_id=assessment.id,
     ) }}
 
     {{ render_nav_pill_item(
-      'assesment.edit_assesment',
+      'assessment.edit_assessment',
       'Edit',
-      assesment_id=assesment.id,
+      assessment_id=assessment.id,
     ) }}
 
     {#
     {{ render_nav_pill_item(
       'obs.view_response_observing_systems',
       'Observing systems',
-      assesment_id=assesment.id,
+      assessment_id=assessment.id,
       _icon='pencil',
-      _badge=assesment.response.observing_systems | length | string,
+      _badge=assessment.response.observing_systems | length | string,
     ) }}
     {{ render_nav_pill_item(
       'data_product.view_response_data_products',
       'Data products',
-      assesment_id=assesment.id,
+      assessment_id=assessment.id,
       _icon='pencil',
-      _badge=assesment.response.data_products | length | string,
+      _badge=assessment.response.data_products | length | string,
     ) }}
     {{ render_nav_pill_item(
       'application.view_response_applications',
       'Applications',
-      assesment_id=assesment.id,
+      assessment_id=assessment.id,
       _icon='pencil',
-      _badge=assesment.response.applications | length | string,
+      _badge=assessment.response.applications | length | string,
     ) }}
     {{ render_nav_pill_item(
       'sba.view_response_sbas',
       'Societal Benefit Areas',
-      assesment_id=assesment.id,
+      assessment_id=assessment.id,
       _icon='pencil',
-      _badge=assesment.response.societal_benefit_areas | length | string,
+      _badge=assessment.response.societal_benefit_areas | length | string,
     ) }}
     #}
 
