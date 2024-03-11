@@ -10,75 +10,23 @@ warning:
 """
 from datetime import datetime
 from functools import cache
-from typing import NotRequired
+from typing import NotRequired, Final
 
 from flask_login import UserMixin, current_user
+from sqlalchemy import case
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import relationship
-from sqlalchemy.schema import Column, ForeignKey, UniqueConstraint
+from sqlalchemy.schema import Column, ForeignKey, UniqueConstraint, Index
 from sqlalchemy.types import Boolean, DateTime, Enum, Integer, String
 from typing_extensions import TypedDict
 
 from usaon_benefit_tool import db
+from usaon_benefit_tool._types import NodeType, NodeTypeDiscriminator
 from usaon_benefit_tool.constants.status import STATUSES
 
 # Workaround for missing type stubs for flask-sqlalchemy:
 #     https://github.com/dropbox/sqlalchemy-stubs/issues/76#issuecomment-595839159
 BaseModel: DeclarativeMeta = db.Model
-
-
-# TODO: This below supports linking objects to their relationships with generic names,
-# but we also need to link relationships to objects with generic names (source/target).
-# That's currently implemented in a WET way below.
-class IORelationship(TypedDict):
-    input: NotRequired[BaseModel]
-    output: NotRequired[BaseModel]
-
-
-# TODO: IOLinkMixin?
-class IORelationshipMixin:
-    """Provide a dictionary of input and/or output models related to this entity.
-
-    TODO: Could use a clearer name. We may want to also have a mixin for models
-    representing relationships instead of entities.
-    """
-
-    @classmethod
-    @cache
-    def __io__(cls) -> IORelationship:
-        """Return dictionary of any IO relationships this model has.
-
-        TODO: Fix and remove type-ignore comments.
-        """
-        io: IORelationship = {}
-        if hasattr(cls, 'input_relationships'):
-            io['input'] = cls.input_relationships.mapper.class_  # type: ignore
-        if hasattr(cls, 'output_relationships'):
-            io['output'] = cls.output_relationships.mapper.class_  # type: ignore
-
-        if io == {}:
-            raise RuntimeError(
-                'Please only use IORelationshipMixin on a model with'
-                ' input_relationships or output_relationships',
-            )
-
-        return io
-
-
-# TODO: object -> node
-class AssessmentObjectFieldMixin:
-    """Provide shared fields between all relationship objects to reduce repetition."""
-
-    short_name = Column(String(256), nullable=False)
-    full_name = Column(String(256), nullable=True)
-    organization = Column(String(256), nullable=False)
-    funder = Column(String(256), nullable=False)
-    funding_country = Column(String(256), nullable=False)
-    # do we want another website field?
-    website = Column(String(256), nullable=True)
-    contact_information = Column(String(256), nullable=False)
-    persistent_identifier = Column(String(256), nullable=True)
-    real = Column(Boolean, nullable=False)
 
 
 class User(BaseModel, UserMixin):
@@ -126,6 +74,10 @@ class User(BaseModel, UserMixin):
         'Assessment',
         back_populates='created_by',
     )
+    nodes = relationship(
+        'Node',
+        back_populates='created_by',
+    )
 
 
 class Assessment(BaseModel):
@@ -139,6 +91,17 @@ class Assessment(BaseModel):
     title = Column(
         String(128),
         nullable=False,
+    )
+
+    description = Column(
+        String(512),
+        nullable=True,
+    )
+
+    private = Column(
+        Boolean,
+        nullable=False,
+        default=False,
     )
 
     status_id = Column(
@@ -166,51 +129,57 @@ class Assessment(BaseModel):
         default=datetime.now,
     )
 
-    description = Column(
-        String(512),
-        nullable=True,
-    )
-
-    private = Column(
-        Boolean,
-        nullable=False,
-        default=False,
-    )
-
     created_by = relationship(
         'User',
         back_populates='assessments',
     )
-    status = relationship('Status')
+    status = relationship('AssessmentStatus')
     nodes = relationship(
         'NodeAssessment',
-        back_populates='assessment',
+        secondary="AssessmentNode",
+        back_populates='assessments',
     )
 
 
-class Node(BaseModel, IORelationshipMixin, AssessmentObjectFieldMixin):
+class Node(BaseModel):
+    """The "Node Library"."""
     __tablename__ = 'node'
     id = Column(
         Integer,
         primary_key=True,
         autoincrement=True,
     )
-    assessment_id = Column(
-        Integer,
-        ForeignKey('assessment.id'),
+    type = Column(
+        Enum(NodeType),
         nullable=False,
     )
-    type_id = Column(
-        String,
-        ForeignKey('node_type.id'),
+    __mapper_args__: Final[dict] = {
+        # TODO: We don't have a concept of a "plain" node. Do we need an identity?
+        # 'polymorphic_identity': ...,
+        'polymorphic_on': case(
+            [
+                (
+                    type == NodeType.SOCIETAL_BENEFIT_AREA,
+                    NodeTypeDiscriminator.SOCIETAL_BENEFIT_AREA,
+                ),
+            ],
+            else_=NodeTypeDiscriminator.OTHER,
+        ),
+    }
+
+    title = Column(
+        String(128),
         nullable=False,
     )
     description = Column(
         String(512),
         nullable=True,
     )
-    tags = Column(String, nullable=False)
-    version = Column(String(64), nullable=True)
+
+    # TODO: Implement tags!
+    # tags = Column(String, nullable=False)
+    # TODO: Implement versioning!
+    # version = Column(String(64), nullable=True)
     created_by_id = Column(
         Integer,
         ForeignKey('user.id'),
@@ -227,15 +196,121 @@ class Node(BaseModel, IORelationshipMixin, AssessmentObjectFieldMixin):
         nullable=False,
         default=datetime.now,
     )
-    assessment = relationship(
-        'Assessment',
+
+    created_by = relationship(
+        'User',
         back_populates='nodes',
+    )
+    # TODO: This is probably wrong; we need to go through AssessmentNode
+    assessments = relationship(
+        'Assessment',
+        secondary="AssessmentNode",
+        back_populates='nodes',
+    )
+    input_links = relationship(
+        "Link",
+        back_populates="target_assessment_node",
+    )
+    output_links = relationship(
+        "Link",
+        back_populates="source_assessment_node",
     )
 
 
-class AssessmentNode(BaseModel, IORelationshipMixin, AssessmentObjectFieldMixin):
-    __tablename__ = ''
-    __table_args__ = (UniqueConstraint('short_name', 'assessment_id', 'node_id'),)
+# TODO: Better naming convention for subtype tables. Should "Type" be in the table/class name??
+class NodeSubtypeOther(BaseModel):
+    """Fields that are used for all node types except societal benefit area."""
+    __tablename__ = "node_subtype_other"
+    __mapper_args__: Final[dict] = {
+        'polymorphic_identity': NodeTypeDiscriminator.OTHER,
+    }
+
+    node_id = Column(
+        Integer,
+        ForeignKey('node.id'),
+        primary_key=True,
+        nullable=False,
+    )
+
+    short_name = Column(String(256), nullable=False)
+    organization = Column(String(256), nullable=False)
+    funder = Column(String(256), nullable=False)
+    funding_country = Column(String(256), nullable=False)
+    # TODO: do we need multiple website fields?
+    website = Column(String(256), nullable=True)
+    contact_information = Column(String(256), nullable=False)
+    persistent_identifier = Column(String(256), nullable=True)
+    hypothetical = Column(Boolean, nullable=False)
+
+
+# TODO: Better naming convention for subtype tables. Should "Type" be in the table/class name??
+class NodeSubtypeSocietalBenefitArea(BaseModel):
+    """Fields that are specific to societal benefit area type nodes."""
+    __tablename__ = "node_subtype_societal_benefit_area"
+    __table_args__ = (UniqueConstraint('societal_benefit_area_id'),)
+    __mapper_args__: Final[dict] = {
+        'polymorphic_identity': NodeTypeDiscriminator.SOCIETAL_BENEFIT_AREA,
+    }
+
+    node_id = Column(
+        Integer,
+        ForeignKey('node.id'),
+        primary_key=True,
+        nullable=False,
+    )
+    societal_benefit_area_id = Column(
+        String,
+        ForeignKey('societal_benefit_area.id'),
+        nullable=False,
+    )
+
+    # TODO: Relationship to societal benefit area table? How would we make a similar
+    #       relationship for the other node types?
+
+
+class Link(BaseModel):
+    __tablename__ = 'link'
+    __table_args__ = (
+        UniqueConstraint('source_assessment_node_id', 'target_assessment_node_id'),
+        Index(
+            f'idx_{__tablename__}',
+            'source_assessment_node_id',
+            'target_assessment_node_id',
+            unique=True,  # TODO: Do we need this?
+        ),
+    )
+    id = Column(
+        Integer,
+        autoincrement=True,
+        primary_key=True,
+    )
+    source_assessment_node_id = Column(
+        Integer,
+        ForeignKey('assessment_node.id'),
+        nullable=False,
+    )
+    target_assessment_node_id = Column(
+        Integer,
+        ForeignKey('assessment_node.id'),
+        nullable=False,
+    )
+
+    source_assessment_node = relationship(
+        'AssessmentNode',
+        foreign_keys=[source_assessment_node_id],
+        back_populates='output_links',
+    )
+    target_assessment_node = relationship(
+        'AssessmentNode',
+        foreign_keys=[target_assessment_node_id],
+        back_populates='input_links',
+    )
+
+
+# Association tables
+class AssessmentNode(BaseModel):
+    __tablename__ = 'assessment_node'
+    __table_args__ = (UniqueConstraint('assessment_id', 'node_id'),)
     id = Column(
         Integer,
         primary_key=True,
@@ -246,11 +321,25 @@ class AssessmentNode(BaseModel, IORelationshipMixin, AssessmentObjectFieldMixin)
         ForeignKey('assessment.id'),
         nullable=False,
     )
+    node_id = Column(
+        Integer,
+        ForeignKey('node.id'),
+        nullable=False,
+    )
 
 
-# Association tables
-# TODO: Rename -> AssessmentStatus?
-class Status(BaseModel):
+# Reference tables
+# TODO: Is this "association" or "reference"
+class Role(BaseModel):
+    __tablename__ = 'role'
+    id = Column(
+        String,
+        primary_key=True,
+        nullable=False,
+    )
+
+
+class AssessmentStatus(BaseModel):
     __tablename__ = 'status'
     id = Column(
         String,
@@ -262,25 +351,6 @@ class Status(BaseModel):
     )
 
 
-class Role(BaseModel):
-    __tablename__ = 'role'
-    id = Column(
-        String,
-        primary_key=True,
-        nullable=False,
-    )
-
-
-class NodeType(BaseModel):
-    __tablename__ = 'role'
-    id = Column(
-        String,
-        primary_key=True,
-        nullable=False,
-    )
-
-
-# Reference tables
 class SocietalBenefitArea(BaseModel):
     __tablename__ = 'societal_benefit_area'
     id = Column(
