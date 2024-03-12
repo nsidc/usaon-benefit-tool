@@ -1,16 +1,16 @@
 ```mermaid
 erDiagram
 
-user {	
-    string id PK "user identifier"	
-    string role FK	
-    string orcid "nullable"	
-    string biography	
-    string affiliation "?"	
+user {
+    string id PK "user identifier"
+    string role FK
+    string orcid "nullable"
+    string biography
+    string affiliation "?"
 }
 
-role {	
-    string id PK "name"	
+role {
+    string id PK "name"
 }
 
 %% Dynamic operational data:
@@ -49,7 +49,7 @@ link {
 %% AKA node library
 node {
     int id PK
-    
+
     enum type
 
     str description
@@ -104,9 +104,9 @@ societal_benefit_key_objective {
 
 %% Relationships
 
-assessment }|--|| user: ""	
+assessment }|--|| user: ""
 user }|--|| role: ""
-node }|--|| user: ""	
+node }|--|| user: ""
 
 
 assessment_node ||--|{ link: "points from"
