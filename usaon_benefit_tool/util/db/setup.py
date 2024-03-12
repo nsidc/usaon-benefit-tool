@@ -8,16 +8,21 @@ from sqlalchemy import MetaData
 from sqlalchemy.orm import Session
 
 from usaon_benefit_tool import db
+from usaon_benefit_tool._types import NodeType
 from usaon_benefit_tool.constants.rbac import ROLES
 from usaon_benefit_tool.constants.sba import IAOA_SBA_FRAMEWORK
-from usaon_benefit_tool.constants.status import STATUSES
+from usaon_benefit_tool.constants.status import ASSESSMENT_STATUSES
 from usaon_benefit_tool.models.tables import (
     Assessment,
+    AssessmentNode,
+    AssessmentStatus,
+    Link,
+    NodeSubtypeOther,
+    NodeSubtypeSocietalBenefitArea,
     Role,
     SocietalBenefitArea,
     SocietalBenefitKeyObjective,
     SocietalBenefitSubArea,
-    AssessmentStatus,
 )
 from usaon_benefit_tool.util.dev import DEV_USER
 
@@ -63,10 +68,9 @@ def populate_reference_data() -> None:
 
 def populate_test_data() -> None:
     """Load the operational tables with example data."""
-    # _init_test_assessment(db.session)
-    logger.warning('NO test data loaded.')
+    _init_test_assessment(db.session)
 
-    # logger.info('Test data loaded.')
+    logger.info('Test data loaded.')
 
 
 def _init_statuses(session: Session) -> None:
@@ -74,8 +78,9 @@ def _init_statuses(session: Session) -> None:
         [
             AssessmentStatus(
                 id=status,
+                description=description,
             )
-            for status in STATUSES
+            for status, description in ASSESSMENT_STATUSES.items()
         ],
     )
 
@@ -142,86 +147,105 @@ def _init_societal_benefit_areas(session: Session) -> None:
     session.commit()
 
 
-# def _init_test_assessment(session: Session) -> None:
-#     assessment = Assessment(
-#         title="[TEST] This is testing data!",
-#         description=(
-#             "Created by running the relevant invoke task from the project source code."
-#         ),
-#     )
-# 
-#     common_obj_fields = {
-#         "organization": "-",
-#         "funder": "-",
-#         "funding_country": "-",
-#         "website": "-",
-#         "description": "-",
-#         "contact_name": "-",
-#         "contact_title": "-",
-#         "contact_email": "-",
-#         "tags": "-",
-#         "version": "-",
-#     }
-# 
-#     observing_system = AssessmentObservingSystem(
-#         **common_obj_fields,
-#         short_name="Test observing system",
-#         full_name="This is a test object",
-#         type=ObservingSystemType.other,
-#         assessment=assessment,
-#     )
-# 
-#     data_product = AssessmentDataProduct(
-#         **common_obj_fields,
-#         short_name="Test data product",
-#         full_name="This is a test object",
-#         assessment=assessment,
-#     )
-#     observing_system_data_product = AssessmentObservingSystemDataProduct(
-#         performance_rating=50,
-#         criticality_rating=10,
-#         observing_system=observing_system,
-#         data_product=data_product,
-#     )
-# 
-#     application = AssessmentApplication(
-#         **common_obj_fields,
-#         short_name="Test application",
-#         full_name="This is a test object",
-#         performance_criteria="",
-#         performance_rating=90,
-#         assessment=assessment,
-#     )
-#     data_product_application = AssessmentDataProductApplication(
-#         performance_rating=75,
-#         criticality_rating=20,
-#         data_product=data_product,
-#         application=application,
-#     )
-# 
-#     sba = AssessmentSocietalBenefitArea(
-#         societal_benefit_area_id=next(iter(IAOA_SBA_FRAMEWORK.keys())),
-#         assessment=assessment,
-#     )
-#     application_sba = AssessmentApplicationSocietalBenefitArea(
-#         performance_rating=25,
-#         application=application,
-#         societal_benefit_area=sba,
-#     )
-# 
-#     session.add_all(
-#         [
-#             assessment,
-#             observing_system,
-#             data_product,
-#             observing_system_data_product,
-#             application,
-#             data_product_application,
-#             sba,
-#             application_sba,
-#         ],
-#     )
-#     session.commit()
+def _init_test_assessment(session: Session) -> None:
+    assessment = Assessment(
+        title="[TEST] This is testing data!",
+        description=(
+            "Created by running the relevant invoke task from the project source code."
+        ),
+    )
+
+    common_obj_fields = {
+        "organization": "-",
+        "funder": "-",
+        "funding_country": "-",
+        "website": "-",
+        "description": "This was inserted by an automated script.",
+        "contact_information": "-",
+        "hypothetical": False,
+        # "contact_name": "-",
+        # "contact_title": "-",
+        # "contact_email": "-",
+        # "tags": "-",
+        # "version": "-",
+    }
+
+    observing_system = NodeSubtypeOther(
+        **common_obj_fields,
+        title="This is a test observing system",
+        short_name="Test observing system",
+        type=NodeType.OBSERVING_SYSTEM,
+    )
+    data_product = NodeSubtypeOther(
+        **common_obj_fields,
+        title="This is a test data product",
+        short_name="Test data product",
+        type=NodeType.DATA_PRODUCT,
+    )
+    application = NodeSubtypeOther(
+        **common_obj_fields,
+        title="This is a test application",
+        short_name="Test application",
+        type=NodeType.APPLICATION,
+    )
+    sba = NodeSubtypeSocietalBenefitArea(
+        title="This is a test SBA",
+        short_name="Test SBA",
+        societal_benefit_area_id=next(iter(IAOA_SBA_FRAMEWORK.keys())),
+        type=NodeType.SOCIETAL_BENEFIT_AREA,
+    )
+
+    assessment_observing_system = AssessmentNode(
+        assessment=assessment,
+        node=observing_system,
+    )
+    assessment_data_product = AssessmentNode(
+        assessment=assessment,
+        node=data_product,
+    )
+    os_dp_link = Link(
+        source_assessment_node=assessment_observing_system,
+        target_assessment_node=assessment_data_product,
+        performance_rating=25,
+    )
+
+    assessment_application = AssessmentNode(
+        assessment=assessment,
+        node=application,
+    )
+    dp_app_link = Link(
+        source_assessment_node=assessment_data_product,
+        target_assessment_node=assessment_application,
+        performance_rating=50,
+    )
+
+    assessment_sba = AssessmentNode(
+        assessment=assessment,
+        node=sba,
+    )
+    app_sba_link = Link(
+        source_assessment_node=assessment_application,
+        target_assessment_node=assessment_sba,
+        performance_rating=75,
+    )
+
+    session.add_all(
+        [
+            assessment,
+            observing_system,
+            data_product,
+            application,
+            sba,
+            assessment_observing_system,
+            assessment_data_product,
+            assessment_application,
+            assessment_sba,
+            os_dp_link,
+            dp_app_link,
+            app_sba_link,
+        ],
+    )
+    session.commit()
 
 
 def _init_dev_user(session: Session) -> None:
