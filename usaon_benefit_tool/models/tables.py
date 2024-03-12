@@ -136,7 +136,14 @@ class Assessment(BaseModel):
         'User',
         back_populates='assessments',
     )
-    status = relationship('AssessmentStatus')
+    status = relationship(
+        'AssessmentStatus',
+        back_populates="assessments",
+    )
+    assessment_nodes = relationship(
+        'AssessmentNode',
+        back_populates="assessment",
+    )
     # TODO: Re-enable this convenience relationship which passes through the association
     # table. Disabled to enable defining AssessmentNode table in a consistent way; to
     # make this work it seems you need to use the Table() constructor, but that was
@@ -162,14 +169,15 @@ class Node(BaseModel):
         nullable=False,
     )
     __mapper_args__: Final[dict] = {
+        'polymorphic_identity': 'none',  # TODO: Do we need this?
         'polymorphic_on': case(
             [
                 (
                     type == NodeType.SOCIETAL_BENEFIT_AREA,
-                    NodeTypeDiscriminator.SOCIETAL_BENEFIT_AREA,
+                    NodeTypeDiscriminator.SOCIETAL_BENEFIT_AREA.value,
                 ),
             ],
-            else_=NodeTypeDiscriminator.OTHER,
+            else_=NodeTypeDiscriminator.OTHER.value,
         ),
     }
 
@@ -203,6 +211,10 @@ class Node(BaseModel):
         'User',
         back_populates='nodes',
     )
+    assessment_nodes = relationship(
+        'AssessmentNode',
+        back_populates="node",
+    )
     # TODO: Re-enable this convenience relationship which passes through the association
     # table. Disabled to enable defining AssessmentNode table in a consistent way; to
     # make this work it seems you need to use the Table() constructor, but that was
@@ -219,7 +231,7 @@ class NodeSubtypeOther(Node):
 
     __tablename__ = "node_subtype_other"
     __mapper_args__: Final[dict] = {
-        'polymorphic_identity': NodeTypeDiscriminator.OTHER,
+        'polymorphic_identity': NodeTypeDiscriminator.OTHER.value,
     }
 
     node_id = Column(
@@ -245,7 +257,7 @@ class NodeSubtypeSocietalBenefitArea(Node):
     __tablename__ = "node_subtype_societal_benefit_area"
     __table_args__ = (UniqueConstraint('societal_benefit_area_id'),)
     __mapper_args__: Final[dict] = {
-        'polymorphic_identity': NodeTypeDiscriminator.SOCIETAL_BENEFIT_AREA,
+        'polymorphic_identity': NodeTypeDiscriminator.SOCIETAL_BENEFIT_AREA.value,
     }
 
     node_id = Column(
@@ -384,6 +396,11 @@ class AssessmentStatus(BaseModel):
     description = Column(
         String,
         nullable=False,
+    )
+
+    assessments = relationship(
+        Assessment,
+        back_populates='status',
     )
 
 
