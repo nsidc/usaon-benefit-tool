@@ -2,7 +2,7 @@ from itertools import chain
 from typing import NotRequired, TypedDict
 
 from usaon_benefit_tool.constants.sankey import DUMMY_NODE_ID
-from usaon_benefit_tool.models.tables import Assessment, AssessmentNode
+from usaon_benefit_tool.models.tables import Assessment, AssessmentNode, Node
 
 # NOTE: Can't use class syntax because of hard keyword conflict "from"
 HighchartsSankeySeriesLink = TypedDict(
@@ -76,46 +76,26 @@ def sankey_subset(
 
 def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
     """Extract Sankey-relevant data from Response and format for Highcharts."""
-    nodes = [
-        *assessment.observing_systems,
-        *assessment.data_products,
-        *assessment.applications,
-        *assessment.societal_benefit_areas,
-    ]
+    assessment_nodes: list[AssessmentNode] = assessment.assessment_nodes
     nodes_simplified: list[HighchartsSankeySeriesNode] = [
         {
-            "id": _node_id(n),
-            # TODO: Need a more consistent way to access the short name
-            "name": (
-                n.short_name if hasattr(n, "short_name") else n.societal_benefit_area.id
-            ),
-            "type": n.__class__.__name__,
+            "id": _node_id(an.node),
+            "name": an.node.short_name,
+            "type": an.node.type.value,
         }
-        for n in nodes
+        for an in assessment_nodes
     ]
 
-    links = list(
-        set(
-            chain.from_iterable(
-                [
-                    *[
-                        node.output_relationships
-                        for node in nodes
-                        if hasattr(node, "output_relationships")
-                    ],
-                    *[
-                        node.input_relationships
-                        for node in nodes
-                        if hasattr(node, "input_relationships")
-                    ],
-                ],
-            ),
-        ),
-    )
+    links = list(set(
+        chain.from_iterable([
+            *[an.input_links for an in assessment_nodes],
+            *[an.output_links for an in assessment_nodes],
+        ])
+    ))
     links_simplified: list[HighchartsSankeySeriesLink] = [
         {
-            "from": _node_id(link.source),
-            "to": _node_id(link.target),
+            "from": _node_id(link.source_assessment_node.node),
+            "to": _node_id(link.target_assessment_node.node),
             "weight": link.performance_rating,
         }
         for link in links
@@ -130,13 +110,13 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
     return series
 
 
-def _node_id(node: AssessmentNode) -> str:
+def _node_id(node: Node) -> str:
     """Generate a unique node id.
 
     The IDs of the node elements need to be made unique by adding the "type" (class
     name) as a prefix.
     """
-    return f"{node.__class__.__name__}_{node.id}"
+    return f"{node.type.value}_{node.id}"
 
 
 def _handle_unlinked_sankey_nodes(
