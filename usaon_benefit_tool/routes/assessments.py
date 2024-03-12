@@ -11,7 +11,7 @@ from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import Assessment
 
-assessments_bp = Blueprint('assesments', __name__, url_prefix='/asessments')
+assessments_bp = Blueprint('assessments', __name__, url_prefix='/asessments')
 
 
 @assessments_bp.route('')
