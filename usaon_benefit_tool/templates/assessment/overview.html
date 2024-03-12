@@ -1,4 +1,4 @@
-{% extends 'assesment/base.html' %}
+{% extends 'assessment/base.html' %}
 {% from 'bootstrap5/utils.html' import render_icon %}
 {% from 'macros/javascript_highcharts.j2' import display_sankey %}
 {% from 'macros/buttons.j2' import create_button %}
@@ -7,11 +7,11 @@
   {{super()}}
 
   <h3>Description</h3>
-  <p>{{assesment.description}}</p>
+  <p>{{assessment.description}}</p>
 
   <div>
     <button
-      hx-get="{{ url_for("assesment.data_products.form", assesment_id=assesment.id) }}"
+      hx-get="{{ url_for("assessment.data_products.form", assessment_id=assessment.id) }}"
       hx-target="#edit-element-modal-hx-target"
       hx-trigger="click"
       data-bs-toggle="modal"
@@ -22,7 +22,7 @@
     {# TODO: etc... #}
   </div>
 
-  {{ display_sankey(sankey_series, assesment=assesment)}}
+  {{ display_sankey(sankey_series, assessment=assessment)}}
 
   <div>
     {# NOTE: This div has HTMX configuration because it can be used by

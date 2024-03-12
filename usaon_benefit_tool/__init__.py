@@ -42,6 +42,22 @@ def create_app():
     # https://flask.palletsprojects.com/en/2.3.x/tutorial/factory/
 
     app = Flask(__name__)
+    _setup_config(app)
+    _setup_proxy_support(app)
+
+    db.init_app(app)
+
+    Bootstrap5(app)
+    JSGlue(app)
+
+    _setup_login(app)
+    _register_blueprints(app)
+    _register_template_helpers(app)
+
+    return app
+
+
+def _setup_config(app) -> None:
     app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'youcanneverguess')
     app.config['SQLALCHEMY_DATABASE_URI'] = db_connstr(app)
     app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = 'cosmo'
@@ -54,14 +70,13 @@ def create_app():
     # DEV ONLY: Disable login
     app.config['LOGIN_DISABLED'] = envvar_is_true("USAON_BENEFIT_TOOL_LOGIN_DISABLED")
 
+
+def _setup_proxy_support(app) -> None:
     if envvar_is_true("USAON_BENEFIT_TOOL_PROXY"):
         app.wsgi_app = ProxyFix(app.wsgi_app, x_prefix=1)  # type: ignore
 
-    db.init_app(app)
 
-    Bootstrap5(app)
-    JSGlue(app)
-
+def _setup_login(app) -> None:
     login_manager = LoginManager()
     login_manager.login_view = "login.login"
     login_manager.init_app(app)
@@ -89,26 +104,8 @@ def create_app():
             if time.time() >= token['expires_at']:
                 del s['google_oauth_token']
 
-    # TODO: Extract function register_blueprints
-    from usaon_benefit_tool.routes.assessment import assessment_bp
-    from usaon_benefit_tool.routes.assessments import assessments_bp
-    from usaon_benefit_tool.routes.login import google_bp, login_bp
-    from usaon_benefit_tool.routes.logout import logout_bp
-    from usaon_benefit_tool.routes.root import root_bp
-    from usaon_benefit_tool.routes.user import user_bp
-    from usaon_benefit_tool.routes.users import users_bp
 
-    app.register_blueprint(root_bp)
-
-    app.register_blueprint(user_bp)
-    app.register_blueprint(users_bp)
-    app.register_blueprint(login_bp)
-    app.register_blueprint(logout_bp)
-    app.register_blueprint(google_bp, url_prefix="/google_oauth")
-
-    app.register_blueprint(assessments_bp)
-    app.register_blueprint(assessment_bp)
-
+def _register_template_helpers(app) -> None:
     # TODO: Consider context processors instead?
     # https://flask.palletsprojects.com/en/2.3.x/templating/#context-processors
     app.jinja_env.globals.update(
@@ -129,4 +126,24 @@ def create_app():
         dateformat=lambda date: date.strftime("%Y-%m-%d %H:%M%Z"),
     )
 
-    return app
+
+def _register_blueprints(app) -> None:
+    # TODO: Extract function register_blueprints
+    from usaon_benefit_tool.routes.assessment import assessment_bp
+    from usaon_benefit_tool.routes.assessments import assessments_bp
+    from usaon_benefit_tool.routes.login import google_bp, login_bp
+    from usaon_benefit_tool.routes.logout import logout_bp
+    from usaon_benefit_tool.routes.root import root_bp
+    from usaon_benefit_tool.routes.user import user_bp
+    from usaon_benefit_tool.routes.users import users_bp
+
+    app.register_blueprint(root_bp)
+
+    app.register_blueprint(user_bp)
+    app.register_blueprint(users_bp)
+    app.register_blueprint(login_bp)
+    app.register_blueprint(logout_bp)
+    app.register_blueprint(google_bp, url_prefix="/google_oauth")
+
+    app.register_blueprint(assessments_bp)
+    app.register_blueprint(assessment_bp)

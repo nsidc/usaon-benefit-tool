@@ -2,12 +2,12 @@
 {% from 'macros/buttons.j2' import delete_button_htmx %}
 
 {# Construct POST or PUT request depending on whether a data product id was passed #}
-{% set edit = assesment_data_product_id is not undefined %}
+{% set edit = assessment_data_product_id is not undefined %}
 {% set
-  htmxQueryAttr = 'hx-put=' ~ url_for("assesment.data_product.put", assesment_id=assesment_id, assesment_data_product_id=assesment_data_product_id)
-  if edit else 'hx-post=' ~ url_for("assesment.data_products.post", assesment_id=assesment_id)
+  htmxQueryAttr = 'hx-put=' ~ url_for("assessment.data_product.put", assessment_id=assessment_id, assessment_data_product_id=assessment_data_product_id)
+  if edit else 'hx-post=' ~ url_for("assessment.data_products.post", assessment_id=assessment_id)
 %}
-{% set endpoint = "assesment.data_product.edit" if edit else "assesment.data_products.post" %}
+{% set endpoint = "assessment.data_product.edit" if edit else "assessment.data_products.post" %}
 
 <div class="modal-content">
   <div class="modal-header">
@@ -17,10 +17,10 @@
     </h5>
     {% if edit %}
       {{delete_button_htmx(
-        'assesment.data_product.delete',
+        'assessment.data_product.delete',
         'Delete',
-        assesment_id=assesment_id,
-        assesment_data_product_id=assesment_data_product_id,
+        assessment_id=assessment_id,
+        assessment_data_product_id=assessment_data_product_id,
       )}}
     {% endif %}
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
