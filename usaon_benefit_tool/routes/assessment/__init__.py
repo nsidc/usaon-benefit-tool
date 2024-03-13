@@ -3,10 +3,10 @@ from flask_login import login_required
 
 from usaon_benefit_tool import db
 from usaon_benefit_tool.models.tables import Assessment
-from usaon_benefit_tool.routes.assessment.data_product import assessment_data_product_bp
-from usaon_benefit_tool.routes.assessment.data_products import (
-    assessment_data_products_bp,
-)
+# from usaon_benefit_tool.routes.assessment.node import assessment_node_bp
+# from usaon_benefit_tool.routes.assessment.nodes import (
+#     assessment_nodes_bp,
+# )
 from usaon_benefit_tool.util.sankey import sankey
 
 assessment_bp = Blueprint(
@@ -14,8 +14,8 @@ assessment_bp = Blueprint(
     __name__,
     url_prefix='/assessment/<string:assessment_id>',
 )
-assessment_bp.register_blueprint(assessment_data_product_bp)
-assessment_bp.register_blueprint(assessment_data_products_bp)
+# assessment_bp.register_blueprint(assessment_node_bp)
+# assessment_bp.register_blueprint(assessment_nodes_bp)
 
 
 @assessment_bp.route('/user_guide', methods=['GET'])
