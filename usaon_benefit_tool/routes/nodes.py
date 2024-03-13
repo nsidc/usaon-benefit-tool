@@ -51,7 +51,7 @@ def post():
 
     return Response(
         status=201,
-        headers={'HX-Redirect': url_for('node.get', node_id=node.id)},
+        headers={'HX-Redirect': url_for('nodes.get')},
     )
 
 
