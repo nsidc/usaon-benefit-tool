@@ -58,8 +58,7 @@ def put(node_id: str):
         status=200,
         headers={
             'HX-Redirect': url_for(
-                'node.get',
-                node_id=node_id,
+                'nodes.get',
             ),
         },
     )
