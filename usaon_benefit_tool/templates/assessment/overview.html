@@ -11,7 +11,7 @@
 
   <div>
     <button
-      hx-get="{{ url_for("assessment.data_products.form", assessment_id=assessment.id) }}"
+      hx-get="{{ url_for("assessment.view_assessment", assessment_id=assessment.id) }}"
       hx-target="#edit-element-modal-hx-target"
       hx-trigger="click"
       data-bs-toggle="modal"
