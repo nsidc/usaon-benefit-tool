@@ -24,6 +24,7 @@ from usaon_benefit_tool.constants.status import ASSESSMENT_STATUSES
 
 # Workaround for missing type stubs for flask-sqlalchemy:
 #     https://github.com/dropbox/sqlalchemy-stubs/issues/76#issuecomment-595839159
+# TODO: Consider adding updated_timestamp there
 BaseModel: DeclarativeMeta = db.Model
 
 
@@ -130,6 +131,7 @@ class Assessment(BaseModel):
         DateTime,
         nullable=False,
         default=datetime.now,
+        onupdate=datetime.now,
     )
 
     created_by = relationship(
@@ -205,6 +207,7 @@ class Node(BaseModel):
         DateTime,
         nullable=False,
         default=datetime.now,
+        onupdate=datetime.now,
     )
 
     created_by = relationship(
