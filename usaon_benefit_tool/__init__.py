@@ -40,6 +40,7 @@ def create_app():
     """Create and configure the app."""
     # TODO: enable override config to test_config
     # https://flask.palletsprojects.com/en/2.3.x/tutorial/factory/
+    _monkeypatch()
 
     app = Flask(__name__)
     _setup_config(app)
@@ -147,3 +148,10 @@ def _register_blueprints(app) -> None:
 
     app.register_blueprint(assessments_bp)
     app.register_blueprint(assessment_bp)
+
+
+def _monkeypatch():
+    from usaon_benefit_tool.util.monkeypatch.wtforms_sqlalchemy import model_fields
+    import wtforms_sqlalchemy
+
+    wtforms_sqlalchemy.orm.model_fields = model_fields
