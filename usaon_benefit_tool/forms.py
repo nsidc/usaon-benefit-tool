@@ -20,6 +20,7 @@ from usaon_benefit_tool.models.tables import (
 
 node_exclude = [
     'assessment_nodes',
+    'created_by_id',
     'created_by',
     'created_timestamp',
     'updated_timestamp',
@@ -54,17 +55,15 @@ model_form = partial(
 BaseModel: DeclarativeMeta = db.Model
 
 FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
-    Assessment: model_form(
-        Assessment,
-        only=['title', 'description'],
-    ),
+    Assessment: model_form(Assessment, only=['title', 'description']),
     NodeSubtypeOther: model_form(
         NodeSubtypeOther,
         exclude=node_exclude,
     ),
     NodeSubtypeSocietalBenefitArea: model_form(
         NodeSubtypeSocietalBenefitArea,
-        exclude=node_exclude,
+        exclude=[*node_exclude, "societal_benefit_area_id"],
+        exclude_fk=False,
     ),
     User: model_form(
         User,

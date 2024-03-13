@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% from 'bootstrap5/utils.html' import render_icon %}
-{% from 'bootstrap5/form.html' import render_form %}
 {% from 'macros/badges/private.j2' import private_badge %}
 {% from 'macros/buttons.j2' import edit_button %}
 
@@ -9,27 +8,63 @@
   <h2>{% block title %}Object library{% endblock %}</h1>
 
   {% if current_user.role_id=='admin' %}
+    {# TODO: _REFACTOR!_ #}
     <button
       data-bs-toggle="modal"
       data-bs-target="#new-node-modal"
+      {# TODO: Parameterize node_type #}
+      hx-get="{{ url_for('nodes.form', node_type='observing_system') }}"
+      hx-target="#new-node-modal-hx-target"
+      hx-trigger="click"
       class="btn btn-success text-nowrap">
-      {{ render_icon("plus-circle-fill") }} New
+      {{ render_icon("plus-circle-fill") }} New observing system
+    </button>
+    <button
+      data-bs-toggle="modal"
+      data-bs-target="#new-node-modal"
+      {# TODO: Parameterize node_type #}
+      hx-get="{{ url_for('nodes.form', node_type='data_product') }}"
+      hx-target="#new-node-modal-hx-target"
+      hx-trigger="click"
+      class="btn btn-success text-nowrap">
+      {{ render_icon("plus-circle-fill") }} New data product
+    </button>
+    <button
+      data-bs-toggle="modal"
+      data-bs-target="#new-node-modal"
+      {# TODO: Parameterize node_type #}
+      hx-get="{{ url_for('nodes.form', node_type='application') }}"
+      hx-target="#new-node-modal-hx-target"
+      hx-trigger="click"
+      class="btn btn-success text-nowrap">
+      {{ render_icon("plus-circle-fill") }} New application
+    </button>
+    <button
+      data-bs-toggle="modal"
+      data-bs-target="#new-node-modal"
+      {# TODO: Parameterize node_type #}
+      hx-get="{{ url_for('nodes.form', node_type='societal_benefit_area') }}"
+      hx-target="#new-node-modal-hx-target"
+      hx-trigger="click"
+      class="btn btn-success text-nowrap">
+      {{ render_icon("plus-circle-fill") }} New societal benefit area
     </button>
 
-    {#
     <div
       id="new-node-modal"
       class="modal modal-blur fade"
       style="display: none"
       aria-hidden="false"
-      tabindex="-1">
-      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      tabindex="-1"
+    >
+      <div
+        id="new-node-modal-hx-target"
+        class="modal-dialog modal-lg modal-dialog-centered"
+        role="document">
         <div class="modal-content">
-          {{ render_form(form, button_map={'submit_button': 'primary'}) }}
         </div>
       </div>
     </div>
-    #}
   {% endif %}
 
   <br />
@@ -44,6 +79,7 @@
         {% endif %}
 
         <th>Title</th>
+        <th>Object type</th>
 
         {% if current_user.role_id=='admin' %}
         <th>Created by</th>
@@ -62,9 +98,15 @@
         <td>{{node.id}}</td>
         {% endif %}
 
-        <td><strong><a href="{{ url_for("node.get", node_id=node.id) }}">
-          {{node.title}}
-        </a></strong></td>
+        <td>
+          <strong><a href="{{ url_for("node.get", node_id=node.id) }}">
+            {{node.title}}
+          </a></strong>
+        </td>
+
+        <td>
+          {{node.type.value}}
+        </td>
 
         {% if current_user.role_id=='admin' %}
         <td>{{node.created_by.email}}</td>
