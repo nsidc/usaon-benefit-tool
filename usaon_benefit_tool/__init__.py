@@ -134,6 +134,8 @@ def _register_blueprints(app) -> None:
     from usaon_benefit_tool.routes.assessments import assessments_bp
     from usaon_benefit_tool.routes.login import google_bp, login_bp
     from usaon_benefit_tool.routes.logout import logout_bp
+    from usaon_benefit_tool.routes.node import node_bp
+    from usaon_benefit_tool.routes.nodes import nodes_bp
     from usaon_benefit_tool.routes.root import root_bp
     from usaon_benefit_tool.routes.user import user_bp
     from usaon_benefit_tool.routes.users import users_bp
@@ -149,9 +151,13 @@ def _register_blueprints(app) -> None:
     app.register_blueprint(assessments_bp)
     app.register_blueprint(assessment_bp)
 
+    app.register_blueprint(nodes_bp)
+    app.register_blueprint(node_bp)
+
 
 def _monkeypatch():
-    from usaon_benefit_tool.util.monkeypatch.wtforms_sqlalchemy import model_fields
     import wtforms_sqlalchemy
+
+    from usaon_benefit_tool.util.monkeypatch.wtforms_sqlalchemy import model_fields
 
     wtforms_sqlalchemy.orm.model_fields = model_fields

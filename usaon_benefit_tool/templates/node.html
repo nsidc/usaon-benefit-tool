@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% from 'macros/forms/form_fields.j2' import render_form_fields %}
+{% from 'macros/help_icon.j2' import help_icon %}
+
+{% block content %}
+  <h2>
+    {% block title %}Object #{{node.id}}: {{node.title}}{% endblock %}
+    {{ help_icon(
+        "Created: " ~ node.created_timestamp | dateformat ~ "<br/>Last updated: " ~ node.updated_timestamp | dateformat,
+        html="true",
+    )}}
+  </h2>
+
+  <form
+    hx-put="{{url_for("node.put", node_id=node.id) }}"
+  >
+    {{ render_form_fields(form) }}
+  </form>
+{% endblock %}

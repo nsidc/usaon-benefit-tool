@@ -1,10 +1,4 @@
-"""Forms corresponding to database models.
-
-TODO: What can we do to improve syncing between models and forms? Consider
-wtforms-sqlalchemy? Consider designing a custom class or type that can represent
-everything needed to construct column and field instances, and functions for converting
-objects of that class to appropriate field/column?
-"""
+"""Forms corresponding to database models."""
 from functools import partial
 
 from flask_wtf import FlaskForm
@@ -19,35 +13,17 @@ from wtforms_sqlalchemy.orm import (
 from usaon_benefit_tool import db
 from usaon_benefit_tool.models.tables import (
     Assessment,
-    AssessmentApplication,
-    AssessmentApplicationSocietalBenefitArea,
-    AssessmentDataProduct,
-    AssessmentDataProductApplication,
-    AssessmentObservingSystem,
-    AssessmentObservingSystemDataProduct,
-    AssessmentSocietalBenefitArea,
+    NodeSubtypeOther,
+    NodeSubtypeSocietalBenefitArea,
     User,
 )
 
-common_response_object_fields = [
-    'short_name',
-    'full_name',
-    'organization',
-    'funder',
-    'funding_country',
-    'website',
-    'description',
-    'contact_name',
-    'contact_title',
-    'contact_email',
-    'tags',
-    'version',
-]
-
-app_response_object_fields = [
-    *common_response_object_fields,
-    'performance_criteria',
-    'performance_rating',
+node_exclude = [
+    'assessment_nodes',
+    'created_by',
+    'created_timestamp',
+    'updated_timestamp',
+    'type',
 ]
 
 
@@ -78,56 +54,27 @@ model_form = partial(
 BaseModel: DeclarativeMeta = db.Model
 
 FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
+    Assessment: model_form(
+        Assessment,
+        only=['title', 'description'],
+    ),
+    NodeSubtypeOther: model_form(
+        NodeSubtypeOther,
+        exclude=node_exclude,
+    ),
+    NodeSubtypeSocietalBenefitArea: model_form(
+        NodeSubtypeSocietalBenefitArea,
+        exclude=node_exclude,
+    ),
     User: model_form(
         User,
         only=['orcid', 'biography', 'affiliation', 'role'],
+        # Helps drop-down display the correct user-facing string
         field_args={'role': {'get_label': 'id'}},
     ),
-    Assessment: model_form(Assessment, only=['title', 'description']),
-    # Response entities ("nodes" from Sankey diagram perspective)
-    # TODO: Restrict "rating" values to correct range
-    AssessmentObservingSystem: model_form(
-        AssessmentObservingSystem,
-        only=common_response_object_fields,
-    ),
-    AssessmentDataProduct: model_form(
-        AssessmentDataProduct,
-        only=common_response_object_fields,
-    ),
-    AssessmentApplication: model_form(
-        AssessmentApplication,
-        only=app_response_object_fields,
-    ),
-    AssessmentSocietalBenefitArea: model_form(
-        AssessmentSocietalBenefitArea,
-        only=['societal_benefit_area'],
-        field_args={'societal_benefit_area': {'get_label': 'id'}},
-    ),
-    # Response relationships ("edges" from Sankey diagram perspective)
-    AssessmentObservingSystemDataProduct: model_form(
-        AssessmentObservingSystemDataProduct,
-        only=[
-            'criticality_rating',
-            'performance_rating',
-            'rationale',
-            'needed_improvements',
-        ],
-    ),
-    AssessmentDataProductApplication: model_form(
-        AssessmentDataProductApplication,
-        only=[
-            'criticality_rating',
-            'performance_rating',
-            'rationale',
-            'needed_improvements',
-        ],
-    ),
-    AssessmentApplicationSocietalBenefitArea: model_form(
-        AssessmentApplicationSocietalBenefitArea,
-        only=['performance_rating'],
-    ),
 }
+
 # HACK: Add a submit button so bootstrap-flask's render_form macro can work
 # TODO: Make this less hacky
 for form in FORMS_BY_MODEL.values():
-    form.submit_button = SubmitField('submit')
+    form.submit_button = SubmitField('Submit')

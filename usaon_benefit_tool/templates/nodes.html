@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% from 'macros/badges/private.j2' import private_badge %}
+{% from 'macros/buttons.j2' import edit_button %}
+
+
+{% block content %}
+  <h2>{% block title %}Object library{% endblock %}</h1>
+
+  {% if current_user.role_id=='admin' %}
+    <button
+      data-bs-toggle="modal"
+      data-bs-target="#new-node-modal"
+      class="btn btn-success text-nowrap">
+      {{ render_icon("plus-circle-fill") }} New
+    </button>
+
+    {#
+    <div
+      id="new-node-modal"
+      class="modal modal-blur fade"
+      style="display: none"
+      aria-hidden="false"
+      tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          {{ render_form(form, button_map={'submit_button': 'primary'}) }}
+        </div>
+      </div>
+    </div>
+    #}
+  {% endif %}
+
+  <br />
+  <br />
+
+  <table class='table'>
+
+    <thead>
+      <tr>
+        {% if current_user.role_id=='admin' %}
+        <th>#</th>
+        {% endif %}
+
+        <th>Title</th>
+
+        {% if current_user.role_id=='admin' %}
+        <th>Created by</th>
+        <th>Created time</th>
+        <th>Updated time</th>
+        {% endif %}
+
+      </tr>
+    </thead>
+
+    <tbody>
+    {% for node in nodes %}
+      <tr>
+
+        {% if current_user.role_id=='admin' %}
+        <td>{{node.id}}</td>
+        {% endif %}
+
+        <td><strong><a href="{{ url_for("node.get", node_id=node.id) }}">
+          {{node.title}}
+        </a></strong></td>
+
+        {% if current_user.role_id=='admin' %}
+        <td>{{node.created_by.email}}</td>
+        <td>{{node.created_timestamp | dateformat}}</td>
+        <td>{{node.updated_timestamp | dateformat}}</td>
+        {% endif %}
+
+      </tr>
+    {% endfor %}
+    </tbody>
+
+  </table>
+
+{% endblock %}
