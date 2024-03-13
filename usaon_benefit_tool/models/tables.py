@@ -248,7 +248,7 @@ class NodeSubtypeOther(Node):
     website = Column(String(256), nullable=True)
     contact_information = Column(String(256), nullable=False)
     persistent_identifier = Column(String(256), nullable=True)
-    hypothetical = Column(Boolean, nullable=False)
+    hypothetical = Column(Boolean)
 
 
 class NodeSubtypeSocietalBenefitArea(Node):
