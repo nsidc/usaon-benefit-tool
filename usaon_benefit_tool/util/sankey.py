@@ -86,12 +86,16 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
         for an in assessment_nodes
     ]
 
-    links = list(set(
-        chain.from_iterable([
-            *[an.input_links for an in assessment_nodes],
-            *[an.output_links for an in assessment_nodes],
-        ])
-    ))
+    links = list(
+        set(
+            chain.from_iterable(
+                [
+                    *[an.input_links for an in assessment_nodes],
+                    *[an.output_links for an in assessment_nodes],
+                ],
+            ),
+        ),
+    )
     links_simplified: list[HighchartsSankeySeriesLink] = [
         {
             "from": _node_id(link.source_assessment_node.node),
