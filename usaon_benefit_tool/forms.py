@@ -13,6 +13,7 @@ from wtforms_sqlalchemy.orm import (
 from usaon_benefit_tool import db
 from usaon_benefit_tool.models.tables import (
     Assessment,
+    AssessmentNode,
     NodeSubtypeOther,
     NodeSubtypeSocietalBenefitArea,
     User,
@@ -56,6 +57,7 @@ BaseModel: DeclarativeMeta = db.Model
 
 FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
     Assessment: model_form(Assessment, only=['title', 'description']),
+    AssessmentNode: model_form(AssessmentNode, only=['node']),
     NodeSubtypeOther: model_form(
         NodeSubtypeOther,
         exclude=node_exclude,
