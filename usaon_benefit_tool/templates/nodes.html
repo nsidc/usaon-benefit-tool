@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% from 'bootstrap5/utils.html' import render_icon %}
 {% from 'macros/badges/private.j2' import private_badge %}
-{% from 'macros/buttons.j2' import edit_button %}
+{% from 'macros/buttons.j2' import edit_button, delete_button_htmx %}
 
 
 {% block content %}
@@ -49,7 +49,6 @@
       class="btn btn-success text-nowrap">
       {{ render_icon("plus-circle-fill") }} New societal benefit area
     </button>
-
     <div
       id="new-node-modal"
       class="modal modal-blur fade"
@@ -112,6 +111,13 @@
         <td>{{node.created_by.email}}</td>
         <td>{{node.created_timestamp | dateformat}}</td>
         <td>{{node.updated_timestamp | dateformat}}</td>
+        <td>
+          {{delete_button_htmx(
+            'node.delete',
+            'Delete object',
+            node_id=node.id,
+          )}}
+        </td>
         {% endif %}
 
       </tr>

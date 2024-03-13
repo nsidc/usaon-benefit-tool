@@ -77,7 +77,7 @@ def delete(assessment_id: int, assessment_data_product_id: int):
     db.session.commit()
 
     return Response(
-        status=202,
+        status=200,
         headers={
             'HX-Redirect': url_for(
                 'assessment.view_assessment_overview',

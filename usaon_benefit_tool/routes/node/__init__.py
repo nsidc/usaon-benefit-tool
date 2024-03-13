@@ -1,4 +1,5 @@
 from flask import Blueprint, Response, render_template, request, url_for
+from flask_login import login_required
 
 from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
@@ -24,8 +25,22 @@ def get(node_id: str):
         form=form,
     )
 
+@node_bp.route('', methods=['DELETE'])
+@login_required
+def delete(node_id: str):
+    """Delete the node."""
+    node = db.get_or_404(Node, node_id)
+    db.session.delete(node)
+    db.session.commit()
+
+    return Response(
+        status=200,
+        headers={'HX-Redirect': url_for('nodes.get')},
+    )
+        
 
 @node_bp.route('', methods=['PUT'])
+@login_required
 def put(node_id: str):
     """Update the node."""
     node = db.get_or_404(Node, node_id)
