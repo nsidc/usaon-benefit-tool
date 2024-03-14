@@ -1,6 +1,6 @@
 from sqlalchemy import inspect as sainspect
-
 from wtforms_sqlalchemy.orm import ModelConverter
+
 
 def model_fields(  # noqa: C901, PLR0913
     model,

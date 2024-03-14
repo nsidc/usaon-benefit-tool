@@ -25,6 +25,7 @@ def get(node_id: str):
         form=form,
     )
 
+
 @node_bp.route('', methods=['DELETE'])
 @login_required
 def delete(node_id: str):
@@ -37,7 +38,7 @@ def delete(node_id: str):
         status=200,
         headers={'HX-Redirect': url_for('nodes.get')},
     )
-        
+
 
 @node_bp.route('', methods=['PUT'])
 @login_required

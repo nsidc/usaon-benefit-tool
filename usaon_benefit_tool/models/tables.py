@@ -302,12 +302,12 @@ class AssessmentNode(BaseModel):
     assessment_id = Column(
         Integer,
         ForeignKey('assessment.id'),
-        nullable=False, 
+        nullable=False,
     )
     node_id = Column(
         Integer,
         ForeignKey('node.id'),
-        nullable=False, 
+        nullable=False,
     )
 
     # TODO: Special case for applications, they have performance_criteria and
