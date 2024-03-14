@@ -9,7 +9,7 @@ warning:
 
 """
 from datetime import datetime
-from typing import Final
+from typing import ClassVar
 
 from flask_login import UserMixin, current_user
 from sqlalchemy import CheckConstraint, case
@@ -170,8 +170,8 @@ class Node(BaseModel):
         Enum(NodeType),
         nullable=False,
     )
-    __mapper_args__: Final[dict] = {
-        'polymorphic_identity': 'none',  # TODO: Do we need this?
+    __mapper_args__: ClassVar = {
+        # 'polymorphic_identity': 'none',  # TODO: Do we need this?
         'polymorphic_on': case(
             [
                 (
@@ -233,7 +233,7 @@ class NodeSubtypeOther(Node):
     """Fields that are used for all node types except societal benefit area."""
 
     __tablename__ = "node_subtype_other"
-    __mapper_args__: Final[dict] = {
+    __mapper_args__: ClassVar = {
         'polymorphic_identity': NodeTypeDiscriminator.OTHER.value,
     }
 
@@ -259,7 +259,7 @@ class NodeSubtypeSocietalBenefitArea(Node):
 
     __tablename__ = "node_subtype_societal_benefit_area"
     __table_args__ = (UniqueConstraint('societal_benefit_area_id'),)
-    __mapper_args__: Final[dict] = {
+    __mapper_args__: ClassVar = {
         'polymorphic_identity': NodeTypeDiscriminator.SOCIETAL_BENEFIT_AREA.value,
     }
 
