@@ -14,6 +14,7 @@ from usaon_benefit_tool import db
 from usaon_benefit_tool.models.tables import (
     Assessment,
     AssessmentNode,
+    Link,
     Node,
     NodeSubtypeOther,
     NodeSubtypeSocietalBenefitArea,
@@ -46,7 +47,7 @@ class CustomModelConverter(ModelConverter):
 
 
 def get_node_label(node: Node) -> str:
-    return f"{node.type.value}: {node.title}"
+    return f"Object #{node.id} ({node.type.value}): {node.title}"
 
 
 model_form = partial(
@@ -67,6 +68,13 @@ FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
         only=['node'],
         field_args={
             'node': {'get_label': get_node_label},
+        },
+    ),
+    Link: model_form(
+        Link,
+        field_args={
+            'source_assessment_node': {'get_label': lambda an: get_node_label(an.node)},
+            'target_assessment_node': {'get_label': lambda an: get_node_label(an.node)},
         },
     ),
     NodeSubtypeOther: model_form(
