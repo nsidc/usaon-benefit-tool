@@ -1,10 +1,4 @@
-"""Forms corresponding to database models.
-
-TODO: What can we do to improve syncing between models and forms? Consider
-wtforms-sqlalchemy? Consider designing a custom class or type that can represent
-everything needed to construct column and field instances, and functions for converting
-objects of that class to appropriate field/column?
-"""
+"""Forms corresponding to database models."""
 from functools import partial
 
 from flask_wtf import FlaskForm
@@ -18,36 +12,22 @@ from wtforms_sqlalchemy.orm import (
 
 from usaon_benefit_tool import db
 from usaon_benefit_tool.models.tables import (
-    ResponseApplication,
-    ResponseApplicationSocietalBenefitArea,
-    ResponseDataProduct,
-    ResponseDataProductApplication,
-    ResponseObservingSystem,
-    ResponseObservingSystemDataProduct,
-    ResponseSocietalBenefitArea,
-    Survey,
+    Assessment,
+    AssessmentNode,
+    Link,
+    Node,
+    NodeSubtypeOther,
+    NodeSubtypeSocietalBenefitArea,
     User,
 )
 
-common_response_object_fields = [
-    'short_name',
-    'full_name',
-    'organization',
-    'funder',
-    'funding_country',
-    'website',
-    'description',
-    'contact_name',
-    'contact_title',
-    'contact_email',
-    'tags',
-    'version',
-]
-
-app_response_object_fields = [
-    *common_response_object_fields,
-    'performance_criteria',
-    'performance_rating',
+node_exclude = [
+    'assessment_nodes',
+    'created_by_id',
+    'created_by',
+    'created_timestamp',
+    'updated_timestamp',
+    'type',
 ]
 
 
@@ -66,6 +46,10 @@ class CustomModelConverter(ModelConverter):
         return super().conv_String(field_args, **extra)
 
 
+def get_node_label(node: Node) -> str:
+    return f"Object #{node.id} ({node.type.value}): {node.title}"
+
+
 model_form = partial(
     model_form,
     converter=CustomModelConverter(),
@@ -78,56 +62,42 @@ model_form = partial(
 BaseModel: DeclarativeMeta = db.Model
 
 FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
+    Assessment: model_form(Assessment, only=['title', 'description']),
+    AssessmentNode: model_form(
+        AssessmentNode,
+        only=['node'],
+        field_args={
+            'node': {'get_label': get_node_label},
+        },
+    ),
+    Link: model_form(
+        Link,
+        field_args={
+            'source_assessment_node': {'get_label': lambda an: get_node_label(an.node)},
+            'target_assessment_node': {'get_label': lambda an: get_node_label(an.node)},
+        },
+    ),
+    NodeSubtypeOther: model_form(
+        NodeSubtypeOther,
+        exclude=node_exclude,
+    ),
+    NodeSubtypeSocietalBenefitArea: model_form(
+        NodeSubtypeSocietalBenefitArea,
+        exclude=[*node_exclude, "societal_benefit_area_id"],
+        exclude_fk=False,
+        field_args={
+            'societal_benefit_area': {'get_label': 'id'},
+        },
+    ),
     User: model_form(
         User,
         only=['orcid', 'biography', 'affiliation', 'role'],
+        # Helps drop-down display the correct user-facing string
         field_args={'role': {'get_label': 'id'}},
     ),
-    Survey: model_form(Survey, only=['title', 'description']),
-    # Response entities ("nodes" from Sankey diagram perspective)
-    # TODO: Restrict "rating" values to correct range
-    ResponseObservingSystem: model_form(
-        ResponseObservingSystem,
-        only=common_response_object_fields,
-    ),
-    ResponseDataProduct: model_form(
-        ResponseDataProduct,
-        only=common_response_object_fields,
-    ),
-    ResponseApplication: model_form(
-        ResponseApplication,
-        only=app_response_object_fields,
-    ),
-    ResponseSocietalBenefitArea: model_form(
-        ResponseSocietalBenefitArea,
-        only=['societal_benefit_area'],
-        field_args={'societal_benefit_area': {'get_label': 'id'}},
-    ),
-    # Response relationships ("edges" from Sankey diagram perspective)
-    ResponseObservingSystemDataProduct: model_form(
-        ResponseObservingSystemDataProduct,
-        only=[
-            'criticality_rating',
-            'performance_rating',
-            'rationale',
-            'needed_improvements',
-        ],
-    ),
-    ResponseDataProductApplication: model_form(
-        ResponseDataProductApplication,
-        only=[
-            'criticality_rating',
-            'performance_rating',
-            'rationale',
-            'needed_improvements',
-        ],
-    ),
-    ResponseApplicationSocietalBenefitArea: model_form(
-        ResponseApplicationSocietalBenefitArea,
-        only=['performance_rating'],
-    ),
 }
+
 # HACK: Add a submit button so bootstrap-flask's render_form macro can work
 # TODO: Make this less hacky
 for form in FORMS_BY_MODEL.values():
-    form.submit_button = SubmitField('submit')
+    form.submit_button = SubmitField('Submit')

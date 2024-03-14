@@ -1,6 +1,52 @@
-{% macro add_javascript__highcharts(sankey_series, survey_title) -%}
-
+{% macro add_javascript__highcharts(sankey_series, assessment) -%}
   <script>
+    // TODO: const or var for compatibility?
+    const camelToSnakeCase = str => str.replace(/[A-Z]/g, (letter, index) => {
+      return index == 0 ? letter.toLowerCase() : '_'+ letter.toLowerCase();
+    });
+    const pointClickHandler = function(event) {
+      const point = this;
+      if ([point.id, point.from].includes("{{ constants.DUMMY_NODE_ID }}")) {
+        console.debug("Ignoring click on dummy node/link");
+        return;
+      }
+
+      const selector = "#form-modal";
+      const el = document.querySelector(selector);
+
+      // Determine the target URL and set the hx-get parameter // accordingly.
+      // We're using vendored Flask-JSGlue to do this from JS.
+      // TODO: Less magic string processing
+      const isNode = "type" in point;
+      let routeTarget, idArgName, idArgValue;
+      if (isNode) {
+        // FIXME: Brittle!
+        const routeSlug = camelToSnakeCase(point.type).replace(/^survey_/, "");
+        routeTarget = "assessment." + routeSlug + ".form";
+        idArgName = "assessment_" + routeSlug + "_id";
+        idArgValue = point.id.split("_")[1];
+      } else {
+        // It's a link, TODO
+        routeTarget = "Help!";
+        idArgName = "Help!";
+        idArgValue = "Help!";
+      }
+      const targetUrl = Flask.url_for(
+        routeTarget,
+        {
+          assessment_id: {{ assessment.id }},
+          [idArgName]: idArgValue,
+        },
+      );
+      el.setAttribute("hx-get", targetUrl);
+      // Make HTMX aware of the change we just made
+      htmx.process(el);
+
+      const modal = new bootstrap.Modal(el, {});
+      modal.show();
+      htmx.trigger(selector, "modalOpened");
+    }
+
     Highcharts.setOptions({
       lang: {
         contextButtonTitle: 'Print and download options',
@@ -11,8 +57,17 @@
       chart: {
         type: 'sankey',
       },
+      plotOptions: {
+        sankey: {
+          point: {
+            events: {
+              click: pointClickHandler,
+            },
+          },
+        },
+      },
       title: {
-        text: "{{ survey_title }}",
+        text: "{{ assessment_title }}",
         style: {fontSize: '20px'},
       },
       accessibility: {
@@ -21,16 +76,43 @@
           valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.',
         },
       },
+      tooltip: {
+        headerFormat: null,
+        nodeFormatter: function() {
+          const point = this;
+          if (point.id === "{{ constants.DUMMY_NODE_ID }}") {
+            // FIXME: This method of hiding a tooltip works for `formatter`, but not `nodeFormatter`.
+            // return false;
+            return point.name
+          }
+          const tooltipName = "<b>" + point.name + "</b>: ";
+          if (point.linksTo[0].from === "{{ constants.DUMMY_NODE_ID }}") {
+            return tooltipName + "Click me to add link(s)!";
+          }
+
+          return tooltipName + point.sum;
+        },
+        pointFormatter: function() {
+          const point = this;
+          if (point.from === "{{ constants.DUMMY_NODE_ID }}") {
+            // FIXME: This method of hiding a tooltip works for `formatter`, but not `pointFormatter`.
+            // return false;
+            return point.fromNode.name;
+          }
+          return "<b>" + point.fromNode.name + "</b> → <b>" + point.toNode.name + "</b>: " + point.weight;
+        },
+      },
       series: [{
         keys: ['from', 'to', 'weight'],
-        data: {{ sankey_series | safe }},
+        data: {{ sankey_series.data | safe }},
+        nodes: {{ sankey_series.nodes | safe }},
       }],
     });
   </script>
 {% endmacro %}
 
 
-{% macro display_sankey(sankey_series, survey_title) -%}
+{% macro display_sankey(sankey_series, assessment) -%}
   {% include 'includes/highcharts.html' %}
   <h4>Diagram</h4>
 
@@ -42,6 +124,6 @@
     <figure class="highcharts-figure">
       <div id="highcharts-container" />
     </figure>
-    {{ add_javascript__highcharts(sankey_series, survey_title) }}
+    {{ add_javascript__highcharts(sankey_series=sankey_series, assessment=assessment) }}
   {% endif %}
 {% endmacro %}

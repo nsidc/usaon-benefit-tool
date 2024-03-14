@@ -1,0 +1,14 @@
+{% from 'macros/forms/form_fields.j2' import render_form_fields %}
+
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title">
+      {{ title }}
+    <h5>
+  </div>
+  <div class="modal-body">
+    <form {{ form_attrs }}>
+      {{ render_form_fields(form) }}
+    </form>
+  </div>
+</div>

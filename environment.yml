@@ -45,3 +45,4 @@ dependencies:
     # TODO: Get these on conda-forge
     - wtforms-sqlalchemy
     - bootstrap-flask ~=2.3.0
+    - flask-pydantic ~=0.10.0

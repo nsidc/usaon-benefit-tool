@@ -1,4 +1,4 @@
-"""The VTA survey data model.
+"""The Value Tree Analysis assessment data model.
 
 WARNING: The type-checker can't save you from yourself in this file; there are many
 magic strings that need to match class names at runtime.
@@ -9,75 +9,28 @@ warning:
 
 """
 from datetime import datetime
-from functools import cache
-from typing import Final, NotRequired
+from typing import ClassVar
 
 from flask_login import UserMixin, current_user
-from sqlalchemy import CheckConstraint
+from sqlalchemy import CheckConstraint, case
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey, Index, UniqueConstraint
-from sqlalchemy.types import Boolean, DateTime, Enum, Integer, SmallInteger, String
-from typing_extensions import TypedDict
+from sqlalchemy.types import Boolean, DateTime, Enum, Integer, String
 
 from usaon_benefit_tool import db
-from usaon_benefit_tool._types import ObservingSystemType
-from usaon_benefit_tool.constants.status import STATUSES
+from usaon_benefit_tool._types import NodeType, NodeTypeDiscriminator
+from usaon_benefit_tool.constants.status import ASSESSMENT_STATUSES
 
 # Workaround for missing type stubs for flask-sqlalchemy:
 #     https://github.com/dropbox/sqlalchemy-stubs/issues/76#issuecomment-595839159
+# TODO: Consider adding updated_timestamp there
 BaseModel: DeclarativeMeta = db.Model
 
 
-class IORelationship(TypedDict):
-    input: NotRequired[BaseModel]
-    output: NotRequired[BaseModel]
-
-
-class IORelationshipMixin:
-    """Provide a dictionary of input and/or output models related to this entity.
-
-    TODO: Could use a clearer name. We may want to also have a mixin for models
-    representing relationships instead of entities.
-    """
-
-    @classmethod
-    @cache
-    def __io__(cls) -> IORelationship:
-        """Return dictionary of any IO relationships this model has.
-
-        TODO: Fix and remove type-ignore comments.
-        """
-        io: IORelationship = {}
-        if hasattr(cls, 'input_relationships'):
-            io['input'] = cls.input_relationships.mapper.class_  # type: ignore
-        if hasattr(cls, 'output_relationships'):
-            io['output'] = cls.output_relationships.mapper.class_  # type: ignore
-
-        if io == {}:
-            raise RuntimeError(
-                'Please only use IORelationshipMixin on a model with'
-                ' input_relationships or output_relationships',
-            )
-
-        return io
-
-
-class ResponseObjectFieldMixin:
-    """Provide shared fields between all relationship objects to reduce repetition."""
-
-    short_name = Column(String(256), nullable=False)
-    full_name = Column(String(256), nullable=True)
-    organization = Column(String(256), nullable=False)
-    funder = Column(String(256), nullable=False)
-    funding_country = Column(String(256), nullable=False)
-    website = Column(String(256), nullable=True)
-    description = Column(String(512), nullable=True)
-    contact_name = Column(String(256), nullable=False)
-    contact_title = Column(String(256), nullable=True)
-    contact_email = Column(String(256), nullable=False)
-    tags = Column(String, nullable=False)
-    version = Column(String(64), nullable=True)
+####################
+# Association tables
+####################
 
 
 class User(BaseModel, UserMixin):
@@ -101,7 +54,7 @@ class User(BaseModel, UserMixin):
         nullable=False,
     )
     orcid = Column(
-        String(64),  # how long are orcids?
+        String(64),  # TODO: Exactly how long are orcids? Validator?
         nullable=True,
     )
     role_id = Column(
@@ -118,29 +71,25 @@ class User(BaseModel, UserMixin):
         String,
         nullable=True,
     )
+
     role = relationship('Role')
-    responses = relationship(
-        'Response',
+    # TODO: Rename "created_assessments"? Add "filled_assessments"?
+    assessments = relationship(
+        'Assessment',
         back_populates='created_by',
     )
-    surveys = relationship(
-        'Survey',
+    nodes = relationship(
+        'Node',
         back_populates='created_by',
     )
 
 
-class Survey(BaseModel):
-    __tablename__ = 'survey'
+class Assessment(BaseModel):
+    __tablename__ = 'assessment'
     id = Column(
         Integer,
         primary_key=True,
         autoincrement=True,
-    )
-
-    response_id = Column(
-        Integer,
-        ForeignKey('response.id'),
-        nullable=True,
     )
 
     title = Column(
@@ -148,10 +97,21 @@ class Survey(BaseModel):
         nullable=False,
     )
 
+    description = Column(
+        String(512),
+        nullable=True,
+    )
+
+    private = Column(
+        Boolean,
+        nullable=False,
+        default=False,
+    )
+
     status_id = Column(
         String,
         ForeignKey('status.id'),
-        default=STATUSES[0],
+        default=next(iter(ASSESSMENT_STATUSES.keys())),
         nullable=False,
     )
 
@@ -167,36 +127,71 @@ class Survey(BaseModel):
         nullable=False,
         default=datetime.now,
     )
-
-    description = Column(
-        String(512),
-        nullable=True,
-    )
-
-    private = Column(
-        Boolean,
+    updated_timestamp = Column(
+        DateTime,
         nullable=False,
-        default=False,
+        default=datetime.now,
+        onupdate=datetime.now,
     )
 
-    response = relationship(
-        'Response',
-        back_populates='survey',
-    )
     created_by = relationship(
         'User',
-        back_populates='surveys',
+        back_populates='assessments',
     )
-    status = relationship('Status')
+    status = relationship(
+        'AssessmentStatus',
+        back_populates="assessments",
+    )
+    assessment_nodes = relationship(
+        'AssessmentNode',
+        back_populates="assessment",
+    )
+    # TODO: Re-enable this convenience relationship which passes through the association
+    # table. Disabled to enable defining AssessmentNode table in a consistent way; to
+    # make this work it seems you need to use the Table() constructor, but that was
+    # causing problems with constructing a relationship to Links table.
+    # nodes = relationship(
+    #     'Node',
+    #     secondary=assessment_node,
+    #     back_populates='assessments',
+    # )
 
 
-class Response(BaseModel):
-    __tablename__ = 'response'
+class Node(BaseModel):
+    """The "Node Library"."""
+
+    __tablename__ = 'node'
     id = Column(
         Integer,
         primary_key=True,
         autoincrement=True,
     )
+    type = Column(
+        Enum(NodeType),
+        nullable=False,
+    )
+    __mapper_args__: ClassVar = {
+        # 'polymorphic_identity': 'none',  # TODO: Do we need this?
+        'polymorphic_on': case(
+            [
+                (
+                    type == NodeType.SOCIETAL_BENEFIT_AREA,
+                    NodeTypeDiscriminator.SOCIETAL_BENEFIT_AREA.value,
+                ),
+            ],
+            else_=NodeTypeDiscriminator.OTHER.value,
+        ),
+    }
+
+    title = Column(String(128), nullable=False)
+    short_name = Column(String(256), nullable=False)
+    description = Column(String(512), nullable=True)
+
+    # TODO: Implement tags!
+    # tags = Column(String, nullable=False)
+    # TODO: Implement versioning!
+    # version = Column(String(64), nullable=True)
+
     created_by_id = Column(
         Integer,
         ForeignKey('user.id'),
@@ -212,147 +207,156 @@ class Response(BaseModel):
         DateTime,
         nullable=False,
         default=datetime.now,
+        onupdate=datetime.now,
     )
 
-    survey = relationship(
-        'Survey',
-        back_populates='response',
-    )
     created_by = relationship(
         'User',
-        back_populates='responses',
+        back_populates='nodes',
     )
-    observing_systems = relationship(
-        'ResponseObservingSystem',
-        back_populates='response',
+    assessment_nodes = relationship(
+        'AssessmentNode',
+        back_populates="node",
     )
-    data_products = relationship(
-        'ResponseDataProduct',
-        back_populates='response',
-    )
-    applications = relationship(
-        'ResponseApplication',
-        back_populates='response',
-    )
-    societal_benefit_areas = relationship(
-        'ResponseSocietalBenefitArea',
-        back_populates='response',
-    )
+    # TODO: Re-enable this convenience relationship which passes through the association
+    # table. Disabled to enable defining AssessmentNode table in a consistent way; to
+    # make this work it seems you need to use the Table() constructor, but that was
+    # causing problems with constructing a relationship to Links table.
+    # assessments = relationship(
+    #     'Assessment',
+    #     secondary=assessment_node,
+    #     back_populates='nodes',
+    # )
 
 
-class ResponseObservingSystem(BaseModel, IORelationshipMixin, ResponseObjectFieldMixin):
-    __tablename__ = 'response_observing_system'
-    __table_args__ = (UniqueConstraint('short_name', 'response_id'),)
+class NodeSubtypeOther(Node):
+    """Fields that are used for all node types except societal benefit area."""
+
+    __tablename__ = "node_subtype_other"
+    __mapper_args__: ClassVar = {
+        'polymorphic_identity': NodeTypeDiscriminator.OTHER.value,
+    }
+
+    node_id = Column(
+        Integer,
+        ForeignKey('node.id'),
+        primary_key=True,
+        nullable=False,
+    )
+
+    organization = Column(String(256), nullable=False)
+    funder = Column(String(256), nullable=False)
+    funding_country = Column(String(256), nullable=False)
+    # TODO: do we need multiple website fields?
+    website = Column(String(256), nullable=True)
+    contact_information = Column(String(256), nullable=False)
+    persistent_identifier = Column(String(256), nullable=True)
+    hypothetical = Column(Boolean)
+
+
+class NodeSubtypeSocietalBenefitArea(Node):
+    """Fields that are specific to societal benefit area type nodes."""
+
+    __tablename__ = "node_subtype_societal_benefit_area"
+    __table_args__ = (UniqueConstraint('societal_benefit_area_id'),)
+    __mapper_args__: ClassVar = {
+        'polymorphic_identity': NodeTypeDiscriminator.SOCIETAL_BENEFIT_AREA.value,
+    }
+
+    node_id = Column(
+        Integer,
+        ForeignKey('node.id'),
+        primary_key=True,
+        nullable=False,
+    )
+    societal_benefit_area_id = Column(
+        String,
+        ForeignKey('societal_benefit_area.id'),
+        nullable=False,
+    )
+
+    # TODO: Relationship to societal benefit area table? How would we make a similar
+    #       relationship for the other node types?
+    societal_benefit_area = relationship("SocietalBenefitArea")
+
+
+class AssessmentNode(BaseModel):
+    """An instance of a Node in the Node Library for use in an Assessment."""
+
+    __tablename__ = "assessment_node"
+    __table_args__ = (
+        UniqueConstraint('assessment_id', 'node_id'),
+        Index(
+            f'idx_{__tablename__}',
+            'assessment_id',
+            'node_id',
+            unique=True,  # TODO: Do we need this?
+        ),
+    )
+
+    # TODO: If/when we make this a pure associative entity, do we need a surrogate ID?
     id = Column(
         Integer,
         primary_key=True,
-        autoincrement=True,
     )
-    response_id = Column(
+    assessment_id = Column(
         Integer,
-        ForeignKey('response.id'),
+        ForeignKey('assessment.id'),
+        nullable=False,
+    )
+    node_id = Column(
+        Integer,
+        ForeignKey('node.id'),
         nullable=False,
     )
 
-    type = Column(
-        Enum(ObservingSystemType),
-        nullable=False,
-    )
+    # TODO: Special case for applications, they have performance_criteria and
+    # performance_rating.
 
-    __mapper_args__: Final[dict] = {
-        'polymorphic_identity': ObservingSystemType.other,
-        'polymorphic_on': type,
-    }
+    assessment = relationship(Assessment)
+    node = relationship(Node)
 
-    response = relationship(
-        'Response',
-        back_populates='observing_systems',
+    input_links = relationship(
+        "Link",
+        foreign_keys="Link.target_assessment_node_id",
+        back_populates="target_assessment_node",
     )
-    output_relationships = relationship(
-        'ResponseObservingSystemDataProduct',
-        back_populates='observing_system',
-        cascade="all, delete",
+    output_links = relationship(
+        "Link",
+        foreign_keys="Link.source_assessment_node_id",
+        back_populates="source_assessment_node",
     )
 
 
-class ResponseObservingSystemObservational(BaseModel):
-    __tablename__ = 'response_observing_system_observational'
-    __mapper_args__: Final[dict] = {
-        'polymorphic_identity': ObservingSystemType.observational,
-    }
+class Link(BaseModel):
+    """A link between two nodes _in an assessment_."""
 
-    response_observing_system_id = Column(
-        Integer,
-        ForeignKey('response_observing_system.id'),
-        primary_key=True,
+    __tablename__ = 'link'
+    __table_args__ = (
+        UniqueConstraint('source_assessment_node_id', 'target_assessment_node_id'),
+        Index(
+            f'idx_{__tablename__}',
+            'source_assessment_node_id',
+            'target_assessment_node_id',
+            unique=True,  # TODO: Do we need this?
+        ),
     )
-
-    platform = Column(String(256), nullable=False)
-    sensor = Column(String(256), nullable=False)
-
-
-class ResponseObservingSystemResearch(BaseModel):
-    __tablename__ = 'response_observing_system_research'
-    __mapper_args__: Final[dict] = {
-        'polymorphic_identity': ObservingSystemType.research,
-    }
-
-    response_observing_system_id = Column(
-        Integer,
-        ForeignKey('response_observing_system.id'),
-        primary_key=True,
-    )
-
-    intermediate_product = Column(String(256), nullable=False)
-
-
-class ResponseDataProduct(BaseModel, IORelationshipMixin, ResponseObjectFieldMixin):
-    __tablename__ = 'response_data_product'
-    __table_args__ = (UniqueConstraint('short_name', 'response_id'),)
     id = Column(
         Integer,
-        primary_key=True,
         autoincrement=True,
+        primary_key=True,
     )
-    response_id = Column(
+    source_assessment_node_id = Column(
         Integer,
-        ForeignKey('response.id'),
+        ForeignKey('assessment_node.id'),
+        nullable=False,
+    )
+    target_assessment_node_id = Column(
+        Integer,
+        ForeignKey('assessment_node.id'),
         nullable=False,
     )
 
-    response = relationship(
-        'Response',
-        back_populates='data_products',
-    )
-    input_relationships = relationship(
-        'ResponseObservingSystemDataProduct',
-        back_populates='data_product',
-        cascade="all, delete",
-    )
-    output_relationships = relationship(
-        'ResponseDataProductApplication',
-        back_populates='data_product',
-        cascade="all, delete",
-    )
-
-
-class ResponseApplication(BaseModel, IORelationshipMixin, ResponseObjectFieldMixin):
-    __tablename__ = 'response_application'
-    __table_args__ = (UniqueConstraint('short_name', 'response_id'),)
-    id = Column(
-        Integer,
-        primary_key=True,
-        autoincrement=True,
-    )
-    response_id = Column(
-        Integer,
-        ForeignKey('response.id'),
-        nullable=False,
-    )
-
-    performance_criteria = Column(
-        String(256),
-    )
     performance_rating = Column(
         Integer,
         CheckConstraint(
@@ -362,64 +366,24 @@ class ResponseApplication(BaseModel, IORelationshipMixin, ResponseObjectFieldMix
         nullable=False,
     )
 
-    response = relationship(
-        'Response',
-        back_populates='applications',
+    source_assessment_node = relationship(
+        AssessmentNode,
+        foreign_keys=[source_assessment_node_id],
+        back_populates='output_links',
     )
-    input_relationships = relationship(
-        'ResponseDataProductApplication',
-        back_populates='application',
-        cascade="all, delete",
-    )
-    output_relationships = relationship(
-        'ResponseApplicationSocietalBenefitArea',
-        back_populates='application',
-        cascade="all, delete",
+    target_assessment_node = relationship(
+        AssessmentNode,
+        foreign_keys=[target_assessment_node_id],
+        back_populates='input_links',
     )
 
 
-class ResponseSocietalBenefitArea(BaseModel, IORelationshipMixin):
-    __tablename__ = 'response_societal_benefit_area'
-    __table_args__ = (UniqueConstraint('societal_benefit_area_id', 'response_id'),)
-    id = Column(
-        Integer,
-        primary_key=True,
-        autoincrement=True,
-    )
-    response_id = Column(
-        Integer,
-        ForeignKey('response.id'),
-        nullable=False,
-    )
-
-    societal_benefit_area_id = Column(
-        String(256),
-        ForeignKey('societal_benefit_area.id'),
-        nullable=False,
-    )
-
-    response = relationship(
-        'Response',
-        back_populates='societal_benefit_areas',
-    )
-    societal_benefit_area = relationship('SocietalBenefitArea')
-    input_relationships = relationship(
-        'ResponseApplicationSocietalBenefitArea',
-        back_populates='societal_benefit_area',
-        cascade="all, delete",
-    )
+##################
+# Reference tables
+##################
 
 
-# Association tables
-class Status(BaseModel):
-    __tablename__ = 'status'
-    id = Column(
-        String,
-        primary_key=True,
-        nullable=False,
-    )
-
-
+# TODO: Is this "association" or "reference"
 class Role(BaseModel):
     __tablename__ = 'role'
     id = Column(
@@ -429,169 +393,23 @@ class Role(BaseModel):
     )
 
 
-class ResponseObservingSystemDataProduct(BaseModel):
-    __tablename__ = 'response_observing_system_data_product'
-    __table_args__ = (
-        UniqueConstraint('response_observing_system_id', 'response_data_product_id'),
-        Index(
-            f'idx_{__tablename__}',
-            'response_observing_system_id',
-            'response_data_product_id',
-            unique=True,
-        ),
-    )
+class AssessmentStatus(BaseModel):
+    __tablename__ = 'status'
     id = Column(
-        Integer,
-        autoincrement=True,
+        String,
         primary_key=True,
     )
-    response_observing_system_id = Column(
-        Integer,
-        ForeignKey('response_observing_system.id'),
-        index=True,
-    )
-    response_data_product_id = Column(
-        Integer,
-        ForeignKey('response_data_product.id'),
-        index=True,
-    )
-
-    criticality_rating = Column(
-        SmallInteger,
-        CheckConstraint(
-            'criticality_rating>=0 and criticality_rating<=100',
-            name='c0-100',
-        ),
-        nullable=False,
-    )
-    performance_rating = Column(
-        SmallInteger,
-        CheckConstraint(
-            'performance_rating>=0 and performance_rating<=100',
-            name='0-100',
-        ),
-        nullable=False,
-    )
-    rationale = Column(String(512), nullable=True)
-    needed_improvements = Column(String(512), nullable=True)
-
-    observing_system = relationship(
-        'ResponseObservingSystem',
-        back_populates='output_relationships',
-    )
-    data_product = relationship(
-        'ResponseDataProduct',
-        back_populates='input_relationships',
-    )
-
-
-class ResponseDataProductApplication(BaseModel):
-    __tablename__ = 'response_data_product_application'
-    __table_args__ = (
-        UniqueConstraint('response_data_product_id', 'response_application_id'),
-        Index(
-            f'idx_{__tablename__}',
-            'response_data_product_id',
-            'response_application_id',
-            unique=True,
-        ),
-    )
-    id = Column(
-        Integer,
-        autoincrement=True,
-        primary_key=True,
-    )
-
-    response_data_product_id = Column(
-        Integer,
-        ForeignKey('response_data_product.id'),
-        index=True,
-    )
-    response_application_id = Column(
-        Integer,
-        ForeignKey('response_application.id'),
-        index=True,
-    )
-
-    criticality_rating = Column(
-        SmallInteger,
-        CheckConstraint(
-            'criticality_rating>=0 and criticality_rating<=100',
-            name='c0-100',
-        ),
-        nullable=False,
-    )
-    performance_rating = Column(
-        SmallInteger,
-        CheckConstraint(
-            'performance_rating>=0 and performance_rating<=100',
-            name='0-100',
-        ),
-        nullable=False,
-    )
-    rationale = Column(String(512), nullable=True)
-    needed_improvements = Column(String(512), nullable=True)
-
-    data_product = relationship(
-        'ResponseDataProduct',
-        back_populates='output_relationships',
-    )
-    application = relationship(
-        'ResponseApplication',
-        back_populates='input_relationships',
-    )
-
-
-class ResponseApplicationSocietalBenefitArea(BaseModel):
-    __tablename__ = 'response_application_societal_benefit_area'
-    __table_args__ = (
-        UniqueConstraint(
-            'response_application_id',
-            'response_societal_benefit_area_id',
-        ),
-        Index(
-            'idx_{__tablename__}',
-            'response_application_id',
-            'response_societal_benefit_area_id',
-            unique=True,
-        ),
-    )
-    id = Column(
-        Integer,
-        autoincrement=True,
-        primary_key=True,
-    )
-    response_application_id = Column(
-        Integer,
-        ForeignKey('response_application.id'),
-        index=True,
-    )
-    response_societal_benefit_area_id = Column(
-        Integer,
-        ForeignKey('response_societal_benefit_area.id'),
-        index=True,
-    )
-
-    performance_rating = Column(
-        SmallInteger,
-        CheckConstraint(
-            'performance_rating>=0 and performance_rating<=100',
-            name='0-100',
-        ),
+    description = Column(
+        String,
         nullable=False,
     )
 
-    application = relationship(
-        'ResponseApplication',
-        back_populates='output_relationships',
-    )
-    societal_benefit_area = relationship(
-        'ResponseSocietalBenefitArea',
-        back_populates='input_relationships',
+    assessments = relationship(
+        Assessment,
+        back_populates='status',
     )
 
 
-# Reference tables
 class SocietalBenefitArea(BaseModel):
     __tablename__ = 'societal_benefit_area'
     id = Column(

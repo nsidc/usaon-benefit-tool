@@ -6,9 +6,9 @@
 {% block content %}
 
   <h2>
-    {% block title %}Project #{{survey.id}}: {{survey.title}}{% endblock %}
+    {% block title %}Assessment #{{assessment.id}}: {{assessment.title}}{% endblock %}
     {{ help_icon(
-        "Created: "~survey.response.created_timestamp | dateformat~"<br/>Last updated: "~survey.response.updated_timestamp | dateformat,
+        "Created: " ~ assessment.created_timestamp | dateformat ~ "<br/>Last updated: " ~ assessment.updated_timestamp | dateformat,
         html="true",
     )}}
   </h2>
@@ -17,45 +17,47 @@
   <ul class="nav nav-pills">
 
     {{ render_nav_pill_item(
-      'survey.view_survey',
-      'Overview',
-      survey_id=survey.id,
+      'assessment.user_guide',
+      'User guide',
+      assessment_id=assessment.id,
     ) }}
 
     {{ render_nav_pill_item(
-      'response.view_response',
-      'User guide',
-      survey_id=survey.id,
+      'assessment.get',
+      'Overview',
+      assessment_id=assessment.id,
     ) }}
 
+    {#
     {{ render_nav_pill_item(
       'obs.view_response_observing_systems',
       'Observing systems',
-      survey_id=survey.id,
+      assessment_id=assessment.id,
       _icon='pencil',
-      _badge=survey.response.observing_systems | length | string,
+      _badge=assessment.response.observing_systems | length | string,
     ) }}
     {{ render_nav_pill_item(
       'data_product.view_response_data_products',
       'Data products',
-      survey_id=survey.id,
+      assessment_id=assessment.id,
       _icon='pencil',
-      _badge=survey.response.data_products | length | string,
+      _badge=assessment.response.data_products | length | string,
     ) }}
     {{ render_nav_pill_item(
       'application.view_response_applications',
       'Applications',
-      survey_id=survey.id,
+      assessment_id=assessment.id,
       _icon='pencil',
-      _badge=survey.response.applications | length | string,
+      _badge=assessment.response.applications | length | string,
     ) }}
     {{ render_nav_pill_item(
       'sba.view_response_sbas',
       'Societal Benefit Areas',
-      survey_id=survey.id,
+      assessment_id=assessment.id,
       _icon='pencil',
-      _badge=survey.response.societal_benefit_areas | length | string,
+      _badge=assessment.response.societal_benefit_areas | length | string,
     ) }}
+    #}
 
   </ul>
 

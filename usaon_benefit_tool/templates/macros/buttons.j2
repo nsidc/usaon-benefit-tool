@@ -1,5 +1,18 @@
 {% from 'bootstrap5/utils.html' import render_icon %}
 
+{% macro delete_button_htmx(endpoint, text) -%}
+  {% set text = text | default('Delete') %}
+
+  <button
+    hx-delete="{{ url_for(endpoint, **kwargs) }}"
+    hx-confirm="Are you sure?"
+    class="btn btn-danger text-nowrap"
+    role="button"
+  >
+    {{render_icon('trash3-fill')}} {{text}}
+  </button>
+{%- endmacro -%}
+
 {% macro delete_button(endpoint, text) -%}
   {# CRITICAL: The "remove()" JS function must be available. #}
   {% set text = text | default('Delete') %}
@@ -21,10 +34,10 @@
      class="btn btn-success text-nowrap"
      role="button"
   />
+    {# TODO: Sparkles? :) #}
     {{ render_icon("plus-circle-fill") }} {{text}}
   </a>
 {%- endmacro -%}
-
 
 
 {% macro edit_button(endpoint, text) -%}

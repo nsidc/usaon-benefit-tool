@@ -13,9 +13,11 @@ from sqlalchemy import inspect as sqla_inspect
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from usaon_benefit_tool.constants import repo
+from usaon_benefit_tool.constants.sankey import DUMMY_NODE_ID
 from usaon_benefit_tool.constants.version import VERSION
 from usaon_benefit_tool.util.db.connect import db_connstr
 from usaon_benefit_tool.util.envvar import envvar_is_true
+from usaon_benefit_tool.util.flask_jsglue import JSGlue
 
 __version__: Final[str] = VERSION
 
@@ -38,8 +40,25 @@ def create_app():
     """Create and configure the app."""
     # TODO: enable override config to test_config
     # https://flask.palletsprojects.com/en/2.3.x/tutorial/factory/
+    _monkeypatch()
 
     app = Flask(__name__)
+    _setup_config(app)
+    _setup_proxy_support(app)
+
+    db.init_app(app)
+
+    Bootstrap5(app)
+    JSGlue(app)
+
+    _setup_login(app)
+    _register_blueprints(app)
+    _register_template_helpers(app)
+
+    return app
+
+
+def _setup_config(app) -> None:
     app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'youcanneverguess')
     app.config['SQLALCHEMY_DATABASE_URI'] = db_connstr(app)
     app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = 'cosmo'
@@ -52,13 +71,13 @@ def create_app():
     # DEV ONLY: Disable login
     app.config['LOGIN_DISABLED'] = envvar_is_true("USAON_BENEFIT_TOOL_LOGIN_DISABLED")
 
+
+def _setup_proxy_support(app) -> None:
     if envvar_is_true("USAON_BENEFIT_TOOL_PROXY"):
         app.wsgi_app = ProxyFix(app.wsgi_app, x_prefix=1)  # type: ignore
 
-    db.init_app(app)
 
-    Bootstrap5(app)
-
+def _setup_login(app) -> None:
     login_manager = LoginManager()
     login_manager.login_view = "login.login"
     login_manager.init_app(app)
@@ -86,44 +105,10 @@ def create_app():
             if time.time() >= token['expires_at']:
                 del s['google_oauth_token']
 
-    from usaon_benefit_tool.routes.login import google_bp, login_bp
-    from usaon_benefit_tool.routes.logout import logout_bp
-    from usaon_benefit_tool.routes.root import root_bp
-    from usaon_benefit_tool.routes.survey import response_bp, survey_bp
-    from usaon_benefit_tool.routes.survey.applications import application_bp
-    from usaon_benefit_tool.routes.survey.data_products import data_product_bp
-    from usaon_benefit_tool.routes.survey.observing_systems import observing_system_bp
-    from usaon_benefit_tool.routes.survey.relationships.application_societal_benefit_area import (
-        application_societal_benefit_area_bp,
-    )
-    from usaon_benefit_tool.routes.survey.relationships.data_product_application import (
-        data_product_application_bp,
-    )
-    from usaon_benefit_tool.routes.survey.relationships.observing_system_data_product import (
-        observing_system_data_product_bp,
-    )
-    from usaon_benefit_tool.routes.survey.sbas import societal_benefit_area_bp
-    from usaon_benefit_tool.routes.surveys import surveys_bp
-    from usaon_benefit_tool.routes.user import user_bp
-    from usaon_benefit_tool.routes.users import users_bp
 
-    app.register_blueprint(root_bp)
-    app.register_blueprint(surveys_bp)
-    app.register_blueprint(survey_bp)
-    app.register_blueprint(user_bp)
-    app.register_blueprint(users_bp)
-    app.register_blueprint(login_bp)
-    app.register_blueprint(logout_bp)
-    app.register_blueprint(google_bp, url_prefix="/google_oauth")
-    app.register_blueprint(response_bp)
-    app.register_blueprint(observing_system_bp)
-    app.register_blueprint(societal_benefit_area_bp)
-    app.register_blueprint(application_bp)
-    app.register_blueprint(data_product_bp)
-    app.register_blueprint(observing_system_data_product_bp)
-    app.register_blueprint(data_product_application_bp)
-    app.register_blueprint(application_societal_benefit_area_bp)
-
+def _register_template_helpers(app) -> None:
+    # TODO: Consider context processors instead?
+    # https://flask.palletsprojects.com/en/2.3.x/templating/#context-processors
     app.jinja_env.globals.update(
         __version__=__version__,
         sqla_inspect=sqla_inspect,
@@ -131,6 +116,9 @@ def create_app():
         doc_url=repo.DOC_URL,
         discuss_url=repo.DISCUSS_URL,
         current_year=repo.CURRENT_YEAR,
+        constants={
+            "DUMMY_NODE_ID": DUMMY_NODE_ID,
+        },
     )
 
     md = Markdown(extensions=['fenced_code'])
@@ -139,4 +127,37 @@ def create_app():
         dateformat=lambda date: date.strftime("%Y-%m-%d %H:%M%Z"),
     )
 
-    return app
+
+def _register_blueprints(app) -> None:
+    # TODO: Extract function register_blueprints
+    from usaon_benefit_tool.routes.assessment import assessment_bp
+    from usaon_benefit_tool.routes.assessments import assessments_bp
+    from usaon_benefit_tool.routes.login import google_bp, login_bp
+    from usaon_benefit_tool.routes.logout import logout_bp
+    from usaon_benefit_tool.routes.node import node_bp
+    from usaon_benefit_tool.routes.nodes import nodes_bp
+    from usaon_benefit_tool.routes.root import root_bp
+    from usaon_benefit_tool.routes.user import user_bp
+    from usaon_benefit_tool.routes.users import users_bp
+
+    app.register_blueprint(root_bp)
+
+    app.register_blueprint(user_bp)
+    app.register_blueprint(users_bp)
+    app.register_blueprint(login_bp)
+    app.register_blueprint(logout_bp)
+    app.register_blueprint(google_bp, url_prefix="/google_oauth")
+
+    app.register_blueprint(assessments_bp)
+    app.register_blueprint(assessment_bp)
+
+    app.register_blueprint(nodes_bp)
+    app.register_blueprint(node_bp)
+
+
+def _monkeypatch():
+    import wtforms_sqlalchemy
+
+    from usaon_benefit_tool.util.monkeypatch.wtforms_sqlalchemy import model_fields
+
+    wtforms_sqlalchemy.orm.model_fields = model_fields

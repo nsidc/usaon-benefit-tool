@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'macros/badges/private.j2' import private_badge %}
+{% from 'macros/forms/new_assessment.j2' import new_assessment_form %}
+
+
+{% block content %}
+  <h2>{% block title %}Assessments{% endblock %}</h1>
+
+  {% if current_user.role_id=='admin' %}
+    <button
+      data-bs-toggle="modal"
+      data-bs-target="#new-assessment-modal"
+      class="btn btn-success text-nowrap">
+      {{ render_icon("plus-circle-fill") }} New
+    </button>
+
+    <div
+      id="new-assessment-modal"
+      class="modal modal-blur fade"
+      style="display: none"
+      aria-hidden="false"
+      tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          {{ new_assessment_form(form) }}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <br />
+  <br />
+
+  <table class='table'>
+
+    <thead>
+      <tr>
+        {% if current_user.role_id=='admin' %}
+        <th>#</th>
+        {% endif %}
+
+        <th>Title</th>
+
+        {% if current_user.role_id=='admin' %}
+        <th>Created by</th>
+        <th>Created time</th>
+        <th>Updated time</th>
+        {% endif %}
+
+        <th>Status</th>
+
+        <!-- no header for final "badges" and "actions" columns -->
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+    {% for assessment in assessments %}
+      <tr>
+        {% if current_user.role_id=='admin' %}
+        <td>{{assessment.id}}</td>
+        {% endif %}
+
+        <td><strong><a href="{{ url_for("assessment.get", assessment_id=assessment.id) }}">
+          {{assessment.title}}
+        </a></strong></td>
+
+        {% if current_user.role_id=='admin' %}
+        <td>{{assessment.created_by.email}}</td>
+        <td>{{assessment.created_timestamp | dateformat}}</td>
+        <td>{{assessment.updated_timestamp | dateformat}}</td>
+        {% endif %}
+
+        <td>{{assessment.status.id}}</td>
+        <td>{{private_badge(assessment.private)}}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+
+  </table>
+
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'macros/badges/private.j2' import private_badge %}
+{% from 'macros/buttons.j2' import edit_button, delete_button_htmx %}
+
+
+{% block content %}
+  <h2>{% block title %}Object library{% endblock %}</h1>
+
+  {% if current_user.role_id=='admin' %}
+    {# TODO: _DRY!_ #}
+    <button
+      data-bs-toggle="modal"
+      data-bs-target="#new-node-modal"
+      {# TODO: Parameterize node_type #}
+      hx-get="{{ url_for('nodes.form', node_type='observing_system') }}"
+      hx-target="#new-node-modal-hx-target"
+      hx-trigger="click"
+      class="btn btn-success text-nowrap">
+      {{ render_icon("plus-circle-fill") }} New observing system
+    </button>
+    <button
+      data-bs-toggle="modal"
+      data-bs-target="#new-node-modal"
+      {# TODO: Parameterize node_type #}
+      hx-get="{{ url_for('nodes.form', node_type='data_product') }}"
+      hx-target="#new-node-modal-hx-target"
+      hx-trigger="click"
+      class="btn btn-success text-nowrap">
+      {{ render_icon("plus-circle-fill") }} New data product
+    </button>
+    <button
+      data-bs-toggle="modal"
+      data-bs-target="#new-node-modal"
+      {# TODO: Parameterize node_type #}
+      hx-get="{{ url_for('nodes.form', node_type='application') }}"
+      hx-target="#new-node-modal-hx-target"
+      hx-trigger="click"
+      class="btn btn-success text-nowrap">
+      {{ render_icon("plus-circle-fill") }} New application
+    </button>
+    <button
+      data-bs-toggle="modal"
+      data-bs-target="#new-node-modal"
+      {# TODO: Parameterize node_type #}
+      hx-get="{{ url_for('nodes.form', node_type='societal_benefit_area') }}"
+      hx-target="#new-node-modal-hx-target"
+      hx-trigger="click"
+      class="btn btn-success text-nowrap">
+      {{ render_icon("plus-circle-fill") }} New societal benefit area
+    </button>
+    <div
+      id="new-node-modal"
+      class="modal modal-blur fade"
+      style="display: none"
+      aria-hidden="false"
+      tabindex="-1"
+    >
+      <div
+        id="new-node-modal-hx-target"
+        class="modal-dialog modal-lg modal-dialog-centered"
+        role="document">
+        <div class="modal-content">
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <br />
+  <br />
+
+  <table class='table'>
+
+    <thead>
+      <tr>
+        {% if current_user.role_id=='admin' %}
+        <th>#</th>
+        {% endif %}
+
+        <th>Title</th>
+        <th>Object type</th>
+
+        {% if current_user.role_id=='admin' %}
+        <th>Created by</th>
+        <th>Created time</th>
+        <th>Updated time</th>
+        {% endif %}
+
+      </tr>
+    </thead>
+
+    <tbody>
+    {% for node in nodes %}
+      <tr>
+
+        {% if current_user.role_id=='admin' %}
+        <td>{{node.id}}</td>
+        {% endif %}
+
+        <td>
+          <strong><a href="{{ url_for("node.get", node_id=node.id) }}">
+            {{node.title}}
+          </a></strong>
+        </td>
+
+        <td>
+          {{node.type.value}}
+        </td>
+
+        {% if current_user.role_id=='admin' %}
+        <td>{{node.created_by.email}}</td>
+        <td>{{node.created_timestamp | dateformat}}</td>
+        <td>{{node.updated_timestamp | dateformat}}</td>
+        <td>
+          {{delete_button_htmx(
+            'node.delete',
+            'Delete object',
+            node_id=node.id,
+          )}}
+        </td>
+        {% endif %}
+
+      </tr>
+    {% endfor %}
+    </tbody>
+
+  </table>
+
+{% endblock %}

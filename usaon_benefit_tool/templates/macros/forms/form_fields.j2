@@ -1,0 +1,35 @@
+{% from 'bootstrap5/form.html' import render_hidden_errors, render_field %}
+
+{% macro render_form_fields(
+  form,
+  form_type="basic",
+  horizontal_columns=('lg', 2, 10),
+  button_map={},
+  button_style="",
+  button_size="",
+  form_group_classes=''
+) %}
+  {#-
+  Render a form without the <form> tag; we want full control of it so we can use
+  HTMX attributes.
+
+  Based on:
+
+      https://github.com/helloflask/bootstrap-flask/blob/ce852e4c8e6c04952cbc27aa8089418ce04ebd13/flask_bootstrap/templates/bootstrap5/form.html#L299-L311
+  -#}
+
+  {{ form.hidden_tag() }}
+  {{ render_hidden_errors(form) }}
+  {%- for field in form %}
+    {% if not bootstrap_is_hidden_field(field) -%}
+      {{ render_field(field,
+          form_type=form_type,
+          horizontal_columns=horizontal_columns,
+          button_map=button_map,
+          button_style=button_style,
+          button_size=button_size,
+          form_group_classes=form_group_classes) }}
+    {%- endif %}
+  {%- endfor %}
+
+{% endmacro %}
