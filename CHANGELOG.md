@@ -1,3 +1,16 @@
+## UNRELEASED
+
+* Revamp data model
+    * All objects unified in one main table
+    * Renamed surveys/projects -> Assessments
+    * Added object library table
+* Revamp user experience
+    * Enter assessment data all on one page
+    * Manage object library separately from assessment data
+* Revamp architecture
+    * Use HTMX to start implementing HATEOAS architecture
+
+
 ## v1.6.1 (2023-12-22)
 
 * Spelling fixes
