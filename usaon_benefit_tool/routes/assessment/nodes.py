@@ -42,7 +42,7 @@ def post(assessment_id: str):
         status=201,
         headers={
             'HX-Redirect': url_for(
-                'assessment.view_assessment_overview',
+                'assessment.get',
                 assessment_id=assessment_id,
             ),
         },

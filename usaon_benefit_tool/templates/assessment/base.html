@@ -17,20 +17,14 @@
   <ul class="nav nav-pills">
 
     {{ render_nav_pill_item(
-      'assessment.view_assessment',
+      'assessment.user_guide',
       'User guide',
       assessment_id=assessment.id,
     ) }}
 
     {{ render_nav_pill_item(
-      'assessment.view_assessment_overview',
+      'assessment.get',
       'Overview',
-      assessment_id=assessment.id,
-    ) }}
-
-    {{ render_nav_pill_item(
-      'assessment.edit_assessment',
-      'Edit',
       assessment_id=assessment.id,
     ) }}
 

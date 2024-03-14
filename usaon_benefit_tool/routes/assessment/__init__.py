@@ -24,27 +24,10 @@ assessment_bp.register_blueprint(assessment_nodes_bp)
 # assessment_bp.register_blueprint(assessment_node_bp)
 
 
-@assessment_bp.route('/user_guide', methods=['GET'])
-@login_required
-def view_assessment(assessment_id: str):
-    """Display the assessment user guide.
-
-    TODO: Rename to "user_guide".
-    """
-    assessment = db.get_or_404(Assessment, assessment_id)
-    return render_template(
-        'assessment/user_guide.html',
-        assessment=assessment,
-    )
-
-
 @assessment_bp.route('')
 @login_required
-def view_assessment_overview(assessment_id: str):
-    """Display the assessment overview.
-
-    TODO: Rename to "get".
-    """
+def get(assessment_id: str):
+    """Display the assessment overview."""
     assessment = db.get_or_404(Assessment, assessment_id)
     return render_template(
         'assessment/overview.html',
@@ -53,16 +36,12 @@ def view_assessment_overview(assessment_id: str):
     )
 
 
-@assessment_bp.route('/edit')
+@assessment_bp.route('/user_guide', methods=['GET'])
 @login_required
-def edit_assessment(assessment_id: str):
-    """Display an interface for editing a assessment.
-
-    TODO: Only permit respondents
-    """
+def user_guide(assessment_id: str):
+    """Display the assessment user guide."""
     assessment = db.get_or_404(Assessment, assessment_id)
     return render_template(
-        'assessment/edit.html',
+        'assessment/user_guide.html',
         assessment=assessment,
-        sankey_series=sankey(assessment),
     )

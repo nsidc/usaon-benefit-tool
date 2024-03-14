@@ -1,7 +1,7 @@
 {% macro new_assessment_form(form) -%}
   <h2>New assessment</h2>
 
-  <form action={{ url_for("assessments.add_assessment") }} method="POST">
+  <form action={{ url_for("assessments.post") }} method="POST">
     {{form.csrf_token}}
 
     {{form.title.label}} {{form.title(rows=4, cols=100)}}

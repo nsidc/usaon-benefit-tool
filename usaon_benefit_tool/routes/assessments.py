@@ -11,12 +11,12 @@ from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import Assessment
 
-assessments_bp = Blueprint('assessments', __name__, url_prefix='/asessments')
+assessments_bp = Blueprint('assessments', __name__, url_prefix='/assessments')
 
 
-@assessments_bp.route('')
+@assessments_bp.route('', methods=["GET"])
 @login_required
-def view_assessments():
+def get():
     assessments = Assessment.query.order_by(Assessment.created_timestamp).all()
     form = FORMS_BY_MODEL[Assessment](obj=Assessment())
     return render_template('assessments.html', assessments=assessments, form=form)
@@ -24,7 +24,7 @@ def view_assessments():
 
 @assessments_bp.route('', methods=["POST"])
 @login_required
-def add_assessment():
+def post():
     assessment = Assessment()
     form = FORMS_BY_MODEL[Assessment](request.form, obj=assessment)
 
@@ -39,4 +39,4 @@ def add_assessment():
     db.session.add(assessment)
     db.session.commit()
 
-    return redirect(url_for('assessment.view_assessment', assessment_id=assessment.id))
+    return redirect(url_for('assessment.get', assessment_id=assessment.id))
