@@ -1,7 +1,7 @@
 {% macro nav_buttons(current_user) -%}
   {% from "bootstrap5/nav.html" import render_nav_item %}
 
-  {{ render_nav_item("assessments.view_assessments", "Assessments", _use_li=True)}}
+  {{ render_nav_item("assessments.get", "Assessments", _use_li=True)}}
   {# NB: The user-facing term for "nodes" is "objects" #}
   {{ render_nav_item("nodes.get", "Object library", _use_li=True)}}
 {%- endmacro -%}

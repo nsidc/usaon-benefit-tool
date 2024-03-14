@@ -13,6 +13,9 @@ from wtforms_sqlalchemy.orm import (
 from usaon_benefit_tool import db
 from usaon_benefit_tool.models.tables import (
     Assessment,
+    AssessmentNode,
+    Link,
+    Node,
     NodeSubtypeOther,
     NodeSubtypeSocietalBenefitArea,
     User,
@@ -43,6 +46,10 @@ class CustomModelConverter(ModelConverter):
         return super().conv_String(field_args, **extra)
 
 
+def get_node_label(node: Node) -> str:
+    return f"Object #{node.id} ({node.type.value}): {node.title}"
+
+
 model_form = partial(
     model_form,
     converter=CustomModelConverter(),
@@ -56,6 +63,20 @@ BaseModel: DeclarativeMeta = db.Model
 
 FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
     Assessment: model_form(Assessment, only=['title', 'description']),
+    AssessmentNode: model_form(
+        AssessmentNode,
+        only=['node'],
+        field_args={
+            'node': {'get_label': get_node_label},
+        },
+    ),
+    Link: model_form(
+        Link,
+        field_args={
+            'source_assessment_node': {'get_label': lambda an: get_node_label(an.node)},
+            'target_assessment_node': {'get_label': lambda an: get_node_label(an.node)},
+        },
+    ),
     NodeSubtypeOther: model_form(
         NodeSubtypeOther,
         exclude=node_exclude,
@@ -64,6 +85,9 @@ FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
         NodeSubtypeSocietalBenefitArea,
         exclude=[*node_exclude, "societal_benefit_area_id"],
         exclude_fk=False,
+        field_args={
+            'societal_benefit_area': {'get_label': 'id'},
+        },
     ),
     User: model_form(
         User,

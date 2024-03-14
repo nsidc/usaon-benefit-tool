@@ -8,7 +8,7 @@
   <h2>{% block title %}Object library{% endblock %}</h1>
 
   {% if current_user.role_id=='admin' %}
-    {# TODO: _REFACTOR!_ #}
+    {# TODO: _DRY!_ #}
     <button
       data-bs-toggle="modal"
       data-bs-target="#new-node-modal"

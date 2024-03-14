@@ -11,15 +11,23 @@
 
   <div>
     <button
-      hx-get="{{ url_for("assessment.view_assessment", assessment_id=assessment.id) }}"
-      hx-target="#edit-element-modal-hx-target"
+      hx-get="{{ url_for("assessment.nodes.form", assessment_id=assessment.id) }}"
+      hx-target="#form-modal-hx-target"
       hx-trigger="click"
       data-bs-toggle="modal"
-      data-bs-target="#edit-element-modal"
+      data-bs-target="#form-modal"
       class="btn btn-success text-nowrap">
-      {{ render_icon("plus-circle-fill") }} New data product
+      {{ render_icon("plus-circle-fill") }} Add node
     </button>
-    {# TODO: etc... #}
+    <button
+      hx-get="{{ url_for("assessment.links.form", assessment_id=assessment.id) }}"
+      hx-target="#form-modal-hx-target"
+      hx-trigger="click"
+      data-bs-toggle="modal"
+      data-bs-target="#form-modal"
+      class="btn btn-success text-nowrap">
+      {{ render_icon("plus-circle-fill") }} Add link
+    </button>
   </div>
 
   {{ display_sankey(sankey_series, assessment=assessment)}}
@@ -36,17 +44,16 @@
         one big Jinja template for a unified diagram editing interface that
         must display at least 4 different kinds of forms.
     #}
-    {# TODO: Better ID; not just for edit. #}
     <div
-      id="edit-element-modal"
+      id="form-modal"
       class="modal modal-blur fade"
       style="display: none"
       aria-hidden="false"
       tabindex="-1"
       hx-trigger="modalOpened"
-      hx-target="#edit-element-modal-hx-target"
+      hx-target="#form-modal-hx-target"
     >
-      <div id="edit-element-modal-hx-target"
+      <div id="form-modal-hx-target"
         class="modal-dialog modal-xl modal-dialog-centered"
         role="document"
       >
