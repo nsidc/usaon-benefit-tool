@@ -4,8 +4,7 @@ from flask_login import login_required
 from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import Assessment
-
-# from usaon_benefit_tool.routes.assessment.link import assessment_link_bp
+from usaon_benefit_tool.routes.assessment.link import assessment_link_bp
 from usaon_benefit_tool.routes.assessment.links import assessment_links_bp
 from usaon_benefit_tool.routes.assessment.node import assessment_node_bp
 from usaon_benefit_tool.routes.assessment.nodes import (
@@ -19,7 +18,7 @@ assessment_bp = Blueprint(
     url_prefix='/assessment/<string:assessment_id>',
 )
 assessment_bp.register_blueprint(assessment_links_bp)
-# assessment_bp.register_blueprint(assessment_link_bp)
+assessment_bp.register_blueprint(assessment_link_bp)
 assessment_bp.register_blueprint(assessment_nodes_bp)
 assessment_bp.register_blueprint(assessment_node_bp)
 

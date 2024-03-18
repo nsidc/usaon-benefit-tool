@@ -72,6 +72,7 @@ FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
     ),
     Link: model_form(
         Link,
+        only=['performance_rating', 'criticality_rating'],
         field_args={
             'source_assessment_node': {'get_label': lambda an: get_node_label(an.node)},
             'target_assessment_node': {'get_label': lambda an: get_node_label(an.node)},

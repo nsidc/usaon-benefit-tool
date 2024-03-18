@@ -26,9 +26,9 @@
         idArgValue = point.id.split("_").slice(-1)[0];
       } else {
         // It's a link, TODO
-        routeTarget = "Help!";
-        idArgName = "Help!";
-        idArgValue = "Help!";
+        routeTarget = "assessment.link.form";
+        idArgName = "link_id";
+        idArgValue = "point.id";
       }
       const targetUrl = Flask.url_for(
         routeTarget,
