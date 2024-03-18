@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% from 'macros/forms/form_fields.j2' import render_form_fields %}
 {% from 'macros/help_icon.j2' import help_icon %}
 {% from 'macros/nav_pills.j2' import render_nav_pill_item %}
 
@@ -27,37 +28,12 @@
       'Overview',
       assessment_id=assessment.id,
     ) }}
-
-    {#
     {{ render_nav_pill_item(
-      'obs.view_response_observing_systems',
-      'Observing systems',
+      'assessment.edit',
+      'Edit Assessment Details',
       assessment_id=assessment.id,
-      _icon='pencil',
-      _badge=assessment.response.observing_systems | length | string,
+      form=form,
     ) }}
-    {{ render_nav_pill_item(
-      'data_product.view_response_data_products',
-      'Data products',
-      assessment_id=assessment.id,
-      _icon='pencil',
-      _badge=assessment.response.data_products | length | string,
-    ) }}
-    {{ render_nav_pill_item(
-      'application.view_response_applications',
-      'Applications',
-      assessment_id=assessment.id,
-      _icon='pencil',
-      _badge=assessment.response.applications | length | string,
-    ) }}
-    {{ render_nav_pill_item(
-      'sba.view_response_sbas',
-      'Societal Benefit Areas',
-      assessment_id=assessment.id,
-      _icon='pencil',
-      _badge=assessment.response.societal_benefit_areas | length | string,
-    ) }}
-    #}
 
   </ul>
 

@@ -1,13 +1,15 @@
 {% extends 'assessment/base.html' %}
-{% from 'bootstrap5/utils.html' import render_icon %}
-{% from 'macros/javascript_highcharts.j2' import display_sankey %}
+{% from 'bootstrap5/form.html' import render_form %}
 
 {% block content %}
-  {{super()}}
 
-  <h3>Description</h3>
-  <p>{{assessment.description}}</p>
+  <h2>Assessment Title</h2>
+  <p>{{assessment.title}}</p>
+  
+  <form method="POST">
+    {{render_form(form, button_map={'submit_button': 'primary'}) }}
+  </form>
 
-  {{ display_sankey(sankey_series, assessment=assessment)}}
+
 
 {% endblock %}
