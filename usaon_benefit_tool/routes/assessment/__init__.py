@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, render_template, request
+from flask import Blueprint, Response, flash, render_template, request, url_for
 from flask_login import login_required
 
 from usaon_benefit_tool import db
@@ -24,6 +24,8 @@ assessment_bp.register_blueprint(assessment_links_bp)
 assessment_bp.register_blueprint(assessment_nodes_bp)
 # assessment_bp.register_blueprint(assessment_node_bp)
 
+Form = FORMS_BY_MODEL[Assessment]
+
 
 @assessment_bp.route('')
 @login_required
@@ -37,33 +39,44 @@ def get(assessment_id: str):
     )
 
 
-@assessment_bp.route('/edit', methods=['POST', 'GET'])
+@assessment_bp.route('/edit', methods=['GET'])
 @login_required
 def edit(assessment_id: str):
     """Display the assessment overview."""
-    Form = FORMS_BY_MODEL[Assessment]
     assessment = db.get_or_404(Assessment, assessment_id)
 
-    if request.method == 'POST':
-        form = Form(request.form, obj=assessment)
-        if form.validate():
-            form.populate_obj(assessment)
-            db.session.add(assessment)
-            db.session.commit()
-            form.populate_obj(assessment)
-
-            flash(f"You have updated {assessment.title}.", 'success')
-
-            return render_template(
-                'assessment/overview.html',
-                assessment=assessment,
-                sankey_series=sankey(assessment),
-            )
     form = Form(obj=assessment)
     return render_template(
         'assessment/edit.html',
         form=form,
         assessment=assessment,
+    )
+
+
+@assessment_bp.route('', methods=['PUT'])
+@login_required
+def put(assessment_id: str):
+    assessment = db.get_or_404(Assessment, assessment_id)
+    form = Form(request.form, obj=assessment)
+
+    if not form.validate():
+        # TODO: Better messaging, HTMX communication
+        return Response(status=400)
+
+    form.populate_obj(assessment)
+    db.session.add(assessment)
+    db.session.commit()
+
+    flash(f"You have updated Assessment #{assessment.id}.", 'success')
+
+    return Response(
+        status=200,
+        headers={
+            'HX-Redirect': url_for(
+                'assessment.get',
+                assessment_id=assessment.id,
+            ),
+        },
     )
 
 

@@ -1,10 +1,15 @@
+{% from 'macros/forms/form_fields.j2' import render_form_fields %}
+
 {% extends 'assessment/base.html' %}
-{% from 'bootstrap5/form.html' import render_form %}
 
 {% block content %}
 
-  <form method="POST">
-    {{render_form(form, button_map={'submit_button': 'primary'}) }}
+  {{super()}}
+
+  <form
+    hx-put="{{url_for("assessment.put", assessment_id=assessment.id) }}"
+  >
+    {{ render_form_fields(form) }}
   </form>
 
 
