@@ -55,9 +55,9 @@ def edit(assessment_id: str):
             flash(f"You have updated {assessment.title}.", 'success')
 
             return render_template(
-                'assessment/edit.html',
-                form=form,
+                'assessment/overview.html',
                 assessment=assessment,
+                sankey_series=sankey(assessment),
             )
     form = Form(obj=assessment)
     return render_template(
