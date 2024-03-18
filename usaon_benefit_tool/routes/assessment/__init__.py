@@ -7,8 +7,7 @@ from usaon_benefit_tool.models.tables import Assessment
 
 # from usaon_benefit_tool.routes.assessment.link import assessment_link_bp
 from usaon_benefit_tool.routes.assessment.links import assessment_links_bp
-
-# from usaon_benefit_tool.routes.assessment.node import assessment_node_bp
+from usaon_benefit_tool.routes.assessment.node import assessment_node_bp
 from usaon_benefit_tool.routes.assessment.nodes import (
     assessment_nodes_bp,
 )
@@ -22,7 +21,7 @@ assessment_bp = Blueprint(
 assessment_bp.register_blueprint(assessment_links_bp)
 # assessment_bp.register_blueprint(assessment_link_bp)
 assessment_bp.register_blueprint(assessment_nodes_bp)
-# assessment_bp.register_blueprint(assessment_node_bp)
+assessment_bp.register_blueprint(assessment_node_bp)
 
 Form = FORMS_BY_MODEL[Assessment]
 

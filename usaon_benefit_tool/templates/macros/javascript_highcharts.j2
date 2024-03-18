@@ -21,10 +21,9 @@
       let routeTarget, idArgName, idArgValue;
       if (isNode) {
         // FIXME: Brittle!
-        const routeSlug = camelToSnakeCase(point.type).replace(/^survey_/, "");
-        routeTarget = "assessment." + routeSlug + ".form";
-        idArgName = "assessment_" + routeSlug + "_id";
-        idArgValue = point.id.split("_")[1];
+        routeTarget = "assessment.node.form";
+        idArgName = "node_id";
+        idArgValue = point.id.split("_").slice(-1)[0];
       } else {
         // It's a link, TODO
         routeTarget = "Help!";
