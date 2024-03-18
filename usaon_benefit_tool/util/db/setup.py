@@ -207,6 +207,7 @@ def _init_test_assessment(session: Session) -> None:
         source_assessment_node=assessment_observing_system,
         target_assessment_node=assessment_data_product,
         performance_rating=25,
+        criticality_rating=75,
     )
 
     assessment_application = AssessmentNode(
@@ -217,6 +218,7 @@ def _init_test_assessment(session: Session) -> None:
         source_assessment_node=assessment_data_product,
         target_assessment_node=assessment_application,
         performance_rating=50,
+        criticality_rating=50,
     )
 
     assessment_sba = AssessmentNode(
@@ -227,6 +229,7 @@ def _init_test_assessment(session: Session) -> None:
         source_assessment_node=assessment_application,
         target_assessment_node=assessment_sba,
         performance_rating=75,
+        criticality_rating=25,
     )
 
     session.add_all(

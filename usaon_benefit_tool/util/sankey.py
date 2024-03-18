@@ -100,7 +100,7 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
         {
             "from": _node_id(link.source_assessment_node.node),
             "to": _node_id(link.target_assessment_node.node),
-            "weight": link.performance_rating,
+            "weight": link.criticality_rating,
         }
         for link in links
     ]
