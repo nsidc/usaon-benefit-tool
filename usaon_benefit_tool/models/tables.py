@@ -361,7 +361,15 @@ class Link(BaseModel):
         Integer,
         CheckConstraint(
             'performance_rating>0 and performance_rating<101',
-            name='0-100',
+            name='p0-100',
+        ),
+        nullable=False,
+    )
+    criticality_rating = Column(
+        Integer,
+        CheckConstraint(
+            'criticality_rating>0 and criticality_rating<101',
+            name='c0-100',
         ),
         nullable=False,
     )
