@@ -264,7 +264,7 @@ def _init_dev_user(session: Session) -> None:
     session.commit()
 
 
-def _get_or_create_test_user(session: Session) -> None:
+def _get_or_create_test_user(session: Session) -> User:
     """Insert a test user if it doesn't already exist."""
     try:
         # Look up test user by email address with .one()
