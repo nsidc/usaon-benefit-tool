@@ -19,15 +19,6 @@
       class="btn btn-success text-nowrap">
       {{ render_icon("plus-circle-fill") }} Add node
     </button>
-    <button
-      hx-get="{{ url_for("assessment.links.form", assessment_id=assessment.id) }}"
-      hx-target="#form-modal-hx-target"
-      hx-trigger="click"
-      data-bs-toggle="modal"
-      data-bs-target="#form-modal"
-      class="btn btn-success text-nowrap">
-      {{ render_icon("plus-circle-fill") }} Add link
-    </button>
   </div>
 
   {{ display_sankey(sankey_series, assessment=assessment)}}
