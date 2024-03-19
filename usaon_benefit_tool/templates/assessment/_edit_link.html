@@ -1,0 +1,27 @@
+{% from 'macros/forms/form_fields.j2' import render_form_fields %}
+{% from 'macros/buttons.j2' import delete_button_htmx %}
+
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title">
+      Edit Link: {{ link.source_assessment_node.node.short_name}} → {{link.target_assessment_node.node.short_name}}
+    </h5>
+    {{delete_button_htmx(
+      'assessment.link.delete',
+      'Delete',
+      assessment_id=assessment_id,
+      link_id=link.id,
+    )}}
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+  </div>
+
+  <div class="modal-body">
+    <form hx-put="{{ url_for(
+      "assessment.link.put",
+      assessment_id=assessment_id,
+      link_id=link.id,
+    ) }}">
+      {{ render_form_fields(form) }}
+    </form>
+  </div>
+</div>

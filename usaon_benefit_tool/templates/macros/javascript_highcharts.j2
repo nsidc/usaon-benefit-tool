@@ -20,15 +20,14 @@
       const isNode = "type" in point;
       let routeTarget, idArgName, idArgValue;
       if (isNode) {
-        // FIXME: Brittle!
         routeTarget = "assessment.node.form";
         idArgName = "node_id";
+        // FIXME: Brittle!
         idArgValue = point.id.split("_").slice(-1)[0];
       } else {
-        // It's a link, TODO
-        routeTarget = "Help!";
-        idArgName = "Help!";
-        idArgValue = "Help!";
+        routeTarget = "assessment.link.form";
+        idArgName = "link_id";
+        idArgValue = point.id;
       }
       const targetUrl = Flask.url_for(
         routeTarget,
