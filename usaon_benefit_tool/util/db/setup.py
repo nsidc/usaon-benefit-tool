@@ -2,6 +2,7 @@
 
 TODO: Break this up in to multiple modules!
 """
+import sqlalchemy
 from flask import current_app
 from loguru import logger
 from sqlalchemy import MetaData
@@ -23,8 +24,9 @@ from usaon_benefit_tool.models.tables import (
     SocietalBenefitArea,
     SocietalBenefitKeyObjective,
     SocietalBenefitSubArea,
+    User,
 )
-from usaon_benefit_tool.util.dev import DEV_USER
+from usaon_benefit_tool.util.dev import DEV_USER, TEST_USER
 
 
 def recreate_tables() -> None:
@@ -148,14 +150,18 @@ def _init_societal_benefit_areas(session: Session) -> None:
 
 
 def _init_test_assessment(session: Session) -> None:
+    test_user = _get_or_create_test_user(session)
+
     assessment = Assessment(
         title="[TEST] This is testing data!",
         description=(
             "Created by running the relevant invoke task from the project source code."
         ),
+        created_by=test_user,
     )
 
     common_obj_fields = {
+        "created_by": test_user,
         "organization": "-",
         "funder": "-",
         "funding_country": "-",
@@ -193,6 +199,7 @@ def _init_test_assessment(session: Session) -> None:
         short_name="Test SBA",
         societal_benefit_area_id=next(iter(IAOA_SBA_FRAMEWORK.keys())),
         type=NodeType.SOCIETAL_BENEFIT_AREA,
+        created_by=test_user,
     )
 
     assessment_observing_system = AssessmentNode(
@@ -255,3 +262,15 @@ def _init_dev_user(session: Session) -> None:
     logger.warning("Inserting dev user. This should not happen in production!")
     session.add(DEV_USER)
     session.commit()
+
+
+def _get_or_create_test_user(session: Session) -> User:
+    """Insert a test user if it doesn't already exist."""
+    try:
+        # Look up test user by email address with .one()
+        return User.query.filter_by(email=TEST_USER.email).one()
+    except sqlalchemy.orm.exc.NoResultFound:
+        logger.warning("Inserting test user.")
+        session.add(TEST_USER)
+        session.commit()
+        return TEST_USER
