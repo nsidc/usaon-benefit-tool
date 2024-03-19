@@ -1,9 +1,6 @@
 {% macro add_javascript__highcharts(sankey_series, assessment) -%}
   <script>
     // TODO: const or var for compatibility?
-    const camelToSnakeCase = str => str.replace(/[A-Z]/g, (letter, index) => {
-      return index == 0 ? letter.toLowerCase() : '_'+ letter.toLowerCase();
-    });
     const pointClickHandler = function(event) {
       const point = this;
       if ([point.id, point.from].includes("{{ constants.DUMMY_NODE_ID }}")) {
@@ -20,16 +17,14 @@
       const isNode = "type" in point;
       let routeTarget, idArgName, idArgValue;
       if (isNode) {
+        routeTarget = "assessment.node.form";
+        idArgName = "node_id";
         // FIXME: Brittle!
-        const routeSlug = camelToSnakeCase(point.type).replace(/^survey_/, "");
-        routeTarget = "assessment." + routeSlug + ".form";
-        idArgName = "assessment_" + routeSlug + "_id";
-        idArgValue = point.id.split("_")[1];
+        idArgValue = point.id.split("_").slice(-1)[0];
       } else {
-        // It's a link, TODO
-        routeTarget = "Help!";
-        idArgName = "Help!";
-        idArgValue = "Help!";
+        routeTarget = "assessment.link.form";
+        idArgName = "link_id";
+        idArgValue = point.id;
       }
       const targetUrl = Flask.url_for(
         routeTarget,

@@ -1,7 +1,8 @@
 from itertools import chain
 from typing import NotRequired, TypedDict
 
-from usaon_benefit_tool.constants.sankey import DUMMY_NODE_ID
+from usaon_benefit_tool._types import NodeType
+from usaon_benefit_tool.constants.sankey import ALLOWED_LINKS, DUMMY_NODE_ID
 from usaon_benefit_tool.models.tables import Assessment, AssessmentNode, Node
 
 # NOTE: Can't use class syntax because of hard keyword conflict "from"
@@ -12,8 +13,24 @@ HighchartsSankeySeriesLink = TypedDict(
         "to": str,
         "weight": int,
         "color": NotRequired[str],
+        "id": NotRequired[int],
     },
 )
+
+
+# TODO: Should we have a general function which combines permitted sources and targets?
+def permitted_target_link_types(node_type: NodeType) -> set[NodeType]:
+    """NodeTypes which this NodeType is permitted to link _to_."""
+    return {
+        *[e[1] for e in ALLOWED_LINKS if e[0] is node_type],
+    }
+
+
+def permitted_source_link_types(node_type: NodeType) -> set[NodeType]:
+    """NodeTypes which this NodeType is permitted to link _from_."""
+    return {
+        *[e[0] for e in ALLOWED_LINKS if e[1] is node_type],
+    }
 
 
 # TODO: Use dataclasses instead
@@ -101,6 +118,7 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
             "from": _node_id(link.source_assessment_node.node),
             "to": _node_id(link.target_assessment_node.node),
             "weight": link.criticality_rating,
+            "id": link.id,
         }
         for link in links
     ]

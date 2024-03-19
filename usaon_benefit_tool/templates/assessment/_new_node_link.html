@@ -1,0 +1,21 @@
+{% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'macros/buttons.j2' import delete_button_htmx %}
+{% from 'macros/forms/form_fields.j2' import render_form_fields %}
+
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title">
+      Add link to node: {{ assessment_node.node.short_name }}
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+  </div>
+
+  <div class="modal-body">
+    <form hx-post="{{ url_for(
+      "assessment.links.post",
+      assessment_id=assessment_node.assessment_id,
+    ) }}">
+      {{ render_form_fields(form) }}
+    </form>
+  </div>
+</div>
