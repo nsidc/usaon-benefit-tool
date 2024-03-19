@@ -50,7 +50,7 @@ def put(assessment_id: int, link_id: int):
         status=200,
         headers={
             'HX-Redirect': url_for(
-                'assessment.view_assessment_overview',
+                'assessment.get',
                 assessment_id=assessment_id,
             ),
         },
@@ -70,7 +70,7 @@ def delete(assessment_id: int, link_id: int):
         status=200,
         headers={
             'HX-Redirect': url_for(
-                'assessment.view_assessment_overview',
+                'assessment.get',
                 assessment_id=assessment_id,
             ),
         },
