@@ -23,10 +23,6 @@ def get():
     )
 
 
-class _QueryModel(BaseModel):
-    node_type: NodeType
-
-
 @nodes_bp.route('', methods=["POST"])
 def post():
     # TODO: How to avoid using request.args? Typing worked on the GET endpoint, but not
@@ -53,6 +49,10 @@ def post():
         status=201,
         headers={'HX-Redirect': url_for('nodes.get')},
     )
+
+
+class _QueryModel(BaseModel):
+    node_type: NodeType
 
 
 @nodes_bp.route('/form', methods=["GET"])
