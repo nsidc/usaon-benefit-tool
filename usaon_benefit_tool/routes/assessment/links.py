@@ -16,10 +16,12 @@ def post(assessment_id: str):
     assessment_link = Link()
     form = Form(request.form, obj=assessment_link)
 
-    if form.validate():
-        form.populate_obj(assessment_link)
-        db.session.add(assessment_link)
-        db.session.commit()
+    if not form.validate():
+        return Response(status=400)
+
+    form.populate_obj(assessment_link)
+    db.session.add(assessment_link)
+    db.session.commit()
 
     return Response(
         status=201,

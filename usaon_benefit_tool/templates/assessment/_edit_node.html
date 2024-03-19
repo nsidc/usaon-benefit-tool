@@ -1,4 +1,4 @@
-{% from 'bootstrap5/form.html' import render_form %}
+{% from 'bootstrap5/utils.html' import render_icon %}
 {% from 'macros/buttons.j2' import delete_button_htmx %}
 
 <div class="modal-content">
@@ -6,15 +6,43 @@
     <h5 class="modal-title">
       Edit node: {{node.short_name}}
     </h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
-  </div>
 
-  <div class="modal-body">
     {{delete_button_htmx(
       'assessment.node.delete',
       'Delete',
       assessment_id=assessment_id,
       node_id=node.id,
     )}}
+
+    <button
+      hx-get="{{ url_for(
+        "assessment.node.form_new_link",
+        assessment_id=assessment_id,
+        node_id=node.id,
+        direction="left",
+      ) }}"
+      hx-target="#form-modal-hx-target"
+      hx-trigger="click"
+      class="btn btn-success text-nowrap">
+      {{ render_icon("box-arrow-left") }} Add source link
+    </button>
+
+    <button
+      hx-get="{{ url_for(
+        "assessment.node.form_new_link",
+        assessment_id=assessment_id,
+        node_id=node.id,
+        direction="right",
+      ) }}"
+      hx-target="#form-modal-hx-target"
+      hx-trigger="click"
+      class="btn btn-success text-nowrap">
+      {{ render_icon("box-arrow-right") }} Add target link
+    </button>
+
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+  </div>
+
+  <div class="modal-body">
   </div>
 </div>
