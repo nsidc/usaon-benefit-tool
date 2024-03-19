@@ -3,7 +3,7 @@ from flask_login import login_required
 
 from usaon_benefit_tool import db
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
-from usaon_benefit_tool.models.tables import AssessmentNode
+from usaon_benefit_tool.models.tables import AssessmentNode, Node
 
 assessment_nodes_bp = Blueprint('nodes', __name__, url_prefix='/nodes')
 Form = FORMS_BY_MODEL[AssessmentNode]
@@ -55,13 +55,21 @@ def form(assessment_id: str):
     """Return a form to add an entry to the assessment's nodes collection."""
     assessment_node = AssessmentNode(assessment_id=assessment_id)
     form = Form(obj=assessment_node)
-    form_attrs = (
-        f"hx-post={url_for('assessment.nodes.post', assessment_id=assessment_id)}"
+
+    # List only nodes that are not already in this assessement!
+    form.node.query = Node.query.filter(
+        Node.id.not_in(
+            AssessmentNode.query.with_entities(
+                AssessmentNode.node_id,
+            ).filter_by(assessment_id=assessment_id),
+        ),
     )
+
+    post_url = url_for('assessment.nodes.post', assessment_id=assessment_id)
 
     return render_template(
         'partials/modal_form.html',
         title="Add a node",
-        form_attrs=form_attrs,
+        form_attrs=f"hx-post={post_url}",
         form=form,
     )
