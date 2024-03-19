@@ -12,6 +12,7 @@ HighchartsSankeySeriesLink = TypedDict(
         "to": str,
         "weight": int,
         "color": NotRequired[str],
+        "id": NotRequired[int],
     },
 )
 
@@ -101,6 +102,7 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
             "from": _node_id(link.source_assessment_node.node),
             "to": _node_id(link.target_assessment_node.node),
             "weight": link.criticality_rating,
+            "id": link.id,
         }
         for link in links
     ]
