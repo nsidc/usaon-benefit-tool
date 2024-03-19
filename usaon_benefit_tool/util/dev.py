@@ -4,6 +4,12 @@ from usaon_benefit_tool.models.tables import User
 # disabled at init time.
 DEV_USER = User(
     id=0,
+    email="dev_user@example.com",
+    name="Dev User",
+    orcid="junk",
+    role_id="admin",
+)
+TEST_USER = User(
     email="test_user@example.com",
     name="Test User",
     orcid="junk",
