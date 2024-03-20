@@ -5,7 +5,15 @@
   <div class="modal-header">
     <h5 class="modal-title">
       Edit node: {{node.short_name}}
+      <a href="{{ url_for("node.get", node_id=node.id) }}" target="_blank">
+        #{{ node.id }} {{ render_icon("box-arrow-up-right") }}
+      </a>
     </h5>
+
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+  </div>
+
+  <div class="modal-body">
 
     {{delete_button_htmx(
       'assessment.node.delete',
@@ -40,9 +48,5 @@
       {{ render_icon("box-arrow-right") }} Add target link
     </button>
 
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
-  </div>
-
-  <div class="modal-body">
   </div>
 </div>
