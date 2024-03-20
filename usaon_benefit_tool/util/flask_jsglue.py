@@ -60,11 +60,6 @@ class JSGlue:
 
         @app.route(JSGLUE_JS_PATH)
         def serve_js():
-            # FIXME: Remove this
-            from loguru import logger
-
-            logger.info(request.environ)
-
             return make_response(
                 (
                     self.generate_js(prefix=request.environ.get('SCRIPT_NAME', '')),
