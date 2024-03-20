@@ -95,6 +95,9 @@ var {{ namespace }} = new(function () {
               url += "#" + anchor;
             }
 
+            // Support ProxyFix prefix passed in from route
+            url = "{{ prefix }}" + url;
+
             if (is_absolute) {
               return scheme + "://" + location.host + url;
             } else {
