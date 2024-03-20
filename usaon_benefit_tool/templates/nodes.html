@@ -7,7 +7,11 @@
 {% block content %}
   <h2>{% block title %}Object library{% endblock %}</h1>
 
-  {% if current_user.role_id == types.RoleName.ADMIN %}
+  {% if current_user.role_id in [
+       types.RoleName.ADMIN,
+       types.RoleName.RESPONDENT,
+     ]
+   %}
     {% for node_type in types.NodeType %}
       <button
         data-bs-toggle="modal"
@@ -19,7 +23,6 @@
         {{ render_icon("plus-circle-fill") }} New {{ node_type.value.replace("_", " ") }}
       </button>
     {% endfor %}
-
 
     <div
       id="new-node-modal"
@@ -36,9 +39,10 @@
         </div>
       </div>
     </div>
+
+    <br />
   {% endif %}
 
-  <br />
 
   <table class='table'>
 
