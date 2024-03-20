@@ -126,7 +126,7 @@ def _setup_login(app) -> None:
 
         from usaon_benefit_tool.util.dev import DEV_USER
 
-        flask_login_utils._get_user = lambda: DEV_USER
+        flask_login_utils._get_user = lambda: User.query.get(DEV_USER.id)
 
     @app.before_request
     def before_request():
