@@ -1,3 +1,4 @@
+import logging
 import os
 import time
 from typing import Final
@@ -6,6 +7,7 @@ from flask import Flask, session
 from flask_bootstrap import Bootstrap5
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from loguru import logger as loguru_logger
 from markdown import Markdown
 from markupsafe import Markup
 from sqlalchemy import MetaData
@@ -43,6 +45,7 @@ def create_app():
     _monkeypatch()
 
     app = Flask(__name__)
+    _setup_logging(app)
     _setup_config(app)
     _setup_proxy_support(app)
 
@@ -58,6 +61,30 @@ def create_app():
     return app
 
 
+def _setup_logging(app) -> None:
+    """Route logs from loguru to the app logger, and respect Gunicorn log-level.
+
+    Based on: https://gist.github.com/M0r13n/0b8c62c603fdbc98361062bd9ebe8153
+    """
+    if "gunicorn" in os.environ.get("SERVER_SOFTWARE", ""):
+        # sync the application log level with Gunicorn's log level
+        gunicorn_logger = logging.getLogger('gunicorn.error')
+        app.logger.handlers = gunicorn_logger.handlers
+        app.logger.setLevel(gunicorn_logger.level)
+        loguru_logger.info(
+            f"Detected Gunicorn server and set log level to {gunicorn_logger.level}.",
+        )
+
+    class InterceptHandler(logging.Handler):
+        def emit(self, record):
+            logger_opt = loguru_logger.opt(depth=6, exception=record.exc_info)
+            logger_opt.log(record.levelno, record.getMessage())
+
+    app.logger.addHandler(InterceptHandler())
+
+    loguru_logger.info("Logging configured.")
+
+
 def _setup_config(app) -> None:
     app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'youcanneverguess')
     app.config['SQLALCHEMY_DATABASE_URI'] = db_connstr(app)
@@ -70,6 +97,8 @@ def _setup_config(app) -> None:
 
     # DEV ONLY: Disable login
     app.config['LOGIN_DISABLED'] = envvar_is_true("USAON_BENEFIT_TOOL_LOGIN_DISABLED")
+
+    loguru_logger.info("App configuration initialized.")
 
 
 def _setup_proxy_support(app) -> None:
@@ -105,6 +134,8 @@ def _setup_login(app) -> None:
             if time.time() >= token['expires_at']:
                 del s['google_oauth_token']
 
+    loguru_logger.info("Login configured.")
+
 
 def _register_template_helpers(app) -> None:
     # TODO: Consider context processors instead?
@@ -126,6 +157,8 @@ def _register_template_helpers(app) -> None:
         markdown=lambda txt: Markup(md.convert(txt)),
         dateformat=lambda date: date.strftime("%Y-%m-%d %H:%M%Z"),
     )
+
+    loguru_logger.info("Template helpers registered.")
 
 
 def _register_blueprints(app) -> None:
@@ -153,6 +186,8 @@ def _register_blueprints(app) -> None:
 
     app.register_blueprint(nodes_bp)
     app.register_blueprint(node_bp)
+
+    loguru_logger.info("Blueprints registered.")
 
 
 def _monkeypatch():
