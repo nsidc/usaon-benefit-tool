@@ -38,7 +38,7 @@ def post(user_id: str):
 
     if not form.validate():
         # FIXME: Error handling!!
-        return Response(400)
+        return Response(status=400)
 
     _validate_role_change(user, form)
     form.populate_obj(user)
