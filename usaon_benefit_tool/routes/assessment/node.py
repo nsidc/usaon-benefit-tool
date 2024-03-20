@@ -7,8 +7,10 @@ from flask_pydantic import validate
 from pydantic import BaseModel
 
 from usaon_benefit_tool import db
+from usaon_benefit_tool._types import RoleName
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import AssessmentNode, Link, Node
+from usaon_benefit_tool.util.rbac import forbid_except_for_roles
 from usaon_benefit_tool.util.sankey import (
     permitted_source_link_types,
     permitted_target_link_types,
@@ -100,6 +102,9 @@ def form_new_link(assessment_id: int, node_id: int, query: _QueryModel):
 @assessment_node_bp.route('', methods=['PUT'])
 @login_required
 def put(assessment_id: int, node_id: int):
+    """Update an AssessmentNode."""
+    forbid_except_for_roles([RoleName.ADMIN, RoleName.RESPONDENT])
+
     try:
         assessment_node = _query_for_assessment_node(assessment_id, node_id)
     except sqlalchemy.orm.exc.NoResultFound:
@@ -130,6 +135,8 @@ def put(assessment_id: int, node_id: int):
 @login_required
 def delete(assessment_id: int, node_id: int):
     """Delete node object from assessment."""
+    forbid_except_for_roles([RoleName.ADMIN, RoleName.RESPONDENT])
+
     try:
         assessment_node = _query_for_assessment_node(assessment_id, node_id)
     except sqlalchemy.orm.exc.NoResultFound:
@@ -150,6 +157,9 @@ def delete(assessment_id: int, node_id: int):
 
 
 def _query_for_assessment_node(assessment_id, node_id):
+    # TODO: Could we use `raise` to trigger a 404 without needing external try/except
+    #       logic?
+    # FIXME: Yes, we can use `abort(404, description=...)`
     return AssessmentNode.query.filter_by(
         assessment_id=assessment_id,
         node_id=node_id,

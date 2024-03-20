@@ -14,6 +14,7 @@ from sqlalchemy import MetaData
 from sqlalchemy import inspect as sqla_inspect
 from werkzeug.middleware.proxy_fix import ProxyFix
 
+from usaon_benefit_tool._types import NodeType, RoleName
 from usaon_benefit_tool.constants import repo
 from usaon_benefit_tool.constants.sankey import DUMMY_NODE_ID
 from usaon_benefit_tool.constants.version import VERSION
@@ -150,6 +151,10 @@ def _register_template_helpers(app) -> None:
         current_year=repo.CURRENT_YEAR,
         constants={
             "DUMMY_NODE_ID": DUMMY_NODE_ID,
+        },
+        types={
+            "RoleName": RoleName,
+            "NodeType": NodeType,
         },
     )
 

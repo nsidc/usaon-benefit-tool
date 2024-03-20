@@ -7,7 +7,7 @@
 {% block content %}
   <h2>{% block title %}Assessments{% endblock %}</h1>
 
-  {% if current_user.role_id=='admin' %}
+  {% if current_user.role_id == types.RoleName.ADMIN %}
     <button
       data-bs-toggle="modal"
       data-bs-target="#new-assessment-modal"
@@ -36,44 +36,38 @@
 
     <thead>
       <tr>
-        {% if current_user.role_id=='admin' %}
         <th>#</th>
-        {% endif %}
 
         <th>Title</th>
 
-        {% if current_user.role_id=='admin' %}
+        {% if current_user.role_id == types.RoleName.ADMIN %}
         <th>Created by</th>
         <th>Created time</th>
         <th>Updated time</th>
+        <th>Visibility</th>
         {% endif %}
 
         <th>Status</th>
-
-        <!-- no header for final "badges" and "actions" columns -->
-        <th></th>
       </tr>
     </thead>
 
     <tbody>
     {% for assessment in assessments %}
       <tr>
-        {% if current_user.role_id=='admin' %}
         <td>{{assessment.id}}</td>
-        {% endif %}
 
         <td><strong><a href="{{ url_for("assessment.get", assessment_id=assessment.id) }}">
           {{assessment.title}}
         </a></strong></td>
 
-        {% if current_user.role_id=='admin' %}
+        {% if current_user.role_id == types.RoleName.ADMIN %}
         <td>{{assessment.created_by.email}}</td>
         <td>{{assessment.created_timestamp | dateformat}}</td>
         <td>{{assessment.updated_timestamp | dateformat}}</td>
+        <td>{{private_badge(assessment.private)}}</td>
         {% endif %}
 
         <td>{{assessment.status.id}}</td>
-        <td>{{private_badge(assessment.private)}}</td>
       </tr>
     {% endfor %}
     </tbody>

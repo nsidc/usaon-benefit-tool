@@ -19,7 +19,7 @@ from sqlalchemy.schema import Column, ForeignKey, Index, UniqueConstraint
 from sqlalchemy.types import Boolean, DateTime, Enum, Integer, String
 
 from usaon_benefit_tool import db
-from usaon_benefit_tool._types import NodeType, NodeTypeDiscriminator
+from usaon_benefit_tool._types import NodeType, NodeTypeDiscriminator, RoleName
 from usaon_benefit_tool.constants.status import ASSESSMENT_STATUSES
 
 # Workaround for missing type stubs for flask-sqlalchemy:
@@ -58,9 +58,9 @@ class User(BaseModel, UserMixin):
         nullable=True,
     )
     role_id = Column(
-        String,
+        Enum(RoleName),
         ForeignKey('role.id'),
-        default="analyst",
+        default=RoleName.ANALYST,
         nullable=False,
     )
     biography = Column(
@@ -395,7 +395,7 @@ class Link(BaseModel):
 class Role(BaseModel):
     __tablename__ = 'role'
     id = Column(
-        String,
+        Enum(RoleName),
         primary_key=True,
         nullable=False,
     )

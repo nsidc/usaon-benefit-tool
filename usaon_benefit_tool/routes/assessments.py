@@ -8,8 +8,10 @@ from flask import (
 from flask_login import login_required
 
 from usaon_benefit_tool import db
+from usaon_benefit_tool._types import RoleName
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import Assessment
+from usaon_benefit_tool.util.rbac import forbid_except_for_roles
 
 assessments_bp = Blueprint('assessments', __name__, url_prefix='/assessments')
 
@@ -25,6 +27,8 @@ def get():
 @assessments_bp.route('', methods=["POST"])
 @login_required
 def post():
+    forbid_except_for_roles([RoleName.ADMIN])
+
     assessment = Assessment()
     form = FORMS_BY_MODEL[Assessment](request.form, obj=assessment)
 

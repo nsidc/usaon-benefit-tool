@@ -7,48 +7,20 @@
 {% block content %}
   <h2>{% block title %}Object library{% endblock %}</h1>
 
-  {% if current_user.role_id=='admin' %}
-    {# TODO: _DRY!_ #}
-    <button
-      data-bs-toggle="modal"
-      data-bs-target="#new-node-modal"
-      {# TODO: Parameterize node_type #}
-      hx-get="{{ url_for('nodes.form', node_type='observing_system') }}"
-      hx-target="#new-node-modal-hx-target"
-      hx-trigger="click"
-      class="btn btn-success text-nowrap">
-      {{ render_icon("plus-circle-fill") }} New observing system
-    </button>
-    <button
-      data-bs-toggle="modal"
-      data-bs-target="#new-node-modal"
-      {# TODO: Parameterize node_type #}
-      hx-get="{{ url_for('nodes.form', node_type='data_product') }}"
-      hx-target="#new-node-modal-hx-target"
-      hx-trigger="click"
-      class="btn btn-success text-nowrap">
-      {{ render_icon("plus-circle-fill") }} New data product
-    </button>
-    <button
-      data-bs-toggle="modal"
-      data-bs-target="#new-node-modal"
-      {# TODO: Parameterize node_type #}
-      hx-get="{{ url_for('nodes.form', node_type='application') }}"
-      hx-target="#new-node-modal-hx-target"
-      hx-trigger="click"
-      class="btn btn-success text-nowrap">
-      {{ render_icon("plus-circle-fill") }} New application
-    </button>
-    <button
-      data-bs-toggle="modal"
-      data-bs-target="#new-node-modal"
-      {# TODO: Parameterize node_type #}
-      hx-get="{{ url_for('nodes.form', node_type='societal_benefit_area') }}"
-      hx-target="#new-node-modal-hx-target"
-      hx-trigger="click"
-      class="btn btn-success text-nowrap">
-      {{ render_icon("plus-circle-fill") }} New societal benefit area
-    </button>
+  {% if current_user.role_id == types.RoleName.ADMIN %}
+    {% for node_type in types.NodeType %}
+      <button
+        data-bs-toggle="modal"
+        data-bs-target="#new-node-modal"
+        hx-get="{{ url_for('nodes.form', node_type=node_type.value) }}"
+        hx-target="#new-node-modal-hx-target"
+        hx-trigger="click"
+        class="btn btn-success text-nowrap">
+        {{ render_icon("plus-circle-fill") }} New {{ node_type.value.replace("_", " ") }}
+      </button>
+    {% endfor %}
+
+
     <div
       id="new-node-modal"
       class="modal modal-blur fade"
@@ -67,20 +39,17 @@
   {% endif %}
 
   <br />
-  <br />
 
   <table class='table'>
 
     <thead>
       <tr>
-        {% if current_user.role_id=='admin' %}
         <th>#</th>
-        {% endif %}
 
         <th>Title</th>
         <th>Object type</th>
 
-        {% if current_user.role_id=='admin' %}
+        {% if current_user.role_id == types.RoleName.ADMIN %}
         <th>Created by</th>
         <th>Created time</th>
         <th>Updated time</th>
@@ -93,9 +62,7 @@
     {% for node in nodes %}
       <tr>
 
-        {% if current_user.role_id=='admin' %}
         <td>{{node.id}}</td>
-        {% endif %}
 
         <td>
           <strong><a href="{{ url_for("node.get", node_id=node.id) }}">
@@ -107,16 +74,12 @@
           {{node.type.value}}
         </td>
 
-        {% if current_user.role_id=='admin' %}
+        {% if current_user.role_id == types.RoleName.ADMIN %}
         <td>{{node.created_by.email}}</td>
         <td>{{node.created_timestamp | dateformat}}</td>
         <td>{{node.updated_timestamp | dateformat}}</td>
         <td>
-          {{delete_button_htmx(
-            'node.delete',
-            'Delete object',
-            node_id=node.id,
-          )}}
+          {{delete_button_htmx('node.delete', 'Delete object', node_id=node.id)}}
         </td>
         {% endif %}
 

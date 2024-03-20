@@ -2,8 +2,10 @@ from flask import Blueprint, Response, render_template, request, url_for
 from flask_login import login_required
 
 from usaon_benefit_tool import db
+from usaon_benefit_tool._types import RoleName
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import Link
+from usaon_benefit_tool.util.rbac import forbid_except_for_roles
 
 assessment_link_bp = Blueprint(
     'link',
@@ -34,6 +36,8 @@ def form(assessment_id: int, link_id: int):
 @assessment_link_bp.route('', methods=['PUT'])
 @login_required
 def put(assessment_id: int, link_id: int):
+    forbid_except_for_roles([RoleName.ADMIN, RoleName.RESPONDENT])
+
     link = db.get_or_404(Link, link_id)
 
     form = Form(request.form, obj=link)
@@ -61,6 +65,8 @@ def put(assessment_id: int, link_id: int):
 @login_required
 def delete(assessment_id: int, link_id: int):
     """Delete link between nodes."""
+    forbid_except_for_roles([RoleName.ADMIN, RoleName.RESPONDENT])
+
     link = db.get_or_404(Link, link_id)
 
     db.session.delete(link)
