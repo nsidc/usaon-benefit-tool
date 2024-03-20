@@ -11,7 +11,7 @@
       const selector = "#form-modal";
       const el = document.querySelector(selector);
 
-      // Determine the target URL and set the hx-get parameter // accordingly.
+      // Determine the target URL and set the hx-get parameter accordingly.
       // We're using vendored Flask-JSGlue to do this from JS.
       // TODO: Less magic string processing
       const isNode = "type" in point;
@@ -73,28 +73,9 @@
       },
       tooltip: {
         headerFormat: null,
-        nodeFormatter: function() {
+        formatter: function() {
           const point = this;
-          if (point.id === "{{ constants.DUMMY_NODE_ID }}") {
-            // FIXME: This method of hiding a tooltip works for `formatter`, but not `nodeFormatter`.
-            // return false;
-            return point.name
-          }
-          const tooltipName = "<b>" + point.name + "</b>: ";
-          if (point.linksTo[0].from === "{{ constants.DUMMY_NODE_ID }}") {
-            return tooltipName + "Click me to add link(s)!";
-          }
-
-          return tooltipName + point.sum;
-        },
-        pointFormatter: function() {
-          const point = this;
-          if (point.from === "{{ constants.DUMMY_NODE_ID }}") {
-            // FIXME: This method of hiding a tooltip works for `formatter`, but not `pointFormatter`.
-            // return false;
-            return point.fromNode.name;
-          }
-          return "<b>" + point.fromNode.name + "</b> → <b>" + point.toNode.name + "</b>: " + point.weight;
+          return point.point.tooltipHTML || false;
         },
       },
       series: [{

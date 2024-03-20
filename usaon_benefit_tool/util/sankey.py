@@ -1,6 +1,8 @@
 from itertools import chain
 from typing import NotRequired, TypedDict
 
+from flask import render_template
+
 from usaon_benefit_tool._types import NodeType
 from usaon_benefit_tool.constants.sankey import ALLOWED_LINKS, DUMMY_NODE_ID
 from usaon_benefit_tool.models.tables import Assessment, AssessmentNode, Node
@@ -14,6 +16,7 @@ HighchartsSankeySeriesLink = TypedDict(
         "weight": int,
         "color": NotRequired[str],
         "id": NotRequired[int],
+        "tooltipHTML": str,
     },
 )
 
@@ -39,6 +42,7 @@ class HighchartsSankeySeriesNode(TypedDict):
     name: str
     type: str
     color: NotRequired[str]
+    tooltipHTML: str
 
 
 class HighchartsSankeySeries(TypedDict):
@@ -92,13 +96,21 @@ def sankey_subset(
 
 
 def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
-    """Extract Sankey-relevant data from Response and format for Highcharts."""
+    """Extract Sankey-relevant data from Response and format for Highcharts.
+
+    TODO: This is probably going to lead to lots of render calls and worse, lots of
+    queries. Needs to be optimized!
+    """
     assessment_nodes: list[AssessmentNode] = assessment.assessment_nodes
     nodes_simplified: list[HighchartsSankeySeriesNode] = [
         {
             "id": _node_id(an.node),
             "name": an.node.short_name,
             "type": an.node.type.value,
+            "tooltipHTML": render_template(
+                "partials/node_tooltip.html",
+                assessment_node=an,
+            ),
         }
         for an in assessment_nodes
     ]
@@ -119,6 +131,10 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
             "to": _node_id(link.target_assessment_node.node),
             "weight": link.criticality_rating,
             "id": link.id,
+            "tooltipHTML": render_template(
+                "partials/link_tooltip.html",
+                link=link,
+            ),
         }
         for link in links
     ]
@@ -167,6 +183,7 @@ def _handle_unlinked_sankey_nodes(
             "to": n["id"],
             "weight": 10,
             "color": "transparent",
+            "tooltipHTML": "",
         }
         for n in orphan_nodes
     ]
@@ -175,6 +192,7 @@ def _handle_unlinked_sankey_nodes(
         "name": "WARNING: Please ensure all nodes have links!",
         "type": DUMMY_NODE_ID,
         "color": "transparent",
+        "tooltipHTML": "",
     }
     return {
         "data": dummy_links + series["data"],
