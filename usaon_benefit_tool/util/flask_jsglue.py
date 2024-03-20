@@ -1,7 +1,11 @@
 """Enable access to url_for in JavaScript code.
 
 Vendored from https://github.com/stewartpark/Flask-JSGlue; appears abandoned.
-Applied changes to work with modern versions of these dependencies.
+
+Applied changes to:
+
+* Work with modern versions of these dependencies.
+* Support werkzeug ProxyFix middleware when generating URLs.
 
 Copyright 2022 Stewart Park
 License: BSD 3-clause
@@ -19,7 +23,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import json
 import re
 
-from flask import make_response, render_template, url_for
+from flask import make_response, render_template, request, url_for
 from markupsafe import Markup
 
 JSGLUE_JS_PATH = '/jsglue.js'
@@ -56,21 +60,32 @@ class JSGlue:
 
         @app.route(JSGLUE_JS_PATH)
         def serve_js():
+            # FIXME: Remove this
+            from loguru import logger
+
+            logger.info(request.environ)
+
             return make_response(
-                (self.generate_js(), 200, {'Content-Type': 'text/javascript'}),
+                (
+                    self.generate_js(prefix=request.environ.get('SCRIPT_NAME', '')),
+                    200,
+                    {'Content-Type': 'text/javascript'},
+                ),
             )
 
         @app.context_processor
         def context_processor():
             return {'JSGlue': JSGlue}
 
-    def generate_js(self):
+    def generate_js(self, *, prefix: str):
         rules = get_routes(self.app)
+
         # NOTE: File has .js extension to avoid autoescaping
         return render_template(
             'jsglue/js_bridge.js',
             namespace=JSGLUE_NAMESPACE,
             rules=json.dumps(rules),
+            prefix=prefix,
         )
 
     @staticmethod
