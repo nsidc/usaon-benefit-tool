@@ -153,6 +153,13 @@ for more, but the way they are currently set up should allow for development on
 
 #### Adding a new route
 
+> [!IMPORTANT]
+>
+> Implement access control at the route level, instead of the template. You may still
+> need some role-based conditionals in templates to, for example, hide a button. Avoid
+> leaving holes where end-users can still use a tool like cURL to submit an update
+> request without authentication or authorization.
+
 * Create the new route function in a module under `/routes/`
 * Should the route be restricted to only logged-in users? If so, decorate with
   `@login_required`.
