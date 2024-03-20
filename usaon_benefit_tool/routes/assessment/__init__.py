@@ -2,6 +2,7 @@ from flask import Blueprint, Response, flash, render_template, request, url_for
 from flask_login import login_required
 
 from usaon_benefit_tool import db
+from usaon_benefit_tool._types import RoleName
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import Assessment
 from usaon_benefit_tool.routes.assessment.link import assessment_link_bp
@@ -10,6 +11,7 @@ from usaon_benefit_tool.routes.assessment.node import assessment_node_bp
 from usaon_benefit_tool.routes.assessment.nodes import (
     assessment_nodes_bp,
 )
+from usaon_benefit_tool.util.rbac import forbid_except_for_roles
 from usaon_benefit_tool.util.sankey import sankey
 
 assessment_bp = Blueprint(
@@ -40,7 +42,13 @@ def get(assessment_id: str):
 @assessment_bp.route('/edit', methods=['GET'])
 @login_required
 def edit(assessment_id: str):
-    """Display the assessment overview."""
+    """Display the assessment edit page.
+
+    TODO: Change to `/form` endpoint and return only a form, following HTMX pattern from
+    elsewhere?
+    """
+    forbid_except_for_roles([RoleName.ADMIN])
+
     assessment = db.get_or_404(Assessment, assessment_id)
 
     form = Form(obj=assessment)
@@ -54,6 +62,9 @@ def edit(assessment_id: str):
 @assessment_bp.route('', methods=['PUT'])
 @login_required
 def put(assessment_id: str):
+    """Update an assessment."""
+    forbid_except_for_roles([RoleName.ADMIN])
+
     assessment = db.get_or_404(Assessment, assessment_id)
     form = Form(request.form, obj=assessment)
 

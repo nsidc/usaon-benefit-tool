@@ -2,8 +2,10 @@ from flask import Blueprint, Response, render_template, request, url_for
 from flask_login import login_required
 
 from usaon_benefit_tool import db
+from usaon_benefit_tool._types import RoleName
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import Link
+from usaon_benefit_tool.util.rbac import forbid_except_for_roles
 
 assessment_links_bp = Blueprint('links', __name__, url_prefix='/links')
 Form = FORMS_BY_MODEL[Link]
@@ -13,6 +15,8 @@ Form = FORMS_BY_MODEL[Link]
 @login_required
 def post(assessment_id: str):
     """Add an entry to the assessment's link collection."""
+    forbid_except_for_roles([RoleName.ADMIN, RoleName.RESPONDENT])
+
     assessment_link = Link()
     form = Form(request.form, obj=assessment_link)
 

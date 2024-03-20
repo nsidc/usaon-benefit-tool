@@ -9,8 +9,7 @@ from sqlalchemy import MetaData
 from sqlalchemy.orm import Session
 
 from usaon_benefit_tool import db
-from usaon_benefit_tool._types import NodeType
-from usaon_benefit_tool.constants.rbac import ROLES
+from usaon_benefit_tool._types import NodeType, RoleName
 from usaon_benefit_tool.constants.sba import IAOA_SBA_FRAMEWORK
 from usaon_benefit_tool.constants.status import ASSESSMENT_STATUSES
 from usaon_benefit_tool.models.tables import (
@@ -90,14 +89,7 @@ def _init_statuses(session: Session) -> None:
 
 
 def _init_roles(session: Session) -> None:
-    session.add_all(
-        [
-            Role(
-                id=role,
-            )
-            for role in ROLES
-        ],
-    )
+    session.add_all([Role(id=role) for role in RoleName])
 
     session.commit()
 

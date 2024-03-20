@@ -4,10 +4,11 @@ from flask_pydantic import validate
 from pydantic import BaseModel
 
 from usaon_benefit_tool import db
-from usaon_benefit_tool._types import NodeType
+from usaon_benefit_tool._types import NodeType, RoleName
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import Node
 from usaon_benefit_tool.util.node_type import get_node_class_by_type
+from usaon_benefit_tool.util.rbac import forbid_except_for_roles
 
 # NB: The user facing term for "nodes" is "objects"
 nodes_bp = Blueprint('nodes', __name__, url_prefix='/objects')
@@ -24,7 +25,10 @@ def get():
 
 
 @nodes_bp.route('', methods=["POST"])
+@login_required
 def post():
+    forbid_except_for_roles([RoleName.ADMIN, RoleName.RESPONDENT])
+
     # TODO: How to avoid using request.args? Typing worked on the GET endpoint, but not
     #       this one.
     node_type = request.args.get("node_type")

@@ -93,7 +93,7 @@ FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
         User,
         only=['orcid', 'biography', 'affiliation', 'role'],
         # Helps drop-down display the correct user-facing string
-        field_args={'role': {'get_label': 'id'}},
+        field_args={'role': {'get_label': lambda role: role.id.value.title()}},
     ),
 }
 

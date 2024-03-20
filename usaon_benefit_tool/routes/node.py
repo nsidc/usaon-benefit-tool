@@ -2,11 +2,11 @@ from flask import Blueprint, Response, render_template, request, url_for
 from flask_login import login_required
 
 from usaon_benefit_tool import db
+from usaon_benefit_tool._types import RoleName
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import Node
+from usaon_benefit_tool.util.rbac import forbid_except_for_roles
 
-# TODO: Separate endpoints for each type of node? /node/data_product/...
-#       Or /node/<node_id>?type=data_product or /node/<node_id/...?type=data_product
 node_bp = Blueprint(
     'node',
     __name__,
@@ -30,6 +30,8 @@ def get(node_id: str):
 @login_required
 def delete(node_id: str):
     """Delete the node."""
+    forbid_except_for_roles([RoleName.ADMIN])
+
     node = db.get_or_404(Node, node_id)
     db.session.delete(node)
     db.session.commit()
@@ -44,6 +46,8 @@ def delete(node_id: str):
 @login_required
 def put(node_id: str):
     """Update the node."""
+    forbid_except_for_roles([RoleName.ADMIN, RoleName.RESPONDENT])
+
     node = db.get_or_404(Node, node_id)
     form = FORMS_BY_MODEL[type(node)](request.form, obj=node)
 
@@ -63,18 +67,3 @@ def put(node_id: str):
             ),
         },
     )
-
-
-# @node_bp.route('/form', methods=['GET'])
-# @login_required
-# def form(assessment_id: str):
-#     """Display an interface for editing a assessment.
-#
-#     TODO: Only permit respondents
-#     """
-#     assessment = db.get_or_404(Assessment, assessment_id)
-#     return render_template(
-#         'assessment/edit.html',
-#         assessment=assessment,
-#         sankey_series=sankey(assessment),
-#     )

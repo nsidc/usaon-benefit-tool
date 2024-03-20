@@ -2,34 +2,21 @@ from flask import Blueprint, Response, render_template, request, url_for
 from flask_login import login_required
 
 from usaon_benefit_tool import db
+from usaon_benefit_tool._types import RoleName
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import AssessmentNode, Node
+from usaon_benefit_tool.util.rbac import forbid_except_for_roles
 
 assessment_nodes_bp = Blueprint('nodes', __name__, url_prefix='/nodes')
 Form = FORMS_BY_MODEL[AssessmentNode]
-
-
-# @assessment_nodes_bp.route('', methods=['GET'])
-# @login_required
-# def get(assessment_id: str):
-#     """Return a page for managing data products associated with a assessment."""
-#     assessment = db.get_or_404(Assessment, assessment_id)
-#     assessment_data_product = AssessmentDataProduct(assessment_id=assessment.id)
-#
-#     form = Form(obj=assessment_data_product)
-#     return render_template(
-#         'assessment/nodes.html',
-#         form=form,
-#         assessment=assessment,
-#         nodes=assessment.nodes,
-#         sankey_series=sankey_subset(assessment, AssessmentDataProduct),
-#     )
 
 
 @assessment_nodes_bp.route('', methods=['POST'])
 @login_required
 def post(assessment_id: str):
     """Add an entry to the assessment's node collection."""
+    forbid_except_for_roles([RoleName.ADMIN, RoleName.RESPONDENT])
+
     assessment_node = AssessmentNode(assessment_id=assessment_id)
     form = Form(request.form, obj=assessment_node)
 

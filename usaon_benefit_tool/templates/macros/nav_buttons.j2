@@ -10,7 +10,7 @@
 {% macro user_buttons(current_user) -%}
   {% from "bootstrap5/nav.html" import render_nav_item %}
 
-  {% if current_user.role_id=="admin" %}
+  {% if current_user.role_id == types.RoleName.ADMIN %}
     <li class="nav-item dropdown">
       <a href="#"
          class="nav-link dropdown-toggle"
@@ -20,7 +20,7 @@
          aria-expanded="false"
       >Admin</a>
       <div class="dropdown-menu">
-        <a href="{{url_for("users.view_users")}}"
+        <a href="{{url_for("users.get")}}"
            class="dropdown-item"
         >Users</a>
       </div>
@@ -37,7 +37,7 @@
          aria-expanded="false"
       >My user</a>
       <div class="dropdown-menu">
-        <a href="{{url_for("user.user", user_id=current_user.id)}}"
+        <a href="{{url_for("user.get", user_id=current_user.id)}}"
            class="dropdown-item"
         >Profile</a>
         <a href="{{url_for("logout.logout")}}"
