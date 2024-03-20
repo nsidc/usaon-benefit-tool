@@ -3,7 +3,7 @@ import os
 import time
 from typing import Final
 
-from flask import Flask, session
+from flask import Flask, render_template, session
 from flask_bootstrap import Bootstrap5
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
@@ -57,6 +57,7 @@ def create_app():
     _setup_login(app)
     _register_blueprints(app)
     _register_template_helpers(app)
+    _register_custom_error_pages(app)
 
     return app
 
@@ -188,6 +189,19 @@ def _register_blueprints(app) -> None:
     app.register_blueprint(node_bp)
 
     loguru_logger.info("Blueprints registered.")
+
+
+def _register_custom_error_pages(app) -> None:
+    for error_code in [403, 404]:
+        app.register_error_handler(
+            error_code,
+            lambda e, error_code=error_code: (
+                render_template(f'{error_code}.html', error=e),
+                error_code,
+            ),
+        )
+
+    loguru_logger.info("Custom error pages registered.")
 
 
 def _monkeypatch():
