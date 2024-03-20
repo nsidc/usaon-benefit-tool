@@ -84,7 +84,7 @@ def _setup_logging(app) -> None:
 
     app.logger.addHandler(InterceptHandler())
 
-    loguru_logger.info("Logging configured.")
+    loguru_logger.debug("Logging configured.")
 
 
 def _setup_config(app) -> None:
@@ -100,7 +100,7 @@ def _setup_config(app) -> None:
     # DEV ONLY: Disable login
     app.config['LOGIN_DISABLED'] = envvar_is_true("USAON_BENEFIT_TOOL_LOGIN_DISABLED")
 
-    loguru_logger.info("App configuration initialized.")
+    loguru_logger.debug("App configuration initialized.")
 
 
 def _setup_proxy_support(app) -> None:
@@ -136,7 +136,7 @@ def _setup_login(app) -> None:
             if time.time() >= token['expires_at']:
                 del s['google_oauth_token']
 
-    loguru_logger.info("Login configured.")
+    loguru_logger.debug("Login configured.")
 
 
 def _register_template_helpers(app) -> None:
@@ -164,7 +164,7 @@ def _register_template_helpers(app) -> None:
         dateformat=lambda date: date.strftime("%Y-%m-%d %H:%M%Z"),
     )
 
-    loguru_logger.info("Template helpers registered.")
+    loguru_logger.debug("Template helpers registered.")
 
 
 def _register_blueprints(app) -> None:
@@ -193,7 +193,7 @@ def _register_blueprints(app) -> None:
     app.register_blueprint(nodes_bp)
     app.register_blueprint(node_bp)
 
-    loguru_logger.info("Blueprints registered.")
+    loguru_logger.debug("Blueprints registered.")
 
 
 def _register_custom_error_pages(app) -> None:
@@ -206,7 +206,7 @@ def _register_custom_error_pages(app) -> None:
             ),
         )
 
-    loguru_logger.info("Custom error pages registered.")
+    loguru_logger.debug("Custom error pages registered.")
 
 
 def _monkeypatch():
