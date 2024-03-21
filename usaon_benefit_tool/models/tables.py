@@ -354,8 +354,8 @@ class Link(BaseModel):
     criticality_rating = Column(
         Integer,
         CheckConstraint(
-            'criticality_rating>0 and criticality_rating<101',
-            name='c0-100',
+            'criticality_rating>0 and criticality_rating<11',
+            name='c0-10',
         ),
         nullable=False,
     )
