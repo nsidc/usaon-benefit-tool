@@ -6,19 +6,7 @@ from flask import render_template
 from usaon_benefit_tool._types import NodeType
 from usaon_benefit_tool.constants.sankey import ALLOWED_LINKS, DUMMY_NODE_ID
 from usaon_benefit_tool.models.tables import Assessment, AssessmentNode, Node
-
-# NOTE: Can't use class syntax because of hard keyword conflict "from"
-HighchartsSankeySeriesLink = TypedDict(
-    'HighchartsSankeySeriesLink',
-    {
-        "from": str,
-        "to": str,
-        "weight": int,
-        "color": NotRequired[str],
-        "id": NotRequired[int],
-        "tooltipHTML": str,
-    },
-)
+from usaon_benefit_tool.util.colormap import color_for_performance_rating
 
 
 # TODO: Should we have a general function which combines permitted sources and targets?
@@ -34,6 +22,21 @@ def permitted_source_link_types(node_type: NodeType) -> set[NodeType]:
     return {
         *[e[0] for e in ALLOWED_LINKS if e[1] is node_type],
     }
+
+
+# NOTE: Can't use class syntax because of hard keyword conflict "from". I think this
+#       also means we can't use a dataclass without some workaround.
+HighchartsSankeySeriesLink = TypedDict(
+    'HighchartsSankeySeriesLink',
+    {
+        "from": str,
+        "to": str,
+        "weight": int,
+        "color": str,
+        "id": NotRequired[int],
+        "tooltipHTML": str,
+    },
+)
 
 
 # TODO: Use dataclasses instead
@@ -130,6 +133,7 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
             "from": _node_id(link.source_assessment_node.node),
             "to": _node_id(link.target_assessment_node.node),
             "weight": link.criticality_rating,
+            "color": color_for_performance_rating(link.performance_rating),
             "id": link.id,
             "tooltipHTML": render_template(
                 "partials/link_tooltip.html",
