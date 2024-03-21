@@ -122,11 +122,10 @@
 
 {% macro display_sankey(sankey_series, assessment) -%}
   {% include 'includes/highcharts.html' %}
-  <h4>Diagram</h4>
 
   {% if sankey_series == [] %}
     <div class="alert alert-info">
-      Please input at least one relationship to display diagram
+      Please input at least one node to display diagram
     </div>
   {% else %}
     <figure class="highcharts-figure">
