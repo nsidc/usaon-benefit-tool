@@ -12,6 +12,7 @@ COLORMAP_PALETTE = get_palette(cmap_name, n_class=COLORMAP_CLASSES)
 
 COLORMAP = colors.LinearSegmentedColormap.from_list(
     f'{cmap_name}_{COLORMAP_CLASSES}',
-    cmap.colors,
+    # FIXME: A way to do this without type-ignore? Seems the annotations are wrong.
+    cmap.colors,  # type: ignore [attr-defined]
     N=COLORMAP_CLASSES,
 )

@@ -26,12 +26,13 @@ warn_unreachable = true
 
 [[tool.mypy.overrides]]
 module = [
-  "sqlalchemy.*",
   "flask_bootstrap.*",
   "flask_wtf.*",
   "flask_dance.*",
   "flask_login.*",
   "flask_pydantic.*",
+  "leafmap.*",
+  "sqlalchemy.*",
   "wtforms.*",
   "wtforms_sqlalchemy.*",
 ]
