@@ -86,27 +86,13 @@ class User(BaseModel, UserMixin):
 
 class Assessment(BaseModel):
     __tablename__ = 'assessment'
-    id = Column(
-        Integer,
-        primary_key=True,
-        autoincrement=True,
-    )
+    id = Column(Integer, primary_key=True, autoincrement=True)
 
-    title = Column(
-        String(128),
-        nullable=False,
-    )
+    title = Column(String(128), nullable=False)
+    description = Column(String(512), nullable=True)
 
-    description = Column(
-        String(512),
-        nullable=True,
-    )
-
-    private = Column(
-        Boolean,
-        nullable=False,
-        default=False,
-    )
+    private = Column(Boolean, nullable=False, default=False)
+    hypothetical = Column(Boolean, nullable=False, default=False)
 
     status_id = Column(
         String,
@@ -251,7 +237,7 @@ class NodeSubtypeOther(Node):
     website = Column(String(256), nullable=True)
     contact_information = Column(String(256), nullable=False)
     persistent_identifier = Column(String(256), nullable=True)
-    hypothetical = Column(Boolean)
+    hypothetical = Column(Boolean, nullable=False, default=False)
 
 
 class NodeSubtypeSocietalBenefitArea(Node):

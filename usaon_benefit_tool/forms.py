@@ -36,6 +36,7 @@ class CustomModelConverter(ModelConverter):
 
     @converts("String")
     def conv_String(self, field_args, **extra):
+        """Automatically use <textarea> over <input> for large string fields."""
         self._string_common(field_args=field_args, **extra)
         if (
             extra['column'].type.length is not None
@@ -44,6 +45,17 @@ class CustomModelConverter(ModelConverter):
             return fields.TextAreaField(**field_args)
 
         return super().conv_String(field_args, **extra)
+
+    @converts("Boolean")
+    def conv_Boolean(self, field_args, **_):
+        """Prevent a required checkbox from failing client-side validation when False.
+
+        "Unchecked" is a valid value: False!
+
+        See: https://github.com/wtforms/wtforms-sqlalchemy/issues/47
+        """
+        field_args["validators"] = []
+        return fields.BooleanField(**field_args)
 
 
 def get_node_label(node: Node) -> str:
@@ -62,7 +74,15 @@ model_form = partial(
 BaseModel: DeclarativeMeta = db.Model
 
 FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
-    Assessment: model_form(Assessment, only=['title', 'description']),
+    Assessment: model_form(
+        Assessment,
+        only=[
+            'title',
+            'description',
+            'private',
+            'hypothetical',
+        ],
+    ),
     AssessmentNode: model_form(
         AssessmentNode,
         only=['node'],
