@@ -5,7 +5,7 @@ from flask import (
     request,
     url_for,
 )
-from flask_login import login_required
+from flask_login import current_user, login_required
 
 from usaon_benefit_tool import db
 from usaon_benefit_tool._types import RoleName
@@ -19,7 +19,12 @@ assessments_bp = Blueprint('assessments', __name__, url_prefix='/assessments')
 @assessments_bp.route('', methods=["GET"])
 @login_required
 def get():
-    assessments = Assessment.query.order_by(Assessment.created_timestamp).all()
+    qry = Assessment.query
+
+    if current_user.role_id != RoleName.ADMIN:
+        qry = qry.filter_by(private=False)
+
+    assessments = qry.order_by(Assessment.created_timestamp).all()
     form = FORMS_BY_MODEL[Assessment](obj=Assessment())
     return render_template('assessments.html', assessments=assessments, form=form)
 
