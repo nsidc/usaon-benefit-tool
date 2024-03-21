@@ -171,6 +171,7 @@ def _register_blueprints(app) -> None:
     # TODO: Extract function register_blueprints
     from usaon_benefit_tool.routes.assessment import assessment_bp
     from usaon_benefit_tool.routes.assessments import assessments_bp
+    from usaon_benefit_tool.routes.colorbar import colorbar_bp
     from usaon_benefit_tool.routes.login import google_bp, login_bp
     from usaon_benefit_tool.routes.logout import logout_bp
     from usaon_benefit_tool.routes.node import node_bp
@@ -180,6 +181,7 @@ def _register_blueprints(app) -> None:
     from usaon_benefit_tool.routes.users import users_bp
 
     app.register_blueprint(root_bp)
+    app.register_blueprint(colorbar_bp)
 
     app.register_blueprint(user_bp)
     app.register_blueprint(users_bp)

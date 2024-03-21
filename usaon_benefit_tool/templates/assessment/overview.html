@@ -22,6 +22,11 @@
   </div>
 
   {{ display_sankey(sankey_series, assessment=assessment)}}
+  <div style="text-align: center;">
+    <img style="margin: auto" src={{ url_for("colorbar.get") }} />
+    <!-- TODO: this label should be baked in to the legend! But was having trouble with the text getting cut off. -->
+    <p>Performance rating</p>
+  </div>
 
   <div>
     {# NOTE: This div has HTMX configuration because it can be used by

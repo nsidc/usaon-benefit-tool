@@ -32,6 +32,8 @@ dependencies:
   - psycopg2 ~=2.9
   - flask-sqlalchemy ~=3.0
   - markdown ~=3.5
+  - matplotlib-base ~=3.8.3
+  - leafmap ~=0.31.5  # TODO: Slim down to _only_ matplotlib; only using this as quick fix to get colorbars just right
 
   - loguru ~=0.6.0
   - werkzeug ~=2.2.3
