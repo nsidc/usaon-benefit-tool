@@ -46,6 +46,7 @@
         <th>Created time</th>
         <th>Updated time</th>
         <th>Visibility</th>
+        <th>Hypothetical?</th>
         {% endif %}
 
         <th>Status</th>
@@ -66,6 +67,7 @@
         <td>{{assessment.created_timestamp | dateformat}}</td>
         <td>{{assessment.updated_timestamp | dateformat}}</td>
         <td>{{private_badge(assessment.private)}}</td>
+        <td>{{assessment.hypothetical}}</td>
         {% endif %}
 
         <td>{{assessment.status.id}}</td>
