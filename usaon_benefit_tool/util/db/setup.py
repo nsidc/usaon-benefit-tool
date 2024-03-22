@@ -1,6 +1,10 @@
 """Set up an existing database with the tables and/or data this application needs.
 
-TODO: Break this up in to multiple modules!
+Todo:
+----
+* Break this up in to multiple modules!
+* Execute each function within a transaction.
+
 """
 import sqlalchemy
 from flask import current_app
@@ -15,6 +19,7 @@ from usaon_benefit_tool.constants.status import ASSESSMENT_STATUSES
 from usaon_benefit_tool.models.tables import (
     Assessment,
     AssessmentNode,
+    AssessmentNodeSubtypeApplication,
     AssessmentStatus,
     Link,
     NodeSubtypeOther,
@@ -46,7 +51,7 @@ def recreate_tables() -> None:
 def create_tables(session: Session) -> None:
     """Create all tables."""
     db.Model.metadata.create_all(bind=session.get_bind())
-    logger.info('Tables created.')
+    logger.success('Tables created.')
 
 
 def populate_reference_data() -> None:
@@ -64,14 +69,14 @@ def populate_reference_data() -> None:
     if current_app.config["LOGIN_DISABLED"]:
         _init_dev_user(db.session)
 
-    logger.info('Reference data loaded.')
+    logger.success('Reference data loaded.')
 
 
 def populate_test_data() -> None:
     """Load the operational tables with example data."""
     _init_test_assessment(db.session)
 
-    logger.info('Test data loaded.')
+    logger.success('Test data loaded.')
 
 
 def _init_statuses(session: Session) -> None:
@@ -206,18 +211,22 @@ def _init_test_assessment(session: Session) -> None:
         source_assessment_node=assessment_observing_system,
         target_assessment_node=assessment_data_product,
         performance_rating=25,
-        criticality_rating=75,
+        criticality_rating=7,
     )
 
-    assessment_application = AssessmentNode(
+    assessment_application = AssessmentNodeSubtypeApplication(
         assessment=assessment,
         node=application,
+        performance_rating=15,
+        performance_rating_criteria="Whatever",
+        performance_rating_rationale="Dunno",
+        performance_rating_gaps="C'mon that's enough questions",
     )
     dp_app_link = Link(
         source_assessment_node=assessment_data_product,
         target_assessment_node=assessment_application,
         performance_rating=50,
-        criticality_rating=50,
+        criticality_rating=5,
     )
 
     assessment_sba = AssessmentNode(
@@ -228,7 +237,7 @@ def _init_test_assessment(session: Session) -> None:
         source_assessment_node=assessment_application,
         target_assessment_node=assessment_sba,
         performance_rating=75,
-        criticality_rating=25,
+        criticality_rating=2,
     )
 
     session.add_all(

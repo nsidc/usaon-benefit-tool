@@ -27,12 +27,13 @@ def get():
 @nodes_bp.route('', methods=["POST"])
 @login_required
 def post():
+    """Add a node to the collection."""
     forbid_except_for_roles([RoleName.ADMIN, RoleName.RESPONDENT])
 
     # TODO: How to avoid using request.args? Typing worked on the GET endpoint, but not
     #       this one.
     node_type = request.args.get("node_type")
-    cls = get_node_class_by_type(node_type)
+    cls = get_node_class_by_type(NodeType(node_type))
     node = cls()
     form = FORMS_BY_MODEL[cls](request.form, obj=node)
 
@@ -63,12 +64,14 @@ class _QueryModel(BaseModel):
 @login_required
 @validate()
 def form(query: _QueryModel):
+    """Return a form for adding a node to the collection."""
     cls = get_node_class_by_type(query.node_type)
     form = FORMS_BY_MODEL[cls](obj=cls())
 
+    post_url = url_for('nodes.post', node_type=query.node_type.value)
     return render_template(
         'partials/modal_form.html',
         title=f"New {query.node_type.value.replace('_', ' ')}",
-        form_attrs=f"hx-post={url_for('nodes.post', node_type=query.node_type.value)}",
+        form_attrs=f"hx-post={post_url}",
         form=form,
     )

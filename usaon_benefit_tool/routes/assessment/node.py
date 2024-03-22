@@ -1,7 +1,7 @@
 from typing import Literal
 
 import sqlalchemy
-from flask import Blueprint, Response, render_template, request, url_for
+from flask import Blueprint, Response, abort, render_template, request, url_for
 from flask_login import login_required
 from flask_pydantic import validate
 from pydantic import BaseModel
@@ -21,19 +21,16 @@ assessment_node_bp = Blueprint(
     __name__,
     url_prefix='/node/<int:node_id>',
 )
-Form = FORMS_BY_MODEL[AssessmentNode]
 
 
 @assessment_node_bp.route('/form', methods=['GET'])
 @login_required
 def form(assessment_id: int, node_id: int):
-    """View assessment node object."""
-    try:
-        assessment_node = _query_for_assessment_node(assessment_id, node_id)
-    except sqlalchemy.orm.exc.NoResultFound:
-        return Response(status=404)
+    """View assessment node object form."""
+    assessment_node = _query_for_assessment_node(assessment_id, node_id)
 
-    form = Form(obj=assessment_node)
+    form = FORMS_BY_MODEL[type(assessment_node)](obj=assessment_node)
+    del form.node
 
     return render_template(
         'assessment/_edit_node.html',
@@ -52,10 +49,7 @@ class _QueryModel(BaseModel):
 @validate()
 def form_new_link(assessment_id: int, node_id: int, query: _QueryModel):
     """Display a form to add a new link (to the left or right) of the node."""
-    try:
-        assessment_node = _query_for_assessment_node(assessment_id, node_id)
-    except sqlalchemy.orm.exc.NoResultFound:
-        return Response(status=404)
+    assessment_node = _query_for_assessment_node(assessment_id, node_id)
 
     LinkForm = FORMS_BY_MODEL[Link]
 
@@ -80,7 +74,9 @@ def form_new_link(assessment_id: int, node_id: int, query: _QueryModel):
 
     # TODO: Should this be a QueryFactory at the Form level (in FORMS_BY_MODEL)?
     # Filter:
-    remaining_field.query = AssessmentNode.query.filter(
+    remaining_field.query = AssessmentNode.query.filter_by(
+        assessment_id=assessment_id,
+    ).filter(
         # Not this node
         AssessmentNode.id != assessment_node.id,
         # Of an allowable type
@@ -105,12 +101,8 @@ def put(assessment_id: int, node_id: int):
     """Update an AssessmentNode."""
     forbid_except_for_roles([RoleName.ADMIN, RoleName.RESPONDENT])
 
-    try:
-        assessment_node = _query_for_assessment_node(assessment_id, node_id)
-    except sqlalchemy.orm.exc.NoResultFound:
-        return Response(status=404)
-
-    form = Form(request.form, obj=assessment_node)
+    assessment_node = _query_for_assessment_node(assessment_id, node_id)
+    form = FORMS_BY_MODEL[type(assessment_node)](request.form, obj=assessment_node)
 
     if not form.validate():
         # TODO: Better messaging, HTMX communication
@@ -137,10 +129,7 @@ def delete(assessment_id: int, node_id: int):
     """Delete node object from assessment."""
     forbid_except_for_roles([RoleName.ADMIN, RoleName.RESPONDENT])
 
-    try:
-        assessment_node = _query_for_assessment_node(assessment_id, node_id)
-    except sqlalchemy.orm.exc.NoResultFound:
-        return Response(status=404)
+    assessment_node = _query_for_assessment_node(assessment_id, node_id)
 
     db.session.delete(assessment_node)
     db.session.commit()
@@ -157,10 +146,10 @@ def delete(assessment_id: int, node_id: int):
 
 
 def _query_for_assessment_node(assessment_id, node_id):
-    # TODO: Could we use `raise` to trigger a 404 without needing external try/except
-    #       logic?
-    # FIXME: Yes, we can use `abort(404, description=...)`
-    return AssessmentNode.query.filter_by(
-        assessment_id=assessment_id,
-        node_id=node_id,
-    ).one()
+    try:
+        return AssessmentNode.query.filter_by(
+            assessment_id=assessment_id,
+            node_id=node_id,
+        ).one()
+    except sqlalchemy.orm.exc.NoResultFound:
+        abort(404)

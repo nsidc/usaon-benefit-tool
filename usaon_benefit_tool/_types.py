@@ -18,5 +18,14 @@ class NodeType(str, Enum):
 
 
 class NodeTypeDiscriminator(Enum):
-    OTHER = "other"
-    SOCIETAL_BENEFIT_AREA = "sba"
+    # Used for both Nodes and AssessmentNodes discrimination
+    OTHER = "other"  # i.e. not a special case
+    SOCIETAL_BENEFIT_AREA = NodeType.SOCIETAL_BENEFIT_AREA.value
+
+    # Used for only AssessmentNodes discrimination
+    APPLICATION = NodeType.APPLICATION.value
+
+    # Not used for any discrimination, these types have nothing special about them...
+    # for now.
+    # OBSERVING_SYSTEM = NodeType.OBSERVING_SYSTEM.value
+    # DATA_PRODUCT = NodeType.DATA_PRODUCT.value

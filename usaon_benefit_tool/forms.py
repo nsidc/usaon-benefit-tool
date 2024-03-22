@@ -14,21 +14,13 @@ from usaon_benefit_tool import db
 from usaon_benefit_tool.models.tables import (
     Assessment,
     AssessmentNode,
+    AssessmentNodeSubtypeApplication,
     Link,
     Node,
     NodeSubtypeOther,
     NodeSubtypeSocietalBenefitArea,
     User,
 )
-
-node_exclude = [
-    'assessment_nodes',
-    'created_by_id',
-    'created_by',
-    'created_timestamp',
-    'updated_timestamp',
-    'type',
-]
 
 
 class CustomModelConverter(ModelConverter):
@@ -59,7 +51,7 @@ class CustomModelConverter(ModelConverter):
 
 
 def get_node_label(node: Node) -> str:
-    return f"Object #{node.id} ({node.type.value}): {node.title}"
+    return f"Object #{node.id}: {node.title}"
 
 
 model_form = partial(
@@ -68,6 +60,18 @@ model_form = partial(
     db_session=db.session,
     base_class=FlaskForm,
 )
+
+node_exclude = [
+    'assessment_nodes',
+    'created_by_id',
+    'created_by',
+    'created_timestamp',
+    'updated_timestamp',
+    'type',
+]
+assessment_node_field_args = {
+    'node': {'get_label': get_node_label},
+}
 
 # Workaround for missing type stubs for flask-sqlalchemy:
 #     https://github.com/dropbox/sqlalchemy-stubs/issues/76#issuecomment-595839159
@@ -86,9 +90,16 @@ FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
     AssessmentNode: model_form(
         AssessmentNode,
         only=['node'],
-        field_args={
-            'node': {'get_label': get_node_label},
-        },
+        field_args=assessment_node_field_args,
+    ),
+    AssessmentNodeSubtypeApplication: model_form(
+        AssessmentNodeSubtypeApplication,
+        exclude=[
+            'assessment',
+            'input_links',
+            'output_links',
+        ],
+        field_args=assessment_node_field_args,
     ),
     Link: model_form(
         Link,
