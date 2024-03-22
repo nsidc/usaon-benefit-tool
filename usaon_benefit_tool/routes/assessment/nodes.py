@@ -1,14 +1,16 @@
 from flask import Blueprint, Response, render_template, request, url_for
 from flask_login import login_required
+from flask_pydantic import validate
+from pydantic import BaseModel
 
 from usaon_benefit_tool import db
-from usaon_benefit_tool._types import RoleName
+from usaon_benefit_tool._types import NodeType, RoleName
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import AssessmentNode, Node
+from usaon_benefit_tool.util.node_type import get_assessment_node_class_by_type
 from usaon_benefit_tool.util.rbac import forbid_except_for_roles
 
 assessment_nodes_bp = Blueprint('nodes', __name__, url_prefix='/nodes')
-Form = FORMS_BY_MODEL[AssessmentNode]
 
 
 @assessment_nodes_bp.route('', methods=['POST'])
@@ -17,8 +19,13 @@ def post(assessment_id: str):
     """Add an entry to the assessment's node collection."""
     forbid_except_for_roles([RoleName.ADMIN, RoleName.RESPONDENT])
 
-    assessment_node = AssessmentNode(assessment_id=assessment_id)
-    form = Form(request.form, obj=assessment_node)
+    # TODO: How to avoid using request.args? Typing worked on the GET endpoint, but not
+    #       this one.
+    node_type = request.args.get("node_type")
+    cls = get_assessment_node_class_by_type(node_type)
+
+    assessment_node = cls(assessment_id=assessment_id)
+    form = FORMS_BY_MODEL[cls](request.form, obj=assessment_node)
 
     if form.validate():
         form.populate_obj(assessment_node)
@@ -36,15 +43,24 @@ def post(assessment_id: str):
     )
 
 
+class _QueryModel(BaseModel):
+    node_type: NodeType
+
+
 @assessment_nodes_bp.route('/form', methods=['GET'])
 @login_required
-def form(assessment_id: str):
+@validate()
+def form(assessment_id: str, query: _QueryModel):
     """Return a form to add an entry to the assessment's nodes collection."""
-    assessment_node = AssessmentNode(assessment_id=assessment_id)
-    form = Form(obj=assessment_node)
+    cls = get_assessment_node_class_by_type(query.node_type)
+    assessment_node = cls(assessment_id=assessment_id)
+    form = FORMS_BY_MODEL[cls](obj=assessment_node)
 
-    # List only nodes that are not already in this assessement!
-    form.node.query = Node.query.filter(
+    form.node.query = Node.query.filter_by(
+        # Select only nodes that are of the selected type
+        type=query.node_type,
+    ).filter(
+        # Select only nodes that are not already in this assessement
         Node.id.not_in(
             AssessmentNode.query.with_entities(
                 AssessmentNode.node_id,
@@ -52,11 +68,14 @@ def form(assessment_id: str):
         ),
     )
 
-    post_url = url_for('assessment.nodes.post', assessment_id=assessment_id)
-
+    post_url = url_for(
+        'assessment.nodes.post',
+        assessment_id=assessment_id,
+        node_type=query.node_type.value,
+    )
     return render_template(
         'partials/modal_form.html',
-        title="Add a node",
+        title=f"Add {query.node_type.replace('_', ' ')} node",
         form_attrs=f"hx-post={post_url}",
         form=form,
     )

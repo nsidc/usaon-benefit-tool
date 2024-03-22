@@ -10,15 +10,17 @@
   <p>{{assessment.description}}</p>
 
   <div>
-    <button
-      hx-get="{{ url_for("assessment.nodes.form", assessment_id=assessment.id) }}"
-      hx-target="#form-modal-hx-target"
-      hx-trigger="click"
-      data-bs-toggle="modal"
-      data-bs-target="#form-modal"
-      class="btn btn-success text-nowrap">
-      {{ render_icon("plus-circle-fill") }} Add node
-    </button>
+    {% for node_type in types.NodeType %}
+      <button
+        hx-get="{{ url_for("assessment.nodes.form", assessment_id=assessment.id, node_type=node_type.value) }}"
+        hx-target="#form-modal-hx-target"
+        hx-trigger="click"
+        data-bs-toggle="modal"
+        data-bs-target="#form-modal"
+        class="btn btn-success text-nowrap">
+        {{ render_icon("plus-circle-fill") }} Add {{ node_type.value.replace("_", " ") }} node
+      </button>
+    {% endfor %}
   </div>
 
   {{ display_sankey(sankey_series, assessment=assessment)}}

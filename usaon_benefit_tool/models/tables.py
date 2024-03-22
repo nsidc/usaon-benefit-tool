@@ -12,9 +12,9 @@ from datetime import datetime
 from typing import ClassVar
 
 from flask_login import UserMixin, current_user
-from sqlalchemy import CheckConstraint, case
+from sqlalchemy import CheckConstraint, case, select
 from sqlalchemy.ext.declarative import DeclarativeMeta
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import column_property, relationship
 from sqlalchemy.schema import Column, ForeignKey, Index, UniqueConstraint
 from sqlalchemy.types import Boolean, DateTime, Enum, Integer, String
 
@@ -313,6 +313,58 @@ class AssessmentNode(BaseModel):
         back_populates="source_assessment_node",
     )
 
+    # HACK: make it look like node type field is local to this table to enable
+    # polymorphism.
+    # OPTIMIZE: This is going to cost an extra subquery as far as I can tell, could be
+    # expensive.
+    # TODO: Open an issue or something on sqlalchemy repo to understand better way to do
+    # this.
+    # TODO: If we can ever remove this hack, move __mapper_args__ back to top.
+    # See: https://stackoverflow.com/a/54934609
+    node_type_discriminator = column_property(
+        select(
+            case(
+                [
+                    (
+                        Node.type == NodeType.APPLICATION,
+                        NodeTypeDiscriminator.APPLICATION.value,
+                    ),
+                ],
+                else_=NodeTypeDiscriminator.OTHER.value,
+            ),
+        ).where(Node.id == node_id),
+    )
+    __mapper_args__: ClassVar = {
+        'polymorphic_identity': NodeTypeDiscriminator.OTHER.value,
+        'polymorphic_on': node_type_discriminator,
+    }
+
+
+class AssessmentNodeSubtypeApplication(AssessmentNode):
+    __tablename__ = "assessment_node_subtype_application"
+    __mapper_args__: ClassVar = {
+        'polymorphic_identity': NodeTypeDiscriminator.APPLICATION.value,
+    }
+
+    assessment_node_id = Column(
+        Integer,
+        ForeignKey('assessment_node.id'),
+        primary_key=True,
+        nullable=False,
+    )
+
+    performance_rating = Column(
+        Integer,
+        CheckConstraint(
+            'performance_rating>0 and performance_rating<101',
+            name='p1-100',
+        ),
+        nullable=False,
+    )
+    performance_rating_criteria = Column(String, nullable=True)
+    performance_rating_rationale = Column(String, nullable=True)
+    performance_rating_gaps = Column(String, nullable=True)
+
 
 class Link(BaseModel):
     """A link between two nodes _in an assessment_."""
@@ -347,7 +399,7 @@ class Link(BaseModel):
         Integer,
         CheckConstraint(
             'performance_rating>0 and performance_rating<101',
-            name='p0-100',
+            name='p1-100',
         ),
         nullable=False,
     )
@@ -355,7 +407,7 @@ class Link(BaseModel):
         Integer,
         CheckConstraint(
             'criticality_rating>0 and criticality_rating<11',
-            name='c0-10',
+            name='c1-10',
         ),
         nullable=False,
     )

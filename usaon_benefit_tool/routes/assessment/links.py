@@ -41,7 +41,10 @@ def post(assessment_id: str):
 @assessment_links_bp.route('/form', methods=['GET'])
 @login_required
 def form(assessment_id: str):
-    """Return a form to add an entry to the assessment's link collection."""
+    """Return a form to add an entry to the assessment's link collection.
+
+    TODO: Remove? Links are added through `assessment.node.form_new_link`.
+    """
     assessment_link = Link()
     form = Form(obj=assessment_link)
     form_attrs = (
