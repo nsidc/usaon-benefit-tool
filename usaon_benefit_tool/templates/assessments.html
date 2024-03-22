@@ -2,6 +2,7 @@
 {% from 'bootstrap5/utils.html' import render_icon %}
 {% from 'macros/badges/private.j2' import private_badge %}
 {% from 'macros/forms/new_assessment.j2' import new_assessment_form %}
+{% from 'macros/forms/form_fields.j2' import render_form_fields %}
 
 
 {% block content %}
@@ -23,7 +24,18 @@
       tabindex="-1">
       <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
-          {{ new_assessment_form(form) }}
+
+          <div class="modal-header">
+            <h5 class="modal-title">
+              New assessment
+            <h5>
+          </div>
+
+          <div class="modal-body">
+            <form action={{ url_for("assessments.post") }} method="POST">
+            {{ render_form_fields(form) }}
+          </div>
+
         </div>
       </div>
     </div>
