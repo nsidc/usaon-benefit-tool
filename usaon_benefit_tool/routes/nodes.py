@@ -33,7 +33,7 @@ def post():
     # TODO: How to avoid using request.args? Typing worked on the GET endpoint, but not
     #       this one.
     node_type = request.args.get("node_type")
-    cls = get_node_class_by_type(node_type)
+    cls = get_node_class_by_type(NodeType(node_type))
     node = cls()
     form = FORMS_BY_MODEL[cls](request.form, obj=node)
 
