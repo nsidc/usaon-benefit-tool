@@ -123,9 +123,9 @@
 {% macro display_sankey(sankey_series, assessment) -%}
   {% include 'includes/highcharts.html' %}
 
-  {% if sankey_series == [] %}
+  {% if sankey_series.data == [] %}
     <div class="alert alert-info">
-      Please input at least one node to display diagram
+      Please add at least one node to display diagram
     </div>
   {% else %}
     <figure class="highcharts-figure">
