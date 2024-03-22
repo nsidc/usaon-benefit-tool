@@ -1,3 +1,8 @@
+## v2.0.1 (2024-03-21)
+
+* Bugfix: Remove obsolete template import.
+
+
 ## v2.0.0 (2024-03-21)
 
 * Revamp data model
