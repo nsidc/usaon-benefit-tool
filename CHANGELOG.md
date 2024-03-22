@@ -1,4 +1,4 @@
-## UNRELEASED
+## v2.0.0 (2024-03-21)
 
 * Revamp data model
     * All objects unified in one main table
@@ -9,6 +9,9 @@
     * Manage object library separately from assessment data
 * Revamp architecture
     * Use HTMX to start implementing HATEOAS architecture
+* New features
+    * Assessments can be private (only visible to Admins)
+    * Detailed tooltips on Sankey diagram
 
 
 ## v1.6.1 (2023-12-22)
