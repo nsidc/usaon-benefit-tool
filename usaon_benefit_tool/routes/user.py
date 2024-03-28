@@ -31,7 +31,7 @@ def get(user_id: str):
 @user_bp.route('/<user_id>', methods=['POST'])
 @login_required
 def post(user_id: str):
-    if user_id != request.form['id']:
+    if user_id != current_user.id and current_user.role_id != RoleName.ADMIN:
         forbid_except_for_roles([RoleName.ADMIN])
 
     user = db.get_or_404(User, user_id)
