@@ -9,4 +9,15 @@
     show_actions=True,
     edit_url=('user.get', [('user_id',':id')]),
   ) }}
+
+{% block scripts %}
+  {{ super() }}
+
+  <script>
+    jQuery(document).ready( function () {
+        jQuery('table').DataTable();
+    } );
+  </script>
+{% endblock %}
+
 {% endblock %}

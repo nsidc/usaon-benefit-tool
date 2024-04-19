@@ -44,7 +44,7 @@
   {% endif %}
 
 
-  <table class='table'>
+  <table class='table' id='objects'>
 
     <thead>
       <tr>
@@ -57,6 +57,7 @@
         <th>Created by</th>
         <th>Created time</th>
         <th>Updated time</th>
+        <th>Delete</th>
         {% endif %}
 
       </tr>
@@ -92,5 +93,16 @@
     </tbody>
 
   </table>
+
+{% block scripts %}
+  {{ super() }}
+
+  <script>
+    jQuery(document).ready( function () {
+        jQuery('#objects').DataTable();
+    } );
+  </script>
+{% endblock %}
+
 
 {% endblock %}

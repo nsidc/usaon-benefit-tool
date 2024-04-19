@@ -44,7 +44,7 @@
   {% endif %}
 
 
-  <table class='table'>
+  <table class='table' id="assessment">
 
     <thead>
       <tr>
@@ -87,5 +87,16 @@
     </tbody>
 
   </table>
+
+{% block scripts %}
+  {{ super() }}
+
+  <script>
+    jQuery(document).ready( function () {
+        jQuery('#assessment').DataTable();
+    } );
+  </script>
+{% endblock %}
+
 
 {% endblock %}
