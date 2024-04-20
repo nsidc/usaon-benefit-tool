@@ -96,12 +96,9 @@
 
 {% block scripts %}
   {{ super() }}
+  {% import 'macros/datatables.j2' as macros %}
+  {{ macros.datatable_script() }}
 
-  <script>
-    jQuery(document).ready( function () {
-        jQuery('#objects').DataTable();
-    } );
-  </script>
 {% endblock %}
 
 

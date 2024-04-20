@@ -13,11 +13,9 @@
 {% block scripts %}
   {{ super() }}
 
-  <script>
-    jQuery(document).ready( function () {
-        jQuery('table').DataTable();
-    } );
-  </script>
+  {% import 'macros/datatables.j2' as macros %}
+  {{ macros.datatable_script() }}
+
 {% endblock %}
 
 {% endblock %}
