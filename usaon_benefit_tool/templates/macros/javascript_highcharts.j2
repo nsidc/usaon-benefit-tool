@@ -114,6 +114,8 @@
         keys: ['from', 'to', 'weight'],
         data: {{ sankey_series.data | safe }},
         nodes: {{ sankey_series.nodes | safe }},
+        colorByPoint: true,
+        colors: ["#AEAEAE"]
       }],
     });
   </script>
