@@ -89,7 +89,7 @@ class Assessment(BaseModel):
     id = Column(Integer, primary_key=True, autoincrement=True)
 
     title = Column(String(128), nullable=False)
-    description = Column(String(512), nullable=True)
+    description = Column(String(4096), nullable=True)
 
     private = Column(Boolean, nullable=False, default=False)
     hypothetical = Column(Boolean, nullable=False, default=False)
@@ -171,7 +171,7 @@ class Node(BaseModel):
 
     title = Column(String(128), nullable=False)
     short_name = Column(String(256), nullable=False)
-    description = Column(String(512), nullable=True)
+    description = Column(String(4096), nullable=True)
 
     # TODO: Implement tags!
     # tags = Column(String, nullable=False)
