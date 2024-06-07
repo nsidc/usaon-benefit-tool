@@ -1,3 +1,8 @@
+## v2.0.2 (2024-06-07)
+
+* Change all sankey nodes to gray color
+
+
 ## v2.0.1 (2024-03-21)
 
 * Bugfix: Remove obsolete template import.
