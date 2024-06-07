@@ -44,7 +44,7 @@
   {% endif %}
 
 
-  <table class='table'>
+  <table class='table' id='objects'>
 
     <thead>
       <tr>
@@ -57,6 +57,7 @@
         <th>Created by</th>
         <th>Created time</th>
         <th>Updated time</th>
+        <th>Delete</th>
         {% endif %}
 
       </tr>
@@ -92,5 +93,13 @@
     </tbody>
 
   </table>
+
+{% block scripts %}
+  {{ super() }}
+  {% import 'macros/datatables.j2' as macros %}
+  {{ macros.datatable_script() }}
+
+{% endblock %}
+
 
 {% endblock %}

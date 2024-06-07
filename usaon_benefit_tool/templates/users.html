@@ -9,4 +9,13 @@
     show_actions=True,
     edit_url=('user.get', [('user_id',':id')]),
   ) }}
+
+{% block scripts %}
+  {{ super() }}
+
+  {% import 'macros/datatables.j2' as macros %}
+  {{ macros.datatable_script() }}
+
+{% endblock %}
+
 {% endblock %}
