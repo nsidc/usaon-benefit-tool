@@ -72,7 +72,7 @@ Bring up the docker container:
 docker compose up -d
 ```
 
-**The stack should now be up, with the web interface running at `locahost:5000`, and
+**The stack should now be up, with the web interface running at `localhost:5000`, and
 database administration at `localhost:8080`.**
 
 You can follow the logs with:
