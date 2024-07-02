@@ -8,6 +8,7 @@ warning:
     https://docs.sqlalchemy.org/en/14/orm/basic_relationships.html#late-evaluation-of-relationship-arguments
 
 """
+
 from datetime import datetime
 from typing import ClassVar
 

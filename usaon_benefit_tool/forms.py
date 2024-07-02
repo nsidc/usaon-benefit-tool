@@ -1,4 +1,5 @@
 """Forms corresponding to database models."""
+
 from functools import partial
 
 from flask_wtf import FlaskForm

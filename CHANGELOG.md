@@ -172,7 +172,7 @@
 ## v0.3.0 (2023-08-17)
 
 * Set up/improve all relationship interfaces
-* Populate societal benfit area reference data
+* Populate societal benefit area reference data
 * Implement role dropdown on profile page
 
 ## v0.2.1 (2023-08-10)

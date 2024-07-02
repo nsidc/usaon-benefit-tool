@@ -174,6 +174,7 @@ def _handle_unlinked_sankey_nodes(
     See Also
     --------
         https://stackoverflow.com/questions/73033817/highcharts-sankey-node-without-links
+
     """
     orphan_nodes = [
         n for n in series["nodes"] if n["id"] not in _node_ids_in_links(series["data"])
