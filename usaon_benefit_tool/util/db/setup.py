@@ -6,6 +6,7 @@ Todo:
 * Execute each function within a transaction.
 
 """
+
 import sqlalchemy
 from flask import current_app
 from loguru import logger
