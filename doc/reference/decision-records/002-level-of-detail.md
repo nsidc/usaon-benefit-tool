@@ -21,6 +21,7 @@ These decisions will be made on a case-by-case basis with the 'respondents' havi
 US AON staff can advise as needed.
 
 The key factors to consider are:
+
 * Telling the right story with an individual evaluation. For instance, in the above example,
   if all AWS stations perform at approximately the same level, it may not be important to list them individually.
 * Re-usability of objects. There is a significant benefit to using the same object in multiple evaluations.
