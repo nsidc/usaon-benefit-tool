@@ -1,4 +1,4 @@
-## NEXT_VERSION
+## v2.1.0 (2024-09-26)
 
 * Increase length of description columns to 4096 chars.
 
