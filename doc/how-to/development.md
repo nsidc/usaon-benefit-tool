@@ -141,6 +141,47 @@ pre-commit run --all-files
 ```
 
 
+### Database migrations
+
+Database migrations are managed by [Alembic](https://alembic.sqlalchemy.org/).
+
+Configuration exists in the `migrations/` directory. Migrations themselves live in
+`migrations/versions/` directories. They are named with unique identifiers, and they are
+**not in chronological order**. The migration script itself contains information about
+its dependencies. Each migration depends on the one before it.
+
+**When the data model changes, you must
+[create a database migration (a.k.a. "revision")](https://alembic.sqlalchemy.org/en/latest/tutorial.html#create-a-migration-script).
+Each release should contain either 0 or 1 database migrations.** If you make multiple
+changes within a single release cycle, combine them all into one migration.
+
+Create each revision with a descriptive name, following the convention you would use
+when creating a Git commit.
+
+:::{.callout-important}
+These commands are executed within the Docker stack by prefixing `docker compose run
+--rm usaon-benefit-tool` to the `alembic` command. The database must be running.
+:::
+
+```bash
+docker compose run --rm usaon-benefit-tool alembic revision --autogenerate --message "Add new criticality rationale field"
+```
+
+This will scan the database and data model for changes and produce an automated
+migration, creating a new file in `migrations/versions/` directory. **Review and test
+this migration carefully.** Remember, the data in the database needs to be changed, not
+just the columns.
+
+To generate an empty migration and manually populate the behaviors, omit
+`--autogenerate`.
+
+To apply all migrations and bring the DB to the latest state:
+
+```bash
+docker compose run --rm usaon-benefit-tool alembic upgrade head  # or replace "head" with a migration id
+```
+
+
 ### Third-party services
 
 See

@@ -94,6 +94,7 @@ ignore = [
 "usaon_benefit_tool/forms.py" = ["N802"]
 "usaon_benefit_tool/routes/__init__.py" = ["F401", "I001"]
 "usaon_benefit_tool/__init__.py" = ["E501", "PLR0915"]
+"migrations/*" = ["INP001"]
 
 [tool.ruff.isort]
 known-third-party = ["luigi"]

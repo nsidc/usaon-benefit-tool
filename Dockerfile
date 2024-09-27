@@ -19,10 +19,12 @@ RUN micromamba install -y \
 
 
 # Install source
+COPY ./usaon_benefit_tool ./usaon_benefit_tool
 COPY ./pyproject.toml .
 COPY ./tasks ./tasks
 COPY ./scripts ./scripts
-COPY ./usaon_benefit_tool ./usaon_benefit_tool
+COPY ./migrations ./migrations
+COPY ./alembic.ini .
 
 ENV FLASK_APP=usaon_benefit_tool
 
