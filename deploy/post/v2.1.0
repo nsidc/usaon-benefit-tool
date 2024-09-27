@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# TODO: figure out better way
+echo "Waiting 10 seconds for the new stack to come up..."
+sleep 10
+
+docker compose run --rm usaon-benefit-tool alembic upgrade head
+
+# confirm the expected migration was applied
+current=$(docker compose run --rm usaon-benefit-tool alembic current 2>/dev/null)
+if [ "fafa3da67d5e (head)" = "${current}" ]; then
+    echo "Data migration successful. On expected revision ${current}."
+else
+    echo "Data migration failed. On unexpected revision ${current}."
+fi

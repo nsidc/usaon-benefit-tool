@@ -181,6 +181,9 @@ To apply all migrations and bring the DB to the latest state:
 docker compose run --rm usaon-benefit-tool alembic upgrade head  # or replace "head" with a migration id
 ```
 
+Finally, create an executable post-deploy script matching the release which should
+include the new migration in `deploy/post/` directory, e.g. `deploy/post/v2.1.0`.
+
 
 ### Third-party services
 
