@@ -1,6 +1,11 @@
+## NEXT_VERSION
+
+* Increase length of description columns to 4096 chars.
+
+
 ## v2.0.2 (2024-06-07)
 
-* Change all sankey nodes to gray color
+* Change all sankey nodes to gray color.
 
 
 ## v2.0.1 (2024-03-21)
