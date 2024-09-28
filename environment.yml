@@ -10,6 +10,7 @@ dependencies:
 
   # Dev dependencies:
   - pre-commit
+  - conda-lock
   - bump-my-version ~=0.9.3
   # TODO: For some reason, with later versions, imports within invoke tasks stop working
   - invoke ~=2.0.0
@@ -30,6 +31,7 @@ dependencies:
   - flask-login ~=0.6.2
   - sqlalchemy ~=1.4
   - psycopg2 ~=2.9
+  - alembic ~=1.13.3
   - flask-sqlalchemy ~=3.0
   - markdown ~=3.5
   - matplotlib-base ~=3.8.3

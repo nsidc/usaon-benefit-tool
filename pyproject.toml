@@ -1,7 +1,7 @@
 [project]
 name = "usaon_benefit_tool"
 description = "Gather data for US AON's Value Tree Analysis (Benefit Tool) process"
-version = "2.0.2"
+version = "2.1.0"
 url = "git@github.com:nsidc/usaon-benefit-tool.git"
 authors = [
   {name = "National Snow and Ice Data Center", email = "nsidc@nsidc.org"},
@@ -94,6 +94,7 @@ ignore = [
 "usaon_benefit_tool/forms.py" = ["N802"]
 "usaon_benefit_tool/routes/__init__.py" = ["F401", "I001"]
 "usaon_benefit_tool/__init__.py" = ["E501", "PLR0915"]
+"migrations/*" = ["INP001"]
 
 [tool.ruff.isort]
 known-third-party = ["luigi"]
@@ -105,7 +106,7 @@ max-complexity = 8
 inline-quotes = "double"
 
 [tool.bumpversion]
-current_version = "2.0.2"
+current_version = "2.1.0"
 commit = false
 tag = false
 
