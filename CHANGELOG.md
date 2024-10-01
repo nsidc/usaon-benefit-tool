@@ -1,6 +1,7 @@
 ## v2.2.0 (2024-10-01)
 
-* Allow ndes of same type to link
+* Allow nodes of same type to link
+* Reverse color bar
 
 ## v2.1.0 (2024-09-26)
 
