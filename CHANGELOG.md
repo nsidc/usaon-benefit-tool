@@ -1,3 +1,7 @@
+## v2.2.0 (2024-10-01)
+
+* Allow ndes of same type to link
+
 ## v2.1.0 (2024-09-26)
 
 * Increase length of description columns to 4096 chars.
