@@ -417,8 +417,6 @@ class Link(BaseModel):
     gaps = Column(String(8192), nullable=True)
     variable_or_attribute = Column(String(512), nullable=True)
 
-
-
     source_assessment_node = relationship(
         AssessmentNode,
         foreign_keys=[source_assessment_node_id],
