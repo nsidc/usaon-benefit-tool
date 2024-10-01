@@ -4,7 +4,7 @@ from matplotlib import colormaps, colors
 COLORMAP_CLASSES = 8
 COLORMAP_DATA_VALUE_RANGE = (0, 100)
 
-cmap_name = 'viridis'
+cmap_name = 'viridis_r'  # "_r" means "reversed"
 cmap = colormaps[cmap_name]
 # FIXME: This duplication is only for expedience. We can do this in pure matplotlib
 #        without leafmap.
