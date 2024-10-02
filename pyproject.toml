@@ -44,7 +44,7 @@ module = "usaon_benefit_tool.*"
 # disallow_incomlete_defs = true
 
 
-[tool.ruff.lint]
+[tool.ruff]
 target-version = "py311"
 select = [
   "F",    # pyflakes
