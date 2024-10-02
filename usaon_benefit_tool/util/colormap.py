@@ -6,6 +6,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.colors import Normalize, rgb2hex
 
 from usaon_benefit_tool.constants.colormap import (
+    COLOR_NO_PERFORMANCE_RATING,
     COLORMAP,
     COLORMAP_DATA_VALUE_RANGE,
     COLORMAP_PALETTE,
@@ -18,8 +19,14 @@ norm = Normalize(
 )
 
 
-def color_for_performance_rating(performance_rating: int):
-    """Return the hex color value for the given performance rating."""
+def color_for_performance_rating(performance_rating: int | None):
+    """Return the hex color value for the given performance rating.
+
+    If not set, return a default non-colormap value.
+    """
+    if performance_rating is None:
+        return COLOR_NO_PERFORMANCE_RATING
+
     lookup_val = norm(performance_rating)
 
     color = COLORMAP(lookup_val)

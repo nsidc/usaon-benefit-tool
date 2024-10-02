@@ -31,6 +31,7 @@ services:
     user: "root"
     volumes:
       - "./usaon_benefit_tool:/usaon-benefit-tool/usaon_benefit_tool:ro"
+      - "./migrations:/usaon-benefit-tool/migrations:rw"
       - "./tasks:/usaon-benefit-tool/tasks:ro"
     ports:
       - "5000:5000"

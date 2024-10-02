@@ -5,6 +5,8 @@ from flask import Flask
 
 from usaon_benefit_tool.util.envvar import envvar_is_true
 
+DB_NAME = "usaon-benefit-tool"
+
 
 @cache
 def db_connstr(app: Flask) -> str:
@@ -20,25 +22,31 @@ def db_connstr(app: Flask) -> str:
     If not provided, default to local sqlite?
     """
     sqlite_db = envvar_is_true('USAON_BENEFIT_TOOL_DB_SQLITE')
-    db_name = "usaon-benefit-tool"
 
     if sqlite_db:
-        if not (app.config["TESTING"] or app.config["DEBUG"]):
-            raise RuntimeError(
-                f"Production application config detected with SQLite DB. {app.config=}",
-            )
-        db_path = f"/db/{db_name}.db"
-        connstr = f"sqlite:///{db_path}"
-        app.logger.warning(
-            f"Using a local file database for development: {connstr}."
-            " You should never see this logged in production!",
-        )
-        return connstr
+        return _sqlite_db_connstr(app)
     else:
-        host = os.environ['USAON_BENEFIT_TOOL_DB_HOST']
-        port = os.environ['USAON_BENEFIT_TOOL_DB_PORT']
-        user = os.environ['USAON_BENEFIT_TOOL_DB_USER']
-        password = os.environ['USAON_BENEFIT_TOOL_DB_PASSWORD']
+        return _postgres_db_connstr()
 
-        connstr = f'postgresql://{user}:{password}@{host}:{port}/{db_name}'
-        return connstr
+
+def _postgres_db_connstr() -> str:
+    host = os.environ['USAON_BENEFIT_TOOL_DB_HOST']
+    port = os.environ['USAON_BENEFIT_TOOL_DB_PORT']
+    user = os.environ['USAON_BENEFIT_TOOL_DB_USER']
+    password = os.environ['USAON_BENEFIT_TOOL_DB_PASSWORD']
+
+    return f'postgresql://{user}:{password}@{host}:{port}/{DB_NAME}'
+
+
+def _sqlite_db_connstr(app: Flask) -> str:
+    if not (app.config["TESTING"] or app.config["DEBUG"]):
+        raise RuntimeError(
+            f"Production application config detected with SQLite DB. {app.config=}",
+        )
+
+    connstr = f"sqlite:////db/{DB_NAME}.db"
+    app.logger.warning(
+        f"Using a local file database for development: {connstr}."
+        " You should never see this logged in production!",
+    )
+    return connstr

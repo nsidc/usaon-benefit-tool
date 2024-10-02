@@ -1,3 +1,23 @@
+## v2.3.0 (2024-10-02)
+
+* Allow null link raings (db migration ea1181510e10)
+
+## v2.2.0 (2024-10-01)
+
+* Allow nodes of same type to link.
+* Reverse color bar.
+* Add new link fields (db migration 925ed377e31b).
+
+## v2.1.0 (2024-09-26)
+
+* Increase length of description columns to 4096 chars (db migration fafa3da67d5e).
+
+
+## v2.0.2 (2024-06-07)
+
+* Change all sankey nodes to gray color.
+
+
 ## v2.0.1 (2024-03-21)
 
 * Bugfix: Remove obsolete template import.
@@ -167,7 +187,7 @@
 ## v0.3.0 (2023-08-17)
 
 * Set up/improve all relationship interfaces
-* Populate societal benfit area reference data
+* Populate societal benefit area reference data
 * Implement role dropdown on profile page
 
 ## v0.2.1 (2023-08-10)

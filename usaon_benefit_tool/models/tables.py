@@ -8,6 +8,7 @@ warning:
     https://docs.sqlalchemy.org/en/14/orm/basic_relationships.html#late-evaluation-of-relationship-arguments
 
 """
+
 from datetime import datetime
 from typing import ClassVar
 
@@ -89,7 +90,7 @@ class Assessment(BaseModel):
     id = Column(Integer, primary_key=True, autoincrement=True)
 
     title = Column(String(128), nullable=False)
-    description = Column(String(512), nullable=True)
+    description = Column(String(4096), nullable=True)
 
     private = Column(Boolean, nullable=False, default=False)
     hypothetical = Column(Boolean, nullable=False, default=False)
@@ -171,7 +172,7 @@ class Node(BaseModel):
 
     title = Column(String(128), nullable=False)
     short_name = Column(String(256), nullable=False)
-    description = Column(String(512), nullable=True)
+    description = Column(String(4096), nullable=True)
 
     # TODO: Implement tags!
     # tags = Column(String, nullable=False)
@@ -401,7 +402,7 @@ class Link(BaseModel):
             'performance_rating>0 and performance_rating<101',
             name='p1-100',
         ),
-        nullable=False,
+        nullable=True,
     )
     criticality_rating = Column(
         Integer,
@@ -409,8 +410,12 @@ class Link(BaseModel):
             'criticality_rating>0 and criticality_rating<11',
             name='c1-10',
         ),
-        nullable=False,
+        nullable=True,
     )
+    performance_rating_rationale = Column(String(8192), nullable=True)
+    critically_rating_rationale = Column(String(8192), nullable=True)
+    gaps_description = Column(String(8192), nullable=True)
+    attribute_description = Column(String(512), nullable=True)
 
     source_assessment_node = relationship(
         AssessmentNode,
