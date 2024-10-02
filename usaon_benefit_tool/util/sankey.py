@@ -183,6 +183,6 @@ def _node_ids_in_links(links: list[HighchartsSankeySeriesLink]) -> set[str]:
 def _weight_for_criticality_rating(criticality_rating: int | None) -> int | float:
     """If criticality rating is not set, return a very thin line."""
     if criticality_rating is None:
-        return 0.01
+        return 0.1
 
     return criticality_rating
