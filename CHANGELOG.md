@@ -1,11 +1,12 @@
 ## v2.2.0 (2024-10-01)
 
-* Allow nodes of same type to link
-* Reverse color bar
+* Allow nodes of same type to link.
+* Reverse color bar.
+* Add new link fields (db migration 925ed377e31b).
 
 ## v2.1.0 (2024-09-26)
 
-* Increase length of description columns to 4096 chars.
+* Increase length of description columns to 4096 chars (db migration fafa3da67d5e).
 
 
 ## v2.0.2 (2024-06-07)
