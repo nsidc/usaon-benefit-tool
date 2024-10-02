@@ -44,7 +44,7 @@ module = "usaon_benefit_tool.*"
 # disallow_incomlete_defs = true
 
 
-[tool.ruff]
+[tool.ruff.lint]
 target-version = "py311"
 select = [
   "F",    # pyflakes
@@ -86,7 +86,7 @@ ignore = [
   "N806",
 ]
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 # E501: Line too long. Long strings, e.g. URLs, are common in config.
 "usaon_benefit_tool/models/tables.py" = ["A003"]
 "tasks/format.py" = ["A001"]
@@ -96,13 +96,13 @@ ignore = [
 "usaon_benefit_tool/__init__.py" = ["E501", "PLR0915"]
 "migrations/*" = ["INP001"]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-third-party = ["luigi"]
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 max-complexity = 8
 
-[tool.ruff.flake8-quotes]
+[tool.ruff.lint.flake8-quotes]
 inline-quotes = "double"
 
 [tool.bumpversion]
