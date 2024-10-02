@@ -1,4 +1,4 @@
-## NEXT_VERSION
+## v2.3.0 (2024-10-02)
 
 * Allow null link raings (db migration ea1181510e10)
 
