@@ -1,3 +1,7 @@
+## NEXT_VERSION
+
+* Allow null link raings (db migration ea1181510e10)
+
 ## v2.2.0 (2024-10-01)
 
 * Allow nodes of same type to link.
