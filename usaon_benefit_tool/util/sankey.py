@@ -65,39 +65,6 @@ def sankey(assessment: Assessment) -> HighchartsSankeySeries:
     return series
 
 
-def sankey_subset(
-    assessment: Assessment,
-    include_related_to_type: type[AssessmentNode],
-) -> HighchartsSankeySeries:
-    """Provide subset of Sankey data structure.
-
-    Include only nodes related to `include_related_to_type`.
-    """
-    series = _sankey(assessment)
-    # FIXME: Using `cls.__name__` could be much better. Replace with an Enum for node
-    # type.
-    node_ids_matching_object_type = [
-        n["id"]
-        for n in series["nodes"]
-        if n["type"] == include_related_to_type.__name__
-    ]
-
-    # For now, select only the outputs. That was the previous behavior, but do we like
-    # it?
-    filtered_links = [
-        link for link in series["data"] if link["from"] in node_ids_matching_object_type
-    ]
-
-    filtered_node_ids = _node_ids_in_links(filtered_links)
-    filtered_nodes = [
-        node for node in series["nodes"] if node["id"] in filtered_node_ids
-    ]
-    return {
-        "data": filtered_links,
-        "nodes": filtered_nodes,
-    }
-
-
 def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
     """Extract Sankey-relevant data from Response and format for Highcharts.
 
