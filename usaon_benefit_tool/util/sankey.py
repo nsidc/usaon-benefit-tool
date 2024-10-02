@@ -31,7 +31,7 @@ HighchartsSankeySeriesLink = TypedDict(
     {
         "from": str,
         "to": str,
-        "weight": int,
+        "weight": int | float,
         "color": str,
         "id": NotRequired[int],
         "tooltipHTML": str,
@@ -63,39 +63,6 @@ def sankey(assessment: Assessment) -> HighchartsSankeySeries:
     """Provide Sankey data structure, formatted for Highcharts."""
     series = _sankey(assessment)
     return series
-
-
-def sankey_subset(
-    assessment: Assessment,
-    include_related_to_type: type[AssessmentNode],
-) -> HighchartsSankeySeries:
-    """Provide subset of Sankey data structure.
-
-    Include only nodes related to `include_related_to_type`.
-    """
-    series = _sankey(assessment)
-    # FIXME: Using `cls.__name__` could be much better. Replace with an Enum for node
-    # type.
-    node_ids_matching_object_type = [
-        n["id"]
-        for n in series["nodes"]
-        if n["type"] == include_related_to_type.__name__
-    ]
-
-    # For now, select only the outputs. That was the previous behavior, but do we like
-    # it?
-    filtered_links = [
-        link for link in series["data"] if link["from"] in node_ids_matching_object_type
-    ]
-
-    filtered_node_ids = _node_ids_in_links(filtered_links)
-    filtered_nodes = [
-        node for node in series["nodes"] if node["id"] in filtered_node_ids
-    ]
-    return {
-        "data": filtered_links,
-        "nodes": filtered_nodes,
-    }
 
 
 def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
@@ -132,7 +99,7 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
         {
             "from": _node_id(link.source_assessment_node.node),
             "to": _node_id(link.target_assessment_node.node),
-            "weight": link.criticality_rating,
+            "weight": _weight_for_criticality_rating(link.criticality_rating),
             "color": color_for_performance_rating(link.performance_rating),
             "id": link.id,
             "tooltipHTML": render_template(
@@ -211,3 +178,11 @@ def _node_ids_in_links(links: list[HighchartsSankeySeriesLink]) -> set[str]:
     node_ids = set(chain.from_iterable(node_id_tuples))
 
     return node_ids
+
+
+def _weight_for_criticality_rating(criticality_rating: int | None) -> int | float:
+    """If criticality rating is not set, return a very thin line."""
+    if criticality_rating is None:
+        return 0.1
+
+    return criticality_rating

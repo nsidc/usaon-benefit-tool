@@ -402,7 +402,7 @@ class Link(BaseModel):
             'performance_rating>0 and performance_rating<101',
             name='p1-100',
         ),
-        nullable=False,
+        nullable=True,
     )
     criticality_rating = Column(
         Integer,
@@ -410,7 +410,7 @@ class Link(BaseModel):
             'criticality_rating>0 and criticality_rating<11',
             name='c1-10',
         ),
-        nullable=False,
+        nullable=True,
     )
     performance_rating_rationale = Column(String(8192), nullable=True)
     critically_rating_rationale = Column(String(8192), nullable=True)
