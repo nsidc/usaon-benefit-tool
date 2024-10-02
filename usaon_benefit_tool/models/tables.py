@@ -414,8 +414,8 @@ class Link(BaseModel):
     )
     performance_rating_rationale = Column(String(8192), nullable=True)
     critically_rating_rationale = Column(String(8192), nullable=True)
-    gaps = Column(String(8192), nullable=True)
-    variable_or_attribute = Column(String(512), nullable=True)
+    gaps_description = Column(String(8192), nullable=True)
+    attribute_description = Column(String(512), nullable=True)
 
     source_assessment_node = relationship(
         AssessmentNode,
