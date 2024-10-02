@@ -31,7 +31,7 @@ HighchartsSankeySeriesLink = TypedDict(
     {
         "from": str,
         "to": str,
-        "weight": int,
+        "weight": int | float,
         "color": str,
         "id": NotRequired[int],
         "tooltipHTML": str,
@@ -180,7 +180,7 @@ def _node_ids_in_links(links: list[HighchartsSankeySeriesLink]) -> set[str]:
     return node_ids
 
 
-def _weight_for_criticality_rating(criticality_rating: int | None) -> float:
+def _weight_for_criticality_rating(criticality_rating: int | None) -> int | float:
     """If criticality rating is not set, return a very thin line."""
     if criticality_rating is None:
         return 0.01
