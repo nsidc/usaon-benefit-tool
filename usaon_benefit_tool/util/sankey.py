@@ -99,7 +99,7 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
         {
             "from": _node_id(link.source_assessment_node.node),
             "to": _node_id(link.target_assessment_node.node),
-            "weight": link.criticality_rating,
+            "weight": _weight_for_criticality_rating(link.criticality_rating),
             "color": color_for_performance_rating(link.performance_rating),
             "id": link.id,
             "tooltipHTML": render_template(
@@ -178,3 +178,11 @@ def _node_ids_in_links(links: list[HighchartsSankeySeriesLink]) -> set[str]:
     node_ids = set(chain.from_iterable(node_id_tuples))
 
     return node_ids
+
+
+def _weight_for_criticality_rating(criticality_rating: int | None) -> float:
+    """If criticality rating is not set, return a very thin line."""
+    if criticality_rating is None:
+        return 0.01
+
+    return criticality_rating

@@ -16,3 +16,4 @@ COLORMAP = colors.LinearSegmentedColormap.from_list(
     cmap.colors,  # type: ignore [attr-defined]
     N=COLORMAP_CLASSES,
 )
+COLOR_NO_PERFORMANCE_RATING = "#666666"
