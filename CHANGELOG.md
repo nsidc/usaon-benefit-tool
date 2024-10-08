@@ -1,6 +1,10 @@
 ## v2.3.0 (2024-10-02)
 
-* Allow null link raings (db migration ea1181510e10)
+* Allow null performance and criticality ratings on links (db migration ea1181510e10)
+    * Null performance is displayed as gray
+    * Null criticality is displayed as a thin line
+* Display a legend for criticality rating
+
 
 ## v2.2.0 (2024-10-01)
 
