@@ -1,5 +1,6 @@
 ## v2.3.0 (2024-10-02)
 
+* Add sort functionality to assessments and object library pages
 * Allow null performance and criticality ratings on links (db migration ea1181510e10)
     * Null performance is displayed as gray
     * Null criticality is displayed as a thin line
