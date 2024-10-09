@@ -468,47 +468,11 @@ class SocietalBenefitArea(BaseModel):
         primary_key=True,
     )
 
+    description = Column(
+        String,
+        nullable=False,
+    )
     societal_benefit_sub_areas = relationship(
         'SocietalBenefitSubArea',
         back_populates='societal_benefit_area',
-    )
-
-
-class SocietalBenefitSubArea(BaseModel):
-    __tablename__ = 'societal_benefit_subarea'
-    id = Column(
-        String(256),
-        primary_key=True,
-    )
-    societal_benefit_area_id = Column(
-        String(256),
-        ForeignKey('societal_benefit_area.id'),
-        nullable=False,
-    )
-
-    societal_benefit_area = relationship(
-        'SocietalBenefitArea',
-        back_populates='societal_benefit_sub_areas',
-    )
-    societal_benefit_key_objectives = relationship(
-        'SocietalBenefitKeyObjective',
-        back_populates='societal_benefit_sub_area',
-    )
-
-
-class SocietalBenefitKeyObjective(BaseModel):
-    __tablename__ = 'societal_benefit_key_objective'
-    id = Column(
-        String(256),
-        primary_key=True,
-    )
-    societal_benefit_subarea_id = Column(
-        String(256),
-        ForeignKey('societal_benefit_subarea.id'),
-        primary_key=True,
-    )
-
-    societal_benefit_sub_area = relationship(
-        'SocietalBenefitSubArea',
-        back_populates='societal_benefit_key_objectives',
     )
