@@ -263,7 +263,7 @@ class NodeSubtypeSocietalBenefitArea(Node):
 
     # TODO: Relationship to societal benefit area table? How would we make a similar
     #       relationship for the other node types?
-    societal_benefit_area = relationship("SocietalBenefitArea")
+    # societal_benefit_area = relationship("SocietalBenefitArea")
 
 
 class AssessmentNode(BaseModel):
