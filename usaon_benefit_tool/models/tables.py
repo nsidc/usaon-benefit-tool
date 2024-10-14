@@ -262,10 +262,10 @@ class NodeSubtypeSocietalBenefitArea(Node):
         ForeignKey('societal_benefit_area.id'),
         nullable=False,
     )
-    name = Column(String(512), nullable=False)
+    name = Column(String(512), nullable=True)
     short_name = Column(String(256), nullable=True)
-    description = Column(String, nullable=False)
-    framework_name = Column(String(256), nullable=False)
+    description = Column(String, nullable=True)
+    framework_name = Column(String(256), nullable=True)
     framework_url = Column(String(512), nullable=True)
 
     # TODO: Relationship to societal benefit area table? How would we make a similar
