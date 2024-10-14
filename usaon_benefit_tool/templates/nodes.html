@@ -57,6 +57,7 @@
         <th>Created by</th>
         <th>Created time</th>
         <th>Updated time</th>
+        <th></th>
         {% endif %}
 
       </tr>
@@ -92,5 +93,10 @@
     </tbody>
 
   </table>
+{% endblock %}
 
+{% block scripts %}
+  {{ super() }}
+  {% import 'macros/datatables.j2' as macros %}
+  {{ macros.datatable_script() }}
 {% endblock %}

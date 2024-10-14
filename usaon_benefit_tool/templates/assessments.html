@@ -44,7 +44,7 @@
   {% endif %}
 
 
-  <table class='table'>
+  <table class='table' id="assessment">
 
     <thead>
       <tr>
@@ -87,5 +87,11 @@
     </tbody>
 
   </table>
+{% endblock %}
 
+{% block scripts %}
+  {{ super() }}
+
+  {% import 'macros/datatables.j2' as macros %}
+  {{ macros.datatable_script() }}
 {% endblock %}
