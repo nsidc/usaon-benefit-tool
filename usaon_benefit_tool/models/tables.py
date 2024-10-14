@@ -245,7 +245,6 @@ class NodeSubtypeSocietalBenefitArea(Node):
     """Fields that are specific to societal benefit area type nodes."""
 
     __tablename__ = "node_subtype_societal_benefit_area"
-    __table_args__ = (UniqueConstraint('societal_benefit_area_id'),)
     __mapper_args__: ClassVar = {
         'polymorphic_identity': NodeTypeDiscriminator.SOCIETAL_BENEFIT_AREA.value,
     }
@@ -256,11 +255,11 @@ class NodeSubtypeSocietalBenefitArea(Node):
         primary_key=True,
         nullable=False,
     )
-    societal_benefit_area_id = Column(
-        String,
-        ForeignKey('societal_benefit_area.id'),
-        nullable=False,
-    )
+    name = Column(String(512), nullable=False)
+    short_name = Column(String(256), nullable=True)
+    description = Column(String, nullable=False)
+    framework_name = Column(String(256), nullable=False)
+    framework_url = Column(String(512), nullable=True)
 
     # TODO: Relationship to societal benefit area table? How would we make a similar
     #       relationship for the other node types?
@@ -458,21 +457,4 @@ class AssessmentStatus(BaseModel):
     assessments = relationship(
         Assessment,
         back_populates='status',
-    )
-
-
-class SocietalBenefitArea(BaseModel):
-    __tablename__ = 'societal_benefit_area'
-    id = Column(
-        String(256),
-        primary_key=True,
-    )
-
-    description = Column(
-        String,
-        nullable=False,
-    )
-    societal_benefit_sub_areas = relationship(
-        'SocietalBenefitSubArea',
-        back_populates='societal_benefit_area',
     )
