@@ -8,6 +8,7 @@ DUMMY_NODE_ID: Final = "__DUMMY__"
 ALLOWED_LINKS: Final[list[tuple[NodeType, NodeType]]] = [
     (NodeType.OBSERVING_SYSTEM, NodeType.OBSERVING_SYSTEM),
     (NodeType.OBSERVING_SYSTEM, NodeType.DATA_PRODUCT),
+    (NodeType.OBSERVING_SYSTEM, NodeType.APPLICATION),
     (NodeType.DATA_PRODUCT, NodeType.DATA_PRODUCT),
     (NodeType.DATA_PRODUCT, NodeType.APPLICATION),
     (NodeType.APPLICATION, NodeType.APPLICATION),

@@ -1,3 +1,7 @@
+## v2.4.0 (2024-10-11)
+
+* Allow linking between observation system and application nodes
+
 ## v2.3.0 (2024-10-02)
 
 * Add sort functionality to assessments and object library pages
