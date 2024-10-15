@@ -1,5 +1,9 @@
 ## v2.4.0 (2024-10-11)
 
+* Update SBA framework
+    * Multiple DB migrations (final migration (ce8e6e308e5c))
+    * No longer prefill information
+    * Add fields for framework information
 * Allow linking between observation system and application nodes
 
 ## v2.3.0 (2024-10-02)
