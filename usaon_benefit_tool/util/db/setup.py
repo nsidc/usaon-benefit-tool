@@ -15,7 +15,6 @@ from sqlalchemy.orm import Session
 
 from usaon_benefit_tool import db
 from usaon_benefit_tool._types import NodeType, RoleName
-from usaon_benefit_tool.constants.sba import IAOA_SBA_FRAMEWORK
 from usaon_benefit_tool.constants.status import ASSESSMENT_STATUSES
 from usaon_benefit_tool.models.tables import (
     Assessment,
@@ -26,9 +25,6 @@ from usaon_benefit_tool.models.tables import (
     NodeSubtypeOther,
     NodeSubtypeSocietalBenefitArea,
     Role,
-    SocietalBenefitArea,
-    SocietalBenefitKeyObjective,
-    SocietalBenefitSubArea,
     User,
 )
 from usaon_benefit_tool.util.dev import DEV_USER, TEST_USER
@@ -61,7 +57,6 @@ def populate_reference_data() -> None:
     Reference tables are tables containing (mostly) static data, e.g. the statuses
     table. Usually these are not editable within the GUI.
     """
-    _init_societal_benefit_areas(db.session)
     _init_roles(db.session)
     _init_statuses(db.session)
 
@@ -96,53 +91,6 @@ def _init_statuses(session: Session) -> None:
 
 def _init_roles(session: Session) -> None:
     session.add_all([Role(id=role) for role in RoleName])
-
-    session.commit()
-
-
-def _init_societal_benefit_areas(session: Session) -> None:
-    """Insert Societal Benefit Areas from GEOSS framework.
-
-    https://en.wikipedia.org/wiki/Global_Earth_Observation_System_of_Systems
-    """
-    # Add all areas:
-    session.add_all(
-        [
-            SocietalBenefitArea(
-                id=sba_name,
-            )
-            for sba_name in IAOA_SBA_FRAMEWORK.keys()
-        ],
-    )
-
-    # Flush guarantees that these records will be present in the transaction before we
-    # add the subsequent child records.
-    session.flush()
-
-    for sba_name, sba in IAOA_SBA_FRAMEWORK.items():
-        # Add all of `sba`'s sub-areas:
-        session.add_all(
-            [
-                SocietalBenefitSubArea(
-                    id=sub_area_name,
-                    societal_benefit_area_id=sba_name,
-                )
-                for sub_area_name in sba.keys()
-            ],
-        )
-        session.flush()
-
-        for sub_area_name, sub_area in sba.items():
-            # Add all of `sub_area`'s key objectives:
-            session.add_all(
-                [
-                    SocietalBenefitKeyObjective(
-                        id=key_objective_name,
-                        societal_benefit_subarea_id=sub_area_name,
-                    )
-                    for key_objective_name in sub_area
-                ],
-            )
 
     session.commit()
 
@@ -195,7 +143,6 @@ def _init_test_assessment(session: Session) -> None:
     sba = NodeSubtypeSocietalBenefitArea(
         title="This is a test SBA",
         short_name="Test SBA",
-        societal_benefit_area_id=next(iter(IAOA_SBA_FRAMEWORK.keys())),
         type=NodeType.SOCIETAL_BENEFIT_AREA,
         created_by=test_user,
     )
