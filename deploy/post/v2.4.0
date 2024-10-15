@@ -17,7 +17,7 @@ docker compose run --rm usaon-benefit-tool alembic upgrade head
 
 # confirm the expected migration was applied
 current=$(docker compose run --rm usaon-benefit-tool alembic current 2>/dev/null)
-if [ "d46c4d798847 (head)" = "${current}" ]; then
+if [ "ce8e6e308e5c (head)" = "${current}" ]; then
     echo "Data migration successful. On expected revision ${current}."
 else
     echo "Data migration failed. On unexpected revision ${current}."
