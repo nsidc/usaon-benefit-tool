@@ -115,11 +115,7 @@ FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
     ),
     NodeSubtypeSocietalBenefitArea: model_form(
         NodeSubtypeSocietalBenefitArea,
-        exclude=[*node_exclude, "societal_benefit_area_id"],
-        exclude_fk=False,
-        field_args={
-            'societal_benefit_area': {'get_label': 'id'},
-        },
+        exclude=node_exclude,
     ),
     User: model_form(
         User,
