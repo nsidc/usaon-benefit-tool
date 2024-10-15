@@ -245,7 +245,6 @@ class NodeSubtypeSocietalBenefitArea(Node):
     """Fields that are specific to societal benefit area type nodes."""
 
     __tablename__ = "node_subtype_societal_benefit_area"
-    # __table_args__ = (UniqueConstraint('societal_benefit_area_id'),)
     __mapper_args__: ClassVar = {
         'polymorphic_identity': NodeTypeDiscriminator.SOCIETAL_BENEFIT_AREA.value,
     }
@@ -456,56 +455,4 @@ class AssessmentStatus(BaseModel):
     assessments = relationship(
         Assessment,
         back_populates='status',
-    )
-
-
-class SocietalBenefitArea(BaseModel):
-    __tablename__ = 'societal_benefit_area'
-    id = Column(
-        String(256),
-        primary_key=True,
-    )
-    societal_benefit_sub_areas = relationship(
-        'SocietalBenefitSubArea',
-        back_populates='societal_benefit_area',
-    )
-
-
-class SocietalBenefitSubArea(BaseModel):
-    __tablename__ = 'societal_benefit_subarea'
-    id = Column(
-        String(256),
-        primary_key=True,
-    )
-    societal_benefit_area_id = Column(
-        String(256),
-        ForeignKey('societal_benefit_area.id'),
-        nullable=False,
-    )
-
-    societal_benefit_area = relationship(
-        'SocietalBenefitArea',
-        back_populates='societal_benefit_sub_areas',
-    )
-    societal_benefit_key_objectives = relationship(
-        'SocietalBenefitKeyObjective',
-        back_populates='societal_benefit_sub_area',
-    )
-
-
-class SocietalBenefitKeyObjective(BaseModel):
-    __tablename__ = 'societal_benefit_key_objective'
-    id = Column(
-        String(256),
-        primary_key=True,
-    )
-    societal_benefit_subarea_id = Column(
-        String(256),
-        ForeignKey('societal_benefit_subarea.id'),
-        primary_key=True,
-    )
-
-    societal_benefit_sub_area = relationship(
-        'SocietalBenefitSubArea',
-        back_populates='societal_benefit_key_objectives',
     )
