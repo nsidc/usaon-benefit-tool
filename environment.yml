@@ -5,8 +5,6 @@ channels:
 platforms:
   - linux-64
   - osx-64
-  - linux-aarch64
-  - osx-arm64
 dependencies:
   - python ~=3.11.7
 
