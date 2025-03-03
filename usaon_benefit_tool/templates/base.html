@@ -89,11 +89,32 @@
 
     <!-- init tooltips (https://getbootstrap.com/docs/5.0/components/tooltips/) -->
     <script type="text/javascript">
-      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-      })
+      document.addEventListener("DOMContentLoaded", function () {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          var tooltip = new bootstrap.Tooltip(tooltipTriggerEl, {
+    	trigger: 'manual' // Disable automatic hover activation
+          });
+    
+          // Show tooltip on right-click
+          tooltipTriggerEl.addEventListener("contextmenu", function (event) {
+    	event.preventDefault(); // Prevent default right-click menu
+    	tooltip.show();
+          });
+    
+          // Hide tooltip when clicking elsewhere
+          document.addEventListener("click", function (event) {
+    	if (!tooltipTriggerEl.contains(event.target)) {
+    	  tooltip.hide();
+    	}
+          });
+    
+          return tooltip;
+        });
+      });
     </script>
+
+
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
   {% endblock %}
