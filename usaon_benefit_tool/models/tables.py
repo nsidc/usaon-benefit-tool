@@ -351,18 +351,6 @@ class AssessmentNodeSubtypeApplication(AssessmentNode):
         nullable=False,
     )
 
-    performance_rating = Column(
-        Integer,
-        CheckConstraint(
-            'performance_rating>0 and performance_rating<101',
-            name='p1-100',
-        ),
-        nullable=False,
-    )
-    performance_rating_criteria = Column(String, nullable=True)
-    performance_rating_rationale = Column(String, nullable=True)
-    performance_rating_gaps = Column(String, nullable=True)
-
 
 class Link(BaseModel):
     """A link between two nodes _in an assessment_."""
