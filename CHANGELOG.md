@@ -1,3 +1,8 @@
+## v2.4.1 (2025-03-04)
+
+* Make null criticality line thicker
+* Hide private field on assessments
+
 ## v2.4.0 (2024-10-11)
 
 * Update SBA framework
