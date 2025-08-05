@@ -26,14 +26,14 @@
   {{ display_sankey(sankey_series, assessment=assessment)}}
   <div style="text-align: center;">
 
-    <img style="margin: auto" src={{ url_for("legend.get_line_thickness_legend") }} />
-    <p>Criticality rating (a thicker line indicates a more critical input, a very thin line is unrated)</p>
-
-    <img style="margin: auto" src={{ url_for("legend.get_colorbar_legend") }} />
-    <!-- TODO: this label should be baked in to the legend! But was having trouble with the text getting cut off. -->
-    <p>Performance rating (grey lines are unrated) </p>
+    
 
   </div>
+
+<p style="text-align: center; color: #555; font-size: 0.9rem;">
+  Thicker lines indicate higher criticality; thinner lines indicate lower criticality.
+</p>
+
 
   <div>
     {# NOTE: This div has HTMX configuration because it can be used by
