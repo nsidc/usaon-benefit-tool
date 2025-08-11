@@ -26,14 +26,13 @@
   {{ display_sankey(sankey_series, assessment=assessment)}}
   <div style="text-align: center;">
 
-    
+    <p> Thicker lines indicate higher criticality; thinner lines indicate lower criticality.</p>
+    <img style="margin: auto" src={{ url_for("legend.get_colorbar_legend") }} />
+    <!-- TODO: this label should be baked in to the legend! But was having trouble with the text getting cut off. -->
+    <p> Performance rating (grey lines are unrated) </p>
 
   </div>
 
-<img style="margin: auto" src={{ url_for("legend.get_colorbar_legend") }} />
-<!-- TODO: this label should be baked in to the legend! But was having trouble with the text getting cut off. -->
-<p>Performance rating (grey lines are unrated) </p>
-<p> Thicker lines indicate higher criticality; thinner lines indicate lower criticality.</p>
 
 
   <div>
