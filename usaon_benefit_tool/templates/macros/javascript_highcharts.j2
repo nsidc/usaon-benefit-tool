@@ -131,15 +131,15 @@
     // This is the updated function using SheetJS
     function downloadCustomExcel(chart, filename) {
       const { headers, rows } = getCustomTableData(chart);
-    
+
       // Create a worksheet from your data
       const data = [headers, ...rows];
       const worksheet = XLSX.utils.aoa_to_sheet(data);
-    
+
       // Create a new workbook and add the worksheet
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, "Assessment Data");
-    
+
       // Write the workbook to an XLSX file
       XLSX.writeFile(workbook, filename + '.xlsx');
     }
