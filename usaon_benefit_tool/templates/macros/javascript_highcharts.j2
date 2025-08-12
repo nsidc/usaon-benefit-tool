@@ -1,6 +1,5 @@
 {% macro add_javascript__highcharts(sankey_series, assessment) -%}
   <script>
-    // TODO: const or var for compatibility?
     const pointClickHandler = function(event) {
       const point = this;
       if ([point.id, point.from].includes("{{ constants.DUMMY_NODE_ID }}")) {
@@ -11,15 +10,11 @@
       const selector = "#form-modal";
       const el = document.querySelector(selector);
 
-      // Determine the target URL and set the hx-get parameter accordingly.
-      // We're using vendored Flask-JSGlue to do this from JS.
-      // TODO: Less magic string processing
       const isNode = "type" in point;
       let routeTarget, idArgName, idArgValue;
       if (isNode) {
         routeTarget = "assessment.node.form";
         idArgName = "node_id";
-        // FIXME: Brittle!
         idArgValue = point.id.split("_").slice(-1)[0];
       } else {
         routeTarget = "assessment.link.form";
@@ -34,7 +29,6 @@
         },
       );
       el.setAttribute("hx-get", targetUrl);
-      // Make HTMX aware of the change we just made
       htmx.process(el);
 
       const modal = new bootstrap.Modal(el, {});
@@ -42,18 +36,13 @@
       htmx.trigger(selector, "modalOpened");
     }
 
-    // Add a "download" symbol
-    // From: https://api.highcharts.com/highcharts/exporting.buttons.contextButton.symbol
     Highcharts.SVGRenderer.prototype.symbols.download = function (x, y, w, h) {
       const path = [
-        // Arrow stem
         'M', x + w * 0.5, y,
         'L', x + w * 0.5, y + h * 0.7,
-        // Arrow head
         'M', x + w * 0.3, y + h * 0.5,
         'L', x + w * 0.5, y + h * 0.7,
         'L', x + w * 0.7, y + h * 0.5,
-        // Box
         'M', x, y + h * 0.9,
         'L', x, y + h,
         'L', x + w, y + h,
@@ -67,6 +56,59 @@
         contextButtonTitle: 'Print and download options',
       }
     });
+
+    function downloadCustomCSV(chart, filename) {
+      const series = chart.series[0];
+      
+      const headers = [
+        'From',
+        'To', 
+        'Weight',
+        'Performance Score',
+        'Performance Rationale',
+        'Criticality Score',
+        'Criticality Rationale',
+        'Gaps Description'
+      ];
+      
+      const rows = [];
+      
+      series.data.forEach(point => {
+        if (point.from === "{{ constants.DUMMY_NODE_ID }}" || point.to === "{{ constants.DUMMY_NODE_ID }}") {
+          return;
+        }
+        
+        const fromNode = series.nodes.find(n => n.id === point.from);
+        const toNode = series.nodes.find(n => n.id === point.to);
+        
+        const row = [
+          fromNode ? fromNode.name : point.from,
+          toNode ? toNode.name : point.to,
+          point.weight,
+          point.options.performance_score || 'unrated',
+          point.options.performance_rationale || '',
+          point.options.criticality_score || 'unrated',
+          point.options.criticality_rationale || '',
+          point.options.gaps_description || ''
+        ];
+        
+        rows.push(row);
+      });
+      
+      const csvContent = [headers, ...rows]
+        .map(row => row.map(cell => `"${cell}"`).join(','))
+        .join('\n');
+      
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', filename);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
 
     Highcharts.chart('highcharts-container', {
       chart: {
@@ -94,66 +136,26 @@
         buttons: {
           contextButton: {
             symbol: "download",
+            menuItems: [
+              'viewFullscreen',
+              'printChart',
+              'separator',
+              'downloadPNG',
+              'downloadJPEG',
+              'downloadSVG',
+              'separator',
+              {
+                text: 'Download CSV',
+                onclick: function() {
+                  downloadCustomCSV(this, '{{ assessment.title | replace(" ", "_") }}_assessment_data.csv');
+                }
+              },
+              'downloadXLS',
+              'viewData'
+            ]
           },
         },
-        // Override the getTable method to customize ALL export formats
-        getTable: function() {
-          const chart = this;
-          const series = chart.series[0];
-
-          // Define which columns to show and their headers
-          const columns = [
-            { key: 'from_name', header: 'From' },
-            { key: 'to_name', header: 'To' },
-            { key: 'weight', header: 'Weight' },
-            { key: 'performance_score', header: 'Performance Score' },
-            { key: 'performance_rationale', header: 'Performance Rationale' },
-            { key: 'criticality_score', header: 'Criticality Score' },
-            { key: 'criticality_rationale', header: 'Criticality Rationale' },
-            { key: 'gaps_description', header: 'Gaps Description' }
-          ];
-
-          // Build the table HTML
-          let tableHTML = '<table><thead><tr>';
-
-          // Add headers
-          columns.forEach(col => {
-            tableHTML += `<th>${col.header}</th>`;
-          });
-          tableHTML += '</tr></thead><tbody>';
-
-          // Add data rows
-          series.data.forEach((point, index) => {
-            // Skip dummy nodes
-            if (point.from === "{{ constants.DUMMY_NODE_ID }}" || point.to === "{{ constants.DUMMY_NODE_ID }}") {
-              return;
-            }
-
-            tableHTML += '<tr>';
-            columns.forEach(col => {
-              let value = point.options[col.key] || point[col.key] || '';
-              // Handle special cases
-              if (col.key === 'from_name') {
-                const fromNode = series.nodes.find(n => n.id === point.from);
-                value = fromNode ? fromNode.name : point.from;
-              } else if (col.key === 'to_name') {
-                const toNode = series.nodes.find(n => n.id === point.to);
-                value = toNode ? toNode.name : point.to;
-              } else if (col.key === 'weight') {
-                value = point.weight;
-              }
-              tableHTML += `<td>${value}</td>`;
-            });
-            tableHTML += '</tr>';
-          });
-
-          tableHTML += '</tbody></table>';
-
-          // Create a temporary div to hold the table
-          const tempDiv = document.createElement('div');
-          tempDiv.innerHTML = tableHTML;
-          return tempDiv.querySelector('table');
-        }
+        filename: '{{ assessment.title | replace(" ", "_") }}_assessment'
       },
       accessibility: {
         description: 'Sankey plot for U.S. AON Benefit Tool',
