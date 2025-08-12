@@ -137,48 +137,47 @@
     function showCustomDataTable(chart) {
       const { headers, rows } = getCustomTableData(chart);
       
+      // Find or create the data table container
+      let tableContainer = document.getElementById('highcharts-data-table');
+      if (!tableContainer) {
+        tableContainer = document.createElement('div');
+        tableContainer.id = 'highcharts-data-table';
+        chart.renderTo.parentNode.appendChild(tableContainer);
+      }
+      
+      // Check if table is already visible
+      if (tableContainer.style.display !== 'none' && tableContainer.innerHTML !== '') {
+        // Hide the table
+        tableContainer.style.display = 'none';
+        return;
+      }
+      
       let tableHTML = `
-        <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-                    background: white; border: 2px solid #ccc; padding: 20px; z-index: 10000; 
-                    max-height: 80vh; overflow: auto; min-width: 80vw;">
-          <h3>Assessment Data Table</h3>
-          <table border="1" style="border-collapse: collapse; width: 100%;">
+        <div style="margin-top: 20px;">
+          <h4>Data table</h4>
+          <table style="border-collapse: collapse; width: 100%; margin-top: 10px;">
             <thead>
-              <tr style="background-color: #f0f0f0;">`;
+              <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">`;
       
       headers.forEach(header => {
-        tableHTML += `<th style="padding: 8px; text-align: left;">${header}</th>`;
+        tableHTML += `<th style="padding: 12px 8px; text-align: left; border-right: 1px solid #dee2e6;">${header}</th>`;
       });
       
       tableHTML += '</tr></thead><tbody>';
       
-      rows.forEach(row => {
-        tableHTML += '<tr>';
+      rows.forEach((row, index) => {
+        const bgColor = index % 2 === 0 ? '#ffffff' : '#f8f9fa';
+        tableHTML += `<tr style="background-color: ${bgColor};">`;
         row.forEach(cell => {
-          tableHTML += `<td style="padding: 8px; border-bottom: 1px solid #ddd;">${cell}</td>`;
+          tableHTML += `<td style="padding: 8px; border-right: 1px solid #dee2e6; border-bottom: 1px solid #dee2e6;">${cell}</td>`;
         });
         tableHTML += '</tr>';
       });
       
-      tableHTML += `
-            </tbody>
-          </table>
-          <div style="margin-top: 15px; text-align: right;">
-            <button onclick="this.parentElement.parentElement.remove()" 
-                    style="padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer;">
-              Close
-            </button>
-          </div>
-        </div>`;
+      tableHTML += '</tbody></table></div>';
       
-      const overlay = document.createElement('div');
-      overlay.innerHTML = tableHTML;
-      overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999;';
-      overlay.onclick = function(e) {
-        if (e.target === overlay) overlay.remove();
-      };
-      
-      document.body.appendChild(overlay);
+      tableContainer.innerHTML = tableHTML;
+      tableContainer.style.display = 'block';
     }
 
     Highcharts.chart('highcharts-container', {
