@@ -134,7 +134,7 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
             ),
             "critically_rating_rationale": getattr(
                 link,
-                'criticality_rating_rationale',
+                'critically_rating_rationale',
                 '',
             )
             or '',
