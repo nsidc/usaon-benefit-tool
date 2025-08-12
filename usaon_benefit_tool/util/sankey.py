@@ -38,9 +38,9 @@ HighchartsSankeySeriesLink = TypedDict(
         "tooltipHTML": str,
         "from_name": NotRequired[str],
         "to_name": NotRequired[str],
-        "performance_score": NotRequired[int | str],
+        "performance_rating": NotRequired[int | str],
         "performance_rationale": NotRequired[str],
-        "criticality_score": NotRequired[int | str],
+        "criticality_rating": NotRequired[int | str],
         "criticality_rationale": NotRequired[str],
         "gaps_description": NotRequired[str],
     },
@@ -116,13 +116,13 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
             ),
             "from_name": link.source_assessment_node.node.short_name,
             "to_name": link.target_assessment_node.node.short_name,
-            "performance_score": (
+            "performance_rating": (
                 link.performance_rating
                 if link.performance_rating is not None
                 else "unrated"
             ),
             "performance_rationale": getattr(link, 'performance_rationale', '') or '',
-            "criticality_score": (
+            "criticality_rating": (
                 link.criticality_rating
                 if link.criticality_rating is not None
                 else "unrated"

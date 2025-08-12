@@ -59,10 +59,10 @@
 
     function getCustomTableData(chart) {
       const series = chart.series[0];
-      
+
       const headers = [
         'From',
-        'To', 
+        'To',
         'Weight',
         'Performance Score',
         'Performance Rationale',
@@ -70,41 +70,41 @@
         'Criticality Rationale',
         'Gaps Description'
       ];
-      
+
       const rows = [];
-      
+
       series.data.forEach(point => {
         if (point.from === "{{ constants.DUMMY_NODE_ID }}" || point.to === "{{ constants.DUMMY_NODE_ID }}") {
           return;
         }
-        
+
         const fromNode = series.nodes.find(n => n.id === point.from);
         const toNode = series.nodes.find(n => n.id === point.to);
-        
+
         const row = [
           fromNode ? fromNode.name : point.from,
           toNode ? toNode.name : point.to,
           point.weight,
-          point.options.performance_score || 'unrated',
+          point.options.performance_rating || 'unrated',
           point.options.performance_rationale || '',
-          point.options.criticality_score || 'unrated',
+          point.options.criticality_rating || 'unrated',
           point.options.criticality_rationale || '',
           point.options.gaps_description || ''
         ];
-        
+
         rows.push(row);
       });
-      
+
       return { headers, rows };
     }
 
     function downloadCustomCSV(chart, filename) {
       const { headers, rows } = getCustomTableData(chart);
-      
+
       const csvContent = [headers, ...rows]
         .map(row => row.map(cell => `"${cell}"`).join(','))
         .join('\n');
-      
+
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');
       const url = URL.createObjectURL(blob);
@@ -118,11 +118,11 @@
 
     function downloadCustomExcel(chart, filename) {
       const { headers, rows } = getCustomTableData(chart);
-      
+
       const csvContent = [headers, ...rows]
         .map(row => row.map(cell => `"${cell}"`).join('\t'))
         .join('\n');
-      
+
       const blob = new Blob([csvContent], { type: 'application/vnd.ms-excel;charset=utf-8;' });
       const link = document.createElement('a');
       const url = URL.createObjectURL(blob);
@@ -136,7 +136,7 @@
 
     function showCustomDataTable(chart) {
       const { headers, rows } = getCustomTableData(chart);
-      
+
       // Find or create the data table container below the chart
       let tableContainer = document.getElementById('highcharts-data-table');
       if (!tableContainer) {
@@ -146,7 +146,7 @@
         // Insert after the chart container
         chart.renderTo.parentNode.insertBefore(tableContainer, chart.renderTo.nextSibling);
       }
-      
+
       // Toggle table visibility
       if (tableContainer.style.display === 'none' || !tableContainer.innerHTML) {
         // Show the table
@@ -154,13 +154,13 @@
           <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd;">
             <thead>
               <tr style="background-color: #f5f5f5;">`;
-        
+
         headers.forEach(header => {
           tableHTML += `<th style="padding: 8px; text-align: left; border: 1px solid #ddd; font-weight: bold;">${header}</th>`;
         });
-        
+
         tableHTML += '</tr></thead><tbody>';
-        
+
         rows.forEach((row, index) => {
           const bgColor = index % 2 === 0 ? '#ffffff' : '#f9f9f9';
           tableHTML += `<tr style="background-color: ${bgColor};">`;
@@ -169,9 +169,9 @@
           });
           tableHTML += '</tr>';
         });
-        
+
         tableHTML += '</tbody></table>';
-        
+
         tableContainer.innerHTML = tableHTML;
         tableContainer.style.display = 'block';
       } else {
