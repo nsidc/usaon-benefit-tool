@@ -130,30 +130,9 @@
     function downloadCustomExcel(chart, filename) {
       const { headers, rows } = getCustomTableData(chart);
 
-      let excelContent = '<?xml version="1.0"?>\n';
-      excelContent += '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">\n';
-      excelContent += '<Worksheet ss:Name="Assessment Data">\n';
-      excelContent += '<Table>\n';
-
-      excelContent += '<Row>\n';
-      headers.forEach(header => {
-        excelContent += `<Cell><Data ss:Type="String">${header}</Data></Cell>\n`;
-      });
-      excelContent += '</Row>\n';
-
-      // Add data rows
-      rows.forEach(row => {
-        excelContent += '<Row>\n';
-        row.forEach(cell => {
-          const cellValue = String(cell).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-          excelContent += `<Cell><Data ss:Type="String">${cellValue}</Data></Cell>\n`;
-        });
-        excelContent += '</Row>\n';
-      });
-
-      excelContent += '</Table>\n';
-      excelContent += '</Worksheet>\n';
-      excelContent += '</Workbook>\n';
+      const csvContent = [headers, ...rows]
+        .map(row => row.map(cell => `"${cell}"`).join('\t'))
+        .join('\n');
 
       const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel;' });
       const link = document.createElement('a');
