@@ -26,6 +26,7 @@ def permitted_source_link_types(node_type: NodeType) -> set[NodeType]:
 
 # NOTE: Can't use class syntax because of hard keyword conflict "from". I think this
 #       also means we can't use a dataclass without some workaround.
+# 8-12-25: Added new fields for enhanced CSV export
 HighchartsSankeySeriesLink = TypedDict(
     'HighchartsSankeySeriesLink',
     {
@@ -35,6 +36,13 @@ HighchartsSankeySeriesLink = TypedDict(
         "color": str,
         "id": NotRequired[int],
         "tooltipHTML": str,
+        "from_name": NotRequired[str],
+        "to_name": NotRequired[str],
+        "performance_score": NotRequired[int | str],
+        "performance_rationale": NotRequired[str],
+        "criticality_score": NotRequired[int | str],
+        "criticality_rationale": NotRequired[str],
+        "gaps_description": NotRequired[str],
     },
 )
 
@@ -106,6 +114,21 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
                 "partials/link_tooltip.html",
                 link=link,
             ),
+            "from_name": link.source_assessment_node.node.short_name,
+            "to_name": link.target_assessment_node.node.short_name,
+            "performance_score": (
+                link.performance_rating
+                if link.performance_rating is not None
+                else "unrated"
+            ),
+            "performance_rationale": getattr(link, 'performance_rationale', '') or '',
+            "criticality_score": (
+                link.criticality_rating
+                if link.criticality_rating is not None
+                else "unrated"
+            ),
+            "criticality_rationale": getattr(link, 'criticality_rationale', '') or '',
+            "gaps_description": getattr(link, 'gaps_description', '') or '',
         }
         for link in links
     ]
