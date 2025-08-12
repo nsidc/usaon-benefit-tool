@@ -57,7 +57,7 @@
       }
     });
 
-    function downloadCustomCSV(chart, filename) {
+    function getCustomTableData(chart) {
       const series = chart.series[0];
       
       const headers = [
@@ -95,6 +95,12 @@
         rows.push(row);
       });
       
+      return { headers, rows };
+    }
+
+    function downloadCustomCSV(chart, filename) {
+      const { headers, rows } = getCustomTableData(chart);
+      
       const csvContent = [headers, ...rows]
         .map(row => row.map(cell => `"${cell}"`).join(','))
         .join('\n');
@@ -108,6 +114,71 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+    }
+
+    function downloadCustomExcel(chart, filename) {
+      const { headers, rows } = getCustomTableData(chart);
+      
+      const csvContent = [headers, ...rows]
+        .map(row => row.map(cell => `"${cell}"`).join('\t'))
+        .join('\n');
+      
+      const blob = new Blob([csvContent], { type: 'application/vnd.ms-excel;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', filename);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function showCustomDataTable(chart) {
+      const { headers, rows } = getCustomTableData(chart);
+      
+      let tableHTML = `
+        <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                    background: white; border: 2px solid #ccc; padding: 20px; z-index: 10000; 
+                    max-height: 80vh; overflow: auto; min-width: 80vw;">
+          <h3>Assessment Data Table</h3>
+          <table border="1" style="border-collapse: collapse; width: 100%;">
+            <thead>
+              <tr style="background-color: #f0f0f0;">`;
+      
+      headers.forEach(header => {
+        tableHTML += `<th style="padding: 8px; text-align: left;">${header}</th>`;
+      });
+      
+      tableHTML += '</tr></thead><tbody>';
+      
+      rows.forEach(row => {
+        tableHTML += '<tr>';
+        row.forEach(cell => {
+          tableHTML += `<td style="padding: 8px; border-bottom: 1px solid #ddd;">${cell}</td>`;
+        });
+        tableHTML += '</tr>';
+      });
+      
+      tableHTML += `
+            </tbody>
+          </table>
+          <div style="margin-top: 15px; text-align: right;">
+            <button onclick="this.parentElement.parentElement.remove()" 
+                    style="padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer;">
+              Close
+            </button>
+          </div>
+        </div>`;
+      
+      const overlay = document.createElement('div');
+      overlay.innerHTML = tableHTML;
+      overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999;';
+      overlay.onclick = function(e) {
+        if (e.target === overlay) overlay.remove();
+      };
+      
+      document.body.appendChild(overlay);
     }
 
     Highcharts.chart('highcharts-container', {
@@ -150,8 +221,18 @@
                   downloadCustomCSV(this, '{{ assessment.title | replace(" ", "_") }}_assessment_data.csv');
                 }
               },
-              'downloadXLS',
-              'viewData'
+              {
+                text: 'Download XLS',
+                onclick: function() {
+                  downloadCustomExcel(this, '{{ assessment.title | replace(" ", "_") }}_assessment_data.xlsx');
+                }
+              },
+              {
+                text: 'View data table',
+                onclick: function() {
+                  showCustomDataTable(this);
+                }
+              }
             ]
           },
         },
