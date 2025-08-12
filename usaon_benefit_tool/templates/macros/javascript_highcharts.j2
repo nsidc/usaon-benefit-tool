@@ -1,5 +1,6 @@
 {% macro add_javascript__highcharts(sankey_series, assessment) -%}
   <script>
+    // TODO: const or var for compatibility?
     const pointClickHandler = function(event) {
       const point = this;
       if ([point.id, point.from].includes("{{ constants.DUMMY_NODE_ID }}")) {
@@ -10,11 +11,15 @@
       const selector = "#form-modal";
       const el = document.querySelector(selector);
 
+      // Determine the target URL and set the hx-get parameter accordingly.
+      // We're using vendored Flask-JSGlue to do this from JS.
+      // TODO: Less magic string processing
       const isNode = "type" in point;
       let routeTarget, idArgName, idArgValue;
       if (isNode) {
         routeTarget = "assessment.node.form";
         idArgName = "node_id";
+        // FIXME: Brittle!
         idArgValue = point.id.split("_").slice(-1)[0];
       } else {
         routeTarget = "assessment.link.form";
@@ -29,6 +34,7 @@
         },
       );
       el.setAttribute("hx-get", targetUrl);
+      // Make HTMX aware of the change we just made
       htmx.process(el);
 
       const modal = new bootstrap.Modal(el, {});
@@ -36,13 +42,18 @@
       htmx.trigger(selector, "modalOpened");
     }
 
+    // Add a "download" symbol
+    // From: https://api.highcharts.com/highcharts/exporting.buttons.contextButton.symbol
     Highcharts.SVGRenderer.prototype.symbols.download = function (x, y, w, h) {
       const path = [
+        // Arrow stem
         'M', x + w * 0.5, y,
         'L', x + w * 0.5, y + h * 0.7,
+        // Arrow head
         'M', x + w * 0.3, y + h * 0.5,
         'L', x + w * 0.5, y + h * 0.7,
         'L', x + w * 0.7, y + h * 0.5,
+        // Box
         'M', x, y + h * 0.9,
         'L', x, y + h,
         'L', x + w, y + h,
