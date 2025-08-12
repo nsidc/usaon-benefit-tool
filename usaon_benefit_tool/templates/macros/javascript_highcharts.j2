@@ -96,65 +96,64 @@
             symbol: "download",
           },
         },
-				// Override the getTable method to customize ALL export formats
-				 getTable: function() {
-const chart = this;
-    const series = chart.series[0];
+        // Override the getTable method to customize ALL export formats
+        getTable: function() {
+          const chart = this;
+          const series = chart.series[0];
 
-    // Define which columns to show and their headers
-    const columns = [
-      { key: 'from_name', header: 'From' },
-      { key: 'to_name', header: 'To' },
-      { key: 'weight', header: 'Weight' },
-      { key: 'performance_score', header: 'Performance Score' },
-      { key: 'performance_rationale', header: 'Performance Rationale' },
-      { key: 'criticality_score', header: 'Criticality Score' },
-      { key: 'criticality_rationale', header: 'Criticality Rationale' },
-      { key: 'gaps_description', header: 'Gaps Description' }
-    ];
+          // Define which columns to show and their headers
+          const columns = [
+            { key: 'from_name', header: 'From' },
+            { key: 'to_name', header: 'To' },
+            { key: 'weight', header: 'Weight' },
+            { key: 'performance_score', header: 'Performance Score' },
+            { key: 'performance_rationale', header: 'Performance Rationale' },
+            { key: 'criticality_score', header: 'Criticality Score' },
+            { key: 'criticality_rationale', header: 'Criticality Rationale' },
+            { key: 'gaps_description', header: 'Gaps Description' }
+          ];
 
-    // Build the table HTML
-    let tableHTML = '<table><thead><tr>';
+          // Build the table HTML
+          let tableHTML = '<table><thead><tr>';
 
-    // Add headers
-    columns.forEach(col => {
-      tableHTML += `<th>${col.header}</th>`;
-    });
-    tableHTML += '</tr></thead><tbody>';
+          // Add headers
+          columns.forEach(col => {
+            tableHTML += `<th>${col.header}</th>`;
+          });
+          tableHTML += '</tr></thead><tbody>';
 
-    // Add data rows
-    series.data.forEach((point, index) => {
-      // Skip dummy nodes
-      if (point.from === "{{ constants.DUMMY_NODE_ID }}" || point.to === "{{ constants.DUMMY_NODE_ID }}") {
-        return;
-      }
+          // Add data rows
+          series.data.forEach((point, index) => {
+            // Skip dummy nodes
+            if (point.from === "{{ constants.DUMMY_NODE_ID }}" || point.to === "{{ constants.DUMMY_NODE_ID }}") {
+              return;
+            }
 
-      tableHTML += '<tr>';
-      columns.forEach(col => {
-        let value = point.options[col.key] || point[col.key] || '';
-        // Handle special cases
-        if (col.key === 'from_name') {
-          const fromNode = series.nodes.find(n => n.id === point.from);
-          value = fromNode ? fromNode.name : point.from;
-        } else if (col.key === 'to_name') {
-          const toNode = series.nodes.find(n => n.id === point.to);
-          value = toNode ? toNode.name : point.to;
-        } else if (col.key === 'weight') {
-          value = point.weight;
+            tableHTML += '<tr>';
+            columns.forEach(col => {
+              let value = point.options[col.key] || point[col.key] || '';
+              // Handle special cases
+              if (col.key === 'from_name') {
+                const fromNode = series.nodes.find(n => n.id === point.from);
+                value = fromNode ? fromNode.name : point.from;
+              } else if (col.key === 'to_name') {
+                const toNode = series.nodes.find(n => n.id === point.to);
+                value = toNode ? toNode.name : point.to;
+              } else if (col.key === 'weight') {
+                value = point.weight;
+              }
+              tableHTML += `<td>${value}</td>`;
+            });
+            tableHTML += '</tr>';
+          });
+
+          tableHTML += '</tbody></table>';
+
+          // Create a temporary div to hold the table
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = tableHTML;
+          return tempDiv.querySelector('table');
         }
-        tableHTML += `<td>${value}</td>`;
-      });
-      tableHTML += '</tr>';
-    });
-
-    tableHTML += '</tbody></table>';
-
-    // Create a temporary div to hold the table
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = tableHTML;
-    return tempDiv.querySelector('table');
-  }
-},
       },
       accessibility: {
         description: 'Sankey plot for U.S. AON Benefit Tool',
