@@ -121,14 +121,22 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
                 if link.performance_rating is not None
                 else "unrated"
             ),
-            "performance_rating_rationale": getattr(link, 'performance_rationale', '')
+            "performance_rating_rationale": getattr(
+                link,
+                'performance_rating_rationale',
+                '',
+            )
             or '',
             "criticality_rating": (
                 link.criticality_rating
                 if link.criticality_rating is not None
                 else "unrated"
             ),
-            "critically_rating_rationale": getattr(link, 'criticality_rationale', '')
+            "critically_rating_rationale": getattr(
+                link,
+                'criticality_rating_rationale',
+                '',
+            )
             or '',
             "gaps_description": getattr(link, 'gaps_description', '') or '',
         }
