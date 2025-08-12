@@ -137,47 +137,47 @@
     function showCustomDataTable(chart) {
       const { headers, rows } = getCustomTableData(chart);
       
-      // Find or create the data table container
+      // Find or create the data table container below the chart
       let tableContainer = document.getElementById('highcharts-data-table');
       if (!tableContainer) {
         tableContainer = document.createElement('div');
         tableContainer.id = 'highcharts-data-table';
-        chart.renderTo.parentNode.appendChild(tableContainer);
+        tableContainer.style.marginTop = '20px';
+        // Insert after the chart container
+        chart.renderTo.parentNode.insertBefore(tableContainer, chart.renderTo.nextSibling);
       }
       
-      // Check if table is already visible
-      if (tableContainer.style.display !== 'none' && tableContainer.innerHTML !== '') {
+      // Toggle table visibility
+      if (tableContainer.style.display === 'none' || !tableContainer.innerHTML) {
+        // Show the table
+        let tableHTML = `
+          <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd;">
+            <thead>
+              <tr style="background-color: #f5f5f5;">`;
+        
+        headers.forEach(header => {
+          tableHTML += `<th style="padding: 8px; text-align: left; border: 1px solid #ddd; font-weight: bold;">${header}</th>`;
+        });
+        
+        tableHTML += '</tr></thead><tbody>';
+        
+        rows.forEach((row, index) => {
+          const bgColor = index % 2 === 0 ? '#ffffff' : '#f9f9f9';
+          tableHTML += `<tr style="background-color: ${bgColor};">`;
+          row.forEach(cell => {
+            tableHTML += `<td style="padding: 8px; border: 1px solid #ddd;">${cell}</td>`;
+          });
+          tableHTML += '</tr>';
+        });
+        
+        tableHTML += '</tbody></table>';
+        
+        tableContainer.innerHTML = tableHTML;
+        tableContainer.style.display = 'block';
+      } else {
         // Hide the table
         tableContainer.style.display = 'none';
-        return;
       }
-      
-      let tableHTML = `
-        <div style="margin-top: 20px;">
-          <h4>Data table</h4>
-          <table style="border-collapse: collapse; width: 100%; margin-top: 10px;">
-            <thead>
-              <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">`;
-      
-      headers.forEach(header => {
-        tableHTML += `<th style="padding: 12px 8px; text-align: left; border-right: 1px solid #dee2e6;">${header}</th>`;
-      });
-      
-      tableHTML += '</tr></thead><tbody>';
-      
-      rows.forEach((row, index) => {
-        const bgColor = index % 2 === 0 ? '#ffffff' : '#f8f9fa';
-        tableHTML += `<tr style="background-color: ${bgColor};">`;
-        row.forEach(cell => {
-          tableHTML += `<td style="padding: 8px; border-right: 1px solid #dee2e6; border-bottom: 1px solid #dee2e6;">${cell}</td>`;
-        });
-        tableHTML += '</tr>';
-      });
-      
-      tableHTML += '</tbody></table></div>';
-      
-      tableContainer.innerHTML = tableHTML;
-      tableContainer.style.display = 'block';
     }
 
     Highcharts.chart('highcharts-container', {
@@ -217,13 +217,13 @@
               {
                 text: 'Download CSV',
                 onclick: function() {
-                  downloadCustomCSV(this, '{{ assessment.title | replace(" ", "_") }}_assessment_data.csv');
+                  downloadCustomCSV(this, 'assessment_{{ assessment.id }}_data.csv');
                 }
               },
               {
                 text: 'Download XLS',
                 onclick: function() {
-                  downloadCustomExcel(this, '{{ assessment.title | replace(" ", "_") }}_assessment_data.xlsx');
+                  downloadCustomExcel(this, 'assessment_{{ assessment.id }}_data.xlsx');
                 }
               },
               {
@@ -235,7 +235,7 @@
             ]
           },
         },
-        filename: '{{ assessment.title | replace(" ", "_") }}_assessment'
+        filename: 'assessment_{{ assessment.id }}'
       },
       accessibility: {
         description: 'Sankey plot for U.S. AON Benefit Tool',
