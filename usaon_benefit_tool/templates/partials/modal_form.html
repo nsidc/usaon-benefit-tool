@@ -16,17 +16,16 @@
              id="node-search"
              class="form-control"
              placeholder="Type to filter by title..."
-             hx-get="{{ request.url }}"
-	     hx-target="#node-field-container"
+	     hx-get="{{ url_for('assessment.nodes.form_field', assessment_id=assessment_id, node_type=node_type) }}"
+	     hx-target="#{{form.node.id }}"
              hx-trigger="input changed delay:300ms"
              hx-include="this"
-             name="search">
+             name="search"
+	     hx-swap="outerHTML">
     </div>
 
     <form {{ form_attrs }}>
-      <div id="node-field-container">
         {{ render_form_fields(form) }}
-      </div>
     </form>
   </div>
 </div>

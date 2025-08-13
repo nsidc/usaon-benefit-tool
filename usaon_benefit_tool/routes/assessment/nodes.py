@@ -87,4 +87,39 @@ def form(assessment_id: str, query: _QueryModel):
         title=f"Add {query.node_type.replace('_', ' ')} node",
         form_attrs=f"hx-post={post_url}",
         form=form,
+        assessment_id=assessment_id, 
+        node_type=query.node_type.value,
     )
+
+
+@assessment_nodes_bp.route('/form/field', methods=['GET'])
+@login_required
+@validate()
+def form_field(assessment_id: str, query: _QueryModel):
+    """Return just the node select field for HTMX updates."""
+    search_query = request.args.get('search', '').strip()
+    
+    cls = get_assessment_node_class_by_type(query.node_type)
+    assessment_node = cls(assessment_id=assessment_id)
+    form = FORMS_BY_MODEL[cls](obj=assessment_node)
+
+    # Apply the same filtering logic as the main form
+    form.node.query = Node.query.filter_by(
+        type=query.node_type,
+    ).filter(
+        Node.id.not_in(
+            AssessmentNode.query.with_entities(
+                AssessmentNode.node_id,
+            ).filter_by(assessment_id=assessment_id),
+        ),
+    )
+    
+    # Apply search filter if search query exists
+    if search_query:
+        search_term = f"%{search_query.lower()}%"
+        form.node.query = form.node.query.filter(
+            Node.title.ilike(search_term),
+        )
+
+    # Return just the select field as HTML
+    return str(form.node())
