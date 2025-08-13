@@ -52,30 +52,12 @@ class _QueryModel(BaseModel):
 @validate()
 def form(assessment_id: str, query: _QueryModel):
     """Return a form to add an entry to the assessment's nodes collection."""
-    search_query = request.args.get('search', '').strip()
-
     cls = get_assessment_node_class_by_type(query.node_type)
     assessment_node = cls(assessment_id=assessment_id)
     form = FORMS_BY_MODEL[cls](obj=assessment_node)
 
-    form.node.query = Node.query.filter_by(
-        # Select only nodes that are of the selected type
-        type=query.node_type,
-    ).filter(
-        # Select only nodes that are not already in this assessement
-        Node.id.not_in(
-            AssessmentNode.query.with_entities(
-                AssessmentNode.node_id,
-            ).filter_by(assessment_id=assessment_id),
-        ),
-    )
-
-    # Apply search filter if search query exists
-    if search_query:
-        search_term = f"%{search_query.lower()}%"
-        form.node.query = form.node.query.filter(
-            Node.title.ilike(search_term),
-        )
+    # We still need the form for CSRF token
+    form.node.query = Node.query.filter_by(type=query.node_type).limit(1)  # Dummy query
 
     post_url = url_for(
         'assessment.nodes.post',
@@ -87,24 +69,20 @@ def form(assessment_id: str, query: _QueryModel):
         title=f"Add {query.node_type.replace('_', ' ')} node",
         form_attrs=f"hx-post={post_url}",
         form=form,
-        assessment_id=assessment_id, 
+        assessment_id=assessment_id,
         node_type=query.node_type.value,
     )
 
 
-@assessment_nodes_bp.route('/form/field', methods=['GET'])
+@assessment_nodes_bp.route('/search-results', methods=['GET'])
 @login_required
 @validate()
-def form_field(assessment_id: str, query: _QueryModel):
-    """Return just the node select field for HTMX updates."""
+def search_results(assessment_id: str, query: _QueryModel):
+    """Return search results for nodes."""
     search_query = request.args.get('search', '').strip()
     
-    cls = get_assessment_node_class_by_type(query.node_type)
-    assessment_node = cls(assessment_id=assessment_id)
-    form = FORMS_BY_MODEL[cls](obj=assessment_node)
-
-    # Apply the same filtering logic as the main form
-    form.node.query = Node.query.filter_by(
+    # Get available nodes (not already in assessment)
+    base_query = Node.query.filter_by(
         type=query.node_type,
     ).filter(
         Node.id.not_in(
@@ -114,12 +92,17 @@ def form_field(assessment_id: str, query: _QueryModel):
         ),
     )
     
-    # Apply search filter if search query exists
+    # Apply search filter if provided
     if search_query:
         search_term = f"%{search_query.lower()}%"
-        form.node.query = form.node.query.filter(
+        base_query = base_query.filter(
             Node.title.ilike(search_term),
         )
-
-    # Return just the select field as HTML
-    return str(form.node())
+    
+    nodes = base_query.order_by(Node.title).limit(20).all()  # Limit to 20 results
+    
+    return render_template(
+        'partials/node_search_results.html',
+        nodes=nodes,
+        search_query=search_query,
+    )
