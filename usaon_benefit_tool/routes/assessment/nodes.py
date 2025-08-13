@@ -56,7 +56,8 @@ def form(assessment_id: str, query: _QueryModel):
     assessment_node = cls(assessment_id=assessment_id)
     form = FORMS_BY_MODEL[cls](obj=assessment_node)
 
-    # We still need the form for CSRF token
+    # We still need the form for CSRF token, but we don't need the actual query
+    # since we're using the search interface
     form.node.query = Node.query.filter_by(type=query.node_type).limit(1)  # Dummy query
 
     post_url = url_for(

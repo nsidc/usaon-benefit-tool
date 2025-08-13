@@ -23,8 +23,9 @@
             {% endif %}
           </div>
           <button type="button" 
-                  class="btn btn-sm btn-primary"
-                  data-id="{{ node.id }}" data-title="{{ node.title|escapejs }}">
+                  class="btn btn-sm btn-primary add-node-btn"
+                  data-node-id="{{ node.id }}"
+                  data-node-title="{{ node.title }}">
             Add
           </button>
         </div>
@@ -42,3 +43,34 @@
     {% endif %}
   </div>
 {% endif %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add event listener for dynamically loaded buttons
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('add-node-btn')) {
+            const nodeId = e.target.getAttribute('data-node-id');
+            const nodeTitle = e.target.getAttribute('data-node-title');
+            
+            // Update the hidden form
+            const hiddenForm = document.getElementById('add-node-form');
+            const nodeInput = document.getElementById('selected-node-id');
+            
+            if (hiddenForm && nodeInput) {
+                nodeInput.value = nodeId;
+                
+                // Submit the form
+                if (confirm('Add "' + nodeTitle + '" to this assessment?')) {
+                    hiddenForm.submit();
+                }
+            } else {
+                console.error('Form elements not found', {
+                    hiddenForm: !!hiddenForm,
+                    nodeInput: !!nodeInput
+                });
+            }
+        }
+    });
+});
+</script>
+

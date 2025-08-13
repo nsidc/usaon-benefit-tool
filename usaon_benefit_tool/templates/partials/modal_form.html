@@ -36,15 +36,3 @@
     </form>
   </div>
 </div>
-
-<script>
-function selectNode(nodeId, nodeTitle) {
-    // Update hidden form
-    document.getElementById('selected-node-id').value = nodeId;
-    
-    // Show confirmation and submit
-    if (confirm('Add "' + nodeTitle + '" to this assessment?')) {
-        document.getElementById('add-node-form').submit();
-    }
-}
-</script>
