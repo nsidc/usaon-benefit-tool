@@ -7,14 +7,14 @@
     </h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
   </div>
-  
+
   <div class="modal-body">
     <!-- Search input -->
     <div class="mb-3">
       <label for="node-search" class="form-label">Search objects:</label>
-      <input type="text" 
-             id="node-search" 
-             class="form-control" 
+      <input type="text"
+             id="node-search"
+             class="form-control"
              placeholder="Type to filter by title..."
              hx-get="{{ request.url }}"
              hx-target="[name='node']"
@@ -23,7 +23,7 @@
              name="search"
              hx-swap="outerHTML">
     </div>
-    
+
     <form {{ form_attrs }}>
       {{ render_form_fields(form) }}
     </form>
