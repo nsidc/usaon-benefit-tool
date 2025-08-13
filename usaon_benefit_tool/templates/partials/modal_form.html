@@ -7,14 +7,14 @@
     </h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
   </div>
-  
+
   <div class="modal-body">
     <!-- Search Section -->
     <div class="mb-3">
       <label for="node-search" class="form-label">Search available objects:</label>
-      <input type="text" 
-             id="node-search" 
-             class="form-control" 
+      <input type="text"
+             id="node-search"
+             class="form-control"
              placeholder="Type to search by title..."
              hx-get="{{ url_for('assessment.nodes.search_results', assessment_id=assessment_id, node_type=node_type) }}"
              hx-target="#search-results"
@@ -23,12 +23,12 @@
              name="search"
              value="">
     </div>
-    
+
     <!-- Search Results Section -->
     <div id="search-results">
       <!-- Results will be loaded here -->
     </div>
-    
+
     <!-- Hidden form for submission -->
     <form style="display: none;" id="add-node-form" {{ form_attrs }}>
       {{ form.csrf_token }}

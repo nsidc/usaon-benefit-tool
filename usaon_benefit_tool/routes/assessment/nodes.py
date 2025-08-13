@@ -81,7 +81,7 @@ def form(assessment_id: str, query: _QueryModel):
 def search_results(assessment_id: str, query: _QueryModel):
     """Return search results for nodes."""
     search_query = request.args.get('search', '').strip()
-    
+
     # Get available nodes (not already in assessment)
     base_query = Node.query.filter_by(
         type=query.node_type,
@@ -92,16 +92,16 @@ def search_results(assessment_id: str, query: _QueryModel):
             ).filter_by(assessment_id=assessment_id),
         ),
     )
-    
+
     # Apply search filter if provided
     if search_query:
         search_term = f"%{search_query.lower()}%"
         base_query = base_query.filter(
             Node.title.ilike(search_term),
         )
-    
+
     nodes = base_query.order_by(Node.title).limit(20).all()  # Limit to 20 results
-    
+
     return render_template(
         'partials/node_search_results.html',
         nodes=nodes,
