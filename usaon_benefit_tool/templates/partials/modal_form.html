@@ -17,16 +17,16 @@
              class="form-control"
              placeholder="Type to filter by title..."
              hx-get="{{ request.url }}"
-             hx-target="#form-content"
+	     hx-target="#node-field-container"
              hx-trigger="input changed delay:300ms"
              hx-include="this"
              name="search">
     </div>
 
-    <div id="form-content">
-      <form {{ form_attrs }}>
+    <form {{ form_attrs }}>
+      <div id="node-field-container">
         {{ render_form_fields(form) }}
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
 </div>
