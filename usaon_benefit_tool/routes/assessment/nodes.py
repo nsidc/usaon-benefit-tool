@@ -88,5 +88,4 @@ def form(assessment_id: str, query: _QueryModel):
         form_attrs=f"hx-post={post_url}",
         form=form,
         assessment_id=assessment_id,
-        node_type=query.node_type.value,
     )
