@@ -70,11 +70,12 @@ def form(assessment_id: str, query: _QueryModel):
         ),
     )
 
-	if search_query:
-		search_term = f"%{search_query.lower()}%"
-		form.node.query = form.node.query.filter(
-			Node.title.ilike(search_term)
-	)
+    # Apply search filter if search query exists
+    if search_query:
+        search_term = f"%{search_query.lower()}%"
+        form.node.query = form.node.query.filter(
+            Node.title.ilike(search_term),
+        )
 
     post_url = url_for(
         'assessment.nodes.post',
