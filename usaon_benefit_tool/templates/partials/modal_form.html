@@ -2,6 +2,21 @@
 
 <div class="modal-content">
   <div class="modal-header">
+    <div class="modal-body">
+      <!-- Add search input -->
+      <div class="mb-3">
+	<label for="node-search" class="form-label">Search objects:</label>
+	<input type="text" 
+	       id="node-search" 
+	 	class="form-control" 
+		placeholder="Type to filter by title..."
+		hx-get="{{ request.url }}"
+		hx-target="#form-content"
+		hx-trigger="input changed delay:300ms"
+		hx-include="this"
+		name="search">
+      </div>
+      <div id="form-content">      
     <h5 class="modal-title">
       {{ title }}
     <h5>
