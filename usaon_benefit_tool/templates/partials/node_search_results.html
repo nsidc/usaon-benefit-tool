@@ -24,7 +24,7 @@
           </div>
           <button type="button" 
                   class="btn btn-sm btn-primary"
-                  onclick="selectNode({{ node.id }}, '{{ node.title|replace("'", "\\'") }}')">
+                  data-id="{{ node.id }}" data-title="{{ node.title|escapejs }}">
             Add
           </button>
         </div>
