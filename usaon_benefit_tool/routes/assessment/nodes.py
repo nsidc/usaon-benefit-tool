@@ -52,8 +52,6 @@ class _QueryModel(BaseModel):
 @validate()
 def form(assessment_id: str, query: _QueryModel):
     """Return a form to add an entry to the assessment's nodes collection."""
-    search_query = request.args.get('search', '').strip()
-
     cls = get_assessment_node_class_by_type(query.node_type)
     assessment_node = cls(assessment_id=assessment_id)
     form = FORMS_BY_MODEL[cls](obj=assessment_node)
@@ -70,13 +68,6 @@ def form(assessment_id: str, query: _QueryModel):
         ),
     )
 
-    # Apply search filter if search query exists
-    if search_query:
-        search_term = f"%{search_query.lower()}%"
-        form.node.query = form.node.query.filter(
-            Node.title.ilike(search_term),
-        )
-
     post_url = url_for(
         'assessment.nodes.post',
         assessment_id=assessment_id,
@@ -87,4 +78,41 @@ def form(assessment_id: str, query: _QueryModel):
         title=f"Add {query.node_type.replace('_', ' ')} node",
         form_attrs=f"hx-post={post_url}",
         form=form,
+        # Pass these values to the modal for the hx-get URL
+        assessment_id=assessment_id,
+        query=query
     )
+
+
+@assessment_nodes_bp.route('/search', methods=['GET'])
+@login_required
+@validate()
+def search(assessment_id: str, query: _QueryModel):
+	"""Return a filtered select field for the node collection."""
+		
+		# Get the search term from the request
+		search_query = request.args.get('search_query', '')
+		
+		cls = get_assessment_node_class_by_type(query.node_type)
+		assessment_node = cls(assessment_id=assessment_id)
+		form = FORMS_BY_MODEL[cls](obj=assessment_node)
+		
+		# Start with the original query from the `form` route
+		node_query = Node.query.filter_by(type=query.node_type).filter(
+			Node.id.not_in(
+				AssessmentNode.query.with_entities(AssessmentNode.node_id).filter_by(assessment_id=assessment_id)
+			)
+		)
+		
+		# Apply the search filter if a query exists
+		if search_query:
+			search_term = f"%{search_query}%"
+			node_query = node_query.filter(Node.title.ilike(search_term))
+			
+		form.node.query = node_query
+		
+		# Render and return only the form fields for the select dropdown
+		return render_template(
+			'partials/node_select_fragment.html',
+			form=form,
+		)
