@@ -52,8 +52,6 @@ class _QueryModel(BaseModel):
 @validate()
 def form(assessment_id: str, query: _QueryModel):
     """Return a form to add an entry to the assessment's nodes collection."""
-    search_query = request.args.get('search', '').strip()
-
     cls = get_assessment_node_class_by_type(query.node_type)
     assessment_node = cls(assessment_id=assessment_id)
     form = FORMS_BY_MODEL[cls](obj=assessment_node)
@@ -69,13 +67,6 @@ def form(assessment_id: str, query: _QueryModel):
             ).filter_by(assessment_id=assessment_id),
         ),
     )
-
-    # Apply search filter if search query exists
-    if search_query:
-        search_term = f"%{search_query.lower()}%"
-        form.node.query = form.node.query.filter(
-            Node.title.ilike(search_term),
-        )
 
     post_url = url_for(
         'assessment.nodes.post',
