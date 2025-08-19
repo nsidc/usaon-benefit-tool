@@ -16,18 +16,18 @@
               {{ field.label.text }}
               {% if field.flags.required %}<span class="text-danger">*</span>{% endif %}
             </label>
-            
+
             {# Search input to filter the dropdown #}
-            <input 
-              type="text" 
-              class="form-control mb-2" 
+            <input
+              type="text"
+              class="form-control mb-2"
               id="node-search-filter"
               placeholder="Type to filter options..."
               onkeyup="filterDropdown()">
-            
+
             {# The original dropdown - we'll filter this with JavaScript #}
             {{ field(class="form-control" + (" is-invalid" if field.errors else ""), id=field.id) }}
-            
+
             {% if field.errors %}
               <div class="invalid-feedback">
                 {% for error in field.errors %}
@@ -35,7 +35,7 @@
                 {% endfor %}
               </div>
             {% endif %}
-            
+
             {% if field.description %}
               <small class="form-text text-muted">{{ field.description }}</small>
             {% endif %}
@@ -52,9 +52,9 @@
               {{ field.label.text }}
               {% if field.flags.required %}<span class="text-danger">*</span>{% endif %}
             </label>
-            
+
             {{ field(class="form-control" + (" is-invalid" if field.errors else "")) }}
-            
+
             {% if field.errors %}
               <div class="invalid-feedback">
                 {% for error in field.errors %}
@@ -62,14 +62,14 @@
                 {% endfor %}
               </div>
             {% endif %}
-            
+
             {% if field.description %}
               <small class="form-text text-muted">{{ field.description }}</small>
             {% endif %}
           </div>
         {% endif %}
       {% endfor %}
-      
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
         <button type="submit" class="btn btn-primary">Add Node</button>
@@ -84,7 +84,7 @@ function filterDropdown() {
   const searchInput = document.getElementById('node-search-filter');
   const dropdown = document.getElementById('{{ form.node.id }}');
   const filter = searchInput.value.toLowerCase();
-  
+
   // Show all options if search is empty
   if (filter === '') {
     for (let i = 0; i < dropdown.options.length; i++) {
@@ -92,19 +92,19 @@ function filterDropdown() {
     }
     return;
   }
-  
+
   // Filter options based on text content
   for (let i = 0; i < dropdown.options.length; i++) {
     const option = dropdown.options[i];
     const text = option.text.toLowerCase();
-    
+
     if (text.includes(filter)) {
       option.style.display = '';
     } else {
       option.style.display = 'none';
     }
   }
-  
+
   // Auto-select first visible option
   for (let i = 0; i < dropdown.options.length; i++) {
     if (dropdown.options[i].style.display !== 'none') {
