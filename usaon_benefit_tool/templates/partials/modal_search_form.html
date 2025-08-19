@@ -1,0 +1,137 @@
+{% from 'macros/forms/form_fields.j2' import render_form_fields %}
+
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title">
+      {{ title }}
+    </h5>
+  </div>
+  <div class="modal-body">
+    <form {{ form_attrs|safe }}>
+      {% for field in form %}
+        {% if field.name == 'node' %}
+          {# Enhanced searchable dropdown for node field #}
+          <div class="form-group mb-3">
+            <label for="{{ field.id }}" class="form-label">
+              {{ field.label.text }}
+              {% if field.flags.required %}<span class="text-danger">*</span>{% endif %}
+            </label>
+
+            {# Search input to filter the dropdown #}
+            <input
+              type="text"
+              class="form-control mb-2"
+              id="node-search-filter"
+              placeholder="Type to filter by ID number or title..."
+              onkeyup="filterDropdown()">
+
+            {# The original dropdown - we'll filter this with JavaScript #}
+            {{ field(class="form-control" + (" is-invalid" if field.errors else ""), id=field.id) }}
+
+            {# Helpful hint for users #}
+            <small class="form-text text-muted mt-1">
+              <i class="fas fa-info-circle"></i> Click on dropdown to see options
+            </small>
+
+            {% if field.errors %}
+              <div class="invalid-feedback">
+                {% for error in field.errors %}
+                  <div>{{ error }}</div>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            {% if field.description %}
+              <small class="form-text text-muted">{{ field.description }}</small>
+            {% endif %}
+          </div>
+        {% elif field.type == 'CSRFTokenField' %}
+          {# Hide CSRF token field but still include it #}
+          {{ field() }}
+        {% elif field.type == 'SubmitField' %}
+        {% else %}
+          <div class="form-group mb-3">
+            <label for="{{ field.id }}" class="form-label">
+              {{ field.label.text }}
+              {% if field.flags.required %}<span class="text-danger">*</span>{% endif %}
+            </label>
+
+            {{ field(class="form-control" + (" is-invalid" if field.errors else "")) }}
+
+            {% if field.errors %}
+              <div class="invalid-feedback">
+                {% for error in field.errors %}
+                  <div>{{ error }}</div>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            {% if field.description %}
+              <small class="form-text text-muted">{{ field.description }}</small>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+// Function to filter the dropdown based on search input
+function filterDropdown() {
+  const searchInput = document.getElementById('node-search-filter');
+  const dropdown = document.getElementById('{{ form.node.id }}');
+  const filter = searchInput.value.toLowerCase();
+
+  // Show all options if search is empty
+  if (filter === '') {
+    for (let i = 0; i < dropdown.options.length; i++) {
+      dropdown.options[i].style.display = '';
+    }
+    return;
+  }
+
+  // Filter options based on text content
+  for (let i = 0; i < dropdown.options.length; i++) {
+    const option = dropdown.options[i];
+    const text = option.text.toLowerCase();
+
+    if (text.includes(filter)) {
+      option.style.display = '';
+    } else {
+      option.style.display = 'none';
+    }
+  }
+
+  // Auto-select first visible option
+  for (let i = 0; i < dropdown.options.length; i++) {
+    if (dropdown.options[i].style.display !== 'none') {
+      dropdown.selectedIndex = i;
+      break;
+    }
+  }
+}
+
+// Clear filter when dropdown is changed manually
+document.getElementById('{{ form.node.id }}').addEventListener('change', function() {
+  document.getElementById('node-search-filter').value = '';
+  filterDropdown(); // Reset all options to visible
+});
+
+// Focus the search input when modal opens
+document.addEventListener('DOMContentLoaded', function() {
+   document.addEventListener('shown.bs.modal', function(event) {
+    if (event.target.id === 'modal') {
+      const searchInput = document.getElementById('node-search-filter');
+      if (searchInput) {
+        searchInput.focus();
+      }
+    }
+  });
+});
+</script>
