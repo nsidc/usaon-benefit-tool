@@ -83,14 +83,7 @@
 function filterDropdown() {
   const searchInput = document.getElementById('node-search-filter');
   const dropdown = document.getElementById('{{ form.node.id }}');
-  const searchInput = document.getElementById('node-search-filter');
-  {% if form.node %}
-  const dropdown = document.getElementById('{{ form.node.id }}');
   const filter = searchInput.value.toLowerCase();
-  {% else %}
-  // form.node is not present; dropdown functionality disabled
-  return;
-  {% endif %}
 
   // Show all options if search is empty
   if (filter === '') {
