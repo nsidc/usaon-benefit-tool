@@ -1,31 +1,5 @@
 {% from 'macros/forms/form_fields.j2' import render_form_fields %}
 
-// Helper function to find option by text
-function getOptionByText(text) {
-  const dropdown = document.getElementById('{{ form.node.id }}');
-  for (let i = 0; i < dropdown.options.length; i++) {
-    if (dropdown.options[i].text === text) {
-      return dropdown.options[i];
-    }
-  }
-  return null;
-}
-
-// Function to select an option from the preview
-function selectOption(value) {
-  const dropdown = document.getElementById('{{ form.node.id }}');
-  dropdown.value = value;
-  
-  // Clear the search and hide preview
-  document.getElementById('node-search-filter').value = '';
-  document.getElementById('search-preview').style.display = 'none';
-  
-  // Reset all options to visible
-  for (let i = 0; i < dropdown.options.length; i++) {
-    dropdown.options[i].style.display = '';
-  }
-}
-
 <div class="modal-content">
   <div class="modal-header">
     <h5 class="modal-title">
@@ -42,18 +16,18 @@ function selectOption(value) {
               {{ field.label.text }}
               {% if field.flags.required %}<span class="text-danger">*</span>{% endif %}
             </label>
-            
+
             {# Search input to filter the dropdown #}
-            <input 
-              type="text" 
-              class="form-control mb-2" 
+            <input
+              type="text"
+              class="form-control mb-2"
               id="node-search-filter"
               placeholder="Type to filter options..."
               onkeyup="filterDropdown()">
-            
+
             {# The original dropdown - we'll filter this with JavaScript #}
             {{ field(class="form-control" + (" is-invalid" if field.errors else ""), id=field.id) }}
-            
+
             {% if field.errors %}
               <div class="invalid-feedback">
                 {% for error in field.errors %}
@@ -61,7 +35,7 @@ function selectOption(value) {
                 {% endfor %}
               </div>
             {% endif %}
-            
+
             {% if field.description %}
               <small class="form-text text-muted">{{ field.description }}</small>
             {% endif %}
@@ -70,17 +44,15 @@ function selectOption(value) {
           {# Hide CSRF token field but still include it #}
           {{ field() }}
         {% elif field.type == 'SubmitField' %}
-          {# Skip submit fields - we'll use our own button #}
         {% else %}
-          {# Render other fields manually #}
           <div class="form-group mb-3">
             <label for="{{ field.id }}" class="form-label">
               {{ field.label.text }}
               {% if field.flags.required %}<span class="text-danger">*</span>{% endif %}
             </label>
-            
+
             {{ field(class="form-control" + (" is-invalid" if field.errors else "")) }}
-            
+
             {% if field.errors %}
               <div class="invalid-feedback">
                 {% for error in field.errors %}
@@ -88,17 +60,17 @@ function selectOption(value) {
                 {% endfor %}
               </div>
             {% endif %}
-            
+
             {% if field.description %}
               <small class="form-text text-muted">{{ field.description }}</small>
             {% endif %}
           </div>
         {% endif %}
       {% endfor %}
-      
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-primary">Add Node</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
       </div>
     </form>
   </div>
@@ -109,55 +81,28 @@ function selectOption(value) {
 function filterDropdown() {
   const searchInput = document.getElementById('node-search-filter');
   const dropdown = document.getElementById('{{ form.node.id }}');
-  const preview = document.getElementById('search-preview');
-  const matchCount = document.getElementById('match-count');
-  const matchList = document.getElementById('match-list');
   const filter = searchInput.value.toLowerCase();
-  
-  let visibleOptions = [];
-  
+
   // Show all options if search is empty
   if (filter === '') {
     for (let i = 0; i < dropdown.options.length; i++) {
       dropdown.options[i].style.display = '';
     }
-    preview.style.display = 'none';
     return;
   }
-  
+
   // Filter options based on text content
   for (let i = 0; i < dropdown.options.length; i++) {
     const option = dropdown.options[i];
     const text = option.text.toLowerCase();
-    
+
     if (text.includes(filter)) {
       option.style.display = '';
-      visibleOptions.push(option.text);
     } else {
       option.style.display = 'none';
     }
   }
-  
-  // Update preview
-  if (visibleOptions.length === 0) {
-    matchCount.textContent = 'No matches found';
-    matchList.innerHTML = '';
-  } else if (visibleOptions.length === 1) {
-    matchCount.textContent = '1 match:';
-    const option = getOptionByText(visibleOptions[0]);
-    matchList.innerHTML = `<div class="p-2 bg-light rounded border" style="cursor: pointer;" onclick="selectOption('${option.value}')" onmouseover="this.style.backgroundColor='#e9ecef'" onmouseout="this.style.backgroundColor='#f8f9fa'">${visibleOptions[0]}</div>`;
-  } else {
-    matchCount.textContent = `${visibleOptions.length} matches:`;
-    const listHtml = visibleOptions.slice(0, 8).map(optionText => {
-      const option = getOptionByText(optionText);
-      return `<div class="p-2 bg-light rounded border mb-1" style="cursor: pointer;" onclick="selectOption('${option.value}')" onmouseover="this.style.backgroundColor='#e9ecef'" onmouseout="this.style.backgroundColor='#f8f9fa'">${optionText}</div>`;
-    }).join('');
-    const extraText = visibleOptions.length > 8 ? `<div class="text-muted">... and ${visibleOptions.length - 8} more (use dropdown for all options)</div>` : '';
-    matchList.innerHTML = listHtml + extraText;
-  }
-  
-  preview.style.display = 'block';
-  
+
   // Auto-select first visible option
   for (let i = 0; i < dropdown.options.length; i++) {
     if (dropdown.options[i].style.display !== 'none') {
@@ -170,17 +115,18 @@ function filterDropdown() {
 // Clear filter when dropdown is changed manually
 document.getElementById('{{ form.node.id }}').addEventListener('change', function() {
   document.getElementById('node-search-filter').value = '';
-  document.getElementById('search-preview').style.display = 'none';
   filterDropdown(); // Reset all options to visible
 });
 
 // Focus the search input when modal opens
 document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(() => {
-    const searchInput = document.getElementById('node-search-filter');
-    if (searchInput) {
-      searchInput.focus();
+   document.addEventListener('shown.bs.modal', function(event) {
+    if (event.target.id === 'modal') {
+      const searchInput = document.getElementById('node-search-filter');
+      if (searchInput) {
+        searchInput.focus();
+      }
     }
-  }, 100);
+  }); 
 });
 </script>
