@@ -56,4 +56,5 @@ def form(assessment_id: str):
         title="Add a link",
         form_attrs=form_attrs,
         form=form,
+        enable_search=False,
     )
