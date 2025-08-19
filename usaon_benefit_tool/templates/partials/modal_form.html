@@ -40,6 +40,9 @@
               <small class="form-text text-muted">{{ field.description }}</small>
             {% endif %}
           </div>
+        {% elif field.type == 'CSRFTokenField' %}
+          {# Hide CSRF token field but still include it #}
+          {{ field() }}
         {% else %}
           {# Render other fields manually #}
           <div class="form-group mb-3">
