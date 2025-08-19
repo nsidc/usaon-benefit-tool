@@ -11,6 +11,8 @@ ALLOWED_LINKS: Final[list[tuple[NodeType, NodeType]]] = [
     (NodeType.OBSERVING_SYSTEM, NodeType.APPLICATION),
     (NodeType.DATA_PRODUCT, NodeType.DATA_PRODUCT),
     (NodeType.DATA_PRODUCT, NodeType.APPLICATION),
+    (NodeType.APPLICATION, NodeType.DATA_PRODUCT),
     (NodeType.APPLICATION, NodeType.APPLICATION),
     (NodeType.APPLICATION, NodeType.SOCIETAL_BENEFIT_AREA),
+    (NodeType.DATA_PRODUCT, NodeType.SOCIETAL_BENEFIT_AREA),
 ]
