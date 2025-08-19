@@ -24,7 +24,7 @@
                 name="node_search" 
                 placeholder="Start typing to search nodes..."
                 hx-post="{{ url_for('assessment.nodes.search_nodes', assessment_id=assessment_id) }}"
-                hx-trigger="input changed delay:300ms, focus"
+                hx-trigger="input changed delay:300ms, focus, keyup[key=='Enter']"
                 hx-target="#node-search-results"
                 hx-indicator=".search-indicator"
                 hx-include="[name='node_type_hidden']"

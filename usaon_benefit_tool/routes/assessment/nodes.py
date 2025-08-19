@@ -1,3 +1,5 @@
+# Modified Flask routes for USAON searchable modal
+
 from flask import Blueprint, Response, render_template, request, url_for, jsonify
 from flask_login import login_required
 from flask_pydantic import validate
@@ -122,11 +124,11 @@ def search_nodes(assessment_id: str):
         ),
     )
     
-    # Add search filtering - adjust field names based on your Node model
+    # Add search filtering using the correct field names from your Node model
     search_query = base_query.filter(
         db.or_(
-            Node.name.ilike(f'%{search_term}%'),
-            Node.description.ilike(f'%{search_term}%'),
+            Node.title.ilike(f'%{search_term}%'),
+            Node.short_name.ilike(f'%{search_term}%'),
             # Add other searchable fields as needed
         )
     ).limit(10)  # Limit results for performance
@@ -139,14 +141,16 @@ def search_nodes(assessment_id: str):
     # Generate HTML for results using Bootstrap classes
     html_results = []
     for node in results:
+        # Display ID and title
+        display_text = f"#{node.id} - {node.title}"
+        
         html_results.append(f'''
         <div class="p-3 border-bottom cursor-pointer" 
              style="cursor: pointer;" 
              onmouseover="this.style.backgroundColor='#f8f9fa'" 
              onmouseout="this.style.backgroundColor='white'"
-             onclick="selectNode({node.id}, '{node.name}')">
-            <strong>{node.name}</strong>
-            {f'<br><small class="text-muted">{node.description[:100]}...</small>' if node.description else ''}
+             onclick="selectNode({node.id}, '{display_text}')">
+            <strong>#{node.id}</strong> - {node.title}
         </div>
         ''')
     
