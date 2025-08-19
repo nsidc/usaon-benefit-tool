@@ -1,403 +1,292 @@
 {% macro add_javascript__highcharts(sankey_series, assessment) -%}
-  <script>
-    const pointClickHandler = function(event) {
-      const point = this;
-      if ([point.id, point.from].includes("{{ constants.DUMMY_NODE_ID }}")) {
-        console.debug("Ignoring click on dummy node/link");
-        return;
-      }
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"
+      integrity="sha384-+wQ6VykBLL8GMDIS9ZhDJW60F7uO3cu6UytzszbmWzxubUoilKx2oyS9MhUlCT3e"
+      crossorigin="anonymous"></script>
+  <script>
+    // TODO: const or var for compatibility?
+    const pointClickHandler = function(event) {
+      const point = this;
+      if ([point.id, point.from].includes("{{ constants.DUMMY_NODE_ID }}")) {
+        console.debug("Ignoring click on dummy node/link");
+        return;
+      }
 
-      const selector = "#form-modal";
-      const el = document.querySelector(selector);
+      const selector = "#form-modal";
+      const el = document.querySelector(selector);
 
-      const isNode = "type" in point;
-      let routeTarget, idArgName, idArgValue;
-      if (isNode) {
-        routeTarget = "assessment.node.form";
-        idArgName = "node_id";
-        idArgValue = point.id.split("_").slice(-1)[0];
-      } else {
-        routeTarget = "assessment.link.form";
-        idArgName = "link_id";
-        idArgValue = point.id;
-      }
-      const targetUrl = Flask.url_for(
-        routeTarget,
-        {
-          assessment_id: {{ assessment.id }},
-          [idArgName]: idArgValue,
-        },
-      );
-      el.setAttribute("hx-get", targetUrl);
-      htmx.process(el);
+      // Determine the target URL and set the hx-get parameter accordingly.
+      // We're using vendored Flask-JSGlue to do this from JS.
+      // TODO: Less magic string processing
+      const isNode = "type" in point;
+      let routeTarget, idArgName, idArgValue;
+      if (isNode) {
+        routeTarget = "assessment.node.form";
+        idArgName = "node_id";
+        // FIXME: Brittle!
+        idArgValue = point.id.split("_").slice(-1)[0];
+      } else {
+        routeTarget = "assessment.link.form";
+        idArgName = "link_id";
+        idArgValue = point.id;
+      }
+      const targetUrl = Flask.url_for(
+        routeTarget,
+        {
+          assessment_id: {{ assessment.id }},
+          [idArgName]: idArgValue,
+        },
+      );
+      el.setAttribute("hx-get", targetUrl);
+      // Make HTMX aware of the change we just made
+      htmx.process(el);
 
-      const modal = new bootstrap.Modal(el, {});
-      modal.show();
-      htmx.trigger(selector, "modalOpened");
+      const modal = new bootstrap.Modal(el, {});
+      modal.show();
+      htmx.trigger(selector, "modalOpened");
+    }
+
+    // Add a "download" symbol
+    // From: https://api.highcharts.com/highcharts/exporting.buttons.contextButton.symbol
+    Highcharts.SVGRenderer.prototype.symbols.download = function (x, y, w, h) {
+      const path = [
+        // Arrow stem
+        'M', x + w * 0.5, y,
+        'L', x + w * 0.5, y + h * 0.7,
+        // Arrow head
+        'M', x + w * 0.3, y + h * 0.5,
+        'L', x + w * 0.5, y + h * 0.7,
+        'L', x + w * 0.7, y + h * 0.5,
+        // Box
+        'M', x, y + h * 0.9,
+        'L', x, y + h,
+        'L', x + w, y + h,
+        'L', x + w, y + h * 0.9
+      ];
+      return path;
+    };
+
+    Highcharts.setOptions({
+      lang: {
+        contextButtonTitle: 'Print and download options',
+      }
+    });
+
+    function getCustomTableData(chart) {
+      const series = chart.series[0];
+
+      const headers = [
+        'From',
+        'To',
+        'Weight',
+        'Performance Rating',
+        'Performance Rationale',
+        'Criticality Rating',
+        'Criticality Rationale',
+        'Gaps Description'
+      ];
+
+      const rows = [];
+
+      series.data.forEach(point => {
+        if (point.from === "{{ constants.DUMMY_NODE_ID }}" || point.to === "{{ constants.DUMMY_NODE_ID }}") {
+          return;
+        }
+
+        const fromNode = series.nodes.find(n => n.id === point.from);
+        const toNode = series.nodes.find(n => n.id === point.to);
+
+        const row = [
+          fromNode ? fromNode.name : point.from,
+          toNode ? toNode.name : point.to,
+          point.weight,
+          point.options.performance_rating || 'unrated',
+          point.options.performance_rating_rationale || '',
+          point.options.criticality_rating || 'unrated',
+          point.options.critically_rating_rationale || '',
+          point.options.gaps_description || ''
+        ];
+
+        rows.push(row);
+      });
+
+      return { headers, rows };
+    }
+
+    function downloadCustomCSV(chart, filename) {
+      const { headers, rows } = getCustomTableData(chart);
+
+      const csvContent = [headers, ...rows]
+        .map(row => row.map(cell => `"${cell}"`).join(','))
+        .join('\n');
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', filename);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // This is the updated function using SheetJS
+    function downloadCustomExcel(chart, filename) {
+      const { headers, rows } = getCustomTableData(chart);
+
+      // Create a worksheet from your data
+      const data = [headers, ...rows];
+      const worksheet = XLSX.utils.aoa_to_sheet(data);
+
+      // Create a new workbook and add the worksheet
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Assessment Data");
+
+      // Write the workbook to an XLSX file
+      XLSX.writeFile(workbook, filename + '.xlsx');
     }
 
-    Highcharts.SVGRenderer.prototype.symbols.download = function (x, y, w, h) {
-      const path = [
-        'M', x + w * 0.5, y,
-        'L', x + w * 0.5, y + h * 0.7,
-        'M', x + w * 0.3, y + h * 0.5,
-        'L', x + w * 0.5, y + h * 0.7,
-        'L', x + w * 0.7, y + h * 0.5,
-        'M', x, y + h * 0.9,
-        'L', x, y + h,
-        'L', x + w, y + h,
-        'L', x + w, y + h * 0.9
-      ];
-      return path;
-    };
+    function showCustomDataTable(chart) {
+      const { headers, rows } = getCustomTableData(chart);
 
-    Highcharts.setOptions({
-      lang: {
-        contextButtonTitle: 'Print and download options',
-      }
-    });
+      // Find or create the data table container below the chart
+      let tableContainer = document.getElementById('highcharts-data-table');
+      if (!tableContainer) {
+        tableContainer = document.createElement('div');
+        tableContainer.id = 'highcharts-data-table';
+        tableContainer.style.marginTop = '20px';
+        // Insert after the chart container
+        chart.renderTo.parentNode.insertBefore(tableContainer, chart.renderTo.nextSibling);
+      }
 
-    function getCustomTableData(chart) {
-      const series = chart.series[0];
+      // Toggle table visibility
+      if (tableContainer.style.display === 'none' || !tableContainer.innerHTML) {
+        // Show the table
+        let tableHTML = `
+          <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd;">
+            <thead>
+              <tr style="background-color: #f5f5f5;">`;
 
-      const headers = [
-        'From',
-        'To',
-        'Weight',
-        'Performance Rating',
-        'Performance Rationale',
-        'Criticality Rating',
-        'Criticality Rationale',
-        'Gaps Description'
-      ];
+        headers.forEach(header => {
+          tableHTML += `<th style="padding: 8px; text-align: left; border: 1px solid #ddd; font-weight: bold;">${header}</th>`;
+        });
 
-      const rows = [];
+        tableHTML += '</tr></thead><tbody>';
 
-      series.data.forEach(point => {
-        if (point.from === "{{ constants.DUMMY_NODE_ID }}" || point.to === "{{ constants.DUMMY_NODE_ID }}") {
-          return;
-        }
+        rows.forEach((row, index) => {
+          const bgColor = index % 2 === 0 ? '#ffffff' : '#f9f9f9';
+          tableHTML += `<tr style="background-color: ${bgColor};">`;
+          row.forEach(cell => {
+            tableHTML += `<td style="padding: 8px; border: 1px solid #ddd;">${cell}</td>`;
+          });
+          tableHTML += '</tr>';
+        });
 
-        const fromNode = series.nodes.find(n => n.id === point.from);
-        const toNode = series.nodes.find(n => n.id === point.to);
+        tableHTML += '</tbody></table>';
 
-        const row = [
-          fromNode ? fromNode.name : point.from,
-          toNode ? toNode.name : point.to,
-          point.weight,
-          point.options.performance_rating || 'unrated',
-          point.options.performance_rationale || '',
-          point.options.criticality_rating || 'unrated',
-          point.options.criticality_rationale || '',
-          point.options.gaps_description || ''
-        ];
+        tableContainer.innerHTML = tableHTML;
+        tableContainer.style.display = 'block';
+      } else {
+        // Hide the table
+        tableContainer.style.display = 'none';
+      }
+    }
 
-        rows.push(row);
-      });
-
-      return { headers, rows };
-    }
-
-    function getCustomNodeData(chart) {
-      const series = chart.series[0];
-      
-      const regularNodes = [];
-      const societalBenefitNodes = [];
-      
-      series.nodes.forEach(node => {
-        if (node.id === "{{ constants.DUMMY_NODE_ID }}") {
-          return;
-        }
-        
-        if (node.type === 'societal_benefit_area') {
-          societalBenefitNodes.push(node);
-        } else {
-          regularNodes.push(node);
-        }
-      });
-      
-      return { regularNodes, societalBenefitNodes };
-    }
-
-    function downloadCustomCSV(chart, filename) {
-      const { headers, rows } = getCustomTableData(chart);
-
-      const csvContent = [headers, ...rows]
-        .map(row => row.map(cell => `"${cell}"`).join(','))
-        .join('\n');
-
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      const url = URL.createObjectURL(blob);
-      link.setAttribute('href', url);
-      link.setAttribute('download', filename);
-      link.style.visibility = 'hidden';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-
-    function downloadCustomExcel(chart, filename) {
-      const { headers, rows } = getCustomTableData(chart);
-
-      let excelContent = '<?xml version="1.0"?>\n';
-      excelContent += '<?mso-application progid="Excel.Sheet"?>\n';
-      excelContent += '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"\n';
-      excelContent += ' xmlns:o="urn:schemas-microsoft-com:office:office"\n';
-      excelContent += ' xmlns:x="urn:schemas-microsoft-com:office:excel"\n';
-      excelContent += ' xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"\n';
-      excelContent += ' xmlns:html="http://www.w3.org/TR/REC-html40">\n';
-      excelContent += '<Worksheet ss:Name="Assessment Data">\n';
-      excelContent += '<Table>\n';
-
-      excelContent += '<Row>\n';
-      headers.forEach(header => {
-        excelContent += `<Cell><Data ss:Type="String">${header}</Data></Cell>\n`;
-      });
-      excelContent += '</Row>\n';
-
-      rows.forEach(row => {
-        excelContent += '<Row>\n';
-        row.forEach(cell => {
-          const cellValue = String(cell).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-          excelContent += `<Cell><Data ss:Type="String">${cellValue}</Data></Cell>\n`;
-        });
-        excelContent += '</Row>\n';
-      });
-
-      excelContent += '</Table>\n';
-      excelContent += '</Worksheet>\n';
-      excelContent += '</Workbook>\n';
-
-      const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
-      const link = document.createElement('a');
-      const url = URL.createObjectURL(blob);
-      link.setAttribute('href', url);
-      link.setAttribute('download', filename);
-      link.style.visibility = 'hidden';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-
-    function downloadCustomNodesCSV(chart, filename) {
-      const { regularNodes, societalBenefitNodes } = getCustomNodeData(chart);
-      
-      let csvContent = '';
-      
-      if (regularNodes.length > 0) {
-        const regularHeaders = [
-          'Title',
-          'Short Name', 
-          'Description',
-          'Organization',
-          'Funder',
-          'Funder Country',
-          'Website',
-          'Contact Information',
-          'Persistent Identifier',
-          'Hypothetical (Y/N)'
-        ];
-        
-        csvContent += 'Observing Systems, Data Products, and Applications\n';
-        csvContent += regularHeaders.map(h => `"${h}"`).join(',') + '\n';
-        
-        regularNodes.forEach(node => {
-          const row = [
-            node.title || '',
-            node.name || '',
-            node.description || '',
-            node.organization || '',
-            node.funder || '',
-            node.funder_country || '',
-            node.website || '',
-            node.contact_information || '',
-            node.persistent_identifier || '',
-            node.hypothetical ? 'Y' : 'N'
-          ];
-          csvContent += row.map(cell => `"${cell}"`).join(',') + '\n';
-        });
-      }
-      
-      if (regularNodes.length > 0 && societalBenefitNodes.length > 0) {
-        csvContent += '\n';
-      }
-      
-      if (societalBenefitNodes.length > 0) {
-        const societalHeaders = [
-          'Title',
-          'Short Name',
-          'Description', 
-          'Framework Name',
-          'Framework Url'
-        ];
-        
-        csvContent += 'Societal Benefit Areas\n';
-        csvContent += societalHeaders.map(h => `"${h}"`).join(',') + '\n';
-        
-        societalBenefitNodes.forEach(node => {
-          const row = [
-            node.title || '',
-            node.name || '',
-            node.description || '',
-            node.framework_name || '',
-            node.framework_url || ''
-          ];
-          csvContent += row.map(cell => `"${cell}"`).join(',') + '\n';
-        });
-      }
-      
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      const url = URL.createObjectURL(blob);
-      link.setAttribute('href', url);
-      link.setAttribute('download', filename);
-      link.style.visibility = 'hidden';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-
-    function showCustomDataTable(chart) {
-      const { headers, rows } = getCustomTableData(chart);
-
-      let tableContainer = document.getElementById('highcharts-data-table');
-      if (!tableContainer) {
-        tableContainer = document.createElement('div');
-        tableContainer.id = 'highcharts-data-table';
-        tableContainer.style.marginTop = '20px';
-        chart.renderTo.parentNode.insertBefore(tableContainer, chart.renderTo.nextSibling);
-      }
-
-      if (tableContainer.style.display === 'none' || !tableContainer.innerHTML) {
-        let tableHTML = `
-          <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd;">
-            <thead>
-              <tr style="background-color: #f5f5f5;">`;
-
-        headers.forEach(header => {
-          tableHTML += `<th style="padding: 8px; text-align: left; border: 1px solid #ddd; font-weight: bold;">${header}</th>`;
-        });
-
-        tableHTML += '</tr></thead><tbody>';
-
-        rows.forEach((row, index) => {
-          const bgColor = index % 2 === 0 ? '#ffffff' : '#f9f9f9';
-          tableHTML += `<tr style="background-color: ${bgColor};">`;
-          row.forEach(cell => {
-            tableHTML += `<td style="padding: 8px; border: 1px solid #ddd;">${cell}</td>`;
-          });
-          tableHTML += '</tr>';
-        });
-
-        tableHTML += '</tbody></table>';
-
-        tableContainer.innerHTML = tableHTML;
-        tableContainer.style.display = 'block';
-      } else {
-        tableContainer.style.display = 'none';
-      }
-    }
-
-    Highcharts.chart('highcharts-container', {
-      chart: {
-        type: 'sankey',
-      },
-      plotOptions: {
-        sankey: {
-          point: {
-            events: {
-              click: pointClickHandler,
-            },
-          },
-          dataLabels: {
-            style: {
-              fontSize: "0.8em",
-            },
-          },
-        },
-      },
-      title: {
-        text: "{{ assessment_title }}",
-        style: {fontSize: '20px'},
-      },
-      exporting: {
-        buttons: {
-          contextButton: {
-            symbol: "download",
-            menuItems: [
-              'viewFullscreen',
-              'printChart',
-              'separator',
-              'downloadPNG',
-              'downloadJPEG',
-              'downloadSVG',
-              'separator',
-              {
-                text: 'Download Links CSV',
-                onclick: function() {
-                  downloadCustomCSV(this, 'assessment_{{ assessment.id }}_links.csv');
-                }
-              },
-              {
-                text: 'Download Links XLS',
-                onclick: function() {
-                  downloadCustomExcel(this, 'assessment_{{ assessment.id }}_links.xls');
-                }
-              },
-              {
-                text: 'Download Nodes CSV',
-                onclick: function() {
-                  downloadCustomNodesCSV(this, 'assessment_{{ assessment.id }}_nodes.csv');
-                }
-              },
-              {
-                text: 'View data table',
-                onclick: function() {
-                  showCustomDataTable(this);
-                }
-              }
-            ]
-          },
-        },
-        filename: 'assessment_{{ assessment.id }}'
-      },
-      accessibility: {
-        description: 'Sankey plot for U.S. AON Benefit Tool',
-        point: {
-          valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.',
-        },
-      },
-      tooltip: {
-        headerFormat: null,
-        formatter: function() {
-          const point = this;
-          return point.point.tooltipHTML || false;
-        },
-      },
-      series: [{
-        keys: ['from', 'to', 'weight'],
-        data: {{ sankey_series.data | safe }},
-        nodes: {{ sankey_series.nodes | safe }},
-        colorByPoint: true,
-        colors: ["#AEAEAE"]
-      }],
-    });
-  </script>
+    Highcharts.chart('highcharts-container', {
+      chart: {
+        type: 'sankey',
+      },
+      plotOptions: {
+        sankey: {
+          point: {
+            events: {
+              click: pointClickHandler,
+            },
+          },
+          dataLabels: {
+            style: {
+              fontSize: "0.8em",
+            },
+          },
+        },
+      },
+      title: {
+        text: "{{ assessment_title }}",
+        style: {fontSize: '20px'},
+      },
+      exporting: {
+        buttons: {
+          contextButton: {
+            symbol: "download",
+            menuItems: [
+              'viewFullscreen',
+              'printChart',
+              'separator',
+              'downloadPNG',
+              'downloadJPEG',
+              'downloadSVG',
+              'separator',
+              {
+                text: 'Download CSV',
+                onclick: function() {
+                  downloadCustomCSV(this, 'assessment_{{ assessment.id }}_data.csv');
+                }
+              },
+              {
+                // The text is updated to reflect the new file format
+                text: 'Download XLSX',
+                onclick: function() {
+                  // The filename is passed without the extension, which is added by the function
+                  downloadCustomExcel(this, 'assessment_{{ assessment.id }}_data');
+                }
+              },
+              {
+                text: 'View data table',
+                onclick: function() {
+                  showCustomDataTable(this);
+                }
+              }
+            ]
+          },
+        },
+        filename: 'assessment_{{ assessment.id }}'
+      },
+      accessibility: {
+        description: 'Sankey plot for U.S. AON Benefit Tool',
+        point: {
+          valueDescriptionFormat: '{index}. {point.from} to {point.to}, {point.weight}.',
+        },
+      },
+      tooltip: {
+        headerFormat: null,
+        formatter: function() {
+          const point = this;
+          return point.point.tooltipHTML || false;
+        },
+      },
+      series: [{
+        keys: ['from', 'to', 'weight'],
+        data: {{ sankey_series.data | safe }},
+        nodes: {{ sankey_series.nodes | safe }},
+        colorByPoint: true,
+        colors: ["#AEAEAE"]
+      }],
+    });
+  </script>
 {% endmacro %}
 
 
 {% macro display_sankey(sankey_series, assessment) -%}
-  {% include 'includes/highcharts.html' %}
+  {% include 'includes/highcharts.html' %}
 
-  {% if sankey_series.data == [] %}
-    <div class="alert alert-info">
-      Please add at least one node to display diagram
-    </div>
-  {% else %}
-    <figure class="highcharts-figure">
-      <div id="highcharts-container" />
-    </figure>
-    {{ add_javascript__highcharts(sankey_series=sankey_series, assessment=assessment) }}
-  {% endif %}
+  {% if sankey_series.data == [] %}
+    <div class="alert alert-info">
+      Please add at least one node to display diagram
+    </div>
+  {% else %}
+    <figure class="highcharts-figure">
+      <div id="highcharts-container" />
+    </figure>
+    {{ add_javascript__highcharts(sankey_series=sankey_series, assessment=assessment) }}
+  {% endif %}
 {% endmacro %}
