@@ -43,6 +43,8 @@
         {% elif field.type == 'CSRFTokenField' %}
           {# Hide CSRF token field but still include it #}
           {{ field() }}
+        {% elif field.type == 'SubmitField' %}
+          {# Skip submit fields - we'll use our own button #}
         {% else %}
           {# Render other fields manually #}
           <div class="form-group mb-3">
