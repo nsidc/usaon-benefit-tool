@@ -74,5 +74,4 @@ def form(query: _QueryModel):
         title=f"New {query.node_type.value.replace('_', ' ')}",
         form_attrs=f"hx-post={post_url}",
         form=form,
-        enable_search=False,
     )
