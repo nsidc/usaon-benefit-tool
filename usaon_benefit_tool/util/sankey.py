@@ -26,7 +26,7 @@ def permitted_source_link_types(node_type: NodeType) -> set[NodeType]:
 
 # NOTE: Can't use class syntax because of hard keyword conflict "from". I think this
 #       also means we can't use a dataclass without some workaround.
-# 8-12-25: Added new fields for enhanced CSV export
+# UPDATED: Added new fields for enhanced CSV export
 HighchartsSankeySeriesLink = TypedDict(
     'HighchartsSankeySeriesLink',
     {
@@ -36,24 +36,38 @@ HighchartsSankeySeriesLink = TypedDict(
         "color": str,
         "id": NotRequired[int],
         "tooltipHTML": str,
+        # NEW FIELDS FOR ENHANCED CSV EXPORT
         "from_name": NotRequired[str],
-        "to_name": NotRequired[str],
-        "performance_rating": NotRequired[int | str],
-        "performance_rating_rationale": NotRequired[str],
-        "criticality_rating": NotRequired[int | str],
-        "critically_rating_rationale": NotRequired[str],
+        "to_name": NotRequired[str], 
+        "performance_score": NotRequired[int | str],
+        "performance_rationale": NotRequired[str],
+        "criticality_score": NotRequired[int | str],
+        "criticality_rationale": NotRequired[str],
         "gaps_description": NotRequired[str],
     },
 )
 
 
 # TODO: Use dataclasses instead
+# UPDATED: Added new fields for node details export
 class HighchartsSankeySeriesNode(TypedDict):
     id: str
     name: str
     type: str
     color: NotRequired[str]
     tooltipHTML: str
+    # NEW FIELDS FOR NODE DETAILS EXPORT
+    title: NotRequired[str]
+    description: NotRequired[str]
+    organization: NotRequired[str]
+    funder: NotRequired[str]
+    funder_country: NotRequired[str]
+    website: NotRequired[str]
+    contact_information: NotRequired[str]
+    persistent_identifier: NotRequired[str]
+    hypothetical: NotRequired[bool]
+    framework_name: NotRequired[str]
+    framework_url: NotRequired[str]
 
 
 class HighchartsSankeySeries(TypedDict):
@@ -80,6 +94,7 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
     queries. Needs to be optimized!
     """
     assessment_nodes: list[AssessmentNode] = assessment.assessment_nodes
+    # UPDATED: Added node details for enhanced export
     nodes_simplified: list[HighchartsSankeySeriesNode] = [
         {
             "id": _node_id(an.node),
@@ -89,6 +104,18 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
                 "partials/node_tooltip.html",
                 assessment_node=an,
             ),
+            # NEW FIELDS FOR NODE DETAILS EXPORT
+            "title": getattr(an.node, 'title', '') or '',
+            "description": getattr(an.node, 'description', '') or '',
+            "organization": getattr(an.node, 'organization', '') or '',
+            "funder": getattr(an.node, 'funder', '') or '',
+            "funder_country": getattr(an.node, 'funder_country', '') or '',
+            "website": getattr(an.node, 'website', '') or '',
+            "contact_information": getattr(an.node, 'contact_information', '') or '',
+            "persistent_identifier": getattr(an.node, 'persistent_identifier', '') or '',
+            "hypothetical": getattr(an.node, 'hypothetical', False),
+            "framework_name": getattr(an.node, 'framework_name', '') or '',
+            "framework_url": getattr(an.node, 'framework_url', '') or '',
         }
         for an in assessment_nodes
     ]
@@ -103,6 +130,7 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
             ),
         ),
     )
+    # UPDATED: Added new fields for enhanced CSV export
     links_simplified: list[HighchartsSankeySeriesLink] = [
         {
             "from": _node_id(link.source_assessment_node.node),
@@ -114,30 +142,13 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
                 "partials/link_tooltip.html",
                 link=link,
             ),
+            # NEW FIELDS FOR ENHANCED CSV EXPORT
             "from_name": link.source_assessment_node.node.short_name,
             "to_name": link.target_assessment_node.node.short_name,
-            "performance_rating": (
-                link.performance_rating
-                if link.performance_rating is not None
-                else "unrated"
-            ),
-            "performance_rating_rationale": getattr(
-                link,
-                'performance_rating_rationale',
-                '',
-            )
-            or '',
-            "criticality_rating": (
-                link.criticality_rating
-                if link.criticality_rating is not None
-                else "unrated"
-            ),
-            "critically_rating_rationale": getattr(
-                link,
-                'critically_rating_rationale',
-                '',
-            )
-            or '',
+            "performance_score": link.performance_rating if link.performance_rating is not None else "unrated",
+            "performance_rationale": getattr(link, 'performance_rationale', '') or '',
+            "criticality_score": link.criticality_rating if link.criticality_rating is not None else "unrated", 
+            "criticality_rationale": getattr(link, 'criticality_rationale', '') or '',
             "gaps_description": getattr(link, 'gaps_description', '') or '',
         }
         for link in links
