@@ -24,10 +24,10 @@
               id="node-search-filter"
               placeholder="Type to filter by ID number or title..."
               onkeyup="filterDropdown()">
-            
+
             {# The original dropdown - we'll filter this with JavaScript #}
             {{ field(class="form-control" + (" is-invalid" if field.errors else ""), id=field.id) }}
-            
+
             {# Helpful hint for users #}
             <small class="form-text text-muted mt-1">
               <i class="fas fa-info-circle"></i> Click on dropdown to see options
@@ -132,6 +132,6 @@ document.addEventListener('DOMContentLoaded', function() {
         searchInput.focus();
       }
     }
-  }); 
+  });
 });
 </script>
