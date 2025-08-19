@@ -10,44 +10,26 @@
     <form {{ form_attrs|safe }}>
       {% for field in form %}
         {% if field.name == 'node' %}
-          {# Custom searchable dropdown for node field #}
+          {# Enhanced searchable dropdown for node field #}
           <div class="form-group mb-3">
             <label for="{{ field.id }}" class="form-label">
               {{ field.label.text }}
               {% if field.flags.required %}<span class="text-danger">*</span>{% endif %}
             </label>
             
-            <div class="position-relative">
-              <input 
-                type="text" 
-                class="form-control" 
-                name="node_search" 
-                placeholder="Start typing to search nodes..."
-                hx-post="{{ url_for('assessment.nodes.search_nodes', assessment_id=assessment_id) }}"
-                hx-trigger="input changed delay:300ms, focus, keyup[key=='Enter']"
-                hx-target="#node-search-results"
-                hx-indicator=".search-indicator"
-                hx-include="[name='node_type_hidden']"
-                autocomplete="off">
-              
-              <div class="position-absolute w-100 bg-white border border-top-0 rounded-bottom shadow-sm" 
-                   id="node-search-results" 
-                   style="top: 100%; z-index: 1050; max-height: 250px; overflow-y: auto; display: none;"></div>
-              <small class="htmx-indicator search-indicator text-muted d-none">
-                <i class="fas fa-spinner fa-spin"></i> Searching...
-              </small>
-            </div>
+            {# Search input to filter the dropdown #}
+            <input 
+              type="text" 
+              class="form-control mb-2" 
+              id="node-search-filter"
+              placeholder="Type to filter options..."
+              onkeyup="filterDropdown()">
             
-            <div class="mt-2" id="selected-node">
-              <em class="text-muted">No node selected</em>
-            </div>
-            
-            {# Hidden field to store the selected node ID #}
-            <input type="hidden" name="{{ field.name }}" id="{{ field.id }}" value="{{ field.data or '' }}">
-            <input type="hidden" name="node_type_hidden" value="{{ node_type }}">
+            {# The original dropdown - we'll filter this with JavaScript #}
+            {{ field(class="form-control" + (" is-invalid" if field.errors else ""), id=field.id) }}
             
             {% if field.errors %}
-              <div class="invalid-feedback d-block">
+              <div class="invalid-feedback">
                 {% for error in field.errors %}
                   <div>{{ error }}</div>
                 {% endfor %}
@@ -59,7 +41,7 @@
             {% endif %}
           </div>
         {% else %}
-          {# Render other fields manually since we can't pass individual fields to render_form_fields #}
+          {# Render other fields manually #}
           <div class="form-group mb-3">
             <label for="{{ field.id }}" class="form-label">
               {{ field.label.text }}
@@ -91,55 +73,55 @@
   </div>
 </div>
 
-
-
 <script>
-// Function to handle node selection
-function selectNode(nodeId, nodeName) {
-  // Update hidden field
-  document.getElementById('node').value = nodeId;
+// Function to filter the dropdown based on search input
+function filterDropdown() {
+  const searchInput = document.getElementById('node-search-filter');
+  const dropdown = document.getElementById('{{ form.node.id }}');
+  const filter = searchInput.value.toLowerCase();
   
-  // Update selected display
-  document.getElementById('selected-node').innerHTML = 
-    `<span class="badge bg-primary">${nodeName}</span>`;
+  // Show all options if search is empty
+  if (filter === '') {
+    for (let i = 0; i < dropdown.options.length; i++) {
+      dropdown.options[i].style.display = '';
+    }
+    return;
+  }
   
-  // Clear search results and input
-  document.getElementById('node-search-results').innerHTML = '';
-  document.getElementById('node-search-results').style.display = 'none';
-  document.querySelector('input[name="node_search"]').value = '';
-}
-
-// Show/hide results based on content
-document.addEventListener('htmx:afterSwap', function(event) {
-  if (event.target.id === 'node-search-results') {
-    const results = event.target;
-    if (results.innerHTML.trim()) {
-      results.style.display = 'block';
+  // Filter options based on text content
+  for (let i = 0; i < dropdown.options.length; i++) {
+    const option = dropdown.options[i];
+    const text = option.text.toLowerCase();
+    
+    if (text.includes(filter)) {
+      option.style.display = '';
     } else {
-      results.style.display = 'none';
+      option.style.display = 'none';
     }
   }
+  
+  // Auto-select first visible option
+  for (let i = 0; i < dropdown.options.length; i++) {
+    if (dropdown.options[i].style.display !== 'none') {
+      dropdown.selectedIndex = i;
+      break;
+    }
+  }
+}
+
+// Clear filter when dropdown is changed manually
+document.getElementById('{{ form.node.id }}').addEventListener('change', function() {
+  document.getElementById('node-search-filter').value = '';
+  filterDropdown(); // Reset all options to visible
 });
 
-// Hide results when clicking outside
-document.addEventListener('click', function(event) {
-  const searchContainer = event.target.closest('.position-relative');
-  const results = document.getElementById('node-search-results');
-  if (!searchContainer && results) {
-    results.style.display = 'none';
-  }
-});
-
-// Show HTMX indicator
-document.addEventListener('htmx:beforeRequest', function(event) {
-  if (event.target.name === 'node_search') {
-    document.querySelector('.search-indicator').classList.remove('d-none');
-  }
-});
-
-document.addEventListener('htmx:afterRequest', function(event) {
-  if (event.target.name === 'node_search') {
-    document.querySelector('.search-indicator').classList.add('d-none');
-  }
+// Focus the search input when modal opens
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(() => {
+    const searchInput = document.getElementById('node-search-filter');
+    if (searchInput) {
+      searchInput.focus();
+    }
+  }, 100);
 });
 </script>

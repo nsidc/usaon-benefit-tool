@@ -1,6 +1,4 @@
-# Modified Flask routes for USAON searchable modal
-
-from flask import Blueprint, Response, render_template, request, url_for, jsonify
+from flask import Blueprint, Response, render_template, request, url_for
 from flask_login import login_required
 from flask_pydantic import validate
 from pydantic import BaseModel
@@ -21,6 +19,8 @@ def post(assessment_id: str):
     """Add an entry to the assessment's node collection."""
     forbid_except_for_roles([RoleName.ADMIN, RoleName.RESPONDENT])
 
+    # TODO: How to avoid using request.args? Typing worked on the GET endpoint, but not
+    #       this one.
     node_type = request.args.get("node_type")
     cls = get_assessment_node_class_by_type(NodeType(node_type))
 
@@ -32,30 +32,15 @@ def post(assessment_id: str):
         db.session.add(assessment_node)
         db.session.commit()
 
-        return Response(
-            status=201,
-            headers={
-                'HX-Redirect': url_for(
-                    'assessment.get',
-                    assessment_id=assessment_id,
-                ),
-            },
-        )
-    else:
-        # Return form with validation errors
-        post_url = url_for(
-            'assessment.nodes.post',
-            assessment_id=assessment_id,
-            node_type=node_type,
-        )
-        return render_template(
-            'partials/modal_form.html',
-            title=f"Add {NodeType(node_type).replace('_', ' ')} node",
-            form_attrs=f"hx-post={post_url}",
-            form=form,
-            assessment_id=assessment_id,
-            node_type=node_type,
-        )
+    return Response(
+        status=201,
+        headers={
+            'HX-Redirect': url_for(
+                'assessment.get',
+                assessment_id=assessment_id,
+            ),
+        },
+    )
 
 
 class _QueryModel(BaseModel):
@@ -71,101 +56,26 @@ def form(assessment_id: str, query: _QueryModel):
     assessment_node = cls(assessment_id=assessment_id)
     form = FORMS_BY_MODEL[cls](obj=assessment_node)
 
-    # Don't set form.node.query here anymore - we'll handle search via HTMX
-    # Remove or comment out this section:
-    # form.node.query = Node.query.filter_by(
-    #     type=query.node_type,
-    # ).filter(
-    #     Node.id.not_in(
-    #         AssessmentNode.query.with_entities(
-    #             AssessmentNode.node_id,
-    #         ).filter_by(assessment_id=assessment_id),
-    #     ),
-    # )
-
-    post_url = url_for(
-        'assessment.nodes.post',
-        assessment_id=assessment_id,
-        node_type=query.node_type.value,
-    )
-    
-    return render_template(
-        'partials/modal_form.html',
-        title=f"Add {query.node_type.replace('_', ' ')} node",
-        form_attrs=f"hx-post={post_url}",
-        form=form,
-        assessment_id=assessment_id,
-        node_type=query.node_type.value,
-    )
-
-
-# New route for HTMX search
-@assessment_nodes_bp.route('/search', methods=['POST'])
-@login_required
-def search_nodes(assessment_id: str):
-    """Search for nodes that can be added to the assessment."""
-    forbid_except_for_roles([RoleName.ADMIN, RoleName.RESPONDENT])
-    
-    search_term = request.form.get('search', '').strip()
-    node_type = request.form.get('node_type')
-    
-    if not search_term or len(search_term) < 2:
-        return ''  # Return empty if search term is too short
-    
-    # Build the same query as before, but with search filtering
-    base_query = Node.query.filter_by(
-        type=NodeType(node_type),
+    form.node.query = Node.query.filter_by(
+        # Select only nodes that are of the selected type
+        type=query.node_type,
     ).filter(
-        # Exclude nodes already in this assessment
+        # Select only nodes that are not already in this assessement
         Node.id.not_in(
             AssessmentNode.query.with_entities(
                 AssessmentNode.node_id,
             ).filter_by(assessment_id=assessment_id),
         ),
     )
-    
-    # Add search filtering using the correct field names from your Node model
-    search_query = base_query.filter(
-        db.or_(
-            Node.title.ilike(f'%{search_term}%'),
-            Node.short_name.ilike(f'%{search_term}%'),
-            # Add other searchable fields as needed
-        )
-    ).limit(10)  # Limit results for performance
-    
-    results = search_query.all()
-    
-    if not results:
-        return '<div class="p-3 text-muted text-center" style="font-style: italic;">No results found</div>'
-    
-    # Generate HTML for results using Bootstrap classes
-    html_results = []
-    for node in results:
-        # Display ID and title
-        display_text = f"#{node.id} - {node.title}"
-        
-        html_results.append(f'''
-        <div class="p-3 border-bottom cursor-pointer" 
-             style="cursor: pointer;" 
-             onmouseover="this.style.backgroundColor='#f8f9fa'" 
-             onmouseout="this.style.backgroundColor='white'"
-             onclick="selectNode({node.id}, '{display_text}')">
-            <strong>#{node.id}</strong> - {node.title}
-        </div>
-        ''')
-    
-    return ''.join(html_results)
 
-
-# Optional: Endpoint to get node details
-@assessment_nodes_bp.route('/node/<int:node_id>', methods=['GET'])
-@login_required
-def get_node_details(assessment_id: str, node_id: int):
-    """Get details for a specific node."""
-    node = Node.query.get_or_404(node_id)
-    return {
-        'id': node.id,
-        'name': node.name,
-        'description': node.description,
-        'type': node.type.value if hasattr(node.type, 'value') else str(node.type),
-    }
+    post_url = url_for(
+        'assessment.nodes.post',
+        assessment_id=assessment_id,
+        node_type=query.node_type.value,
+    )
+    return render_template(
+        'partials/modal_form.html',
+        title=f"Add {query.node_type.replace('_', ' ')} node",
+        form_attrs=f"hx-post={post_url}",
+        form=form,
+    )
