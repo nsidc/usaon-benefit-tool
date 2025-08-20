@@ -5,10 +5,7 @@
 <div class="modal-content">
   <div class="modal-header">
     <h5 class="modal-title">
-      Edit node: {{node.short_name}}
-      <a href="{{ url_for("node.get", node_id=node.id) }}" target="_blank">
-        #{{ node.id }} {{ render_icon("box-arrow-up-right") }}
-      </a>
+      {{node.short_name}}
     </h5>
 
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
@@ -18,24 +15,21 @@
     
     {# Node Information Section - moved from tooltip, read-only display #}
     <div class="mb-3">
-      <div class="row">
-        <div class="col-md-6">
-          <p class="mb-1"><strong>Short Name:</strong> {{node.short_name}}</p>
-          <p class="mb-1"><strong>Type:</strong> {{node.type.value}}</p>
-        </div>
-        <div class="col-md-6">
-          <p class="mb-1"><strong>Title:</strong> {{node.title}}</p>
-        </div>
-      </div>
+        <p class="mb-1"><strong>Short Name:</strong> {{node.short_name}}</p>
+        <p class="mb-1"><strong>Title:</strong> {{node.title}}</p>
+        <p class="mb-1"><strong>Type:</strong> {{node.type.value}}</p>
+        <p class="mb-1"><strong>Title:</strong> {{node.title}}</p>
       {% if node.description %}
-      <div class="row">
-        <div class="col-12">
-          <p class="mb-1"><strong>Description:</strong></p>
-          <p class="text-muted mb-0">{{node.description}}</p>
-        </div>
-      </div>
+         <p class="mb-1"><strong>Description:</strong> {{node.description}}</p>
       {% endif %}
     </div>
+
+    <h5 class="modal-title">
+      Edit node: {{node.short_name}}
+      <a href="{{ url_for("node.get", node_id=node.id) }}" target="_blank">
+        #{{ node.id }} {{ render_icon("box-arrow-up-right") }}
+      </a>
+    </h5>
 
     <hr>
 
