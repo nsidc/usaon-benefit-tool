@@ -22,6 +22,11 @@
       {% if node.description %}
          <p class="mb-1"><strong>Description:</strong> {{node.description}}</p>
       {% endif %}
+      {% if node.node_subtype_other and node.node_subtype_other.website %}
+         <p class="mb-1"><strong>Website:</strong> 
+           <a href="{{node.node_subtype_other.website}}" target="_blank" rel="noopener noreferrer">{{node.node_subtype_other.website}}</a>
+         </p>
+      {% endif %}  
     </div>
 
     <h5 class="modal-title">
