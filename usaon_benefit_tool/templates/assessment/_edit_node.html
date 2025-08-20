@@ -15,7 +15,31 @@
   </div>
 
   <div class="modal-body">
+    
+    {# Node Information Section - moved from tooltip, read-only display #}
+    <div class="mb-3">
+      <div class="row">
+        <div class="col-md-6">
+          <p class="mb-1"><strong>Short Name:</strong> {{node.short_name}}</p>
+          <p class="mb-1"><strong>Type:</strong> {{node.type.value}}</p>
+        </div>
+        <div class="col-md-6">
+          <p class="mb-1"><strong>Title:</strong> {{node.title}}</p>
+        </div>
+      </div>
+      {% if node.description %}
+      <div class="row">
+        <div class="col-12">
+          <p class="mb-1"><strong>Description:</strong></p>
+          <p class="text-muted mb-0">{{node.description}}</p>
+        </div>
+      </div>
+      {% endif %}
+    </div>
 
+    <hr>
+
+    {# Action Buttons Section #}
     {{delete_button_htmx(
       'assessment.node.delete',
       'Delete',
@@ -49,8 +73,10 @@
       {{ render_icon("box-arrow-right") }} Add target link
     </button>
 
+    {# Form Section - only shows when there are actual form fields to edit #}
     {# An empty form has a submit button and a CSRF token field #}
     {% if form._fields | length > 2 %}
+      <hr>
       <form
         hx-put="{{url_for(
           "assessment.node.put",
