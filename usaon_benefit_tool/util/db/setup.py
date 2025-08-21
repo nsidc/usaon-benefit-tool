@@ -19,7 +19,6 @@ from usaon_benefit_tool.constants.status import ASSESSMENT_STATUSES
 from usaon_benefit_tool.models.tables import (
     Assessment,
     AssessmentNode,
-    AssessmentNodeSubtypeApplication,
     AssessmentStatus,
     Link,
     NodeSubtypeOther,
@@ -162,13 +161,9 @@ def _init_test_assessment(session: Session) -> None:
         criticality_rating=7,
     )
 
-    assessment_application = AssessmentNodeSubtypeApplication(
+    assessment_application = AssessmentNode(
         assessment=assessment,
         node=application,
-        performance_rating=15,
-        performance_rating_criteria="Whatever",
-        performance_rating_rationale="Dunno",
-        performance_rating_gaps="C'mon that's enough questions",
     )
     dp_app_link = Link(
         source_assessment_node=assessment_data_product,

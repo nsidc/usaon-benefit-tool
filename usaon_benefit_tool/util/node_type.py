@@ -1,7 +1,6 @@
 from usaon_benefit_tool._types import NodeType
 from usaon_benefit_tool.models.tables import (
     AssessmentNode,
-    AssessmentNodeSubtypeApplication,
     NodeSubtypeOther,
     NodeSubtypeSocietalBenefitArea,
 )
@@ -27,7 +26,5 @@ def get_assessment_node_class_by_type(node_type: NodeType):
 
     FIXME: Dedup this logic somehow?
     """
-    if node_type == NodeType.APPLICATION:
-        return AssessmentNodeSubtypeApplication
 
     return AssessmentNode

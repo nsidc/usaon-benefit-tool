@@ -15,7 +15,6 @@ from usaon_benefit_tool import db
 from usaon_benefit_tool.models.tables import (
     Assessment,
     AssessmentNode,
-    AssessmentNodeSubtypeApplication,
     Link,
     Node,
     NodeSubtypeOther,
@@ -90,15 +89,6 @@ FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
     AssessmentNode: model_form(
         AssessmentNode,
         only=['node'],
-        field_args=assessment_node_field_args,
-    ),
-    AssessmentNodeSubtypeApplication: model_form(
-        AssessmentNodeSubtypeApplication,
-        exclude=[
-            'assessment',
-            'input_links',
-            'output_links',
-        ],
         field_args=assessment_node_field_args,
     ),
     Link: model_form(
