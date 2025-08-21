@@ -1,6 +1,5 @@
 from usaon_benefit_tool._types import NodeType
 from usaon_benefit_tool.models.tables import (
-    AssessmentNode,
     NodeSubtypeOther,
     NodeSubtypeSocietalBenefitArea,
 )
