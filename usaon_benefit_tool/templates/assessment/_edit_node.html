@@ -28,7 +28,7 @@
       {% endif %}
     </div>
 
-    <h5 class="modal-title">
+    <h5>
       Edit node: {{node.short_name}}
       <a href="{{ url_for("node.get", node_id=node.id) }}" target="_blank">
         #{{ node.id }} {{ render_icon("box-arrow-up-right") }}
