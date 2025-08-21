@@ -84,7 +84,6 @@ FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
         only=[
             'title',
             'description',
-            'private',
             'hypothetical',
         ],
     ),

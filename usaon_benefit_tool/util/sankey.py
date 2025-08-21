@@ -26,6 +26,7 @@ def permitted_source_link_types(node_type: NodeType) -> set[NodeType]:
 
 # NOTE: Can't use class syntax because of hard keyword conflict "from". I think this
 #       also means we can't use a dataclass without some workaround.
+# 8-12-25: Added new fields for enhanced CSV export
 HighchartsSankeySeriesLink = TypedDict(
     'HighchartsSankeySeriesLink',
     {
@@ -35,6 +36,13 @@ HighchartsSankeySeriesLink = TypedDict(
         "color": str,
         "id": NotRequired[int],
         "tooltipHTML": str,
+        "from_name": NotRequired[str],
+        "to_name": NotRequired[str],
+        "performance_rating": NotRequired[int | str],
+        "performance_rating_rationale": NotRequired[str],
+        "criticality_rating": NotRequired[int | str],
+        "critically_rating_rationale": NotRequired[str],
+        "gaps_description": NotRequired[str],
     },
 )
 
@@ -77,10 +85,7 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
             "id": _node_id(an.node),
             "name": an.node.short_name,
             "type": an.node.type.value,
-            "tooltipHTML": render_template(
-                "partials/node_tooltip.html",
-                assessment_node=an,
-            ),
+            "tooltipHTML": '',
         }
         for an in assessment_nodes
     ]
@@ -106,6 +111,31 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
                 "partials/link_tooltip.html",
                 link=link,
             ),
+            "from_name": link.source_assessment_node.node.short_name,
+            "to_name": link.target_assessment_node.node.short_name,
+            "performance_rating": (
+                link.performance_rating
+                if link.performance_rating is not None
+                else "unrated"
+            ),
+            "performance_rating_rationale": getattr(
+                link,
+                'performance_rating_rationale',
+                '',
+            )
+            or '',
+            "criticality_rating": (
+                link.criticality_rating
+                if link.criticality_rating is not None
+                else "unrated"
+            ),
+            "critically_rating_rationale": getattr(
+                link,
+                'critically_rating_rationale',
+                '',
+            )
+            or '',
+            "gaps_description": getattr(link, 'gaps_description', '') or '',
         }
         for link in links
     ]
@@ -183,6 +213,6 @@ def _node_ids_in_links(links: list[HighchartsSankeySeriesLink]) -> set[str]:
 def _weight_for_criticality_rating(criticality_rating: int | None) -> int | float:
     """If criticality rating is not set, return a very thin line."""
     if criticality_rating is None:
-        return 0.1
+        return 0.5
 
     return criticality_rating

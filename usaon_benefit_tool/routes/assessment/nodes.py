@@ -74,7 +74,7 @@ def form(assessment_id: str, query: _QueryModel):
         node_type=query.node_type.value,
     )
     return render_template(
-        'partials/modal_form.html',
+        'partials/modal_search_form.html',
         title=f"Add {query.node_type.replace('_', ' ')} node",
         form_attrs=f"hx-post={post_url}",
         form=form,

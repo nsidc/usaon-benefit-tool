@@ -1,7 +1,7 @@
 [project]
 name = "usaon_benefit_tool"
 description = "Gather data for US AON's Value Tree Analysis (Benefit Tool) process"
-version = "2.4.0"
+version = "2.5.0"
 url = "git@github.com:nsidc/usaon-benefit-tool.git"
 authors = [
   {name = "National Snow and Ice Data Center", email = "nsidc@nsidc.org"},
@@ -46,7 +46,7 @@ module = "usaon_benefit_tool.*"
 
 [tool.ruff]
 target-version = "py311"
-select = [
+lint.select = [
   "F",    # pyflakes
   "E",    # pycodestyle errors
   "W",    # pycodestyle warnings
@@ -73,7 +73,7 @@ select = [
   "RUF",  # Ruff
 
 ]
-ignore = [
+lint.ignore = [
   # D1: Ignore errors requiring docstrings on everything.
   # D203: "1 blank line required before class docstring"
   # D213: "Multi-line docstring summary should start at the second line"
@@ -84,6 +84,10 @@ ignore = [
   # TODO: re-enable and fix these!
   # N806: Variable name should be lowercase
   "N806",
+
+  # allow imports wherever in files not just at
+  # the top
+  "PLC0415",
 ]
 
 [tool.ruff.lint.per-file-ignores]
@@ -106,7 +110,7 @@ max-complexity = 8
 inline-quotes = "double"
 
 [tool.bumpversion]
-current_version = "2.4.0"
+current_version = "2.5.0"
 commit = false
 tag = false
 
