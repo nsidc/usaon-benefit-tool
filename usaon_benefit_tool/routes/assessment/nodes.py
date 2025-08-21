@@ -18,7 +18,7 @@ def post(assessment_id: str):
     """Add an entry to the assessment's node collection."""
     forbid_except_for_roles([RoleName.ADMIN, RoleName.RESPONDENT])
 
-    cls = AssessmentNode 
+    cls = AssessmentNode
 
     assessment_node = cls(assessment_id=assessment_id)
     form = FORMS_BY_MODEL[cls](request.form, obj=assessment_node)
@@ -39,8 +39,8 @@ def post(assessment_id: str):
     )
 
 
-# class _QueryModel(BaseModel):
-#     node_type: NodeType
+class _QueryModel(BaseModel):
+    node_type: NodeType
 
 
 @assessment_nodes_bp.route('/form', methods=['GET'])
