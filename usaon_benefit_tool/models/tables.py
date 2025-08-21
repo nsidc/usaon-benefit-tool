@@ -13,7 +13,7 @@ from datetime import datetime
 from typing import ClassVar
 
 from flask_login import UserMixin, current_user
-from sqlalchemy import CheckConstraint
+from sqlalchemy import CheckConstraint, case
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey, Index, UniqueConstraint

@@ -18,9 +18,6 @@ def post(assessment_id: str):
     """Add an entry to the assessment's node collection."""
     forbid_except_for_roles([RoleName.ADMIN, RoleName.RESPONDENT])
 
-    # TODO: How to avoid using request.args? Typing worked on the GET endpoint, but not
-    #       this one.
-    node_type = request.args.get("node_type")
     cls = AssessmentNode 
 
     assessment_node = cls(assessment_id=assessment_id)
@@ -42,8 +39,8 @@ def post(assessment_id: str):
     )
 
 
-class _QueryModel(BaseModel):
-    node_type: NodeType
+# class _QueryModel(BaseModel):
+#     node_type: NodeType
 
 
 @assessment_nodes_bp.route('/form', methods=['GET'])
