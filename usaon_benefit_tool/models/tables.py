@@ -13,9 +13,9 @@ from datetime import datetime
 from typing import ClassVar
 
 from flask_login import UserMixin, current_user
-from sqlalchemy import CheckConstraint, case, select
+from sqlalchemy import CheckConstraint, case
 from sqlalchemy.ext.declarative import DeclarativeMeta
-from sqlalchemy.orm import column_property, relationship
+from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey, Index, UniqueConstraint
 from sqlalchemy.types import Boolean, DateTime, Enum, Integer, String
 
@@ -310,7 +310,6 @@ class AssessmentNode(BaseModel):
         foreign_keys="Link.source_assessment_node_id",
         back_populates="source_assessment_node",
     )
-
 
 
 class Link(BaseModel):

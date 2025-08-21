@@ -19,12 +19,13 @@ def get_node_class_by_type(node_type: NodeType):
     return NodeSubtypeOther
 
 
-def get_assessment_node_class_by_type(node_type: NodeType):
+# NOTE: applications are now simplified, all types use the base AssessmentNode.
+# TODO: maybe remove this since its not really needed anymore
+def get_assessment_node_class_by_type(node_type: NodeType):  # noqa: ARG001
     """Get the appropriate AssessmentNode subclass based on `node_type`.
 
     This duplicates logic found in the data model, powered by a `case()` statement.
 
     FIXME: Dedup this logic somehow?
     """
-
     return AssessmentNode
