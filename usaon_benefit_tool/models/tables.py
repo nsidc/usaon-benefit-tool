@@ -311,45 +311,6 @@ class AssessmentNode(BaseModel):
         back_populates="source_assessment_node",
     )
 
-    # HACK: make it look like node type field is local to this table to enable
-    # polymorphism.
-    # OPTIMIZE: This is going to cost an extra subquery as far as I can tell, could be
-    # expensive.
-    # TODO: Open an issue or something on sqlalchemy repo to understand better way to do
-    # this.
-    # TODO: If we can ever remove this hack, move __mapper_args__ back to top.
-    # See: https://stackoverflow.com/a/54934609
-    node_type_discriminator = column_property(
-        select(
-            case(
-                [
-                    (
-                        Node.type == NodeType.APPLICATION,
-                        NodeTypeDiscriminator.APPLICATION.value,
-                    ),
-                ],
-                else_=NodeTypeDiscriminator.OTHER.value,
-            ),
-        ).where(Node.id == node_id),
-    )
-    __mapper_args__: ClassVar = {
-        'polymorphic_identity': NodeTypeDiscriminator.OTHER.value,
-        'polymorphic_on': node_type_discriminator,
-    }
-
-
-class AssessmentNodeSubtypeApplication(AssessmentNode):
-    __tablename__ = "assessment_node_subtype_application"
-    __mapper_args__: ClassVar = {
-        'polymorphic_identity': NodeTypeDiscriminator.APPLICATION.value,
-    }
-
-    assessment_node_id = Column(
-        Integer,
-        ForeignKey('assessment_node.id'),
-        primary_key=True,
-        nullable=False,
-    )
 
 
 class Link(BaseModel):
