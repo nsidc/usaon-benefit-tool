@@ -85,10 +85,7 @@ def _sankey(assessment: Assessment) -> HighchartsSankeySeries:
             "id": _node_id(an.node),
             "name": an.node.short_name,
             "type": an.node.type.value,
-            "tooltipHTML": render_template(
-                "partials/node_tooltip.html",
-                assessment_node=an,
-            ),
+            "tooltipHTML": '',
         }
         for an in assessment_nodes
     ]

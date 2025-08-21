@@ -4,11 +4,11 @@
 <div class="modal-content">
   <div class="modal-header">
     <h5 class="modal-title">
-      Edit Link: {{ link.source_assessment_node.node.short_name}} → {{link.target_assessment_node.node.short_name}}
+      Edit Link: "{{ link.source_assessment_node.node.short_name}}" → "{{link.target_assessment_node.node.short_name}}"
     </h5>
     {{delete_button_htmx(
       'assessment.link.delete',
-      'Delete',
+      'Delete Link',
       assessment_id=assessment_id,
       link_id=link.id,
     )}}
