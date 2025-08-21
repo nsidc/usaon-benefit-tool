@@ -7,7 +7,6 @@ from usaon_benefit_tool import db
 from usaon_benefit_tool._types import NodeType, RoleName
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
 from usaon_benefit_tool.models.tables import AssessmentNode, Node
-from usaon_benefit_tool.util.node_type import get_assessment_node_class_by_type
 from usaon_benefit_tool.util.rbac import forbid_except_for_roles
 
 assessment_nodes_bp = Blueprint('nodes', __name__, url_prefix='/nodes')
@@ -22,7 +21,7 @@ def post(assessment_id: str):
     # TODO: How to avoid using request.args? Typing worked on the GET endpoint, but not
     #       this one.
     node_type = request.args.get("node_type")
-    cls = get_assessment_node_class_by_type(NodeType(node_type))
+    cls = AssessmentNode 
 
     assessment_node = cls(assessment_id=assessment_id)
     form = FORMS_BY_MODEL[cls](request.form, obj=assessment_node)
@@ -52,7 +51,7 @@ class _QueryModel(BaseModel):
 @validate()
 def form(assessment_id: str, query: _QueryModel):
     """Return a form to add an entry to the assessment's nodes collection."""
-    cls = get_assessment_node_class_by_type(query.node_type)
+    cls = AssessmentNode
     assessment_node = cls(assessment_id=assessment_id)
     form = FORMS_BY_MODEL[cls](obj=assessment_node)
 
