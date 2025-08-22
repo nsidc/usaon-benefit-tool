@@ -14,7 +14,7 @@ docker compose up -d
 # IMPORTANT: First time only. Initializing DB starts fresh, deleting all entered data:
 ./scripts/invoke_in_container.sh db.init
 
-# Mark Alembic as up-to-date 
+# Mark Alembic as up-to-date
 # this creates the alembic table on the dev DB and puts in the most recent migration ID
 # essential for doing future migrations
 docker compose run --rm usaon-benefit-tool alembic stamp head
