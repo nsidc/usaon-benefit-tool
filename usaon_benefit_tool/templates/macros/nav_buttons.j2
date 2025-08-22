@@ -4,6 +4,24 @@
   {{ render_nav_item("assessments.get", "Assessments", _use_li=True)}}
   {# NB: The user-facing term for "nodes" is "objects" #}
   {{ render_nav_item("nodes.get", "Object library", _use_li=True)}}
+
+  <li class="nav-item dropdown">
+    <a href="#"
+       class="nav-link dropdown-toggle"
+       data-bs-toggle="dropdown"
+       role="button"
+       aria-haspopup="true"
+       aria-expanded="false"
+    >User Support</a>
+    <div class="dropdown-menu">
+      <a href="{{url_for("user.get", user_id=current_user.id)}}"
+         class="dropdown-item"
+      >FAQs</a>
+      <a href="{{url_for("logout.logout")}}"
+         class="dropdown-item"
+      >User Guide</a>
+    </div>
+  </li>
 {%- endmacro -%}
 
 
