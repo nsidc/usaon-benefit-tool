@@ -5,10 +5,7 @@
 <div class="modal-content">
   <div class="modal-header">
     <h5 class="modal-title">
-      Edit node: {{node.short_name}}
-      <a href="{{ url_for("node.get", node_id=node.id) }}" target="_blank">
-        #{{ node.id }} {{ render_icon("box-arrow-up-right") }}
-      </a>
+      {{node.short_name}}
     </h5>
 
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
@@ -16,6 +13,31 @@
 
   <div class="modal-body">
 
+    {# Node Information Section - moved from tooltip, read-only display #}
+    <div class="mb-3">
+        <p class="mb-1"><strong>Short Name:</strong> {{node.short_name}}</p>
+        <p class="mb-1"><strong>Title:</strong> {{node.title}}</p>
+        <p class="mb-1"><strong>Type:</strong> {{node.type.value}}</p>
+      {% if node.description %}
+         <p class="mb-1"><strong>Description:</strong> {{node.description}}</p>
+      {% endif %}
+      {% if node.node_subtype_other and node.node_subtype_other.website %}
+         <p class="mb-1"><strong>Website:</strong>
+           <a href="{{node.node_subtype_other.website}}" target="_blank" rel="noopener noreferrer">{{node.node_subtype_other.website}}</a>
+         </p>
+      {% endif %}
+    </div>
+
+    <h5>
+      Edit node: {{node.short_name}}
+      <a href="{{ url_for("node.get", node_id=node.id) }}" target="_blank">
+        #{{ node.id }} {{ render_icon("box-arrow-up-right") }}
+      </a>
+    </h5>
+
+    <hr>
+
+    {# Action Buttons Section #}
     {{delete_button_htmx(
       'assessment.node.delete',
       'Delete',
@@ -49,8 +71,10 @@
       {{ render_icon("box-arrow-right") }} Add target link
     </button>
 
+    {# Form Section - only shows when there are actual form fields to edit #}
     {# An empty form has a submit button and a CSRF token field #}
     {% if form._fields | length > 2 %}
+      <hr>
       <form
         hx-put="{{url_for(
           "assessment.node.put",

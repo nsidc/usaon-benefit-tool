@@ -1,3 +1,10 @@
+## v2.6.0 (2025-08-21)
+
+* Simplify application fields (db migration 4e1467a2b7a3)
+* Put note on user profile
+* Update tooltip and node click abilities
+* Aesthetic updates
+
 ## v2.5.0 (2025-08-19)
 
 * Allow more linking capabilities for data products
