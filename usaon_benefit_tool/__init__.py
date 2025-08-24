@@ -179,6 +179,7 @@ def _register_blueprints(app) -> None:
     from usaon_benefit_tool.routes.root import root_bp
     from usaon_benefit_tool.routes.user import user_bp
     from usaon_benefit_tool.routes.users import users_bp
+    from usaon_benefit_tool.routes.support import support_bp
 
     app.register_blueprint(root_bp)
     app.register_blueprint(legend_bp)
@@ -194,6 +195,8 @@ def _register_blueprints(app) -> None:
 
     app.register_blueprint(nodes_bp)
     app.register_blueprint(node_bp)
+
+    app.register_blueprint(support_bp)
 
     loguru_logger.debug("Blueprints registered.")
 
