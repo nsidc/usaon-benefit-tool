@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+  {% filter markdown %}{% include "user_guide.md" %}{% endfilter %}
+
+{% endblock %}
