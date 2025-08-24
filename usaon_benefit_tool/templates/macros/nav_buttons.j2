@@ -4,6 +4,34 @@
   {{ render_nav_item("assessments.get", "Assessments", _use_li=True)}}
   {# NB: The user-facing term for "nodes" is "objects" #}
   {{ render_nav_item("nodes.get", "Object library", _use_li=True)}}
+
+  <li class="nav-item dropdown">
+    <a href="#"
+       class="nav-link dropdown-toggle"
+       data-bs-toggle="dropdown"
+       role="button"
+       aria-haspopup="true"
+       aria-expanded="false"
+    >User Support</a>
+    <div class="dropdown-menu">
+{# these lead to the wrong area but you get the point #}
+      <a href="{{url_for('user_support.what_is_benefit_assessment')}}"
+         class="dropdown-item"
+      >What is Benefit Assessment?</a>
+      <a href="{{url_for("user_support.user_guide")}}"
+         class="dropdown-item"
+      >User Guide</a>
+      <a href="{{url_for("user_support.rating_rubric")}}"
+         class="dropdown-item"
+      >Rating Rubric</a>
+      <a href="{{url_for("user_support.glossary")}}"
+         class="dropdown-item"
+      >Glossary</a>
+      <a href="{{url_for("user_support.faqs")}}"
+         class="dropdown-item"
+      >FAQs</a>
+    </div>
+  </li>
 {%- endmacro -%}
 
 

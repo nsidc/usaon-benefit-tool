@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+  {% filter markdown %}{% include "what_is_benefit_assessment.md" %}{% endfilter %}
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+  {% filter markdown %}{% include "rating_rubric.md" %}{% endfilter %}
+{% endblock %}
