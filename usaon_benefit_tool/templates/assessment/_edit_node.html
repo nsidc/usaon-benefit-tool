@@ -14,13 +14,16 @@
   <div class="modal-body">
 
     <div class="mb-3">
-        <p class="mb-1"><strong>Short Name:</strong> {{node.short_name}}</p>
-        <p class="mb-1"><strong>Title:</strong> {{node.title}}</p>
-        <p class="mb-1"><strong>Type:</strong> {{node.type.value}}</p>
-      {% if node.description %}
-         <p class="mb-1"><strong>Description:</strong> {{node.description}}</p>
-      {% endif %}
-      <p class="mb-1"><strong>Website:</strong> {{node.website}}</p>
+	    {% if node.type == node.type.SOCIETAL_BENEFIT_AREA %}
+	    <p class="mb-1"><strong>Name:</strong> {{node.title}}</p>
+	    <p class="mb-1"><strong>Framework:</strong> {{node.framework_name}}</p>
+	    {% else %}
+	    <p class="mb-1"><strong>Short Name:</strong> {{node.short_name}}</p>
+	    <p class="mb-1"><strong>Title:</strong> {{node.title}}</p>
+            <p class="mb-1"><strong>Object Type:</strong> {{node.type.value}}</p>
+            <p class="mb-1"><strong>Description:</strong> {{node.description}}</p>
+            <p class="mb-1"><strong>Website:</strong> {{node.website}}</p>
+	    {% endif %}
     </div>
 
     <h5>
