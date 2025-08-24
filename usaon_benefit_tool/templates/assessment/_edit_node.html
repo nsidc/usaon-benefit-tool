@@ -13,7 +13,6 @@
 
   <div class="modal-body">
 
-    {# Node Information Section - moved from tooltip, read-only display #}
     <div class="mb-3">
         <p class="mb-1"><strong>Short Name:</strong> {{node.short_name}}</p>
         <p class="mb-1"><strong>Title:</strong> {{node.title}}</p>
@@ -21,11 +20,7 @@
       {% if node.description %}
          <p class="mb-1"><strong>Description:</strong> {{node.description}}</p>
       {% endif %}
-      {% if node.node_subtype_other and node.node_subtype_other.website %}
-         <p class="mb-1"><strong>Website:</strong>
-           <a href="{{node.node_subtype_other.website}}" target="_blank" rel="noopener noreferrer">{{node.node_subtype_other.website}}</a>
-         </p>
-      {% endif %}
+      <p class="mb-1"><strong>Website:</strong> {{node.website}}</p>
     </div>
 
     <h5>

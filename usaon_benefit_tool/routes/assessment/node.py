@@ -1,6 +1,7 @@
 from typing import Literal
 
 import sqlalchemy
+from sqlalchemy.orm import joinedload, with_polymorphic
 from flask import Blueprint, Response, abort, render_template, request, url_for
 from flask_login import login_required
 from flask_pydantic import validate
@@ -9,7 +10,7 @@ from pydantic import BaseModel
 from usaon_benefit_tool import db
 from usaon_benefit_tool._types import RoleName
 from usaon_benefit_tool.forms import FORMS_BY_MODEL
-from usaon_benefit_tool.models.tables import AssessmentNode, Link, Node
+from usaon_benefit_tool.models.tables import AssessmentNode, Link, Node, NodeSubtypeOther, NodeSubtypeSocietalBenefitArea
 from usaon_benefit_tool.util.rbac import forbid_except_for_roles
 from usaon_benefit_tool.util.sankey import (
     permitted_source_link_types,
@@ -147,7 +148,15 @@ def delete(assessment_id: int, node_id: int):
 
 def _query_for_assessment_node(assessment_id, node_id):
     try:
-        return AssessmentNode.query.filter_by(
+        node_poly = with_polymorphic(
+                Node,
+                [NodeSubtypeOther, NodeSubtypeSocietalBenefitArea],
+                aliased=True
+                )
+        
+        return AssessmentNode.query.options(
+            joinedload(AssessmentNode.node.of_type(node_poly))
+        ).filter_by(
             assessment_id=assessment_id,
             node_id=node_id,
         ).one()
