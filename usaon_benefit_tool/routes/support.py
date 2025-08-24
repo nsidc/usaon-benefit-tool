@@ -8,7 +8,7 @@ def what_is_benefit_assessment():
 
 @support_bp.route('/user-support/user-guide')
 def user_guide():
-    return render_template('user_support/user_guide.html')
+    return render_template('user_guide.html')
 
 @support_bp.route('/user-support/rating-rubric')
 def rating_rubric():
