@@ -1,3 +1,11 @@
+## v2.7.0 (2025-08-24)
+
+* Add user support dropdown
+* Update node click content
+* Remove excel download (was temperamental)
+* UI improvements
+* Deploy migration (4e1467a2b7a3)
+
 ## v2.6.0 (2025-08-21)
 
 * Simplify application fields (db migration 4e1467a2b7a3)

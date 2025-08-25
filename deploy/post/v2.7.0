@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# HACK: Garrison doesn't see these variables that were exported in main deploy
+# script, which is unintuitive. NOTE that sourcing VERSION.env is not
+# compatible with integration, but this script doesn't receive the environment
+# as a parameter. Garrison needs some extra thought here.
+source /etc/profile.d/envvars.sh
+source VERSION.env
+
+# TODO: figure out better way
+echo "Waiting 10 seconds for the new stack to come up..."
+sleep 10
+
+docker compose run --rm usaon-benefit-tool alembic upgrade head
+
+# confirm the expected migration was applied
+current=$(docker compose run --rm usaon-benefit-tool alembic current 2>/dev/null)
+if [ "4e1467a2b7a3 (head)" = "${current}" ]; then
+    echo "Data migration successful. On expected revision ${current}."
+else
+    echo "Data migration failed. On unexpected revision ${current}."
+fi
