@@ -1,6 +1,7 @@
-# Rating Rubrics for Societal Benefits
+# Rating Rubrics
 
-## Performance Rating Scale
+## Rating Rubrics for Societal Benefits
+
 
 | Performance Rating | Interpretation | Example SBA/Key Objectives | Examples of Supporting Evidence for Performance of Applications |
 |-------------------|----------------|---------------------------|---------------------------------------------------------------|
@@ -12,7 +13,6 @@
 | **16-30** | **Poor:** Application is occasionally consulted to provide insights. It provides no stand-alone value in this context. | SBA Marine & Coastal Process/Improve understanding of the impacts of environmental change on Arctic marine and coastal ecosystems | Greenland Ice Sheet Indicator of the Arctic Report Card provides insights about freshwater discharge to adjacent seas (Performance Context) and can inform research on ecosystem impacts (Conceptual Understanding Impact); it is not presented at the temporal or spatial scales needed for process understanding (Gap). Preliminary information was presented at a science meeting and used to propose new work (Performance Metric). |
 | **1-15** | **Very Poor:** Application is rarely if ever, consulted to provide insights into this key objective. | | |
 
-## Criticality Scale
 
 | Criticality Level | Description | Example | Line Thickness |
 |------------------|-------------|---------|----------------|
@@ -24,9 +24,8 @@
 
 ---
 
-# Rating Rubrics for Inputs (Observing Systems and Intermediate Products)
+## Rating Rubrics for Inputs (Observing Systems and Intermediate Products)
 
-## Performance Rating Scale for Inputs
 
 | Performance Rating | Interpretation |
 |-------------------|----------------|
@@ -39,7 +38,6 @@
 | **1-15** | **Very Poor:** Intermediate Product or Observing System is rarely if ever, consulted to provide insights into this key objective. |
 | | **Prefer not to rate** |
 
-## Criticality Scale for Inputs
 
 | Criticality Level | Description | Line Thickness |
 |------------------|-------------|----------------|
