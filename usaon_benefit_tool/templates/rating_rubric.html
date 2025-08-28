@@ -1,5 +1,32 @@
 {% extends 'base.html' %}
 
+{% block styles %}
+{{ super() }}
+<style>
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+table th,
+table td {
+    border: 1px solid #dee2e6;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+</style>
+{% endblock %}
+
 
 {% block content %}
   {% filter markdown %}{% include "rating_rubric.md" %}{% endfilter %}
