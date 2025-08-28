@@ -158,7 +158,7 @@ def _register_template_helpers(app) -> None:
         },
     )
 
-    md = Markdown(extensions=['fenced_code'])
+    md = Markdown(extensions=['fenced_code', 'tables'])
     app.jinja_env.filters.update(
         markdown=lambda txt: Markup(md.convert(txt)),
         dateformat=lambda date: date.strftime("%Y-%m-%d %H:%M%Z"),
