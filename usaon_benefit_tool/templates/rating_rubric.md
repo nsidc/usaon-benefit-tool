@@ -1,5 +1,3 @@
-# Rating Rubric
-
 # Rating Rubrics for Societal Benefits
 
 ## Performance Rating Scale
