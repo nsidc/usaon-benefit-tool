@@ -1,3 +1,7 @@
+## v2.7.1 (2025-08-29)
+
+* Add content to user support pages
+
 ## v2.7.0 (2025-08-24)
 
 * Add user support dropdown
