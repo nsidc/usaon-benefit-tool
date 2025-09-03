@@ -1,6 +1,6 @@
 # Rating Rubrics
 
-## Rating Rubrics for Societal Benefits
+## Rating Rubrics for Societal Benefits - Performance
 
 
 | Performance Rating | Interpretation | Example SBA/Key Objectives | Examples of Supporting Evidence for Performance of Applications |
@@ -14,6 +14,10 @@
 | **1-15** | **Very Poor:** Application is rarely if ever, consulted to provide insights into this key objective. | | |
 
 
+
+## Rating Rubric for Societal Benefits - Criticality
+
+
 | Criticality Level | Description | Example | Line Thickness |
 |------------------|-------------|---------|----------------|
 | **High (Essential)** | It would not be possible to meet this Key Objective within this Performance Context without this Application. | This application currently informs disaster prediction and response. It is widely used by planners and cited in their literature. | Thick |
@@ -24,7 +28,8 @@
 
 ---
 
-## Rating Rubrics for Inputs (Observing Systems and Intermediate Products)
+
+## Rating Rubrics for Inputs (Observing Systems and Intermediate Products) - Performance
 
 
 | Performance Rating | Interpretation |
@@ -37,6 +42,10 @@
 | **16-30** | **Poor:** Intermediate Product or Observing System is occasionally consulted to provide insights. It provides no stand-alone value in this context. |
 | **1-15** | **Very Poor:** Intermediate Product or Observing System is rarely if ever, consulted to provide insights into this key objective. |
 | | **Prefer not to rate** |
+
+
+
+## Rating Rubrics for Inputs (Observing Systems and Intermediate Products) - Criticality
 
 
 | Criticality Level | Description | Line Thickness |
