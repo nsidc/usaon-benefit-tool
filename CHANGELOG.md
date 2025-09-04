@@ -1,3 +1,8 @@
+## v2.7.2 (2025-09-04)
+
+* Update user support page content
+* Update pre-commit hooks
+
 ## v2.7.1 (2025-08-29)
 
 * Add content to user support pages
