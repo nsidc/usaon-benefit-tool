@@ -1,13 +1,12 @@
 import csv
 import io
-from datetime import UTC, datetime
 
 from flask import Blueprint, Response, render_template
 from flask_login import login_required
 
 from usaon_benefit_tool._types import RoleName
-from usaon_benefit_tool.util.datetime import today_mountain
 from usaon_benefit_tool.models.tables import User
+from usaon_benefit_tool.util.datetime import today_mountain
 from usaon_benefit_tool.util.rbac import forbid_except_for_roles
 
 users_bp = Blueprint('users', __name__, url_prefix='/users')
@@ -58,7 +57,7 @@ def export():
 
     # Prepare response
     output.seek(0)
-    today = today_mountain() 
+    today = today_mountain()
 
     return Response(
         output.getvalue(),

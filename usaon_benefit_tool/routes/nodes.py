@@ -1,8 +1,5 @@
 import csv
 import io
-from datetime import UTC, datetime
-from usaon_benefit_tool.util.datetime import today_mountain
-
 
 from flask import Blueprint, Response, render_template, request, url_for
 from flask_login import login_required
@@ -18,6 +15,7 @@ from usaon_benefit_tool.models.tables import (
     NodeSubtypeOther,
     NodeSubtypeSocietalBenefitArea,
 )
+from usaon_benefit_tool.util.datetime import today_mountain
 from usaon_benefit_tool.util.node_type import get_node_class_by_type
 from usaon_benefit_tool.util.rbac import forbid_except_for_roles
 
@@ -170,7 +168,7 @@ def export():
 
     output.seek(0)
 
-    today = today_mountain() 
+    today = today_mountain()
 
     return Response(
         output.getvalue(),
