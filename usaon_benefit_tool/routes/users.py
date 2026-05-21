@@ -1,5 +1,8 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, Response
 from flask_login import login_required
+import csv
+import io
+from datetime import date
 
 from usaon_benefit_tool._types import RoleName
 from usaon_benefit_tool.models.tables import User
@@ -17,4 +20,44 @@ def get():
     return render_template(
         'users.html',
         users=users,
+    )
+
+
+@users_bp.route('/export', methods=['GET'])
+@login_required
+def export():
+    """Export users table as CSV."""
+    forbid_except_for_roles([RoleName.ADMIN])
+
+    users = User.query.order_by(User.name).all()
+
+    # Create CSV in memory
+    output = io.StringIO()
+    writer = csv.writer(output)
+
+    # Write header
+    writer.writerow(['ID', 'Email', 'Name', 'ORCID', 'Role', 'Biography', 'Affiliation'])
+
+    # Write user data
+    for user in users:
+        writer.writerow([
+            user.id,
+            user.email,
+            user.name,
+            user.orcid,
+            user.role_id.value if user.role_id else '',
+            user.biography,
+            user.affiliation
+        ])
+
+    # Prepare response
+    output.seek(0)
+
+    return Response(
+        output.getvalue(),
+        mimetype='text/csv',
+        headers={
+            'Content-Disposition': f'attachment; filename=usaon-benefit-tool-users-{date.today()}.csv'
+
+        }
     )
