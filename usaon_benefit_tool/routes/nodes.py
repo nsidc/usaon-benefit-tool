@@ -1,8 +1,7 @@
 import csv
 import io
-from datetime import datetime
+from datetime import UTC, datetime
 
-import pytz
 from flask import Blueprint, Response, render_template, request, url_for
 from flask_login import login_required
 from flask_pydantic import validate
@@ -168,7 +167,8 @@ def export():
         )
 
     output.seek(0)
-    today = datetime.now(pytz.UTC).date()
+
+    today = datetime.now(UTC).date()
 
     return Response(
         output.getvalue(),

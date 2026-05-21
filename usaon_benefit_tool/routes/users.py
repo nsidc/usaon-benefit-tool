@@ -1,8 +1,7 @@
 import csv
 import io
-from datetime import datetime
+from datetime import UTC, datetime
 
-import pytz
 from flask import Blueprint, Response, render_template
 from flask_login import login_required
 
@@ -58,7 +57,7 @@ def export():
 
     # Prepare response
     output.seek(0)
-    today = datetime.now(pytz.UTC).date()
+    today = datetime.now(UTC).date()
 
     return Response(
         output.getvalue(),

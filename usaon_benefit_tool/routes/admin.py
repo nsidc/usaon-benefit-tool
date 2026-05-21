@@ -1,9 +1,8 @@
 import csv
 import io
 import zipfile
-from datetime import datetime
+from datetime import UTC, datetime
 
-import pytz
 from flask import Blueprint, Response
 from flask_login import login_required
 
@@ -66,7 +65,7 @@ def export_database():
             zf.writestr(f'{table_name}.csv', csv_buffer.getvalue())
 
     memory_file.seek(0)
-    today = datetime.now(pytz.UTC).date()
+    today = datetime.now(UTC).date()
 
     return Response(
         memory_file.getvalue(),
