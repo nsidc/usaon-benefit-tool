@@ -1,6 +1,8 @@
 import csv
 import io
 from datetime import UTC, datetime
+from usaon_benefit_tool.util.datetime import today_mountain
+
 
 from flask import Blueprint, Response, render_template, request, url_for
 from flask_login import login_required
@@ -168,7 +170,7 @@ def export():
 
     output.seek(0)
 
-    today = datetime.now(UTC).date()
+    today = today_mountain() 
 
     return Response(
         output.getvalue(),

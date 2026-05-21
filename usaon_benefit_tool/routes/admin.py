@@ -6,6 +6,7 @@ from datetime import UTC, datetime
 from flask import Blueprint, Response
 from flask_login import login_required
 
+from usaon_benefit_tool.util.datetime import today_mountain
 from usaon_benefit_tool._types import RoleName
 from usaon_benefit_tool.util.rbac import forbid_except_for_roles
 
@@ -65,7 +66,7 @@ def export_database():
             zf.writestr(f'{table_name}.csv', csv_buffer.getvalue())
 
     memory_file.seek(0)
-    today = datetime.now(UTC).date()
+    today = today_mountain()
 
     return Response(
         memory_file.getvalue(),
