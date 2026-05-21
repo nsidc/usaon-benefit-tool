@@ -21,7 +21,9 @@ def post(assessment_id: str):
 
     # TODO: How to avoid using request.args? Typing worked on the GET endpoint, but not
     #       this one.
-    node_type = request.args.get("node_type")
+    node_type = request.args.get("node_type") 
+    if not node_type:
+        return Response(status=400)  # Bad request - node_type is required
     cls = get_assessment_node_class_by_type(NodeType(node_type))
 
     assessment_node = cls(assessment_id=assessment_id)
