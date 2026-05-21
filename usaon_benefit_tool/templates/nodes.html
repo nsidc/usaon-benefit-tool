@@ -5,13 +5,27 @@
 
 
 {% block content %}
-  <h2>{% block title %}Object library{% endblock %}</h1>
+
+  <div class="d-flex justify-content-between align-items-start mb-3">
+    <h2>{% block title %}Object library{% endblock %}</h2>
+
+    {% if current_user.role_id in [
+         types.RoleName.ADMIN,
+         types.RoleName.RESPONDENT,
+       ]
+     %}
+      <a href="{{ url_for('nodes.export') }}" class="btn btn-primary">
+        Export Object Library
+      </a>
+    {% endif %}
+  </div>
 
   {% if current_user.role_id in [
        types.RoleName.ADMIN,
        types.RoleName.RESPONDENT,
      ]
    %}
+
     {% for node_type in types.NodeType %}
       <button
         data-bs-toggle="modal"

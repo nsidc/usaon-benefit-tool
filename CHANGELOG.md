@@ -1,3 +1,8 @@
+## NEXT_VERSION
+
+* Support data downloads for users and nodes
+* Allow admin to download database tables as CSV
+
 ## v2.7.2 (2025-09-04)
 
 * Update user support page content

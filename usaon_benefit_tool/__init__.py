@@ -169,6 +169,7 @@ def _register_template_helpers(app) -> None:
 
 def _register_blueprints(app) -> None:
     # TODO: Extract function register_blueprints
+    from usaon_benefit_tool.routes.admin import admin_bp
     from usaon_benefit_tool.routes.assessment import assessment_bp
     from usaon_benefit_tool.routes.assessments import assessments_bp
     from usaon_benefit_tool.routes.legend import legend_bp
@@ -197,6 +198,7 @@ def _register_blueprints(app) -> None:
     app.register_blueprint(node_bp)
 
     app.register_blueprint(support_bp)
+    app.register_blueprint(admin_bp)
 
     loguru_logger.debug("Blueprints registered.")
 

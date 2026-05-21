@@ -2,7 +2,12 @@
 {% from 'bootstrap5/table.html' import render_table %}
 
 {% block content %}
-  <h1>{% block title %}Users{% endblock %}</h1>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+	<h1>{% block title %}Users{% endblock %}</h1>
+	<a href="{{ url_for('users.export') }}" class="btn btn-primary">
+		Export User Table
+	</a>
+  </div>
 
   {{ render_table(
     users,
