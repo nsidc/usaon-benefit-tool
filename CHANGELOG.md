@@ -1,4 +1,4 @@
-## NEXT_VERSION
+## v2.7.3 (2026-06-01)
 
 * Support data downloads for users and nodes
 * Allow admin to download database tables as CSV
