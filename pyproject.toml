@@ -116,7 +116,7 @@ tag = false
 
 [[tool.bumpversion.files]]
 filename = "usaon_benefit_tool/constants/version.py"
-search = '^VERSION = "{current_version}"'
+search = 'VERSION = "{current_version}"'
 replace = 'VERSION = "{new_version}"'
 
 [[tool.bumpversion.files]]
