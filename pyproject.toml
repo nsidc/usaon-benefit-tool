@@ -121,25 +121,25 @@ replace = 'VERSION = "{new_version}"'
 
 [[tool.bumpversion.files]]
 filename = "pyproject.toml"
-search = '^version = "{current_version}"$'
+search = 'version = "{current_version}"'
 replace = 'version = "{new_version}"'
 
 [[tool.bumpversion.files]]
 filename = "CITATION.cff"
-search = '^version: {current_version}'
+search = 'version: {current_version}'
 replace = 'version: {new_version}'
 
 [[tool.bumpversion.files]]
 filename = "CITATION.cff"
-search = '^date-released: "\d{{4}}-\d{{2}}-\d{{2}}"'
+search = 'date-released: "\d{{4}}-\d{{2}}-\d{{2}}"'
 replace = 'date-released: "{now:%Y-%m-%d}"'
 
 [[tool.bumpversion.files]]
 filename = "CHANGELOG.md"
-search = "^## NEXT_VERSION"
+search = "## NEXT_VERSION"
 replace = "## v{new_version} ({now:%Y-%m-%d})"
 
 [[tool.bumpversion.files]]
 filename = "VERSION.env"
-search = '^export USAON_BENEFIT_TOOL_VERSION="v{current_version}"'
+search = 'export USAON_BENEFIT_TOOL_VERSION="v{current_version}"'
 replace = 'export USAON_BENEFIT_TOOL_VERSION="v{new_version}"'
