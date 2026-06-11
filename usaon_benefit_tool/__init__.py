@@ -21,6 +21,7 @@ from usaon_benefit_tool.constants.version import VERSION
 from usaon_benefit_tool.util.db.connect import db_connstr
 from usaon_benefit_tool.util.envvar import envvar_is_true
 from usaon_benefit_tool.util.flask_jsglue import JSGlue
+from usaon_benefit_tool.util.jinja_filters import humanize_enum
 
 __version__: Final[str] = VERSION
 
@@ -99,6 +100,8 @@ def _setup_config(app) -> None:
 
     # DEV ONLY: Disable login
     app.config['LOGIN_DISABLED'] = envvar_is_true("USAON_BENEFIT_TOOL_LOGIN_DISABLED")
+
+    app.jinja_env.filters['humanize_enum'] = humanize_enum
 
     loguru_logger.debug("App configuration initialized.")
 
