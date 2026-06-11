@@ -81,7 +81,7 @@
         </td>
 
         <td>
-          {{node.type.value}}
+	  {{node.type.value | humanize_enum}}
         </td>
 
         {% if current_user.role_id == types.RoleName.ADMIN %}
