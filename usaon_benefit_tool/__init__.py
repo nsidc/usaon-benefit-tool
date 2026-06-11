@@ -23,7 +23,6 @@ from usaon_benefit_tool.util.envvar import envvar_is_true
 from usaon_benefit_tool.util.flask_jsglue import JSGlue
 from usaon_benefit_tool.util.jinja_filters import humanize_enum
 
-
 __version__: Final[str] = VERSION
 
 # TODO: Figure out where to put this. model.py?
