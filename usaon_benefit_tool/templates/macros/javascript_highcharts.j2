@@ -136,19 +136,19 @@
 
     function downloadDiagramWithAnnotations(chart, filename) {
       const element = document.querySelector('#sankey-export-container');
-      
+
       html2canvas(element, {
         scale: 2,
         backgroundColor: '#ffffff',
         logging: false,
       }).then(canvas => {
         const ctx = canvas.getContext('2d');
-        
+
         // Add URL at bottom
         ctx.font = '12px Arial';
         ctx.fillStyle = '#666666';
         ctx.fillText('https://www.usaon.org/apps/benefit-tool/', 20, canvas.height - 10);
-        
+
         // Download
         canvas.toBlob(blob => {
           const url = URL.createObjectURL(blob);
