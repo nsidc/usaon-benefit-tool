@@ -2,6 +2,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"
       integrity="sha384-+wQ6VykBLL8GMDIS9ZhDJW60F7uO3cu6UytzszbmWzxubUoilKx2oyS9MhUlCT3e"
       crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+      integrity="sha384-B+MRDJaYvlDM4RlKcYqfOLQpV77FVLhfVHhjPhtAv1L3xH35e5TJg5zLf1LIaqPmN"
+      crossorigin="anonymous"></script>
   <script>
     // TODO: const or var for compatibility?
     const pointClickHandler = function(event) {
@@ -131,6 +134,32 @@
       URL.revokeObjectURL(url);
     }
 
+    function downloadDiagramWithAnnotations(chart, filename) {
+      const element = document.querySelector('#sankey-export-container');
+      
+      html2canvas(element, {
+        scale: 2,
+        backgroundColor: '#ffffff',
+        logging: false,
+      }).then(canvas => {
+        const ctx = canvas.getContext('2d');
+        
+        // Add URL at bottom
+        ctx.font = '12px Arial';
+        ctx.fillStyle = '#666666';
+        ctx.fillText('https://www.usaon.org/apps/benefit-tool/', 20, canvas.height - 10);
+        
+        // Download
+        canvas.toBlob(blob => {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = `${filename}_diagram.png`;
+          link.click();
+          URL.revokeObjectURL(url);
+        });
+      });
+    }
 
     function showCustomDataTable(chart) {
       const { headers, rows } = getCustomTableData(chart);
@@ -208,9 +237,12 @@
               'viewFullscreen',
               'printChart',
               'separator',
-              'downloadPNG',
-              'downloadJPEG',
-              'downloadSVG',
+              {
+                text: 'Download diagram as PNG',
+                onclick: function() {
+                  downloadDiagramWithAnnotations(this, 'assessment_{{ assessment.id }}');
+                }
+              },
               'separator',
               {
                 text: 'Download CSV',
