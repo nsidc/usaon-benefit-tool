@@ -1,10 +1,6 @@
 {% macro add_javascript__highcharts(sankey_series, assessment) -%}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"
-      integrity="sha384-+wQ6VykBLL8GMDIS9ZhDJW60F7uO3cu6UytzszbmWzxubUoilKx2oyS9MhUlCT3e"
-      crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
-      integrity="sha384-B+MRDJaYvlDM4RlKcYqfOLQpV77FVLhfVHhjPhtAv1L3xH35e5TJg5zLf1LIaqPmN"
-      crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script>
     // TODO: const or var for compatibility?
     const pointClickHandler = function(event) {
