@@ -30,7 +30,7 @@ repos:
       - id: "trailing-whitespace"
 
   - repo: "https://github.com/astral-sh/ruff-pre-commit"
-    rev: "v0.15.15"
+    rev: "v0.15.20"
     hooks:
       - id: "ruff"
         # NOTE: "--exit-non-zero-on-fix" is important for CI to function
@@ -47,7 +47,7 @@ repos:
   # specify the prettier hook twice if we want to format other things and avoid
   # a messy regex.
   - repo: "https://github.com/rbubley/mirrors-prettier"
-    rev: "v3.8.3"
+    rev: "v3.9.4"
     hooks:
       - id: "prettier"
         files: "CITATION.cff"
