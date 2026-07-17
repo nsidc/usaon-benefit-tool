@@ -5,7 +5,7 @@ from typing import Final
 
 from flask import Flask, render_template, session
 from flask_bootstrap import Bootstrap5
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
 from loguru import logger as loguru_logger
 from markdown import Markdown
@@ -16,8 +16,13 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 from usaon_benefit_tool._types import NodeType, RoleName
 from usaon_benefit_tool.constants import repo
+from usaon_benefit_tool.constants.agreement import (
+    CURRENT_AGREEMENT_EFFECTIVE_DATE,
+    CURRENT_AGREEMENT_VERSION,
+)
 from usaon_benefit_tool.constants.sankey import DUMMY_NODE_ID
 from usaon_benefit_tool.constants.version import VERSION
+from usaon_benefit_tool.routes.agreement import user_needs_agreement
 from usaon_benefit_tool.util.db.connect import db_connstr
 from usaon_benefit_tool.util.envvar import envvar_is_true
 from usaon_benefit_tool.util.flask_jsglue import JSGlue
@@ -184,6 +189,7 @@ def _register_blueprints(app) -> None:
     from usaon_benefit_tool.routes.support import support_bp
     from usaon_benefit_tool.routes.user import user_bp
     from usaon_benefit_tool.routes.users import users_bp
+    from usaon_benefit_tool.routes.agreement import agreement_bp
 
     app.register_blueprint(root_bp)
     app.register_blueprint(legend_bp)
@@ -202,6 +208,8 @@ def _register_blueprints(app) -> None:
 
     app.register_blueprint(support_bp)
     app.register_blueprint(admin_bp)
+    app.register_blueprint(agreement_bp)
+
 
     loguru_logger.debug("Blueprints registered.")
 
@@ -218,6 +226,13 @@ def _register_custom_error_pages(app) -> None:
 
     loguru_logger.debug("Custom error pages registered.")
 
+@app.context_processor
+def inject_agreement_state():
+    return {
+        "needs_agreement": user_needs_agreement(current_user),
+        "agreement_version": CURRENT_AGREEMENT_VERSION,
+        "agreement_effective_date": CURRENT_AGREEMENT_EFFECTIVE_DATE,
+    }
 
 def _monkeypatch():
     import wtforms_sqlalchemy

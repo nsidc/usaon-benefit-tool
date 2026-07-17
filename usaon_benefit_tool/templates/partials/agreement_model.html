@@ -1,0 +1,556 @@
+{# Contributor User Agreement modal.
+   Included from base.html when `needs_agreement` is true (see context
+   processor in INTEGRATION.md). Static backdrop + no keyboard dismissal:
+   the only ways out are "I agree" or "I do not agree" (logout). #}
+
+<div class="modal fade" id="agreementModal" tabindex="-1"
+     data-bs-backdrop="static" data-bs-keyboard="false"
+     aria-labelledby="agreementModalLabel" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h1 class="modal-title h5" id="agreementModalLabel">
+          US AON BENEFIT Tool — Contributor User Agreement &amp; Informed Consent
+        </h1>
+      </div>
+
+      <div class="modal-body">
+
+        <p class="fw-bold">
+          Please read this agreement carefully before registering or
+          submitting an assessment. By clicking "I agree" and creating an
+          account, you are confirming that you have read, understood, and
+          voluntarily consent to the terms described in this document.
+          Participation is entirely voluntary. You may withdraw at any time
+          without penalty.
+        </p>
+
+        <hr>
+
+        <h2 class="h6">Summary</h2>
+        <ul class="list-unstyled">
+          <li class="mb-2">🌍 <strong>What this is.</strong> The BENEFIT Tool
+            collects expert assessments of Arctic observing systems to help
+            decision-makers understand what's working, what's missing, and
+            what matters. Your knowledge helps shape how Arctic observations
+            are funded and managed. (See Section 1)</li>
+          <li class="mb-2">🙋 <strong>Your call.</strong> Participation is
+            completely voluntary. You can stop at any time, and you don't
+            need to give a reason. (See Section 4)</li>
+          <li class="mb-2">📛 <strong>Your name will be on it.</strong> Right
+            now, all assessments are public and attributed to you by name and
+            institution — not tied to individual ratings, but listed as a
+            contributor to the assessment team. Only share what you're
+            comfortable with. (See Section 5.3)</li>
+          <li class="mb-2">📂 <strong>Open by default.</strong> Your
+            assessment data is publicly available under a Creative Commons
+            Attribution license (CC BY 4.0), meaning anyone can use or build
+            on it, including for commercial purposes, as long as they credit
+            the source. US AON will not sell your data or use it for
+            commercial purposes. (See Section 6)</li>
+          <li class="mb-2">↩️ <strong>You can withdraw.</strong> You can ask
+            us to remove your assessment at any time. We can always take it
+            off our site. For reports and other materials we've produced,
+            we'll do our best within a year or two. For third-party
+            publications or downloads, we can't make guarantees.
+            (See Section 4.2)</li>
+          <li class="mb-2">⚠️ <strong>A few real risks to know about.</strong>
+            Public attribution means your name is attached to your
+            assessment. Once published, we can't fully control how others use
+            or interpret it. And results may influence decisions (e.g., about
+            funding or operations) in ways none of us can fully anticipate.
+            We add caveats to all published assessments, but that doesn't
+            eliminate these risks. (See Section 9.1)</li>
+          <li class="mb-2">🌱 <strong>Indigenous and community
+            knowledge.</strong> If you're contributing on behalf of a
+            community or sharing community-held knowledge, please reach out
+            to us before you start. We want to get this right together.
+            (See Section 8)</li>
+          <li class="mb-2">📬 <strong>We'll tell you if things
+            change.</strong> If we update this agreement in ways that affect
+            your rights or your data, we'll email you at least 30 days before
+            the change takes effect. (See Section 10)</li>
+        </ul>
+        <p>Questions? Contact Sandy Starkweather at
+          <a href="mailto:sandra.starkweather@colorado.edu">sandra.starkweather@colorado.edu</a>.</p>
+
+        <hr>
+
+        <p class="mb-1"><strong>Document version:</strong> {{ agreement_version }}</p>
+        <p class="mb-1"><strong>Effective date:</strong> {{ agreement_effective_date }}</p>
+        <p class="mb-1"><strong>Principal Investigator:</strong> Sandy
+          Starkweather, CIRES / University of Colorado Boulder</p>
+        <p class="mb-1"><strong>PI Contact:</strong>
+          <a href="mailto:sandra.starkweather@colorado.edu">sandra.starkweather@colorado.edu</a></p>
+        <p><strong>Institutional affiliation:</strong> Cooperative Institute
+          for Research in Environmental Sciences (CIRES), University of
+          Colorado Boulder</p>
+
+        <h2 class="h6 mt-4">1. Purpose of the BENEFIT Tool</h2>
+        <p>The US Arctic Observing Network (US AON) BENEFIT Tool is a
+          web-based platform that collects structured expert assessments of
+          Arctic observing systems, data products, and applications. These
+          assessments capture how well observing and data systems perform,
+          how important they are, and how they contribute to societal
+          benefit. The resulting analyses are used to help managers and
+          decision-makers understand capabilities and gaps in the Arctic
+          observing system. Some of the data from this tool could end up in
+          research publications (e.g., peer-reviewed journals). This
+          agreement explains what that means for you as a contributor.</p>
+
+        <h2 class="h6 mt-4">2. Who Is Conducting This Work</h2>
+        <p>This work is led by the US Arctic Observing Network (US AON), with
+          principal oversight by:</p>
+        <p class="mb-1"><strong>Principal Investigator:</strong> Sandy Starkweather</p>
+        <p class="mb-1"><strong>Institution:</strong> CIRES, University of Colorado Boulder</p>
+        <p><strong>Email:</strong>
+          <a href="mailto:sandra.starkweather@colorado.edu">sandra.starkweather@colorado.edu</a></p>
+        <p>The BENEFIT Tool is hosted by the National Snow and Ice Data
+          Center (NSIDC), which implements the BENEFIT Tool design under the
+          guidance of US AON. NSIDC is also affiliated with the University of
+          Colorado Boulder. Funding is provided by the National Oceanic and
+          Atmospheric Administration (NOAA) and the National Science
+          Foundation (NSF) through US AON. Neither NOAA nor NSF retains
+          ownership of or rights to contributor data.</p>
+
+        <h2 class="h6 mt-4">3. What You Are Being Asked to Do</h2>
+        <p>As a registered user of the BENEFIT Tool, you may:</p>
+        <ul>
+          <li>Create or contribute to BENEFIT Assessments — structured
+            assessments that evaluate Arctic observing systems, data
+            products, and applications</li>
+          <li>Provide quantitative ratings (numerical scores) and qualitative
+            descriptions of system capabilities, importance, and societal
+            benefit</li>
+          <li>Review and validate analyses led by other contributors, in
+            consultation with US AON staff</li>
+          <li>Be listed as a contributor to published assessments</li>
+        </ul>
+        <p>Assessments are typically developed collaboratively. You may work
+          individually or as part of a group, including in workshop-based or
+          community-based settings. Contribution to any specific assessment
+          is always voluntary — registering an account does not obligate you
+          to complete or contribute to any particular analysis.</p>
+
+        <h2 class="h6 mt-4">4. Voluntary Contribution and Your Right to Withdraw</h2>
+        <p>Contributing to the BENEFIT Tool or any specific assessment is
+          entirely voluntary. You may choose not to contribute, to stop
+          contributing at any time, or to request removal of your
+          contributions. US AON will not impose penalties, loss of benefits,
+          or adverse consequences for choosing not to participate or for
+          withdrawing.</p>
+
+        <h3 class="h6 mt-3">4.1 How to Request Withdrawal</h3>
+        <p>To request removal of your contributions, contact the Principal
+          Investigator at
+          <a href="mailto:sandra.starkweather@colorado.edu">sandra.starkweather@colorado.edu</a>.
+          You do not need to provide a reason.</p>
+
+        <h3 class="h6 mt-3">4.2 Scope and Limitations of Withdrawal</h3>
+        <p>Withdrawal is handled in three tiers, depending on where your data
+          appears:</p>
+        <ol>
+          <li><strong>BENEFIT Tool website:</strong> We will remove your
+            assessment from the live site promptly upon request, typically
+            within 30 days.</li>
+          <li><strong>US AON-produced materials</strong> (e.g., technical
+            briefs, reports): We will make reasonable efforts to update or
+            retract materials that cite your assessment within approximately
+            one to two years of your withdrawal request. The complexity of
+            these updates varies by material.</li>
+          <li><strong>Third-party publications and downloaded copies:</strong>
+            We cannot guarantee retrieval of data that has been incorporated
+            into formal third-party publications or downloaded by other
+            users prior to withdrawal. Once data has been publicly
+            disseminated, full retraction may not be technically or
+            practically feasible.</li>
+        </ol>
+        <p>We will always be transparent with you about the status of your
+          withdrawal request and what we are and are not able to accomplish.
+          If you have questions about a specific situation, please contact
+          us.</p>
+
+        <h2 class="h6 mt-4">5. What Data Is Collected and How It Is Used</h2>
+
+        <h3 class="h6 mt-3">5.1 Data collected</h3>
+        <p>When you register and use the BENEFIT Tool, the following
+          information is collected:</p>
+        <ul>
+          <li><strong>Account registration information:</strong> name, email
+            address, institutional affiliation, and professional role</li>
+          <li><strong>Assessment data:</strong> quantitative ratings,
+            qualitative descriptions, and the links you draw between
+            observing systems, data products, and applications. There is an
+            option to create links without providing specific rating
+            information.</li>
+          <li><strong>Contributor attribution:</strong> your name and
+            affiliation as a contributor to assessments you participate
+            in</li>
+          <li><strong>Tool interaction data:</strong> general usage logs for
+            technical maintenance purposes</li>
+        </ul>
+
+        <h3 class="h6 mt-3">5.2 How your data is used</h3>
+        <p>Your contributions are used to:</p>
+        <ul>
+          <li>Build and publish BENEFIT Assessments on the BENEFIT Tool
+            website</li>
+          <li>Support US AON's mission of improving coordination and
+            management of Arctic observing systems</li>
+          <li>Contribute to scientific publications, reports, and
+            policy-relevant materials</li>
+          <li>Improve the BENEFIT Tool's methodology and software</li>
+        </ul>
+
+        <h3 class="h6 mt-3">5.3 Public attribution and identity</h3>
+        <p>Attribution of contributions to the BENEFIT tool is public by
+          design.</p>
+        <p>Assessments are attributed as a whole to the group of contributors
+          that worked on them (e.g., "this assessment was conducted by a team
+          that included X, Y, and Z"), rather than linking individual ratings
+          to individual names. Your name and affiliation will appear as part
+          of this contributor list in published assessments you participate
+          in.</p>
+        <p>We do not currently offer a "private" or anonymized assessment
+          option. All assessments are published with contributor attribution
+          as described above. We plan to develop a private assessment
+          capability in the future; this agreement will be updated at that
+          time.</p>
+
+        <h2 class="h6 mt-4">6. Data Sharing, Access, and Reuse</h2>
+        <p>US AON is committed to open data as a default. Assessment data,
+          including contributor attribution, is made publicly available
+          unless specific circumstances require otherwise (see Section
+          8).</p>
+        <p>Published assessment data is made available in open,
+          non-proprietary formats (e.g., JSON, CSV) and is stored in a
+          PostgreSQL database hosted by NSIDC with regular backups. By
+          contributing to the BENEFIT Tool, you agree that your assessment
+          data and contributor attribution may be freely accessed, used, and
+          cited by others under the Creative Commons Attribution 4.0
+          International License (CC BY 4.0). This means anyone may share or
+          adapt your assessment data for any purpose, including commercially,
+          as long as they credit the source. The full license text is
+          available at
+          <a href="https://creativecommons.org/licenses/by/4.0/"
+             target="_blank" rel="noopener">https://creativecommons.org/licenses/by/4.0/</a>.</p>
+        <p>Data already released under CC BY 4.0 may continue to be used by
+          others under the terms of that license even if you later withdraw
+          participation.</p>
+        <p>US AON does not sell contributor data and does not itself share it
+          for commercial purposes.</p>
+        <p><strong>Long-term archiving.</strong> Assessment data may also be
+          archived at the NSF Arctic Data Center (ADC) to ensure long-term
+          preservation. The ADC requires that all deposited data be released
+          under either CC BY 4.0 or the CC-0 Public Domain Dedication. US AON
+          will deposit data under CC BY 4.0. By agreeing to this document,
+          you authorize US AON to deposit your assessment data and
+          contributor attribution at the ADC under these terms.</p>
+
+        <h2 class="h6 mt-4">7. Data Storage and Stewardship</h2>
+        <p>Assessment data is stored in a secure PostgreSQL database hosted
+          at NSIDC and backed up regularly. Source code and documentation for
+          the BENEFIT Tool is maintained on GitHub and archived on Zenodo
+          with a permanent DOI (10.5281/zenodo.8403759).</p>
+
+        <h3 class="h6 mt-3">7.1 Program continuity</h3>
+        <p>US AON intends to maintain the BENEFIT Tool and contributor
+          withdrawal capabilities for as long as the program is staffed and
+          funded. Long-term archiving at the NSF Arctic Data Center is a
+          planned future step that has not yet been completed.</p>
+        <p>In the event that US AON is discontinued or funding changes
+          significantly, we will make reasonable efforts to notify registered
+          contributors and provide a transition plan for data stewardship
+          before ceasing operations.</p>
+
+        <h3 class="h6 mt-3">7.2 Retention</h3>
+        <p>Data is retained for as long as the BENEFIT Tool is active and for
+          archival purposes thereafter. You may request deletion of your data
+          at any time (see Section 4).</p>
+
+        <h2 class="h6 mt-4">8. Indigenous Data Sovereignty and Community Assessments</h2>
+        <p>US AON recognizes that some contributors may reference knowledge
+          that is community-held, culturally significant, or otherwise
+          subject to Indigenous data sovereignty principles. This section
+          describes how we approach those situations.</p>
+
+        <h3 class="h6 mt-3">8.1 Applicable frameworks</h3>
+        <p>US AON is committed to the following data governance
+          frameworks:</p>
+        <ul>
+          <li><strong>CARE Principles</strong> (Collective Benefit, Authority
+            to Control, Responsibility, Ethics) — developed by the Global
+            Indigenous Data Alliance</li>
+          <li><strong>FAIR Principles</strong> (Findable, Accessible,
+            Interoperable, Reusable) — where they do not conflict with
+            CARE</li>
+          <li><strong>OCAP®</strong> (Ownership, Control, Access,
+            Possession) — First Nations Principles of Information
+            Governance</li>
+        </ul>
+        <p>Where these frameworks conflict, CARE principles take precedence
+          over FAIR principles.</p>
+
+        <h3 class="h6 mt-3">8.2 Community and group assessments</h3>
+        <p>The BENEFIT Tool is evolving to better support group and
+          community-based assessments, such as workshops where participants
+          build a shared view of observing system capabilities. We recognize
+          that in these settings, contributors may be providing their best
+          understanding of community perspectives rather than representing
+          only their individual expertise. Contributors are responsible for
+          ensuring they have appropriate authority or permission to share any
+          community-held knowledge they provide.</p>
+        <p>Even in group assessments, individual attribution is tied to the
+          specific people who contributed, because individual contributors
+          cannot fully represent the perspectives of a diverse community. We
+          acknowledge this limitation openly.</p>
+        <p>If you are contributing knowledge on behalf of a community or as a
+          community representative, we strongly encourage you to discuss with
+          US AON staff before completing an assessment, so we can work with
+          you on appropriate attribution, consent, and data handling.
+          Contact:
+          <a href="mailto:sandra.starkweather@colorado.edu">sandra.starkweather@colorado.edu</a></p>
+
+        <h3 class="h6 mt-3">8.3 Sensitive or restricted data</h3>
+        <p>If your assessment involves knowledge that you or your community
+          consider sensitive, confidential, or subject to Indigenous data
+          governance restrictions, please contact us before proceeding. We
+          will work collaboratively to develop an appropriate data management
+          approach, which may include restricted access, modified
+          attribution, or other accommodations.</p>
+
+        <h2 class="h6 mt-4">9. Risks and Benefits</h2>
+
+        <h3 class="h6 mt-3">9.1 Potential risks</h3>
+        <p>Risks associated with contributing to the BENEFIT Tool are
+          minimal. The main risks are:</p>
+        <ul>
+          <li><strong>Professional reputational risk.</strong> Because all
+            current assessments are publicly attributed (see Section 5.3),
+            you should only contribute assessments you are comfortable having
+            associated with your name and institution.</li>
+          <li><strong>Risk of misinterpretation or use out of
+            context.</strong> Once a BENEFIT Assessment is published, others
+            may draw conclusions from it that were not intended by the
+            contributors — either about the observing systems being assessed
+            or about your individual views. US AON includes contextual
+            language with all published assessments noting that results
+            represent the perspectives of specific contributors at a specific
+            point in time and should not be treated as definitive or
+            comprehensive evaluations. This reduces but does not eliminate
+            the risk that assessments are cited in ways that mischaracterize
+            a contributor's professional positions or misrepresent the state
+            of scientific knowledge.</li>
+          <li><strong>Risk related to funding and management
+            decisions.</strong> BENEFIT Assessments are explicitly designed
+            to inform resource allocation, funding priorities, and management
+            decisions about Arctic observing systems. There is a risk that
+            your assessment — individually or as part of a broader analysis —
+            could influence such decisions in ways you did not anticipate or
+            intend. We cannot predict or control how decision-makers will
+            interpret or apply assessment results.</li>
+        </ul>
+        <p>We do not anticipate physical risks. Other risks are primarily
+          professional and reputational in nature, as described above.</p>
+
+        <h3 class="h6 mt-3">9.2 Potential benefits</h3>
+        <p>Contribution supports:</p>
+        <ul>
+          <li>Improved coordination and management of Arctic observing
+            systems</li>
+          <li>A publicly accessible record of expert knowledge about the
+            value of Arctic observations</li>
+          <li>Scientific publications and policy-relevant analyses that
+            support societal benefit in the Arctic</li>
+          <li>Your own professional recognition as a named contributor to
+            published analyses</li>
+          <li>Potential positive influence on funding and management
+            decisions for Arctic observing systems — the tool is explicitly
+            designed to make expert knowledge actionable for
+            decision-makers</li>
+        </ul>
+        <p>There is no direct financial compensation for contribution.</p>
+
+        <h2 class="h6 mt-4">10. Updates to This Agreement</h2>
+        <p>US AON may update this agreement from time to time to reflect
+          changes in the tool, our data practices, or applicable regulations.
+          We distinguish between two types of changes:</p>
+        <ul>
+          <li><strong>Material changes:</strong> Changes that affect your
+            rights, the use of your data, or attribution practices. We will
+            notify all registered contributors by email at least 30 days
+            before a material change takes effect.</li>
+          <li><strong>Non-material changes:</strong> Typographical
+            corrections, clarifications, or formatting changes that do not
+            affect substance. These take effect immediately and are noted in
+            the document version history.</li>
+        </ul>
+        <p>If you continue to use the BENEFIT Tool after a material change
+          notification period has elapsed, your continued use constitutes
+          acceptance of the updated agreement. If you do not accept the
+          updated terms, you may withdraw your participation at any time (see
+          Section 4).</p>
+        <p>The current version number and effective date are shown at the top
+          of this document and in your account settings. Previous versions
+          are available upon request.</p>
+
+        <h2 class="h6 mt-4">11. Your Rights as a Contributor</h2>
+        <p>As a contributor to the BENEFIT Tool, you have the following
+          rights:</p>
+        <ul>
+          <li>The right to be informed about the nature and purpose of this
+            work before participating</li>
+          <li>The right to participate voluntarily and to withdraw at any
+            time without penalty</li>
+          <li>The right to ask questions about this work at any time</li>
+          <li>The right to have your data handled in accordance with this
+            agreement</li>
+        </ul>
+
+        <h2 class="h6 mt-4">12. Contact Information</h2>
+        <p>For questions about this agreement, your contributions, or your
+          data:</p>
+        <p class="mb-1"><strong>Principal Investigator:</strong> Sandy Starkweather</p>
+        <p class="mb-1"><strong>Institution:</strong> CIRES, University of Colorado Boulder</p>
+        <p class="mb-1"><strong>Email:</strong>
+          <a href="mailto:sandra.starkweather@colorado.edu">sandra.starkweather@colorado.edu</a></p>
+        <p><strong>Project website:</strong>
+          <a href="https://www.usaon.org/apps/benefit-tool/" target="_blank"
+             rel="noopener">https://www.usaon.org/apps/benefit-tool/</a></p>
+
+        <h2 class="h6 mt-4">Statement of Informed Consent</h2>
+        <p>By clicking "I agree", I confirm that:</p>
+        <ul>
+          <li>I have read and understood this Contributor User
+            Agreement.</li>
+          <li>I am 18 years of age or older.</li>
+          <li>I voluntarily agree to contribute and understand I may withdraw
+            at any time.</li>
+          <li>I understand that my assessments will be publicly attributed to
+            me by name and institution.</li>
+          <li>I understand the current limitations on data withdrawal
+            described in Section 4.2.</li>
+          <li>I understand that this agreement may be updated, and I will be
+            notified of material changes.</li>
+        </ul>
+
+        <h2 class="h6 mt-4">Appendix A: Summary of Key Terms</h2>
+        <table class="table table-sm table-bordered">
+          <thead>
+            <tr><th scope="col">Term</th><th scope="col">Definition</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>BENEFIT Assessment</td>
+              <td>A structured assessment created using the BENEFIT Tool that
+                evaluates Arctic observing systems, data products, and
+                applications for their capabilities, importance, and societal
+                benefit.</td>
+            </tr>
+            <tr>
+              <td>Contributor attribution</td>
+              <td>The identification of contributors to a published
+                assessment by name and institutional affiliation.</td>
+            </tr>
+            <tr>
+              <td>CARE Principles</td>
+              <td>Data governance framework emphasizing Collective Benefit,
+                Authority to Control, Responsibility, and Ethics — developed
+                for and by Indigenous data communities.</td>
+            </tr>
+            <tr>
+              <td>FAIR Principles</td>
+              <td>Data management framework emphasizing Findable, Accessible,
+                Interoperable, and Reusable data.</td>
+            </tr>
+            <tr>
+              <td>OCAP®</td>
+              <td>First Nations Principles of Ownership, Control, Access, and
+                Possession, governing Indigenous research data.</td>
+            </tr>
+            <tr>
+              <td>Material change</td>
+              <td>An update to this agreement that affects contribution
+                rights, data use, or attribution. Requires 30 days' notice by
+                email.</td>
+            </tr>
+            <tr>
+              <td>Withdrawal</td>
+              <td>A contributor's request to end participation and remove
+                their data, subject to the three-tier limitations described
+                in Section 4.2.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 class="h6 mt-4">Appendix B: Version History</h2>
+        <table class="table table-sm table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Version</th>
+              <th scope="col">Date</th>
+              <th scope="col">Summary of changes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1.0</td>
+              <td>June 24, 2026</td>
+              <td>Initial release</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+      <div class="modal-footer flex-column align-items-stretch">
+        <form method="post" action="{{ url_for('agreement.accept') }}"
+              id="agreement-accept-form">
+          {# If you use Flask-WTF CSRF protection, add:
+             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> #}
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" name="agree"
+                   id="agreement-checkbox" required>
+            <label class="form-check-label" for="agreement-checkbox">
+              I have read and understood this agreement, I am 18 years of age
+              or older, and I voluntarily consent to the terms described in
+              this document.
+            </label>
+          </div>
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-outline-secondary"
+                    form="agreement-decline-form">
+              I do not agree — log me out
+            </button>
+            <button type="submit" class="btn btn-primary"
+                    id="agreement-accept-button" disabled>
+              I agree
+            </button>
+          </div>
+        </form>
+        <form method="post" action="{{ url_for('agreement.decline') }}"
+              id="agreement-decline-form">
+          {# If you use Flask-WTF CSRF protection, add:
+             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> #}
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const modal = new bootstrap.Modal(
+      document.getElementById("agreementModal"),
+    );
+    modal.show();
+
+    const checkbox = document.getElementById("agreement-checkbox");
+    const acceptButton = document.getElementById("agreement-accept-button");
+    checkbox.addEventListener("change", function () {
+      acceptButton.disabled = !checkbox.checked;
+    });
+  });
+</script>

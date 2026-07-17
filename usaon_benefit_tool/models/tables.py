@@ -72,6 +72,8 @@ class User(BaseModel, UserMixin):
         String,
         nullable=True,
     )
+    agreed_agreement_version = Column(String(16), nullable=True)
+    agreed_agreement_at = Column(DateTime(timezone=True), nullable=True)
 
     role = relationship('Role')
     # TODO: Rename "created_assessments"? Add "filled_assessments"?
