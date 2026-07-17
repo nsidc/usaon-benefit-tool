@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from flask import Blueprint, flash, redirect, request, url_for
 from flask_login import current_user, login_required, logout_user
@@ -10,7 +10,7 @@ agreement_bp = Blueprint('agreement', __name__, url_prefix='/agreement')
 
 
 def user_needs_agreement(user) -> bool:
-    """True if the user has not accepted the current agreement version."""
+    """Is true if the user has not accepted the current agreement version."""
     return (
         user.is_authenticated
         and user.agreed_agreement_version != CURRENT_AGREEMENT_VERSION
@@ -23,14 +23,13 @@ def accept():
     # Server-side validation: don't trust the client-side disabled button.
     if not request.form.get("agree"):
         flash(
-            "You must check the box to accept the Contributor User"
-            " Agreement.",
+            "You must check the box to accept the Contributor User" " Agreement.",
             "danger",
         )
         return redirect(url_for("root.root"))
 
     current_user.agreed_agreement_version = CURRENT_AGREEMENT_VERSION
-    current_user.agreed_agreement_at = datetime.now(timezone.utc)
+    current_user.agreed_agreement_at = datetime.now(UTC)
     db.session.add(current_user)
     db.session.commit()
 
@@ -46,6 +45,6 @@ def decline():
     flash(
         "You have not accepted the Contributor User Agreement, so you have"
         " been logged out. You may log in again at any time to review and"
-        " accept it."
+        " accept it.",
     )
     return redirect(url_for("login.login"))

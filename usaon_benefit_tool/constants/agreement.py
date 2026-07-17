@@ -12,9 +12,7 @@ CURRENT_AGREEMENT_EFFECTIVE_DATE = "June 24, 2026"
 # The confirmations from the Statement of Informed Consent. Each is rendered
 # as a required checkbox and validated server-side by name.
 CONSENT_STATEMENTS: dict[str, str] = {
-    "read_understood": (
-        "I have read and understood this Contributor User Agreement."
-    ),
+    "read_understood": ("I have read and understood this Contributor User Agreement."),
     "age_18": "I am 18 years of age or older.",
     "voluntary": (
         "I voluntarily agree to contribute and understand I may withdraw"
