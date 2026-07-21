@@ -5,7 +5,7 @@ from typing import Final
 
 from flask import Flask, render_template, session
 from flask_bootstrap import Bootstrap5
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
 from loguru import logger as loguru_logger
 from markdown import Markdown
@@ -59,9 +59,28 @@ def create_app():
     _setup_login(app)
     _register_blueprints(app)
     _register_template_helpers(app)
+    _register_context_processors(app)
     _register_custom_error_pages(app)
 
     return app
+
+
+def _register_context_processors(app) -> None:
+    from usaon_benefit_tool.constants.agreement import (
+        CURRENT_AGREEMENT_EFFECTIVE_DATE,
+        CURRENT_AGREEMENT_VERSION,
+    )
+    from usaon_benefit_tool.routes.agreement import user_needs_agreement
+
+    @app.context_processor
+    def inject_agreement_state():
+        return {
+            "needs_agreement": user_needs_agreement(current_user),
+            "agreement_version": CURRENT_AGREEMENT_VERSION,
+            "agreement_effective_date": CURRENT_AGREEMENT_EFFECTIVE_DATE,
+        }
+
+    loguru_logger.debug("Context processors registered.")
 
 
 def _setup_logging(app) -> None:
@@ -173,6 +192,7 @@ def _register_template_helpers(app) -> None:
 def _register_blueprints(app) -> None:
     # TODO: Extract function register_blueprints
     from usaon_benefit_tool.routes.admin import admin_bp
+    from usaon_benefit_tool.routes.agreement import agreement_bp
     from usaon_benefit_tool.routes.assessment import assessment_bp
     from usaon_benefit_tool.routes.assessments import assessments_bp
     from usaon_benefit_tool.routes.legend import legend_bp
@@ -202,6 +222,7 @@ def _register_blueprints(app) -> None:
 
     app.register_blueprint(support_bp)
     app.register_blueprint(admin_bp)
+    app.register_blueprint(agreement_bp)
 
     loguru_logger.debug("Blueprints registered.")
 
