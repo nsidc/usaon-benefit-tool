@@ -9,7 +9,7 @@
   <form
     hx-put="{{url_for("assessment.put", assessment_id=assessment.id) }}"
   >
-    {{ render_form_fields(form) }}
+    {{ render_form_fields(form, field_order=['title', 'description', 'status', 'hypothetical']) }}
   </form>
 
 {% endblock %}
