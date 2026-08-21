@@ -89,7 +89,7 @@ FORMS_BY_MODEL: dict[BaseModel, FlaskForm] = {
         ],
         field_args={
             'status': {'get_label': 'id'},
-            },
+        },
     ),
     AssessmentNode: model_form(
         AssessmentNode,
