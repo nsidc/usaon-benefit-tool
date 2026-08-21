@@ -1,3 +1,12 @@
+## NEXT_VERSION
+* Add status dropdown to assessment
+
+## v2.8.0 (2026-07-21)
+
+* Make object types more human readable
+* User agreement popup
+* Deploy migraton  (2a175b3a16e1)
+
 ## v2.7.3 (2026-06-01)
 
 * Support data downloads for users and nodes
