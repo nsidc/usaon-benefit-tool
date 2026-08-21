@@ -2,7 +2,7 @@ from sqlalchemy import inspect as sainspect
 from wtforms_sqlalchemy.orm import ModelConverter
 
 
-def model_fields(  # noqa: C901, PLR0913
+def model_fields(  # noqa: C901, PLR0913, PLR0917
     model,
     db_session=None,
     only=None,
