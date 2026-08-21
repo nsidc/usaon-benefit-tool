@@ -1,4 +1,4 @@
-## NEXT_VERSION
+## v2.8.1 (2026-08-21)
 * Add status dropdown to assessment
 
 ## v2.8.0 (2026-07-21)
