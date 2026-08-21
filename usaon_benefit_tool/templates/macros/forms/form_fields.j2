@@ -7,7 +7,8 @@
   button_map={},
   button_style="",
   button_size="",
-  form_group_classes=''
+  form_group_classes='',
+  field_order=None
 ) %}
   {#-
   Render a form without the <form> tag; we want full control of it so we can use
@@ -20,16 +21,32 @@
 
   {{ form.hidden_tag() }}
   {{ render_hidden_errors(form) }}
-  {%- for field in form %}
-    {% if not bootstrap_is_hidden_field(field) -%}
-      {{ render_field(field,
-          form_type=form_type,
-          horizontal_columns=horizontal_columns,
-          button_map=button_map,
-          button_style=button_style,
-          button_size=button_size,
-          form_group_classes=form_group_classes) }}
-    {%- endif %}
-  {%- endfor %}
+
+  {%- if field_order -%}
+    {%- for name in field_order %}
+      {%- set field = form[name] %}
+      {% if not bootstrap_is_hidden_field(field) -%}
+        {{ render_field(field,
+            form_type=form_type,
+            horizontal_columns=horizontal_columns,
+            button_map=button_map,
+            button_style=button_style,
+            button_size=button_size,
+            form_group_classes=form_group_classes) }}
+      {%- endif %}
+    {%- endfor %}
+  {%- else -%}
+    {%- for field in form %}
+      {% if not bootstrap_is_hidden_field(field) -%}
+        {{ render_field(field,
+            form_type=form_type,
+            horizontal_columns=horizontal_columns,
+            button_map=button_map,
+            button_style=button_style,
+            button_size=button_size,
+            form_group_classes=form_group_classes) }}
+      {%- endif %}
+    {%- endfor %}
+  {%- endif -%}
 
 {% endmacro %}
