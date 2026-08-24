@@ -1,4 +1,4 @@
-## NEXT_VERSION
+## v2.8.2 (2026-08-24)
 
 * Change status `closed` to `private` db migration (31d9cf7fb54d)
 
