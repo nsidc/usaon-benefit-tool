@@ -4,6 +4,6 @@ from typing import Final
 ASSESSMENT_STATUSES: Final[dict[str, str]] = {
     'work in progress': 'The assessment is not done yet',
     'published': 'The assessment is complete and visible to the public',
-    'closed': 'TODO',
-    'archived': 'TODO',
+    'private': 'Complete but not available for viewing publicly',
+    'archived': 'data saved but not available for viewing. Admins can still review.',
 }
