@@ -10,6 +10,8 @@
     hx-put="{{url_for("assessment.put", assessment_id=assessment.id) }}"
   >
     {{ render_form_fields(form, field_order=['title', 'description', 'status', 'hypothetical']) }}
+      <button type="submit" class="btn btn-primary">Submit</button>
+
   </form>
 
 {% endblock %}
