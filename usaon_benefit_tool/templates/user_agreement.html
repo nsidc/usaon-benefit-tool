@@ -1,0 +1,17 @@
+{# Standalone, read-only view of the Contributor User Agreement, linked from
+   the User Support dropdown. Shares its body with the post-login modal via
+   partials/agreement_text.html. #}
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container py-4">
+
+    <h1 class="h3 mb-4">
+      US AON BENEFIT Tool — Contributor User Agreement &amp; Informed Consent
+    </h1>
+
+    {% include 'partials/agreement_text.html' %}
+
+  </div>
+{% endblock %}

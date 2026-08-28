@@ -26,3 +26,10 @@ def glossary():
 @support_bp.route('/user-support/faqs')
 def faqs():
     return render_template('faqs.html')
+
+
+@support_bp.route('/user-support/user-agreement')
+def user_agreement():
+    return render_template(
+        'user_agreement.html',
+    )
