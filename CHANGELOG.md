@@ -1,3 +1,10 @@
+## NEXT_VERSION
+
+* Fix submit button on edit assessment page
+* Remove empty user guide from assessment view
+* Add user agreement to User Support dropdown
+* Unify user agreement text
+
 ## v2.8.2 (2026-08-24)
 
 * Change status `closed` to `private` db migration (31d9cf7fb54d)
