@@ -1,4 +1,4 @@
-## NEXT_VERSION
+## v2.8.3 (2026-08-28)
 
 * Fix submit button on edit assessment page
 * Remove empty user guide from assessment view
